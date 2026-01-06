@@ -18,11 +18,10 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 - System UI font stack (Segoe UI / Roboto / Ubuntu)
 - Host names emphasized, services unchanged
 - Consistent look across:
-  ```
-  - avail.cgi
+  ```- avail.cgi
   - status.cgi
   - extinfo.cgi
-  - cmd.cgi
+  - cmd.cgi```
 
 
 ## 📸 Screenshots
@@ -33,14 +32,13 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 
 ## 🛠 Installation
 Replace the following files in your Nagios Core installation:
-```
-- <nagiosroot>/share/stylesheets/avail.css
+```- <nagiosroot>/share/stylesheets/avail.css
 - <nagiosroot>/share/stylesheets/cmd.css
 - <nagiosroot>/share/stylesheets/extinfo.css
 - <nagiosroot>/share/stylesheets/history.css
 - <nagiosroot>/share/stylesheets/outage.css
 - <nagiosroot>/share/stylesheets/status.css
-- <nagiosroot>/share/stylesheets/tac.css
+- <nagiosroot>/share/stylesheets/tac.css```
 
 Restart is **not required**.  
 Just hard-refresh your browser (Ctrl+F5).
