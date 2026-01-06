@@ -18,11 +18,12 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 - System UI font stack (Segoe UI / Roboto / Ubuntu)
 - Host names emphasized, services unchanged
 - Consistent look across:
+  ```
   - avail.cgi
   - status.cgi
   - extinfo.cgi
   - cmd.cgi
-
+```
 
 ## 📸 Screenshots
 | Status Overview | Host Detail |
