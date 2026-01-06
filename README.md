@@ -1,3 +1,7 @@
+![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
+![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui)
+
+
 # Nagios Core – Modern UI Tweaks
 A minimal, CSS-only modernization of the Nagios Core web interface.
 
