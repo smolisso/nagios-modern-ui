@@ -32,14 +32,15 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 
 ## 🛠 Installation
 Replace the following files in your Nagios Core installation:
-
-- /usr/local/nagios/share/stylesheets/avail.css
-- /usr/local/nagios/share/stylesheets/cmd.css
-- /usr/local/nagios/share/stylesheets/extinfo.css
-- /usr/local/nagios/share/stylesheets/history.css
-- /usr/local/nagios/share/stylesheets/outage.css
-- /usr/local/nagios/share/stylesheets/status.css
-- /usr/local/nagios/share/stylesheets/tac.css
+```
+- <nagiosroot>/share/stylesheets/avail.css
+- <nagiosroot>/share/stylesheets/cmd.css
+- <nagiosroot>/share/stylesheets/extinfo.css
+- <nagiosroot>/share/stylesheets/history.css
+- <nagiosroot>/share/stylesheets/outage.css
+- <nagiosroot>/share/stylesheets/status.css
+- <nagiosroot>/share/stylesheets/tac.css
+```
 
 Restart is **not required**.  
 Just hard-refresh your browser (Ctrl+F5).
