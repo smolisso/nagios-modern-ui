@@ -1,8 +1,6 @@
-```md
-![Version](https://img.shields.io/badge/version-0.0.1-blue)
-
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui)
+![Version](https://img.shields.io/badge/version-0.0.1-blue)
 
 
 # Nagios Core – Modern UI Tweaks
