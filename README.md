@@ -1,5 +1,5 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
-![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui)
+![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
 ![Version](https://img.shields.io/badge/version-0.0.1-blue)
 
 
@@ -23,6 +23,7 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
   - status.cgi
   - extinfo.cgi
   - cmd.cgi
+  and so on....
 
 
 ## 📸 Screenshots
