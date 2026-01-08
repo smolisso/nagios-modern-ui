@@ -1,3 +1,6 @@
+```md
+![Version](https://img.shields.io/badge/version-0.0.1-blue)
+
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui)
 
@@ -35,25 +38,28 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 
 
 ## 🛠 Installation
+
 Replace the following files in your Nagios Core installation:
-- [nagios_root_path]/share/stylesheets/avail.css
-- [nagios_root_path]/share/stylesheets/cmd.css
-- [nagios_root_path]/share/stylesheets/config.css
-- [nagios_root_path]/share/stylesheets/extinfo.css
-- [nagios_root_path]/share/stylesheets/histogram.css
-- [nagios_root_path]/share/stylesheets/history.css
-- [nagios_root_path]/share/stylesheets/notifications.css
-- [nagios_root_path]/share/stylesheets/outages.css
-- [nagios_root_path]/share/stylesheets/showlog.css
-- [nagios_root_path]/share/stylesheets/status.css
-- [nagios_root_path]/share/stylesheets/summary.css
-- [nagios_root_path]/share/stylesheets/tac.css
-- [nagios_root_path]/share/stylesheets/trends.css
+
+```text
+[nagios_root_path]/share/stylesheets/avail.css
+[nagios_root_path]/share/stylesheets/cmd.css
+[nagios_root_path]/share/stylesheets/config.css
+[nagios_root_path]/share/stylesheets/extinfo.css
+[nagios_root_path]/share/stylesheets/histogram.css
+[nagios_root_path]/share/stylesheets/history.css
+[nagios_root_path]/share/stylesheets/notifications.css
+[nagios_root_path]/share/stylesheets/outages.css
+[nagios_root_path]/share/stylesheets/showlog.css
+[nagios_root_path]/share/stylesheets/status.css
+[nagios_root_path]/share/stylesheets/summary.css
+[nagios_root_path]/share/stylesheets/tac.css
+[nagios_root_path]/share/stylesheets/trends.css
 
 Restart is **not required**.  
 Just hard-refresh your browser (Ctrl+F5).
 
-You can download the stylesheets.zip file with all css included.
+You can also download stylesheets.zip with all CSS files included.
 
 ## ⚠️ Notes
 - Tested on **Nagios Core 4.5.x**
