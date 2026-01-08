@@ -53,6 +53,8 @@ Replace the following files in your Nagios Core installation:
 [nagios_root_path]/share/stylesheets/summary.css
 [nagios_root_path]/share/stylesheets/tac.css
 [nagios_root_path]/share/stylesheets/trends.css
+```
+
 
 Restart is **not required**.  
 Just hard-refresh your browser (Ctrl+F5).
