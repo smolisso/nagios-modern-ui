@@ -31,7 +31,7 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 
 | Extended Info | Service Problems |
 |-----------------|------------|
-| ![](screenshots/extinfo.png) | ![](screenshots/service-problem.png) |
+| ![](screenshots/extinfo.png) | ![](screenshots/service-problems.png) |
 
 
 ## 🛠 Installation
