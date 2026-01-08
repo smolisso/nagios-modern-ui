@@ -32,23 +32,24 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 
 ## 🛠 Installation
 Replace the following files in your Nagios Core installation:
-- <nagiosroot>/share/stylesheets/avail.css
-- <nagiosroot>/share/stylesheets/cmd.css
-- <nagiosroot>/share/stylesheets/config.css
-- <nagiosroot>/share/stylesheets/extinfo.css
-- <nagiosroot>/share/stylesheets/histogram.css
-- <nagiosroot>/share/stylesheets/history.css
-- <nagiosroot>/share/stylesheets/notifications.css
-- <nagiosroot>/share/stylesheets/outages.css
-- <nagiosroot>/share/stylesheets/showlog.css
-- <nagiosroot>/share/stylesheets/status.css
-- <nagiosroot>/share/stylesheets/summary.css
-- <nagiosroot>/share/stylesheets/tac.css
-- <nagiosroot>/share/stylesheets/trends.css
+- [nagios_root_path]/share/stylesheets/avail.css
+- [nagios_root_path]/share/stylesheets/cmd.css
+- [nagios_root_path]/share/stylesheets/config.css
+- [nagios_root_path]/share/stylesheets/extinfo.css
+- [nagios_root_path]/share/stylesheets/histogram.css
+- [nagios_root_path]/share/stylesheets/history.css
+- [nagios_root_path]/share/stylesheets/notifications.css
+- [nagios_root_path]/share/stylesheets/outages.css
+- [nagios_root_path]/share/stylesheets/showlog.css
+- [nagios_root_path]/share/stylesheets/status.css
+- [nagios_root_path]/share/stylesheets/summary.css
+- [nagios_root_path]/share/stylesheets/tac.css
+- [nagios_root_path]/share/stylesheets/trends.css
 
 Restart is **not required**.  
 Just hard-refresh your browser (Ctrl+F5).
 
+You can download the stylesheets.zip file with all css included.
 
 ## ⚠️ Notes
 - Tested on **Nagios Core 4.5.x**
