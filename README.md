@@ -29,6 +29,10 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 |-----------------|------------|
 | ![](screenshots/status-service-all.png) | ![](screenshots/hostdetail.png) |
 
+| Extended Info | Service Problems |
+|-----------------|------------|
+| ![](screenshots/extinfo.png) | ![](screenshots/service-problem.png) |
+
 
 ## 🛠 Installation
 Replace the following files in your Nagios Core installation:
