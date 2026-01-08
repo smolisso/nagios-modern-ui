@@ -27,18 +27,24 @@ Just cleaner colors, modern fonts and better readability — while keeping the o
 ## 📸 Screenshots
 | Status Overview | Host Detail |
 |-----------------|------------|
-| ![](screenshots/status-all.png) | ![](screenshots/hostdetail.png) |
+| ![](screenshots/status-service-all.png) | ![](screenshots/hostdetail.png) |
 
 
 ## 🛠 Installation
 Replace the following files in your Nagios Core installation:
 - <nagiosroot>/share/stylesheets/avail.css
 - <nagiosroot>/share/stylesheets/cmd.css
+- <nagiosroot>/share/stylesheets/config.css
 - <nagiosroot>/share/stylesheets/extinfo.css
+- <nagiosroot>/share/stylesheets/histogram.css
 - <nagiosroot>/share/stylesheets/history.css
-- <nagiosroot>/share/stylesheets/outage.css
+- <nagiosroot>/share/stylesheets/notifications.css
+- <nagiosroot>/share/stylesheets/outages.css
+- <nagiosroot>/share/stylesheets/showlog.css
 - <nagiosroot>/share/stylesheets/status.css
+- <nagiosroot>/share/stylesheets/summary.css
 - <nagiosroot>/share/stylesheets/tac.css
+- <nagiosroot>/share/stylesheets/trends.css
 
 Restart is **not required**.  
 Just hard-refresh your browser (Ctrl+F5).

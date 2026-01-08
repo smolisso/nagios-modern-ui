@@ -74,14 +74,103 @@ td.featureHeader { font-weight: bold; border-bottom: 1px solid #aaaaaa; }
 .featureItemEnabledPassiveHostChecks     { font-size: 8pt; background-color: #88d066; border: 1px solid #777777; }
 .featureItemDisabledPassiveHostChecks    { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
 
-/* === minimal dark background === */
+/* =========================================================
+   Nagios Modern UI – tac.cgi
+   ========================================================= */
+
+/* background generale */
 body.tac {
-  background-color: #8a8a8a;
+    background-color: #8a8a8a;
+    font-family:
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        Ubuntu,
+        Cantarell,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
 }
+
+/* neutralizza il bianco ereditato */
+body.tac table,
+body.tac td,
+body.tac th,
+body.tac div {
+    background-color: transparent;
+}
+
+/* =========================================================
+   TAC – Health bars (de-fosforescentizzazione)
+   ========================================================= */
+
+body.tac .healthBox {
+    background-color: #9e9e9e !important;
+    border: 1px solid #7f7f7f;
+    padding: 6px;
+}
+
+body.tac .healthItem {
+    font-weight: 600;
+    color: #1f1f1f;
+}
+
+/* attenua il verde sparato */
+body.tac .healthBar img {
+    filter: saturate(0.6) brightness(0.9);
+    border-radius: 4px;
+}
+
+/* =========================================================
+   TAC – Section titles
+   ========================================================= */
+
+body.tac .outageTitle,
+body.tac .hostTitle,
+body.tac .serviceTitle,
+body.tac .featureTitle {
+    background-color: #7f8fa3;
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border: 1px solid #6c7a8c;
+}
+
+/* =========================================================
+   TAC – Section headers
+   ========================================================= */
+
+body.tac .outageHeader,
+body.tac .hostHeader,
+body.tac .serviceHeader,
+body.tac .featureHeader {
+    background-color: #a5a5a5;
+    border: 1px solid #8c8c8c;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   TAC – Monitoring Features boxes
+   ========================================================= */
+
+body.tac .featureEnabledFlapDetection,
+body.tac .featureEnabledHandlers,
+body.tac .featureEnabledActiveChecks,
+body.tac .featureEnabledPassiveChecks,
+body.tac .featureDisabledNotifications {
+    background-color: #b0b0b0;
+    border: 1px solid #8c8c8c;
+    padding: 6px;
+    border-radius: 3px;
+}
+
 body.tac a {
-  color: #0f2f4a;
+    color: #0f2f4a;
+    font-weight: 500;
 }
 
 body.tac a:hover {
-  color: #000000;
+    color: #000000;
 }

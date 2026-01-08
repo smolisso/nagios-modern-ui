@@ -5,54 +5,56 @@
 /* purpose with or without fee is hereby granted, provided that the above  */
 /* copyright notice and this permission notice appear in all copies.       */
 
-.history { }
+.histogram { }
+
+.helpfulHints { font-size: 10pt; font-style: italic; text-align: center; }
 
 /* =========================================================
-   HISTORY – MODERN UI ALIGNMENT
+   NAGIOS MODERN UI – histogram.cgi (FINAL)
    ========================================================= */
 
-/* === BASE === */
-body.history {
+/* =========================================================
+   BASE
+   ========================================================= */
+
+body.histogram {
     background-color: #8a8a8a;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
-body.history a {
+body.histogram a {
     color: #0f2f4a;
 }
-body.history a:hover {
+body.histogram a:hover {
     color: #000000;
 }
 
 /* =========================================================
-   RESET BACKGROUND DA common.css
+   RESET WHITE BACKGROUNDS (common.css)
    ========================================================= */
 
-body.history table,
-body.history td,
-body.history th,
-body.history div {
+body.histogram table,
+body.histogram td,
+body.histogram th,
+body.histogram div {
     background-color: transparent;
 }
 
 /* =========================================================
-   INFO / OPTION BOX
+   INFO BOX (HEADER)
    ========================================================= */
 
-body.history .infoBox,
-body.history .optBox,
-body.history .navBox {
+body.histogram .infoBox {
     background-color: #a5a5a5 !important;
     border: 1px solid #6f6f6f;
 }
 
 /* =========================================================
-   TITOLI – AZZURRINO COERENTE CON STATUS / AVAIL / TRENDS
+   TITLES – AZZURRO COERENTE CON IL RESTO DEL TEMA
    ========================================================= */
 
-body.history .infoBoxTitle,
-body.history .dataTitle,
-body.history .navBoxTitle {
+body.histogram .infoBoxTitle,
+body.histogram .reportSelectTitle {
     background: #7f96ad;
     color: #ffffff;
     font-weight: 600;
@@ -61,68 +63,45 @@ body.history .navBoxTitle {
 }
 
 /* =========================================================
-   LINK BOX
+   REPORT SELECTION / FORMS
    ========================================================= */
 
-body.history .linkBox {
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
-}
-
-body.history .linkBox a {
-    font-weight: 500;
-}
-
-/* =========================================================
-   FORM / FILTER AREA
-   ========================================================= */
-
-body.history .optBoxItem {
+body.histogram .reportSelectSubTitle,
+body.histogram .reportSelectItem,
+body.histogram .optBoxItem {
     background-color: #a5a5a5;
     color: #1f1f1f;
     padding: 6px 8px;
 }
 
-/* select & button */
-body.history select,
-body.history input[type="submit"] {
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+
+body.histogram select,
+body.histogram input[type="text"],
+body.histogram input[type="submit"] {
     background-color: #9e9e9e;
     border: 1px solid #6f6f6f;
+    color: #1f1f1f;
     padding: 4px 6px;
     border-radius: 4px;
-    color: #1f1f1f;
 }
 
-body.history input[type="submit"]:hover {
-    background-color: #b0b0b0;
+/* submit button */
+body.histogram input[type="submit"] {
+    font-weight: 600;
     cursor: pointer;
 }
 
-/* =========================================================
-   NAVIGATION FILE INFO
-   ========================================================= */
-
-body.history .navBoxFile {
-    background-color: #9e9e9e;
-    border: 1px solid #6f6f6f;
-    padding: 6px 8px;
-    color: #1f1f1f;
-    border-radius: 4px;
+body.histogram input[type="submit"]:hover {
+    background-color: #b0b0b0;
 }
 
 /* =========================================================
-   HISTORY ENTRIES (stato visivo pulito)
+   VISUAL SPACING
    ========================================================= */
 
-body.history .statusOK {
-    color: #1f3d2b;
-}
-body.history .statusWARNING {
-    color: #3b2f00;
-}
-body.history .statusCRITICAL {
-    color: #ffffff;
-}
-body.history .statusUNKNOWN {
-    color: #2f2f2f;
+body.histogram table {
+    border-spacing: 4px;
 }

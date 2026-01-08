@@ -1,0 +1,173 @@
+/* exfoliation: a nagios makeover                                          */
+/* Copyright 2010 Matthew Wall, all rights reserved                        */
+/*                                                                         */
+/* Permission to use, copy, modify, and distribute this software for any   */
+/* purpose with or without fee is hereby granted, provided that the above  */
+/* copyright notice and this permission notice appear in all copies.       */
+
+.notifications { }
+
+TABLE.notifications { padding: 0; margin: 0; }
+TH.notifications    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #777777; color: #333333; }
+.notificationsOdd   { font-size: 8pt; background-color: #e7e7e7; padding: 0 4 0 4; }
+.notificationsEven  { font-size: 8pt; background-color: #f4f2f2; padding: 0 4 0 4; }
+
+/* these are dark colors */
+.notificationsOK              { background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsUNKNOWN         { background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsWARNING         { background-color: #ffff00; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsCRITICAL        { background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsACKNOWLEDGEMENT { background-color: #aaaaaa; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsCUSTOM          { background-color: #778899; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsDOWNTIME        { background-color: #aaccff; border: 1px solid #777777; padding: 0 4 0 4; }
+
+/* these are dark colors */
+.notificationsHOSTUP              { background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsHOSTDOWN            { background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsHOSTUNREACHABLE     { background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsHOSTACKNOWLEDGEMENT { background-color: #aaaaaa; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsHOSTCUSTOM          { background-color: #778899; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsHOSTDOWNTIME        { background-color: #aaccff; border: 1px solid #777777; padding: 0 4 0 4; }
+
+/* =========================================================
+   NAGIOS MODERN UI – notifications.cgi (FINAL)
+   ========================================================= */
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+body.notifications {
+    background-color: #8a8a8a;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+}
+
+body.notifications a {
+    color: #0f2f4a;
+}
+body.notifications a:hover {
+    color: #000000;
+}
+
+/* =========================================================
+   RESET WHITE BACKGROUNDS (common.css)
+   ========================================================= */
+
+body.notifications table,
+body.notifications td,
+body.notifications th,
+body.notifications div {
+    background-color: transparent;
+}
+
+/* =========================================================
+   INFO BOX (HEADER)
+   ========================================================= */
+
+body.notifications .infoBox {
+    background-color: #a5a5a5 !important;
+    border: 1px solid #6f6f6f;
+}
+
+/* =========================================================
+   TITLES – AZZURRO COERENTE
+   ========================================================= */
+
+body.notifications .infoBoxTitle,
+body.notifications .dataTitle,
+body.notifications .navBoxTitle {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+/* =========================================================
+   NAVIGATION BOX
+   ========================================================= */
+
+body.notifications .navBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+}
+
+body.notifications .navBoxItem,
+body.notifications .navBoxDate {
+    color: #1f1f1f;
+}
+
+/* =========================================================
+   OPTIONS BOX (FILTERS)
+   ========================================================= */
+
+body.notifications .optBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+}
+
+body.notifications .optBoxItem {
+    color: #1f1f1f;
+    padding: 6px 8px;
+}
+
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+
+body.notifications select,
+body.notifications input[type="text"],
+body.notifications input[type="submit"] {
+    background-color: #9e9e9e;
+    border: 1px solid #6f6f6f;
+    color: #1f1f1f;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+body.notifications input[type="submit"] {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+body.notifications input[type="submit"]:hover {
+    background-color: #b0b0b0;
+}
+
+/* =========================================================
+   NOTIFICATIONS TABLE
+   ========================================================= */
+
+table.notifications {
+    background-color: #a5a5a5;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+/* header */
+table.notifications th.notifications {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 6px 8px;
+}
+
+/* rows */
+table.notifications td.notifications {
+    background-color: #b0b0b0;
+    color: #1f1f1f;
+    padding: 6px 8px;
+}
+
+/* =========================================================
+   EMPTY / ERROR MESSAGE
+   ========================================================= */
+
+body.notifications .errorMessage {
+    background-color: #b59bb5;
+    color: #2f2f2f;
+    padding: 10px 14px;
+    border-left: 4px solid #7f5a7f;
+    margin-top: 12px;
+    font-weight: 600;
+}

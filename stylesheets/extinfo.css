@@ -83,113 +83,251 @@ TH.queue       { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-
 .queueENABLED  { font-size: 9pt; background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
 .queueDISABLED { font-size: 9pt; background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
 
-/* === minimal dark background === */
-body.extinfo {
-  background-color: #8a8a8a;
-}
-body.extinfo a {
-  color: #0f2f4a;
-}
-
-body.extinfo a:hover {
-  color: #000000;
-}
-
-
-/* Font moderno, leggibile, enterprise */
-body {
-    font-family:
-        system-ui,
-        -apple-system,
-        "Segoe UI",
-        Roboto,
-        Ubuntu,
-        Cantarell,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-}
+/* =========================================================
+   EXTINFO – MODERN UI (ALL TYPES)
+   Coerente con HISTORY / STATUS / AVAIL / TRENDS
+   ========================================================= */
 
 /* =========================
-   EXTINFO – uniformiamo allo status
+   BASE
    ========================= */
 
 body.extinfo {
-    background-color: #7a7a7a;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+    background-color: #8a8a8a;
+    font-family: system-ui, -apple-system, "Segoe UI",
+                 Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
-/* pannelli principali */
-td.stateInfoTable1,
-td.stateInfoTable2,
-td.commandPanel,
-td.commentPanel {
-    background-color: #a5a5a5 !important;
-}
-
-/* celle label / valore */
-td.dataVar,
-td.dataVal {
-    background-color: #a5a5a5 !important;
-    color: #1f1f1f;
-}
-
-/* titoli */
-.dataTitle {
-    font-weight: 600;
-    letter-spacing: 0.2px;
+body.extinfo a {
     color: #0f2f4a;
 }
-
-/* box info (header sinistro) */
-.infoBox,
-.linkBox {
-    background-color: #a5a5a5 !important;
+body.extinfo a:hover {
+    color: #000000;
 }
 
 /* =========================
-   EXTINFO – Comment panel
+   RESET BIANCHI common.css
    ========================= */
 
-body.extinfo .commentPanel {
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
-    padding: 10px;
+body.extinfo table,
+body.extinfo td,
+body.extinfo th,
+body.extinfo div {
+    background-color: transparent;
 }
 
-body.extinfo .commentTitle {
-    background-color: #8f8f8f;
+/* =========================
+   INFO BOX (header sinistro)
+   ========================= */
+
+body.extinfo .infoBox,
+body.extinfo .linkBox {
+    background-color: #a5a5a5 !important;
+    border: 1px solid #6f6f6f;
+}
+
+/* titolo info box */
+body.extinfo .infoBoxTitle {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+/* =========================
+   TITOLI GENERICI (azzurrino)
+   ========================= */
+
+body.extinfo .dataTitle,
+body.extinfo .commentTitle,
+body.extinfo .downtimeTitle,
+body.extinfo .commandTitle {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+/* =========================
+   PROCESS INFO (type=0)
+   ========================= */
+
+body.extinfo td.stateInfoTable1,
+body.extinfo td.stateInfoTable2,
+body.extinfo td.commandPanel {
+    background-color: #a5a5a5 !important;
+}
+
+body.extinfo td.dataVar,
+body.extinfo td.dataVal {
+    background-color: #a5a5a5 !important;
     color: #1f1f1f;
+    padding: 4px 6px;
+}
+
+/* =========================================================
+   EXTINFO – SERVICE COMMENTS (type=3) FIX LAYOUT
+   ========================================================= */
+
+/* contenitore tabella */
+body.extinfo table.comment {
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* celle comuni */
+body.extinfo table.comment td {
+    vertical-align: top;
+    line-height: 1.4;
+}
+
+/* header "spezzati" (Host Name / Service / Entry Time ecc.) */
+body.extinfo table.comment th.comment {
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* righe dati */
+body.extinfo table.comment td.comment,
+body.extinfo table.comment td.commentOdd,
+body.extinfo table.comment td.commentEven {
+    background-color: #b0b0b0;
+}
+
+/* riga COMMENTO: più spazio e leggibilità */
+body.extinfo table.comment td[colspan] {
+    background-color: #b8b8b8;
+    padding: 10px 12px;
+    font-size: 0.95em;
+}
+
+/* ACTIONS (icona cestino) */
+body.extinfo table.comment td:last-child {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* separazione visiva tra un commento e l’altro */
+body.extinfo table.comment tr.commentOdd:not(:first-child),
+body.extinfo table.comment tr.commentEven:not(:first-child) {
+    border-top: 4px solid #8a8a8a;
+}
+
+
+/* =========================
+   DOWNTIME (type=6)
+   ========================= */
+
+body.extinfo .downtimeNav {
+    background-color: #a5a5a5;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+body.extinfo table.downtime {
+    background-color: #a5a5a5;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+body.extinfo th.downtime {
+    background: #7f96ad;
+    color: #ffffff;
     font-weight: 600;
     padding: 6px 8px;
-    border-bottom: 1px solid #6f6f6f;
 }
 
-/* Tabelle commenti */
-body.extinfo table.comment {
-    background-color: #a5a5a5;
-    border-collapse: collapse;
-}
-
-body.extinfo .commentOdd,
-body.extinfo .commentEven,
-body.extinfo td.commentOdd,
-body.extinfo td.commentEven {
+body.extinfo td.downtime,
+body.extinfo td.downtimeOdd,
+body.extinfo td.downtimeEven {
     background-color: #b0b0b0;
     color: #1f1f1f;
+    padding: 6px 8px;
 }
 
-/* Header tabella commenti */
-body.extinfo th.comment {
-    background-color: #8f8f8f;
-    color: #1f1f1f;
-    font-weight: 600;
+/* =========================
+   ICONS
+   ========================= */
+
+body.extinfo img {
+    opacity: 0.85;
+}
+body.extinfo img:hover {
+    opacity: 1;
+}
+
+/* =========================================================
+   EXTINFO – SERVICE COMMENTS (type=3) FIX LAYOUT
+   ========================================================= */
+
+/* contenitore tabella */
+body.extinfo table.comment {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* celle comuni */
+body.extinfo table.comment td {
+    vertical-align: top;
+    line-height: 1.4;
+}
+
+/* header "spezzati" (Host Name / Service / Entry Time ecc.) */
+body.extinfo table.comment th.comment {
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* righe dati */
+body.extinfo table.comment td.comment,
+body.extinfo table.comment td.commentOdd,
+body.extinfo table.comment td.commentEven {
+    background-color: #b0b0b0;
+}
+
+/* riga COMMENTO: più spazio e leggibilità */
+body.extinfo table.comment td[colspan] {
+    background-color: #b8b8b8;
+    padding: 10px 12px;
+    font-size: 0.95em;
+}
+
+/* ACTIONS (icona cestino) */
+body.extinfo table.comment td:last-child {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* separazione visiva tra un commento e l’altro */
+body.extinfo table.comment tr.commentOdd:not(:first-child),
+body.extinfo table.comment tr.commentEven:not(:first-child) {
+    border-top: 4px solid #8a8a8a;
 }
 
 
-body.extinfo td.comment,
-body.extinfo td.comment a,
-body.extinfo a.comment {
-    background-color: #b0b0b0 !important;
-    color: #1f1f1f !important;
+
+body.extinfo .stateInfoPanel > .dataTitle {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* TABELLE interne Host State */
+body.extinfo .stateInfoPanel table {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+body.extinfo .commandPanel .commandTitle {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+body.extinfo table.command {
+    width: 100%;
+    box-sizing: border-box;
 }

@@ -13,16 +13,26 @@
 .infoMessage        { font-size:  8pt; background-color: #efefaa; border: 1px solid #777777; margin: 40 20% 0 20%; padding: 5 5 5 5; }
 .optBox             { font-size:  9pt; padding: 5 5 5 5; }
 
-/* === minimal dark background === */
-body.cmd {
-	background-color: #8a8a8a;
-}
-body.cmd a {
-	color: #0f2f4a;
+/* =========================================================
+   CMD CGI – FIX DEFINITIVO SFONDO BIANCO
+   ========================================================= */
+
+/* copri sia cmd che fallback */
+body.cmd,
+body.extinfo,
+body {
+    background-color: #8a8a8a;
 }
 
-body.cmd a:hover {
-	color: #000000;
+/* link */
+body.cmd a,
+body.extinfo a {
+    color: #0f2f4a;
+}
+
+body.cmd a:hover,
+body.extinfo a:hover {
+    color: #000000;
 }
 
 body.cmd .infoMessage {

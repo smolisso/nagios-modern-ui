@@ -88,106 +88,20 @@ a.pagenumber:hover { background-color: #EFEFEF;text-decoration:none;}
 #inner_numbers { clear:right;}
 #pagelimit,#bottom_page_numbers { font-size:8pt;}
 
+/* =========================================================
+   BASE
+   ========================================================= */
 
-/* === minimal dark background === */
-body.status {
-	background-color: #7a7a7a;
-}
-body.status a {
-	color: #0f2f4a;
-}
-
-body.status a:hover {
-	color: #000000;
-}
-
-/* sfondo nomi grigio piu scuro */
-td.statusEven,
-td.statusOdd {
-    background-color: #a5a5a5 !important;
-}
-
-/* Font moderno, leggibile, enterprise */
-body {
-    font-family:
-        system-ui,
-        -apple-system,
-        "Segoe UI",
-        Roboto,
-        Ubuntu,
-        Cantarell,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-}
-
-
-
-/* Bold SOLO sui nomi host (extinfo type=1) */
-table.status a[href*="extinfo.cgi?type=1"] {
-    font-weight: 600;
-    letter-spacing: 0.2px;
-}
-
-/* === STATUS COLORS - MODERN PALETTE === */
-
-/* OK */
-td.statusOK,
-td.statusOK a {
-    background-color: #8fd19e !important;
-    color: #1f3d2b !important;
-}
-
-/* WARNING */
-td.statusWARNING,
-td.statusWARNING a, 
-td.statusBGWARNING {
-    background-color: #efda3cff !important;
-    color: #3b2f00 !important;
-}
-
-/* CRITICAL – rosso meno aggressivo */
-td.statusCRITICAL,
-td.statusCRITICAL a,
-td.statusBGCRITICAL {
-    background-color: #ce6e6eff !important;
-    color: #ffffff !important;
-}
-
-/* UNKNOWN */
-td.statusUNKNOWN,
-td.statusUNKNOWN a,
-td.statusBGUNKNOWN {
-    background-color: #b59bb5ff !important;
-    color: #2f2f2f !important;
-}
-
-/* PENDING */
-td.statusPENDING,
-td.statusPENDING a {
-    background-color: #6fcf97 !important;
-    color: #1f3d2b !important;
-}
-
-td.statusOK,
-td.statusWARNING,
-td.statusCRITICAL,
-td.statusUNKNOWN,
-td.statusPENDING {
-    border-left: 4px solid rgba(0,0,0,0.15);
-}
-/* === background pagina === */
 body.status {
     background-color: #7a7a7a;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
-/* link */
 body.status a {
     color: #0f2f4a;
 }
 body.status a:hover {
-    color: #000;
+    color: #000000;
 }
 
 /* righe alternate */
@@ -196,9 +110,24 @@ td.statusOdd {
     background-color: #a5a5a5 !important;
 }
 
-/* =========================
-   HOST STATUS COLORS
-   ========================= */
+
+/* =========================================================
+   TITOLI – AZZURRO SOLO QUI
+   ========================================================= */
+
+.statusTitle,
+td.statusTitle {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 4px;
+}
+
+
+/* =========================================================
+   HOST STATUS
+   ========================================================= */
 
 /* UP */
 td.statusHOSTUP {
@@ -208,7 +137,7 @@ td.statusHOSTUP {
 
 /* DOWN */
 td.statusHOSTDOWN {
-    background-color: #e06666 !important;
+    background-color: #ce6e6e !important;
     color: #ffffff !important;
 }
 
@@ -224,7 +153,6 @@ td.statusHOSTPENDING {
     color: #3b2f00 !important;
 }
 
-/* bordo elegante */
 td.statusHOSTUP,
 td.statusHOSTDOWN,
 td.statusHOSTUNREACHABLE,
@@ -232,11 +160,169 @@ td.statusHOSTPENDING {
     border-left: 4px solid rgba(0,0,0,0.15);
 }
 
-/* solo nomi host in bold */
-td.statusHOSTUP a,
-td.statusHOSTDOWN a,
-td.statusHOSTUNREACHABLE a,
-td.statusHOSTPENDING a {
+
+/* =========================================================
+   SERVICE STATUS – RIGHE (DETAIL / SUMMARY)
+   ========================================================= */
+
+/* OK */
+tr.statusOK td,
+td.statusOK,
+td.statusBGOK {
+    background-color: #8fd19e !important;
+    color: #1f3d2b !important;
+}
+
+/* WARNING */
+tr.statusWARNING td,
+td.statusWARNING,
+td.statusBGWARNING {
+    background-color: #efda3c !important;
+    color: #3b2f00 !important;
+}
+
+/* CRITICAL */
+tr.statusCRITICAL td,
+td.statusCRITICAL,
+td.statusBGCRITICAL {
+    background-color: #ce6e6e !important;
+    color: #ffffff !important;
+}
+
+/* UNKNOWN */
+tr.statusUNKNOWN td,
+td.statusUNKNOWN,
+td.statusBGUNKNOWN {
+    background-color: #b59bb5 !important;
+    color: #2f2f2f !important;
+}
+
+/* PENDING */
+tr.statusPENDING td,
+td.statusPENDING {
+    background-color: #909fc1ff !important;
+    color: #1f3d2b !important;
+}
+
+/* bordo elegante */
+tr.statusOK td,
+tr.statusWARNING td,
+tr.statusCRITICAL td,
+tr.statusUNKNOWN td,
+tr.statusPENDING td {
+    border-left: 4px solid rgba(0,0,0,0.15);
+}
+
+/* link coerenti */
+tr.statusOK a,
+tr.statusWARNING a,
+tr.statusCRITICAL a,
+tr.statusUNKNOWN a {
+    color: inherit !important;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   MINI STATUS (OVERVIEW + GRID)
+   ========================================================= */
+
+.miniStatusOK,
+.miniStatusOK a {
+    background-color: #8fd19e !important;
+    color: #1f3d2b !important;
+}
+
+.miniStatusWARNING,
+.miniStatusWARNING a {
+    background-color: #efda3c !important;
+    color: #3b2f00 !important;
+}
+
+.miniStatusCRITICAL,
+.miniStatusCRITICAL a {
+    background-color: #ce6e6e !important;
+    color: #ffffff !important;
+}
+
+.miniStatusUNKNOWN,
+.miniStatusUNKNOWN a {
+    background-color: #b59bb5 !important;
+    color: #2f2f2f !important;
+}
+
+.miniStatusPENDING,
+.miniStatusPENDING a {
+    background-color: #f2c94c !important;
+    color: #3b2f00 !important;
+}
+
+.miniStatusOK,
+.miniStatusWARNING,
+.miniStatusCRITICAL,
+.miniStatusUNKNOWN,
+.miniStatusPENDING {
+    border-left: 4px solid rgba(0,0,0,0.15);
+    padding-left: 6px;
+}
+
+
+/* =========================================================
+   STATUS GRID
+   ========================================================= */
+
+table.statusGrid {
+    background-color: #a5a5a5;
+    border-collapse: separate;
+    border-spacing: 6px;
+}
+
+table.statusGrid td {
+    background-color: #9e9e9e;
+    border-radius: 4px;
+    padding: 4px 6px;
+}
+
+table.statusGrid td.statusOK {
+    background-color: #8fd19e !important;
+}
+
+table.statusGrid td.statusWARNING {
+    background-color: #efda3c !important;
+}
+
+table.statusGrid td.statusCRITICAL {
+    background-color: #ce6e6e !important;
+}
+
+table.statusGrid td.statusUNKNOWN {
+    background-color: #b59bb5 !important;
+}
+
+table.statusGrid td.statusPENDING {
+    background-color: #f2c94c !important;
+}
+
+table.statusGrid td.hostName {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #0f2f4a;
+}
+
+table.statusGrid td img {
+    opacity: 0.85;
+}
+table.statusGrid td img:hover {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOST NAME EMPHASIS
+   ========================================================= */
+
+table.status a[href*="status.cgi?host="],
+table.status a[href*="extinfo.cgi?type=1"] {
     font-weight: 600;
     letter-spacing: 0.2px;
 }

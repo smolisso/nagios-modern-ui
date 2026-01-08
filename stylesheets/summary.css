@@ -1,0 +1,130 @@
+/* exfoliation: a nagios makeover                                          */
+/* Copyright 2010 Matthew Wall, all rights reserved                        */
+/*                                                                         */
+/* Permission to use, copy, modify, and distribute this software for any   */
+/* purpose with or without fee is hereby granted, provided that the above  */
+/* copyright notice and this permission notice appear in all copies.       */
+
+.summary { }
+
+/* override to match filter table style */
+.optBoxItem         { font-size: 8pt; font-weight: bold; }
+.optBoxValue        { font-size: 8pt; }
+
+/* override to match query info style */
+.dataSubTitle { font-size: 8pt; text-align: center; font-weight: normal; }
+
+/* override so we get a bit of whitespace */
+table.data { padding-top: 15; }
+
+.reportDataOdd  { font-size: 9pt; background-color: #e7e7e7; padding: 0 4 0 4; }
+.reportDataEven { font-size: 9pt; background-color: #f4f2f2; padding: 0 4 0 4; }
+
+.hostUP          { font-size: 9pt; background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
+.hostDOWN        { font-size: 9pt; background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
+.hostUNREACHABLE { font-size: 9pt; background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
+
+.serviceOK       { font-size: 9pt; background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
+.serviceWARNING  { font-size: 9pt; background-color: #ffff00; border: 1px solid #777777; padding: 0 4 0 4; }
+.serviceUNKNOWN  { font-size: 9pt; background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
+.serviceCRITICAL { font-size: 9pt; background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
+
+
+/* =========================================================
+   Nagios Modern UI – summary.cgi
+   ========================================================= */
+
+/* =========================================================
+   NAGIOS MODERN UI – summary.cgi (FINAL)
+   ========================================================= */
+
+/* === BASE === */
+body.summary {
+    background-color: #8a8a8a;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
+}
+
+body.summary a {
+    color: #0f2f4a;
+}
+body.summary a:hover {
+    color: #000000;
+}
+
+/* =========================================================
+   RESET WHITE BACKGROUNDS (common.css)
+   ========================================================= */
+
+body.summary table,
+body.summary td,
+body.summary th,
+body.summary div {
+    background-color: transparent;
+}
+
+/* =========================================================
+   INFO BOX (HEADER)
+   ========================================================= */
+
+body.summary .infoBox {
+    background-color: #a5a5a5 !important;
+    border: 1px solid #6f6f6f;
+}
+
+/* =========================================================
+   TITLES – AZZURRO COERENTE CON STATUS / HISTORY / AVAIL
+   ========================================================= */
+
+body.summary .infoBoxTitle,
+body.summary .dateSelectTitle {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+/* =========================================================
+   REPORT SELECTION / FORMS
+   ========================================================= */
+
+body.summary .reportSelectSubTitle,
+body.summary .reportSelectItem,
+body.summary .dateSelectItem,
+body.summary .optBoxItem {
+    background-color: #a5a5a5;
+    color: #1f1f1f;
+    padding: 6px 8px;
+}
+
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+
+body.summary select,
+body.summary input[type="text"],
+body.summary input[type="submit"] {
+    background-color: #9e9e9e;
+    border: 1px solid #6f6f6f;
+    color: #1f1f1f;
+    padding: 4px 6px;
+    border-radius: 4px;
+}
+
+/* submit button */
+body.summary input[type="submit"] {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+body.summary input[type="submit"]:hover {
+    background-color: #b0b0b0;
+}
+
+/* =========================================================
+   VISUAL SPACING (ARIA & LEGGIBILITÀ)
+   ========================================================= */
+
+body.summary table {
+    border-spacing: 4px;
+}
