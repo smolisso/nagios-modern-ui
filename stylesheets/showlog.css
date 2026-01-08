@@ -36,19 +36,7 @@ body.showlog a:hover {
     color: #000000;
 }
 
-/* =========================================================
-   SHOWLOG – header info box
-   ========================================================= */
 
-body.showlog .infoBox {
-    background-color: #a5a5a5;
-    border: 1px solid #7f7f7f;
-}
-
-body.showlog .infoBoxTitle {
-    font-weight: 600;
-    letter-spacing: 0.3px;
-}
 
 /* =========================================================
    SHOWLOG – time separators
@@ -114,16 +102,58 @@ body.showlog img[alt*="Informational"] {
     border-radius: 3px;
 }
 
+
+
 /* =========================================================
-   SHOWLOG – navigation
-   ========================================================= */
+   NAVIGATION BOX
+   ========================================================= 
 
 body.showlog .navBox {
     background-color: #a5a5a5;
-    border: 1px solid #7f7f7f;
-    padding: 4px;
+    border: 1px solid #6f6f6f;
 }
 
+body.showlog .navBoxItem,
+body.showlog .navBoxDate {
+    color: #1f1f1f;
+} */
+
+
+
+/* =========================================================
+   SHOWLOG – InfoBox (header top-left)
+   Coerenza totale con TUTTE le CGI Nagios
+   ========================================================= */
+
+/* contenitore box */
+body.showlog table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.showlog td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.showlog .infoBoxTitle,
+body.showlog .dataTitle,
 body.showlog .navBoxTitle {
+    background: #7f96ad;
+    color: #ffffff;
     font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+
+/* testo interno */
+body.showlog .infoBox,
+body.showlog .infoBox a,
+body.showlog .infoBox i {
+    color: #1f1f1f;
 }

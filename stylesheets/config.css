@@ -53,25 +53,6 @@ body.config div {
 }
 
 /* =========================
-   INFO BOX (HEADER)
-   ========================= */
-
-body.config .infoBox {
-    background-color: #a5a5a5 !important;
-    border: 1px solid #6f6f6f;
-    border-radius: 4px;
-}
-
-/* titolo principale */
-body.config .infoBoxTitle {
-    background: #7f96ad;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 8px 12px;
-    border-radius: 4px;
-}
-
-/* =========================
    PAGE TITLE
    ========================= */
 
@@ -124,4 +105,40 @@ body.config input[type="submit"] {
 
 body.config input[type="submit"]:hover {
     background-color: #b0b0b0;
+}
+
+/* =========================================================
+   CONFIG – InfoBox (header top-left)
+   Coerenza totale con TUTTE le CGI Nagios
+   ========================================================= */
+
+/* contenitore box */
+body.config table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.config td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.config .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.config .infoBox,
+body.config .infoBox a,
+body.config .infoBox i {
+    color: #1f1f1f;
 }

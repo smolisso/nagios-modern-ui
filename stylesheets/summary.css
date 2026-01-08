@@ -63,15 +63,6 @@ body.summary div {
 }
 
 /* =========================================================
-   INFO BOX (HEADER)
-   ========================================================= */
-
-body.summary .infoBox {
-    background-color: #a5a5a5 !important;
-    border: 1px solid #6f6f6f;
-}
-
-/* =========================================================
    TITLES – AZZURRO COERENTE CON STATUS / HISTORY / AVAIL
    ========================================================= */
 
@@ -127,4 +118,41 @@ body.summary input[type="submit"]:hover {
 
 body.summary table {
     border-spacing: 4px;
+}
+
+
+/* =========================================================
+   SUMMARY – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES / TRENDS / HISTORY
+   ========================================================= */
+
+/* contenitore box */
+body.summary table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.summary td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.summary .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.summary .infoBox,
+body.summary .infoBox a,
+body.summary .infoBox i {
+    color: #1f1f1f;
 }

@@ -1,0 +1,908 @@
+/* exfoliation: a nagios makeover                                          */
+/* version: 0.7                                                            */
+/* Copyright 2010 Matthew Wall, all rights reserved                        */
+/*                                                                         */
+/* Permission to use, copy, modify, and distribute this software for any   */
+/* purpose with or without fee is hereby granted, provided that the above  */
+/* copyright notice and this permission notice appear in all copies.       */
+
+/*   thanks to jacob.laack for nagiosneat           */
+/*   thanks to nagios authors for a solid base      */
+
+/* these are reference colors for the color scheme:
+
+                color    dark    light   border
+           OK:  green    88d066  cce8cc  777777
+      WARNING:  yellow   ffff00  feffc1  777777
+     CRITICAL:  red      f88888  ffdddd  777777
+      PENDING:  grey     acacac  fefefe  777777
+      UNKNOWN:  orange   ffbb55  ffddaa  777777
+  UNREACHABLE:  orange   ffbb55  ffddaa  777777
+INDETERMINATE:  purple           ddccff  777777
+     PROBLEMS:  blue             aaccff  777777
+
+          ACK:  aaaaaa
+       CUSTOM:  778899
+
+    important:  blue     99aacc          777777
+not important:  blue             aaccff  777777
+
+ table header:  d0d0d0
+     odd rows:  e7e7e7
+    even rows:  f4f2f2
+
+   titles: 12pt
+   body: 10pt
+   table headings: 9pt
+   controls: 9pt
+   data in tables: 8pt or 9pt
+*/
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Regular.woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Bold.woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-SemiBold.woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Black.woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-Thin.woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-UltraLight.woff2');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('../fonts/Geist-UltraBlack.woff2');
+    font-weight: 950;
+    font-style: normal;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --primary: #4D89F9;
+  --primary-foreground: #FAFAFA;
+  --secondary-foreground: #D3DAE5;
+  --muted-foreground: #8A92A1;
+  --border: #28303E;
+  --input: #0D1014;
+  --radius: 0.3rem;
+
+  --info-msg-text: #89BDF1;
+  --info-msg-border: #1866B6;
+  --info-msg-bg: #041220;
+
+  --success-msg-text: #40DE7A;
+  --success-msg-border: #147538;
+  --success-msg-bg: #04160A;
+
+  --warning-msg-text: #FFF948;
+  --warning-msg-border: #706C00;
+  --warning-msg-bg: #191900;
+
+  --error-msg-text: #F9B4B5;
+  --error-msg-border: #710B09;
+  --error-msg-bg: #1C0202;
+}
+
+.light {
+  --background: #FFFFFF;
+  --foreground: #000000;
+  --primary: #4D89F9;
+  --secondary-foreground: #1A1A1A;
+  --muted-foreground: #3D3D3D;
+  --border: #D6D6D6;
+  --input: #FCFCFC;
+
+  --info-msg-text: #033281;
+  --info-msg-border: #0860F7;
+  --info-msg-bg: #DCE8FE;
+
+  --success-msg-text: #005C2E;
+  --success-msg-border: #47B880;
+  --success-msg-bg: #DBFFED;
+
+  --warning-msg-text: #5C5900;
+  --warning-msg-border: #E0D900;
+  --warning-msg-bg: #FFFEE5;
+
+  --error-msg-text: #710B09;
+  --error-msg-border: #DB2424;
+  --error-msg-bg: #FCD9D9;
+}
+
+#side {
+  border: none;
+  height: 100vh;
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--background);
+}
+
+#main {
+  height: 100vh;
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+body {
+  margin: 0.8em 0.8em 2em 0.8em;
+  font-family: Geist;
+  font-weight: normal;
+  font-size: 10pt;
+}
+
+table {
+  border: none;
+  margin: 0;
+}
+
+th,
+td {
+  border: none;
+  padding: 0 2px 0 2px;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
+
+a img {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #40529b;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--primary);
+}
+
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  margin: 0;
+}
+
+.navbarlogo {
+  margin-bottom: 10px;
+}
+
+.nagioslogo {
+  background-color: var(--foreground);
+}
+
+.nlogo {
+  mask: url(../images/logos/nagios-n-logo.svg) no-repeat center / contain;
+  height: 32px;
+}
+
+.fulllogo {
+  mask: url(../images/logos/horizontal-nagios-full-logo.svg) no-repeat center / contain;
+  height: 39px;
+  width: 140px;
+}
+
+div.navsection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+div.navsectiontitle {
+  font-size: 9pt;
+  font-weight: bold;
+  border-bottom: 1px var(--border) solid;
+  padding-bottom: 6px;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+ul.navsectionlinks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+ul.navsectionlinks li {
+  font-weight: normal;
+  font-size: 9pt;
+  text-decoration: none;
+  color: var(--foreground)
+}
+
+ul.navsectionlinks li a {
+  font-weight: normal;
+  font-size: 9pt;
+  text-decoration: none;
+  color: var(--foreground)
+}
+
+ul.navsectionlinks li a:hover {
+  color: var(--primary);
+}
+
+ul.navsectionlinks li ul {
+  margin: 0px;
+  padding-top: 4px;
+  padding-left: 15px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+ul.navsectionlinks li ul li a {
+  background: none;
+  padding: 0;
+  font-weight: normal;
+  color: var(--secondary-foreground)
+}
+
+ul.navsectionlinks li ul li a:hover {
+  background: none;
+}
+
+.navbarsearch {
+  margin-top: 4px;
+}
+
+.navbarsearch form {
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 9pt;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navbarsearch input {
+  font-size: 9pt;
+  background-color: var(--input);
+  border: 1px var(--border) solid;
+  border-radius: var(--radius);
+  padding: 6px;
+  color: var(--foreground);
+  outline: none;
+}
+
+
+#splashpage {
+  text-align: center;
+}
+
+#maincopy {
+  margin: 0 0 15px 0;
+}
+
+#currentversioninfo {
+  display: flex;
+  font-size: small;
+  color: var(--secondary-foreground);
+  align-items: center;
+  border-bottom: 1px var(--border) solid;
+  padding: 16px;
+  gap: 16px;
+  margin: -0.8em -0.7em 0 -0.8em;
+  justify-content: space-between;
+}
+
+#currentversioninfo > div {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#currentversioninfo .checkforupdates {
+  background-color: var(--background);
+  color: var(--foreground);
+  border: 1px var(--border) solid;
+  border-radius: 0.5rem;
+  padding: 6px 10px 6px 10px;
+  align-self: flex-end;
+}
+
+#currentversioninfo .checkforupdates:hover {
+  color: var(--foreground);
+  background-color: var(--input);
+  text-decoration: none;
+}
+
+#updateversioninfo {
+  margin: 15px auto 0 auto;
+  width: 400px;
+}
+
+#updateversioninfo div.submessage {
+  clear: left;
+}
+
+.updatechecksdisabled {
+  background-color: var(--error-msg-bg);
+  border: 1px solid var(--error-msg-border);
+  color: var(--error-msg-text);
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+.updatechecksdisabled div.warningmessage {
+  font-weight: bold;
+}
+
+.updateavailable {
+  background-color: var(--info-msg-bg);
+  border: 1px solid var(--info-msg-border);
+  color: var(--info-msg-text);
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+.updateavailable div.updatemessage {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.dot-enabled {
+  color: #00EE5F;
+}
+
+.dot-disabled {
+  color: red;
+}
+
+#mainsplash {
+  display: grid;
+  max-width: 1400px;
+  margin: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 100px;
+  padding: 120px 60px 120px 60px;
+}
+
+@media (width <= 1200px) {
+  #mainsplash {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 60px;
+  }
+}
+
+#mainsplash img {
+  max-width: 100%;
+  margin: 0;
+}
+
+#splashtext {
+  text-align: left;
+  color: var(--secondary-foreground);
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+}
+
+#splashtexttitle {
+  font-size: 2.25rem; /* 36px */
+  line-height: 2.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+#splashbuttons {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+#splashlearnmore {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  padding: 16px;
+  border-radius: var(--radius);
+}
+
+#splashlearnmore:hover {
+  background-color: var(--primary);
+  text-decoration: none;
+}
+
+#splashnewsletter {
+  text-decoration: underline;
+  color: var(--secondary-foreground);
+}
+
+#splashnewsletter:hover {
+  color: var(--primary);
+}
+
+#splashpage #mainfooter {
+  clear: both;
+  font-size: 8pt;
+  padding-top: 35px;
+  margin: auto;
+  max-width: 800px;
+  color: var(--muted-foreground);
+}
+
+#splashpage #mainfooter .disclaimer {
+  margin: auto;
+}
+
+#splashpage #mainfooter .logos {
+  margin: 15px 0 0 0;
+}
+
+table.infoBox {
+  width: 100%;
+}
+
+td.infoBox {
+  font-size: 8pt;
+  padding: 0 0 1em 0;
+  white-space: nowrap;
+}
+
+div.infoBoxTitle {
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+div.infoBoxBadProcStatus {
+  font-size: 8pt;
+  font-weight: bold;
+  color: red;
+}
+
+.linkBox {
+  font-size: 8pt;
+  padding: 1px;
+}
+
+table.linkBox td {
+  white-space: nowrap;
+}
+
+.filter {
+  font-size: 8pt;
+  padding: 1px;
+}
+
+.filterTitle {
+  font-size: 9pt;
+  font-weight: bold;
+}
+
+.filterName {
+  font-size: 8pt;
+  text-align: right;
+  font-weight: bold;
+}
+
+.filterValue {
+  font-size: 8pt;
+}
+
+.errorDescription {
+  font-size: 10pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.errorMessage {
+  font-size: 10pt;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+}
+
+.warningMessage {
+  font-size: 10pt;
+  text-align: center;
+  font-weight: bold;
+  color: red;
+}
+
+.statusTitle {
+  text-align: center;
+  font-weight: bold;
+  font-size: 12pt;
+  white-space: nowrap;
+}
+
+.statusSort {
+  font-size: 8pt;
+}
+
+table.data {
+  padding: 0;
+}
+
+th.data {
+  font-size: 9pt;
+  text-align: left;
+  padding: 0 3px 0 3px;
+  border-bottom: 1px solid #777777;
+  color: #333333;
+}
+
+.dataOdd {
+  font-size: 8pt;
+  background-color: #e7e7e7;
+  padding: 0px 4px 0px 4px;
+}
+
+.dataEven {
+  font-size: 8pt;
+  background-color: #f4f2f2;
+  padding: 0px 4px 0px 4px;
+}
+
+.dataTitle {
+  font-size: 12pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dataSubTitle {
+  font-size: 10pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.optBox {
+  font-size: 9pt;
+  white-space: nowrap;
+  padding: 2px 0px 0px 0px;
+}
+
+.optBoxTitle {
+  font-size: 10pt;
+  font-weight: bold;
+  text-align: center;
+}
+
+.optBoxRequiredItem {
+  font-size: 9pt;
+  text-align: right;
+  padding: 0px 5px 0px 5px;
+  color: red;
+}
+
+.optBoxItem {
+  font-size: 9pt;
+  text-align: right;
+  padding: 0px 5px 0px 5px;
+}
+
+.optBoxValue {
+  font-size: 9pt;
+}
+
+.optionBoxTitle {
+  font-size: 10pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.optionBox {
+  font-size: 10pt;
+  padding: 2px;
+}
+
+.navBoxTitle {
+  font-size: 10pt;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.navBoxItem {
+  font-size: 8pt;
+}
+
+.navBoxDate {
+  font-size: 8pt;
+  white-space: nowrap;
+}
+
+.navBoxFile {
+  font-size: 8pt;
+  text-align: center;
+}
+
+.helpfulHint {
+  font-size: 8pt;
+  font-style: italic;
+  text-align: center;
+}
+
+.logEntries {
+  font-size: 8pt;
+  white-space: nowrap;
+}
+
+.dateTimeBreak {
+  font-size: 9pt;
+  font-weight: bold;
+}
+
+.reportRange {
+  font-size: 10pt;
+  white-space: nowrap;
+}
+
+.reportDuration {
+  font-size: 8pt;
+  white-space: nowrap;
+}
+
+.reportTime {
+  font-size: 8pt;
+  white-space: nowrap;
+  text-align: right;
+  font-style: italic;
+}
+
+.reportSelectTitle {
+  font-size: 12pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.reportSelectSubTitle {
+  font-size: 9pt;
+  text-align: right;
+}
+
+.reportSelectItem {
+  font-size: 9pt;
+}
+
+.reportSelectTip {
+  font-size: 8pt;
+  font-style: italic;
+}
+
+.dateSelectTitle {
+  font-size: 12pt;
+  text-align: center;
+  font-weight: bold;
+}
+
+.dateSelectSubTitle {
+  font-size: 9pt;
+  text-align: right;
+}
+
+.dateSelectItem {
+  font-size: 9pt;
+}
+
+.popupText {
+  font-size: 8pt;
+  background-color: #eeeeaa;
+  border: 1px solid #777777;
+  padding: 10px 10px 10px 10px;
+}
+
+.hostImportantProblem {
+  font-size: 8pt;
+  background-color: #88aadd;
+  border: 1px solid #aaaaaa;
+  padding: 0px 5px 0px 5px;
+}
+
+.hostUnimportantProblem {
+  font-size: 8pt;
+  background-color: #aaccff;
+  border: 1px solid #888888;
+  padding: 0px 5px 0px 5px;
+}
+
+.serviceImportantProblem {
+  font-size: 8pt;
+  background-color: #88aadd;
+  border: 1px solid #aaaaaa;
+  padding: 0px 5px 0px 5px;
+}
+
+.serviceUnimportantProblem {
+  font-size: 8pt;
+  background-color: #aaccff;
+  border: 1px solid #888888;
+  padding: 0px 5px 0px 5px;
+}
+
+.outageImportantProblem {
+  font-size: 8pt;
+  background-color: #88aadd;
+  border: 1px solid #aaaaaa;
+  padding: 0px 5px 0px 5px;
+}
+
+.outageUnimportantProblem {
+  font-size: 8pt;
+  background-color: #aaccff;
+  border: 1px solid #888888;
+  padding: 0px 5px 0px 5px;
+}
+
+
+/* Some nagios configurations have side.html rather than side.php and define */
+/* a slightly different set of nav elements. */
+.NavBarTitle {
+  font-size: 9pt;
+  font-weight: bold;
+  margin: 5px 0 10px 0;
+  padding: 2px;
+  background-color: #efefef;
+  border: 1px solid #dddddd;
+}
+
+.NavBarItem {
+  font-size: 9pt;
+  font-weight: bold;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0 0 0 0;
+}
+
+.NavBarSearchItem {
+  font-size: 9pt;
+}
+
+
+/* =========================================================
+   CLX MONITORING PLATFORM – HOME
+   ========================================================= */
+
+body.clx-home {
+    background-color: #8a8a8a;
+    font-family:
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        Ubuntu,
+        Cantarell,
+        Arial,
+        sans-serif;
+}
+
+/* container */
+.clx-container {
+    width: 760px;
+    margin: 60px auto;
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 6px;
+    padding: 24px;
+}
+
+/* header */
+.clx-header {
+    background: #7f96ad;
+    color: #ffffff;
+    padding: 14px 18px;
+    border-radius: 4px;
+}
+
+.clx-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.clx-subtitle {
+    font-size: 14px;
+    opacity: 0.95;
+}
+
+/* status */
+.clx-status {
+    margin: 18px 0;
+    font-weight: 500;
+    color: #1f1f1f;
+}
+
+/* links */
+.clx-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.clx-links a {
+    background-color: #9e9e9e;
+    border: 1px solid #6f6f6f;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+    color: #0f2f4a;
+    text-decoration: none;
+}
+
+.clx-links a:hover {
+    background-color: #b0b0b0;
+}
+
+/* footer */
+.clx-footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #2f2f2f;
+}
+
+/* =========================================================
+   GLOBAL – BAD PROCESS STATUS (Notifications disabled, etc.)
+   ========================================================= */
+
+body.status .infoBoxBadProcStatus,
+body.tac .infoBoxBadProcStatus,
+body.outages .infoBoxBadProcStatus,
+body.avail .infoBoxBadProcStatus,
+body.cmd .infoBoxBadProcStatus,
+body.trends .infoBoxBadProcStatus,
+body.history .infoBoxBadProcStatus,
+body.histogram .infoBoxBadProcStatus,
+body.notifications .infoBoxBadProcStatus,
+body.summary .infoBoxBadProcStatus,
+body.showlog .infoBoxBadProcStatus,
+body.config .infoBoxBadProcStatus,
+body.extinfo .infoBoxBadProcStatus {
+    color: #8b2f2f;
+    background: rgba(139,47,47,0.08);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+}
+

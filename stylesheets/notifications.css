@@ -60,14 +60,6 @@ body.notifications div {
     background-color: transparent;
 }
 
-/* =========================================================
-   INFO BOX (HEADER)
-   ========================================================= */
-
-body.notifications .infoBox {
-    background-color: #a5a5a5 !important;
-    border: 1px solid #6f6f6f;
-}
 
 /* =========================================================
    TITLES – AZZURRO COERENTE
@@ -85,7 +77,7 @@ body.notifications .navBoxTitle {
 
 /* =========================================================
    NAVIGATION BOX
-   ========================================================= */
+   ========================================================= 
 
 body.notifications .navBox {
     background-color: #a5a5a5;
@@ -95,7 +87,7 @@ body.notifications .navBox {
 body.notifications .navBoxItem,
 body.notifications .navBoxDate {
     color: #1f1f1f;
-}
+} */
 
 /* =========================================================
    OPTIONS BOX (FILTERS)
@@ -170,4 +162,42 @@ body.notifications .errorMessage {
     border-left: 4px solid #7f5a7f;
     margin-top: 12px;
     font-weight: 600;
+}
+
+/* =========================================================
+   NOTIFICATIONS – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES
+   / TRENDS / HISTORY / SUMMARY / HISTOGRAM
+   ========================================================= */
+
+/* contenitore box */
+body.notifications table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+    witdh: 80%
+}
+
+/* cella interna */
+body.notifications td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.notifications .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.notifications .infoBox,
+body.notifications .infoBox a,
+body.notifications .infoBox i {
+    color: #1f1f1f;
 }

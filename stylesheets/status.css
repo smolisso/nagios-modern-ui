@@ -326,3 +326,143 @@ table.status a[href*="extinfo.cgi?type=1"] {
     font-weight: 600;
     letter-spacing: 0.2px;
 }
+
+/* =========================================================
+   CLX – STATUS HEADER (REAL FIX)
+   ========================================================= */
+
+/* tabella header */
+table.headertable {
+    width: 95%;
+    margin: 20px auto;
+    border-spacing: 20px;
+}
+
+/* celle header */
+table.headertable > tbody > tr > td {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 10px;
+    padding: 16px 18px;
+    vertical-align: top;
+}
+
+
+/* ===== TITOLI AZZURRINI ===== */
+
+/* Current Network Status */
+.infoBoxTitle {
+    background: #7f96ad;
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* Host Status Totals */
+div.hostTotals {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Service Status Totals */
+div.serviceTotals {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* ===== CONTATORI ===== */
+
+table.hostTotals td,
+table.serviceTotals td {
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+/* colori più sobri */
+.hostTotalsUP,
+.serviceTotalsOK {
+    background-color: #7fbf7f !important;
+    color: #102010;
+}
+
+.serviceTotalsWARNING {
+    background-color: #d6c85c !important;
+    color: #3b2f00;
+}
+
+.serviceTotalsCRITICAL {
+    background-color: #c87070 !important;
+    color: #ffffff;
+}
+
+.serviceTotalsPROBLEMS {
+    background-color: #9bbce6 !important;
+    color: #0f2f4a;
+}
+
+table.headertable > tbody > tr > td:last-child {
+    display: none !important;
+}
+
+
+/* =========================================================
+   DISPLAY FILTERS – CLX STYLE
+   ========================================================= */
+
+/* contenitore esterno */
+
+body.status table.filter {
+    width: 70%;
+	margin: 10px 0 5px 0;
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+}
+
+/* cella wrapper */
+body.status td.filter {
+    padding: 2px 4px;
+}
+
+/* titolo */
+body.status .filterTitle {
+    background: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 4px 6px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    display: inline-block;
+}
+
+/* righe nome/valore */
+body.status .filterName {
+    font-weight: 600;
+    color: #1f1f1f;
+    padding: 2px 3px;
+    white-space: nowrap;
+	text-align: left;
+}
+
+body.status .filterValue {
+    color: #0f2f4a;
+    padding: 2px 3px;
+}
+
+/* spacing interno */
+body.status table.filter table {
+    border-spacing: 2px;
+}
+

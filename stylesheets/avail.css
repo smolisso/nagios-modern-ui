@@ -49,7 +49,6 @@ body.avail a:hover {
 }
 
 
-body.avail .infoBox,
 body.avail .optBox {
     background-color: #a5a5a5 !important;
     border: 1px solid #6f6f6f;
@@ -59,7 +58,6 @@ body.avail .optBox {
    TITOLI – AZZURRINO COERENTE CON STATUS / TACTICAL
    ========================================================= */
 
-body.avail .infoBoxTitle,
 body.avail .reportSelectTitle {
     background: #7f96ad;
     color: #ffffff;
@@ -98,4 +96,40 @@ body.avail input[type="submit"] {
 body.avail input[type="submit"]:hover {
     background-color: #b0b0b0;
     cursor: pointer;
+}
+
+/* =========================================================
+   AVAIL – InfoBox (header top-left)
+   Coerenza totale con TAC / STATUS
+   ========================================================= */
+
+/* contenitore box */
+body.avail table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.avail td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.avail .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.avail .infoBox,
+body.avail .infoBox a,
+body.avail .infoBox i {
+    color: #1f1f1f;
 }

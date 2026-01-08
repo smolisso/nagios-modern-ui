@@ -37,16 +37,6 @@ body.trends div {
 }
 
 /* =========================================================
-   INFO / OPTION BOX
-   ========================================================= */
-
-body.trends .infoBox,
-body.trends .optBox {
-    background-color: #a5a5a5 !important;
-    border: 1px solid #6f6f6f;
-}
-
-/* =========================================================
    TITOLI – AZZURRINO COERENTE CON STATUS / AVAIL / TAC
    ========================================================= */
 
@@ -92,4 +82,40 @@ body.trends input[type="submit"] {
 body.trends input[type="submit"]:hover {
     background-color: #b0b0b0;
     cursor: pointer;
+}
+
+/* =========================================================
+   TRENDS – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES
+   ========================================================= */
+
+/* contenitore box */
+body.trends table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.trends td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.trends .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.trends .infoBox,
+body.trends .infoBox a,
+body.trends .infoBox i {
+    color: #1f1f1f;
 }

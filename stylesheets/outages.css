@@ -41,19 +41,7 @@ body.outages a:hover {
     color: #000000;
 }
 
-/* =========================================================
-   OUTAGES – header info box
-   ========================================================= */
 
-body.outages .infoBox {
-    background-color: #a5a5a5;
-    border: 1px solid #7f7f7f;
-}
-
-body.outages .infoBoxTitle {
-    font-weight: 600;
-    letter-spacing: 0.3px;
-}
 
 /* =========================================================
    OUTAGES – section title
@@ -112,4 +100,39 @@ body.outages tr.outageCritical {
 body.outages tr.outageWarning {
     background-color: #f2c94c;
     color: #3b2f00;
+}
+/* =========================================================
+   OUTAGES – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO
+   ========================================================= */
+
+/* contenitore box */
+body.outages table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.outages td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.outages .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.outages .infoBox,
+body.outages .infoBox a,
+body.outages .infoBox i {
+    color: #1f1f1f;
 }

@@ -174,3 +174,41 @@ body.tac a {
 body.tac a:hover {
     color: #000000;
 }
+
+/* =========================================================
+   TAC – InfoBox (header top-left)
+   Coerenza con status.cgi
+   ========================================================= */
+
+/* contenitore box */
+body.tac table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.tac td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.tac .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+
+/* testo interno */
+body.tac .infoBox,
+body.tac .infoBox a,
+body.tac .infoBox i {
+    color: #1f1f1f;
+}
+

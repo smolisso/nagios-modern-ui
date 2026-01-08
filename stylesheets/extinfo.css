@@ -116,24 +116,6 @@ body.extinfo div {
     background-color: transparent;
 }
 
-/* =========================
-   INFO BOX (header sinistro)
-   ========================= */
-
-body.extinfo .infoBox,
-body.extinfo .linkBox {
-    background-color: #a5a5a5 !important;
-    border: 1px solid #6f6f6f;
-}
-
-/* titolo info box */
-body.extinfo .infoBoxTitle {
-    background: #7f96ad;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 8px 12px;
-    border-radius: 4px;
-}
 
 /* =========================
    TITOLI GENERICI (azzurrino)
@@ -290,7 +272,7 @@ body.extinfo table.comment td.commentEven {
 
 /* riga COMMENTO: più spazio e leggibilità */
 body.extinfo table.comment td[colspan] {
-    background-color: #b8b8b8;
+    background-color: #6c6565ff;
     padding: 10px 12px;
     font-size: 0.95em;
 }
@@ -311,12 +293,13 @@ body.extinfo table.comment tr.commentEven:not(:first-child) {
 
 body.extinfo .stateInfoPanel > .dataTitle {
     width: 100%;
+    text-align: center;
+    background: #8a8a8a;
     box-sizing: border-box;
 }
 
 /* TABELLE interne Host State */
 body.extinfo .stateInfoPanel table {
-    width: 100%;
     box-sizing: border-box;
 }
 
@@ -331,3 +314,300 @@ body.extinfo table.command {
     width: 100%;
     box-sizing: border-box;
 }
+
+/* =========================================================
+   EXTINFO – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL
+   ========================================================= */
+
+/* contenitore box */
+body.extinfo table.infoBox {
+    width: 80%;
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+
+body.extinfo table.linkBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.extinfo td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+
+/* titolo box */
+body.extinfo .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.extinfo .infoBox,
+body.extinfo .infoBox a,
+body.extinfo .infoBox i {
+    color: #1f1f1f;
+}
+
+
+/* =========================================================
+   EXTINFO – Host / Service Commands (layout)
+   ========================================================= */
+
+body.extinfo table.command img {
+    display: none;
+}
+
+/* contenitore lista */
+body.extinfo table.command {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+/* righe comando (command + data) */
+body.extinfo tr.command,
+body.extinfo tr.data {
+    display: block;
+    padding: 4px 8px;
+    margin: 4px 0;
+    border-radius: 6px;
+    border: 1px solid #6f6f6f;
+    background-color: #94badaff;
+}
+
+/* hover */
+body.extinfo tr.command:hover,
+body.extinfo tr.data:hover {
+    background-color: #d5d4d4ff;
+}
+
+/* link */
+body.extinfo td.command a {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+
+    color: #1f1f1f;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1.3;
+}
+
+/* =========================================================
+   EXTINFO – Command Icons
+   ========================================================= */
+
+/* default */
+body.extinfo tr.command td.command a::before,
+body.extinfo tr.data td.command a::before {
+    /* content: "▶";*/
+    display: inline-block;
+    width: 1.2em;
+    margin-right: 6px;
+    font-size: 1.1em;
+    opacity: 0.75;
+}
+
+/* locate on map */
+body.extinfo a[href*="statusmap.cgi"]::before {
+    content: "⚲";
+}
+
+/* reschedule / schedule */
+body.extinfo a[href*="cmd_typ=96"]::before,
+body.extinfo a[href*="cmd_typ=17"]::before {
+    content: "⏱";
+
+}
+
+/* passive checks */
+body.extinfo a[href*="cmd_typ=87"]::before {
+    content: "▶";
+}
+
+/* downtime */
+body.extinfo a[href*="cmd_typ=55"]::before,
+body.extinfo a[href*="cmd_typ=86"]::before {
+    content: "⚒";
+}
+
+/* notifications */
+body.extinfo a[href*="cmd_typ=25"]::before,
+body.extinfo a[href*="cmd_typ=28"]::before,
+body.extinfo a[href*="cmd_typ=29"]::before {
+    content: "✉";
+}
+
+/* enable */
+body.extinfo a[href*="cmd_typ=15"]::before {
+    content: "✔";
+}
+
+/* disable / stop */
+body.extinfo a[href*="cmd_typ=16"]::before,
+body.extinfo a[href*="cmd_typ=48"]::before,
+body.extinfo a[href*="cmd_typ=93"]::before,
+body.extinfo a[href*="cmd_typ=102"]::before,
+body.extinfo a[href*="cmd_typ=44"]::before,
+body.extinfo a[href*="cmd_typ=58"]::before {
+    content: "⏻";
+}
+
+/* flap */
+body.extinfo a[href*="cmd_typ=173"]::before {
+    content: "↺";
+}
+/*----------------------------- */
+
+/* =========================================================
+   EXTINFO type=0 – Process Command Icons (monochrome)
+   ========================================================= */
+
+/* default */
+body.extinfo td.command a::before {
+    display: inline-block;
+    width: 1.1em;
+    margin-right: 6px;
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+/* shutdown Nagios */
+body.extinfo a[href*="cmd_typ=14"]::before {
+    content: "⏻";   /* power */
+}
+
+/* restart Nagios */
+body.extinfo a[href*="cmd_typ=13"]::before {
+    content: "↻";   /* restart */
+}
+
+/* enable notifications */
+body.extinfo a[href*="cmd_typ=12"]::before {
+    content: "✉";
+}
+
+body.extinfo a[href*="cmd_typ=11"]::before {
+    content: "✉";
+}
+
+/* stop service checks */
+body.extinfo a[href*="cmd_typ=36"]::before {
+    content: "⊘";
+}
+
+/* stop passive service checks */
+body.extinfo a[href*="cmd_typ=38"]::before {
+    content: "⊘";
+}
+
+/* stop host checks */
+body.extinfo a[href*="cmd_typ=89"]::before {
+    content: "⊘";
+}
+
+/* stop passive host checks */
+body.extinfo a[href*="cmd_typ=91"]::before {
+    content: "⊘";
+}
+
+/* disable event handlers */
+body.extinfo a[href*="cmd_typ=42"]::before {
+    content: "⚙";
+}
+
+/* start obsessing services */
+body.extinfo a[href*="cmd_typ=49"]::before {
+    content: "▶";
+}
+
+/* start obsessing hosts */
+body.extinfo a[href*="cmd_typ=94"]::before {
+    content: "▶";
+}
+
+/* disable flap detection */
+body.extinfo a[href*="cmd_typ=62"]::before {
+    content: "↺";
+}
+
+/* disable performance data */
+body.extinfo a[href*="cmd_typ=83"]::before {
+    content: "☰";
+}
+
+/* disable performance data */
+body.extinfo a[href*="cmd_typ=82"]::before {
+    content: "☰";
+}
+
+/* =========================================================
+   EXTINFO – Host Comments (modernized)
+   ========================================================= */
+
+/* nasconde le icone bitmap */
+body.extinfo .commentPanel img {
+    display: none;
+}
+
+/* layout riga commenti */
+body.extinfo .commentPanel td.comment {
+    padding: 0 8px;
+}
+
+/* stile link commenti */
+body.extinfo .commentPanel td.comment a {
+    display: inline-flex;
+    align-items: center;
+
+    background-color: #94badaff;
+    color: #1f1f1f;
+
+    padding: 4px 10px;
+    border-radius: 6px;
+
+    font-weight: 500;
+    text-decoration: none;
+    line-height: 1.3;
+}
+
+/* hover coerente */
+body.extinfo .commentPanel td.comment a:hover {
+    background-color: #d5d4d4ff;
+}
+
+/* icona default */
+body.extinfo .commentPanel td.comment a::before {
+    display: inline-block;
+    width: 1.3em;
+    margin-right: 6px;
+    font-size: 1.1em;
+    opacity: 0.8;
+}
+
+/* Add new comment */
+body.extinfo a[href*="cmd_typ=1&"]::before,
+body.extinfo a[href$="cmd_typ=1"]::before {
+    content: "💬";
+}
+
+/* Delete all comments */
+body.extinfo a[href*="cmd_typ=20&"]::before,
+body.extinfo a[href$="cmd_typ=20"]::before {
+    content: "🗑";
+}
+

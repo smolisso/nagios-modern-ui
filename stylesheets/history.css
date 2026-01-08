@@ -37,14 +37,14 @@ body.history div {
 
 /* =========================================================
    INFO / OPTION BOX
-   ========================================================= */
+   ========================================================= 
 
 body.history .infoBox,
 body.history .optBox,
 body.history .navBox {
     background-color: #a5a5a5 !important;
     border: 1px solid #6f6f6f;
-}
+} */
 
 /* =========================================================
    TITOLI – AZZURRINO COERENTE CON STATUS / AVAIL / TRENDS
@@ -58,19 +58,6 @@ body.history .navBoxTitle {
     font-weight: 600;
     padding: 8px 12px;
     border-radius: 4px;
-}
-
-/* =========================================================
-   LINK BOX
-   ========================================================= */
-
-body.history .linkBox {
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
-}
-
-body.history .linkBox a {
-    font-weight: 500;
 }
 
 /* =========================================================
@@ -125,4 +112,67 @@ body.history .statusCRITICAL {
 }
 body.history .statusUNKNOWN {
     color: #2f2f2f;
+}
+
+/* =========================================================
+   HISTORY – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES / TRENDS
+   ========================================================= */
+
+/* contenitore box */
+body.history table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+	width: 80%;
+}
+
+body.history table.linkBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+
+/* cella interna */
+body.history td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.history .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.history .infoBox,
+body.history .infoBox a,
+body.history .infoBox i {
+    color: #1f1f1f;
+}
+
+/* =========================================================
+   HISTORY – time separators
+   ========================================================= */
+
+body.history .dateTimeBreak {
+    background-color: #7f8fa3;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 4px 0;
+    border-radius: 3px;
+}
+
+body.history .dateTimeBreak hr {
+    border: none;
+    height: 1px;
+    background-color: #6c7a8c;
 }

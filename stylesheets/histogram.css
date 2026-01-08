@@ -41,15 +41,6 @@ body.histogram div {
 }
 
 /* =========================================================
-   INFO BOX (HEADER)
-   ========================================================= */
-
-body.histogram .infoBox {
-    background-color: #a5a5a5 !important;
-    border: 1px solid #6f6f6f;
-}
-
-/* =========================================================
    TITLES – AZZURRO COERENTE CON IL RESTO DEL TEMA
    ========================================================= */
 
@@ -104,4 +95,40 @@ body.histogram input[type="submit"]:hover {
 
 body.histogram table {
     border-spacing: 4px;
+}
+
+/* =========================================================
+   HISTOGRAM – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES / TRENDS / HISTORY / SUMMARY
+   ========================================================= */
+
+/* contenitore box */
+body.histogram table.infoBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 5px 5px;
+}
+
+/* cella interna */
+body.histogram td.infoBox {
+    background-color: #a5a5a5;
+    padding: 8px;
+}
+
+/* titolo box */
+body.histogram .infoBoxTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* testo interno */
+body.histogram .infoBox,
+body.histogram .infoBox a,
+body.histogram .infoBox i {
+    color: #1f1f1f;
 }
