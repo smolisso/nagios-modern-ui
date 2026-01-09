@@ -611,3 +611,22 @@ body.extinfo a[href$="cmd_typ=20"]::before {
     content: "🗑";
 }
 
+/* prende SOLO l'ultimo .data (che è l'IP) */
+body.extinfo td > div.data:last-of-type {
+    padding: 6px 14px;
+    background-color: #b0b0b0;
+    color: #1f1f1f;
+    font-weight: 800;
+    border-radius: 8px;
+    border: 1px solid #6c7a8c;
+    letter-spacing: 0.4px;
+    font-family: monospace;
+}
+
+/* icona network */
+body.extinfo td > div.data:last-of-type::before {
+    content: "🖧";
+    margin-right: 10px;
+    font-size: 1.1em;
+    opacity: 0.85;
+}
