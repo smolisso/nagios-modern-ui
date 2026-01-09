@@ -364,7 +364,7 @@ body.tac {
 
 /* ingrandisce tutta la griglia TAC */
 body.tac table.tac {
-    transform: scale(1.06);
+    transform: scale(1.03);
     transform-origin: top left;
     margin-bottom: 8px;
 } 
@@ -500,7 +500,15 @@ body.tac .hostTitle,
 body.tac .serviceTitle,
 body.tac .featureTitle {
     margin-top: 0 !important;
+    white-space: nowrap;
+    text-align: center;
 }
+
+/* allarga leggermente il box Network Outages */
+body.tac table.tac[width="135"] {
+    width: 160px !important;
+}
+
 
 
 /* =========================================================
