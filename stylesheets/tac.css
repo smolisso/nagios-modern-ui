@@ -212,3 +212,349 @@ body.tac .infoBox i {
     color: #1f1f1f;
 }
 
+/* =========================================================
+   TAC – Remove legacy icons (green check / red X)
+   ========================================================= */
+body.tac img[src*="tacenabled"],
+body.tac img[src*="tacdisabled"] {
+    display: none;
+}
+
+/* =========================================================
+   TAC – Modern monochrome icons for Monitoring Features
+   ========================================================= */
+
+/* base icon style */
+body.tac .featureEnabledFlapDetection::before,
+body.tac .featureEnabledHandlers::before,
+body.tac .featureEnabledActiveChecks::before,
+body.tac .featureEnabledPassiveChecks::before,
+body.tac .featureDisabledNotifications::before {
+    display: inline-block;
+    width: 1.4em;
+    margin-right: 6px;
+    font-size: 1.1em;
+    vertical-align: middle;
+    opacity: 0.85;
+}
+
+/* enabled features */
+body.tac .featureEnabledFlapDetection::before,
+body.tac .featureEnabledHandlers::before,
+body.tac .featureEnabledActiveChecks::before,
+body.tac .featureEnabledNotifications::before,
+body.tac .featureEnabledPassiveChecks::before {
+    content: "✔";
+}
+
+/* disabled / N-A */
+body.tac .featureDisabledFlapDetection::before,
+body.tac .featureDisabledHandlers::before,
+body.tac .featureDisabledActiveChecks::before,
+body.tac .featureDisabledNotifications::before,
+body.tac .featureDisabledPassiveChecks::before {
+    content: "⦸";
+}
+
+/* =========================================================
+   TAC – Network Health box restyle
+   ========================================================= */
+
+/* container */
+body.tac .healthBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+/* title */
+body.tac .healthTitle {
+    background-color: #7f96ad;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-weight: 600;
+    color: #ffffffff;
+}
+
+/* soften legacy health bars */
+body.tac img[src*="thermok"] {
+    border-radius: 4px;
+    opacity: 0.85;
+}
+
+/* =========================================================
+   TAC – Layout polish
+   ========================================================= */
+body.tac table.tac {
+    margin-bottom: 12px;
+}
+
+/* =========================================================
+   TAC – Monitoring Performance (modern layout)
+   ========================================================= */
+
+/* container */
+body.tac .perfBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+/* title */
+body.tac .perfTitle {
+    background-color: #7f96ad;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-weight: 600;
+    color: #ffffffff;
+    text-decoration: none;
+}
+
+/* remove underline on title links */
+body.tac .perfTitle a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* inner rows */
+body.tac .perfItem,
+body.tac .perfValue {
+    font-size: 0.8em;
+    color: #000000ff;
+}
+
+/* align rows nicely */
+body.tac .perfItem {
+    padding-right: 8px;
+    white-space: nowrap;
+}
+
+/* remove old link styling */
+body.tac .perfItem a,
+body.tac .perfValue a {
+    color: #1f1f1f;
+    text-decoration: none;
+}
+
+/* spacing between rows */
+body.tac .perfBox table tr {
+    line-height: 0.6;
+}
+
+/* hover subtle */
+body.tac .perfItem a:hover,
+body.tac .perfValue a:hover {
+    text-decoration: underline;
+    opacity: 0.85;
+    color: #000000ff;
+}
+
+
+
+/* =========================================================
+   TAC – Global scale & readability boost
+   ========================================================= */
+
+body.tac {
+    font-size: 5px;              /* base più grande */
+    line-height: 0.5;
+}
+
+/* ingrandisce tutta la griglia TAC */
+body.tac table.tac {
+    transform: scale(1.06);
+    transform-origin: top left;
+    margin-bottom: 8px;
+} 
+
+/* =========================================================
+   TAC – Section containers (uniform look)
+   ========================================================= 
+
+body.tac table.tac {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 6px;
+}  */
+
+/* =========================================================
+   TAC – Section titles (Network / Hosts / Services / Features)
+   ========================================================= */
+
+body.tac .outageTitle,
+body.tac .hostTitle,
+body.tac .serviceTitle,
+body.tac .featureTitle {
+    background-color: #7f96ad;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.05em;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #6c7a8c;
+}
+
+/* =========================================================
+   TAC – Section headers (counts row)
+   ========================================================= */
+
+body.tac .outageHeader,
+body.tac .hostHeader,
+body.tac .serviceHeader,
+body.tac .featureHeader {
+    background-color: #b0b0b0;
+    border: 1px solid #8c8c8c;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.95em;
+}
+
+/* link inside headers */
+body.tac .outageHeader a,
+body.tac .hostHeader a,
+body.tac .serviceHeader a {
+    color: #0f2f4a;
+    text-decoration: none;
+}
+
+body.tac .outageHeader a:hover,
+body.tac .hostHeader a:hover,
+body.tac .serviceHeader a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* =========================================================
+   TAC – Inner content spacing
+   ========================================================= */
+
+body.tac td {
+    padding: 4px;
+}
+
+/* Services / Hosts detail rows */
+body.tac .serviceImportantProblem,
+body.tac .featureItemEnabledServiceFlapDetection,
+body.tac .featureItemServicesFlapping,
+body.tac .featureItemEnabledHostFlapDetection,
+body.tac .featureItemHostsNotFlapping {
+    font-size: 0.9em;
+}
+
+/* =========================================================
+   TAC – Monitoring Features boxes (bigger & consistent)
+   ========================================================= */
+
+body.tac .featureEnabledFlapDetection,
+body.tac .featureEnabledHandlers,
+body.tac .featureEnabledActiveChecks,
+body.tac .featureEnabledPassiveChecks,
+body.tac .featureDisabledNotifications {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 0.9em;
+}
+
+/* =========================================================
+   TAC – Network Health (match other boxes)
+   ========================================================= */
+
+body.tac .healthBox {
+    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+body.tac .healthTitle {
+    background-color: #7f96ad;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* =========================================================
+   TAC – Monitoring Performance scale
+   ========================================================= */
+
+body.tac .perfBox {
+    padding: 8px;
+}
+
+body.tac .perfItem,
+body.tac .perfValue {
+    font-size: 0.85em;
+}
+
+
+/* Network Outages / Hosts / Services / Features */
+body.tac .outageTitle,
+body.tac .hostTitle,
+body.tac .serviceTitle,
+body.tac .featureTitle {
+    margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   TAC – Normalize Monitoring Features typography
+   ========================================================= */
+
+/* forza stesso font-size per TUTTE le voci interne */
+body.tac
+.featureEnabledFlapDetection td,
+body.tac
+.featureEnabledHandlers td,
+body.tac
+.featureEnabledActiveChecks td,
+body.tac
+.featureEnabledPassiveChecks td,
+body.tac
+.featureDisabledNotifications {
+    font-size: 0.85em !important;
+    line-height: 1.15 !important;
+}
+
+/* normalizza TUTTE le featureItem */
+body.tac
+.featureItemEnabledServiceFlapDetection,
+body.tac
+.featureItemServicesFlapping,
+body.tac
+.featureItemEnabledHostFlapDetection,
+body.tac
+.featureItemHostsNotFlapping,
+body.tac
+.featureItemEnabledServiceHandlers,
+body.tac
+.featureItemEnabledHostHandlers,
+body.tac
+.featureItemEnabledActiveServiceChecks,
+body.tac
+.featureItemEnabledActiveHostChecks,
+body.tac
+.featureItemEnabledPassiveServiceChecks,
+body.tac
+.featureItemEnabledPassiveHostChecks {
+    font-size: 0.55em !important;
+    font-weight: 300;
+}
+
+/* link dentro Flap Detection NON devono sembrare titoli */
+body.tac .featureItemServicesFlapping a {
+    font-size: inherit !important;
+    font-weight: 400;
+    color: #0f2f4a;
+    text-decoration: none;
+}
+
+body.tac .featureItemServicesFlapping a:hover {
+    text-decoration: underline;
+}
