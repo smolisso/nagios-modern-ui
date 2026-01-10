@@ -618,9 +618,10 @@ body.extinfo td > div.data:last-of-type {
     color: #1f1f1f;
     font-weight: 800;
     border-radius: 8px;
-    border: 1px solid #6c7a8c;
+    border: 1.5px solid #6c7a8c;
     letter-spacing: 0.4px;
     font-family: monospace;
+    margin-bottom: 20;
 }
 
 /* icona network */
@@ -629,4 +630,61 @@ body.extinfo td > div.data:last-of-type::before {
     margin-right: 10px;
     font-size: 1.1em;
     opacity: 0.85;
+}
+
+/* =========================================================
+   EXTINFO – Host state badge (UP / DOWN)
+   ========================================================= */
+
+/* base comune */
+body.extinfo .hostUP,
+body.extinfo .hostDOWN,
+body.extinfo .hostUNREACHABLE,
+body.extinfo .hostPENDING {
+    display: inline-block;
+    padding: 4px 12px;
+    min-width: 48px;
+
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+
+    border-radius: 999px; /* pill */
+    border: 1px solid transparent;
+}
+
+/* =========================
+   UP → verde
+   ========================= */
+body.extinfo .hostUP {
+    background-color: #cfe8d4;
+    color: #1f6b3a;
+    border-color: #7bbf9a;
+}
+
+/* =========================
+   DOWN → rosso
+   ========================= */
+body.extinfo .hostDOWN {
+    background-color: #f1c6c6;
+    color: #8b2f2f;
+    border-color: #c67a7a;
+}
+
+/* =========================
+   UNREACHABLE → arancio/grigio
+   ========================= */
+body.extinfo .hostUNREACHABLE {
+    background-color: #e6d3b1;
+    color: #6b4a1f;
+    border-color: #c2a06a;
+}
+
+/* =========================
+   PENDING → neutro
+   ========================= */
+body.extinfo .hostPENDING {
+    background-color: #d0d0d0;
+    color: #3a3a3a;
+    border-color: #9a9a9a;
 }
