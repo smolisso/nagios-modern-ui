@@ -906,3 +906,102 @@ body.extinfo .infoBoxBadProcStatus {
     display: inline-block;
 }
 
+/* =========================================================
+   Nagios Modern UI – Signature
+   ========================================================= */
+
+
+body::after {
+    content: "Nagios Modern UI · smolinux";
+    position: fixed;
+    bottom: 6px;
+    right: 8px;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.45);
+    background: rgba(255, 255, 255, 0.35);
+    padding: 3px 8px;
+    border-radius: 6px;
+    pointer-events: none;
+    user-select: none;
+    backdrop-filter: blur(2px);
+}
+
+/* ===============================
+   PAGINAZIONE COMPACT – NAGIOS
+   =============================== */
+
+#top_page_numbers,
+#bottom_page_numbers {
+    display: flex;
+    justify-content: left;
+    margin: 6px 0;
+}
+
+/* wrapper */
+#top_page_numbers .inner_numbers,
+#bottom_page_numbers .inner_numbers {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background-color: #a5a5a5;
+    border: 1px solid #7f7f7f;
+    border-radius: 6px;
+    padding: 2px 4px;
+}
+
+/* numeri e link */
+.inner_numbers .pagenumber,
+.inner_numbers .current_page {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 600;
+    border-radius: 4px;
+    background-color: #b0b0b0;
+    color: #1f1f1f;
+    text-decoration: none;
+    border: 1px solid #8c8c8c;
+    line-height: 1;
+}
+
+/* hover */
+.inner_numbers .pagenumber:hover {
+    background-color: #c0c0c0;
+}
+
+/* pagina corrente */
+.inner_numbers .current_page {
+    background-color: #7f96ad;
+    color: #ffffff;
+    border-color: #6c7a8c;
+}
+
+/* rimuove icone legacy */
+.inner_numbers a.pagenumber img {
+    display: none;
+}
+
+/* frecce testuali minimal */
+.inner_numbers a[title*="First"]::before { content: "«"; }
+.inner_numbers a[title*="Previous"]::before { content: "‹"; }
+.inner_numbers a[title*="Next"]::before { content: "›"; }
+.inner_numbers a[title*="Last"]::before { content: "»"; }
+
+.inner_numbers a[title*="First"]::before,
+.inner_numbers a[title*="Previous"]::before,
+.inner_numbers a[title*="Next"]::before,
+.inner_numbers a[title*="Last"]::before {
+    font-size: 12px;
+}
+
+/* testo risultati */
+.itemTotalsTitle {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #3a3a3a;
+    text-align: center;
+}
