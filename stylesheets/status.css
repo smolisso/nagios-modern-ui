@@ -466,3 +466,33 @@ body.status table.filter table {
     border-spacing: 2px;
 }
 
+/* =========================================================
+   Status – Results footer (modernized)
+   ========================================================= */
+
+body.status .itemTotalsTitle {
+    margin-top: 12px;
+    padding: 6px 14px;
+	witdh: 10%;
+
+    /* background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px;*/
+
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #1f1f1f;
+
+    letter-spacing: 0.3px;
+    text-align: left;
+	opacity: 0.9;
+}
+
+
+#pagelimit {
+    margin-bottom: 15px;
+}
+
+body.status table.status {
+    margin-top: 15px;
+}
