@@ -1005,3 +1005,22 @@ body::after {
     color: #3a3a3a;
     text-align: center;
 }
+
+/* =========================================================
+   EMPTY / ERROR MESSAGE – GLOBAL STYLE
+   ========================================================= */
+
+body.notifications .errorMessage,
+body.history .warningMessage,
+body.status .errorMessage {
+    background-color: #b59bb5;
+    color: #2f2f2f;
+    padding: 10px 14px;
+    border-left: 4px solid #7f5a7f;
+    margin: 16px auto;
+    font-weight: 600;
+    border-radius: 6px;
+    /*max-width: 800px;*/
+}
+
+

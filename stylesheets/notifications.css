@@ -152,19 +152,6 @@ table.notifications td.notifications {
 }
 
 /* =========================================================
-   EMPTY / ERROR MESSAGE
-   ========================================================= */
-
-body.notifications .errorMessage {
-    background-color: #b59bb5;
-    color: #2f2f2f;
-    padding: 10px 14px;
-    border-left: 4px solid #7f5a7f;
-    margin-top: 12px;
-    font-weight: 600;
-}
-
-/* =========================================================
    NOTIFICATIONS – InfoBox (header top-left)
    Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES
    / TRENDS / HISTORY / SUMMARY / HISTOGRAM

@@ -434,6 +434,23 @@ body.extinfo a[href*="cmd_typ=17"]::before {
 
 }
 
+/* =========================================================
+   PRIMARY ACTION – SCHEDULE CHECK ALL SERVICES
+   (cmd_typ=17 ONLY)
+   ========================================================= */
+
+body.extinfo a[href*="cmd_typ=17&"] {
+    background-color: #81cdbe !important;
+    color: #1f2a33 !important;
+    font-weight: 700;
+}
+
+/* hover leggerissimo */
+body.extinfo a[href*="cmd_typ=17&"]:hover {
+    background-color: #6f98bb !important;
+}
+
+
 /* passive checks */
 body.extinfo a[href*="cmd_typ=87"]::before {
     content: "▶";
@@ -687,4 +704,18 @@ body.extinfo .hostPENDING {
     background-color: #d0d0d0;
     color: #3a3a3a;
     border-color: #9a9a9a;
+}
+
+/* =========================================================
+   HOST COMMANDS – SIZE REDUCTION
+   ========================================================= */
+
+body.extinfo .commandPanel {
+    transform: scale(0.82);
+    transform-origin: top center;
+}
+
+/* evita che il panel “si mangi” spazio vuoto sotto */
+body.extinfo .commandPanel table {
+    margin-bottom: -30px;
 }

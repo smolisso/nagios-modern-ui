@@ -358,6 +358,7 @@ table.headertable > tbody > tr > td {
     padding: 8px 12px;
     border-radius: 6px;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 /* Host Status Totals */
@@ -495,4 +496,52 @@ body.status .itemTotalsTitle {
 
 body.status table.status {
     margin-top: 15px;
+}
+
+
+
+#pagelimit {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+    margin: 14px 0 18px 0;
+    padding: 6px 10px;
+/*    background-color: #a5a5a5;
+    border: 1px solid #6f6f6f;
+    border-radius: 8px; */
+}
+
+#result_limit select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-color: #e0e0e0;
+    border: 1px solid #6f6f6f;
+    border-radius: 6px;
+
+    padding: 4px 26px 4px 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1f1f1f;
+
+    cursor: pointer;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #1f1f1f 50%),
+        linear-gradient(135deg, #1f1f1f 50%, transparent 50%);
+    background-position:
+        calc(100% - 16px) 55%,
+        calc(100% - 11px) 55%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+}
+
+#result_limit select:hover {
+    background-color: #ededed;
+}
+
+#result_limit select:focus {
+    outline: none;
+    border-color: #7f96ad;
+    box-shadow: 0 0 0 2px rgba(127,150,173,0.3);
 }
