@@ -10,14 +10,14 @@
 .itemTotalsTitle { font-size: 8pt; font-style: italic; clear:both;}
 
 table.status { font-size: 9pt; padding: 0 0 10 0; }
-th.status    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #777777; color: #333333; }
+th.status    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
 div.status   { font-size: 10pt; text-align: center; }
 .statusOdd   { font-size: 8pt; background-color: #e7e7e7; line-height: 150%; padding: 0 4 0 4; }
 .statusEven  { font-size: 8pt; background-color: #f4f2f2; line-height: 150%; padding: 0 4 0 4; }
 
 .statusPENDING  { font-size: 8pt; background-color: #acacac; border: 1px solid #777777; padding: 0 5 0 5; }
-.statusOK       { font-size: 8pt; background-color: #88d066; border: 1px solid #777777; padding: 0 5 0 5; }
-.statusRECOVERY { font-size: 8pt; background-color: #88d066; border: 1px solid #777777; padding: 0 5 0 5; }
+.statusOK       { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; padding: 0 5 0 5; }
+.statusRECOVERY { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusUNKNOWN  { font-size: 8pt; background-color: #ffbb55; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusWARNING  { font-size: 8pt; background-color: #ffff00; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusCRITICAL { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; padding: 0 5 0 5; }
@@ -52,7 +52,7 @@ div.serviceTotals      { font-size: 10pt; text-align: center; font-weight: bold;
 table.serviceTotals    { font-size: 10pt; font-weight: bold; }
 th.serviceTotals,a.serviceTotals { font-size: 8pt; }
 td.serviceTotals       { font-size: 8pt; text-align: center; background-color: #e0e0e0; border: 1px solid #777777; padding: 2 4 2 4; }
-.serviceTotalsOK       { font-size: 8pt; text-align: center; background-color: #88d066; border: 1px solid #777777; padding: 2 4 2 4; }
+.serviceTotalsOK       { font-size: 8pt; text-align: center; background-color: #6BC497; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsWARNING  { font-size: 8pt; text-align: center; background-color: #ffff00; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsUNKNOWN  { font-size: 8pt; text-align: center; background-color: #ffbb55; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsCRITICAL { font-size: 8pt; text-align: center; background-color: #f88888; border: 1px solid #777777; padding: 2 4 2 4; }
@@ -63,19 +63,19 @@ div.hostTotals         { font-size: 10pt; text-align: center; font-weight: bold;
 table.hostTotals       { font-size: 10pt; font-weight: bold; }
 th.hostTotals,a.hostTotals { font-size: 8pt; }
 td.hostTotals          { font-size: 8pt; text-align: center; background-color: #e0e0e0; border: 1px solid #777777; padding: 2 4 2 4; }
-.hostTotalsUP          { font-size: 8pt; text-align: center; background-color: #88d066; border: 1px solid #777777; padding: 2 4 2 4; }
+.hostTotalsUP          { font-size: 8pt; text-align: center; background-color: #6BC497; border: 1px solid #777777; padding: 2 4 2 4; }
 .hostTotalsDOWN        { font-size: 8pt; text-align: center; background-color: #f88888; border: 1px solid #777777; padding: 2 4 2 4; }
 .hostTotalsUNREACHABLE { font-size: 8pt; text-align: center; background-color: #ffbb55; border: 1px solid #777777; padding: 2 4 2 4; }
 .hostTotalsPENDING     { font-size: 8pt; text-align: center; background-color: #acacac; border: 1px solid #777777; padding: 2 4 2 4; }
 .hostTotalsPROBLEMS    { font-size: 8pt; text-align: center; background-color: #aaccff; border: 1px solid #777777; padding: 2 4 2 4; }
 
 .miniStatusPENDING     { font-size: 8pt; text-align: center; background-color: #acacac; border: 1px solid #777777; padding: 0 5 0 5; }
-.miniStatusOK          { font-size: 8pt; text-align: center; background-color: #88d066; border: 1px solid #777777; padding: 0 5 0 5; }
+.miniStatusOK          { font-size: 8pt; text-align: center; background-color: #6BC497; border: 1px solid #777777; padding: 0 5 0 5; }
 .miniStatusUNKNOWN     { font-size: 8pt; text-align: center; background-color: #ffbb55; border: 1px solid #777777; padding: 0 5 0 5; }
 .miniStatusWARNING     { font-size: 8pt; text-align: center; background-color: #ffff00; border: 1px solid #777777; padding: 0 5 0 5; }
 .miniStatusCRITICAL    { font-size: 8pt; text-align: center; background-color: #f88888; border: 1px solid #777777; padding: 0 5 0 5; }
 
-.miniStatusUP          { font-size: 8pt; text-align: center; background-color: #88d066; border: 1px solid #777777; padding: 0 5 0 5; }
+.miniStatusUP          { font-size: 8pt; text-align: center; background-color: #6BC497; border: 1px solid #777777; padding: 0 5 0 5; }
 .miniStatusDOWN        { font-size: 8pt; text-align: center; background-color: #f88888; border: 1px solid #777777; padding: 0 5 0 5; }
 .miniStatusUNREACHABLE { font-size: 8pt; text-align: center; background-color: #ffbb55; border: 1px solid #777777; padding: 0 5 0 5; }
 
@@ -93,21 +93,23 @@ a.pagenumber:hover { background-color: #EFEFEF;text-decoration:none;}
    ========================================================= */
 
 body.status {
-    background-color: #7a7a7a;
+    background-color: #111111;
+    color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.status a {
-    color: #0f2f4a;
+    color: #6ba3e8;
 }
 body.status a:hover {
-    color: #000000;
+    color: #99c0f5;
 }
 
 /* righe alternate */
 td.statusEven,
 td.statusOdd {
-    background-color: #a5a5a5 !important;
+    background-color: #2a2a2a !important;
+    color: #c8cdd5 !important;
 }
 
 
@@ -117,7 +119,7 @@ td.statusOdd {
 
 .statusTitle,
 td.statusTitle {
-    background: #7f96ad;
+    background: #1e3652;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 10px;
@@ -131,7 +133,7 @@ td.statusTitle {
 
 /* UP */
 td.statusHOSTUP {
-    background-color: #8fd19e !important;
+    background-color: #6BC497 !important;
     color: #1f3d2b !important;
 }
 
@@ -169,7 +171,7 @@ td.statusHOSTPENDING {
 tr.statusOK td,
 td.statusOK,
 td.statusBGOK {
-    background-color: #8fd19e !important;
+    background-color: #6BC497 !important;
     color: #1f3d2b !important;
 }
 
@@ -194,7 +196,7 @@ tr.statusUNKNOWN td,
 td.statusUNKNOWN,
 td.statusBGUNKNOWN {
     background-color: #b59bb5 !important;
-    color: #2f2f2f !important;
+    color: #ffffff !important;
 }
 
 /* PENDING */
@@ -227,6 +229,24 @@ tr.statusUNKNOWN a {
    MINI STATUS (OVERVIEW + GRID)
    ========================================================= */
 
+.miniStatusUP,
+.miniStatusUP a {
+    background-color: #6BC497 !important;
+    color: #1f3d2b !important;
+}
+
+.miniStatusDOWN,
+.miniStatusDOWN a {
+    background-color: #ce6e6e !important;
+    color: #ffffff !important;
+}
+
+.miniStatusUNREACHABLE,
+.miniStatusUNREACHABLE a {
+    background-color: #6BC497 !important;
+    color: #ffffff !important;
+}
+
 .miniStatusOK,
 .miniStatusOK a {
     background-color: #8fd19e !important;
@@ -257,6 +277,9 @@ tr.statusUNKNOWN a {
     color: #3b2f00 !important;
 }
 
+.miniStatusUP,
+.miniStatusDOWN,
+.miniStatusUNREACHABLE,
 .miniStatusOK,
 .miniStatusWARNING,
 .miniStatusCRITICAL,
@@ -272,19 +295,19 @@ tr.statusUNKNOWN a {
    ========================================================= */
 
 table.statusGrid {
-    background-color: #a5a5a5;
+    background-color: #1a1a1a;
     border-collapse: separate;
     border-spacing: 6px;
 }
 
 table.statusGrid td {
-    background-color: #9e9e9e;
+    background-color: #252525;
     border-radius: 4px;
     padding: 4px 6px;
 }
 
 table.statusGrid td.statusOK {
-    background-color: #8fd19e !important;
+    background-color: #6BC497 !important;
 }
 
 table.statusGrid td.statusWARNING {
@@ -306,7 +329,7 @@ table.statusGrid td.statusPENDING {
 table.statusGrid td.hostName {
     font-weight: 600;
     letter-spacing: 0.2px;
-    color: #0f2f4a;
+    color: #6ba3e8;
 }
 
 table.statusGrid td img {
@@ -340,8 +363,8 @@ table.headertable {
 
 /* celle header */
 table.headertable > tbody > tr > td {
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
+    background-color: #1c1c1c;
+    border: 1px solid #333333;
     border-radius: 10px;
     padding: 16px 18px;
     vertical-align: top;
@@ -352,7 +375,7 @@ table.headertable > tbody > tr > td {
 
 /* Current Network Status */
 .infoBoxTitle {
-    background: #7f96ad;
+    background: #1e3652;
     color: #ffffff !important;
     font-weight: 600;
     padding: 8px 12px;
@@ -363,7 +386,7 @@ table.headertable > tbody > tr > td {
 
 /* Host Status Totals */
 div.hostTotals {
-    background: #7f96ad;
+    background: #1e3652;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -374,7 +397,7 @@ div.hostTotals {
 
 /* Service Status Totals */
 div.serviceTotals {
-    background: #7f96ad;
+    background: #1e3652;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -409,8 +432,8 @@ table.serviceTotals td {
 }
 
 .serviceTotalsPROBLEMS {
-    background-color: #9bbce6 !important;
-    color: #0f2f4a;
+    background-color: #1e3652 !important;
+    color: #e8ecf0 !important;
 }
 
 table.headertable > tbody > tr > td:last-child {
@@ -427,8 +450,8 @@ table.headertable > tbody > tr > td:last-child {
 body.status table.filter {
     width: 70%;
 	margin: 10px 0 5px 0;
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
+    background-color: #1c1c1c;
+    border: 1px solid #333333;
     border-radius: 8px;
 }
 
@@ -439,7 +462,7 @@ body.status td.filter {
 
 /* titolo */
 body.status .filterTitle {
-    background: #7f96ad;
+    background: #1e3652;
     color: #ffffff;
     font-weight: 600;
     padding: 4px 6px;
@@ -451,14 +474,14 @@ body.status .filterTitle {
 /* righe nome/valore */
 body.status .filterName {
     font-weight: 600;
-    color: #1f1f1f;
+    color: #c8cdd5;
     padding: 2px 3px;
     white-space: nowrap;
 	text-align: left;
 }
 
 body.status .filterValue {
-    color: #0f2f4a;
+    color: #6ba3e8;
     padding: 2px 3px;
 }
 
@@ -476,13 +499,13 @@ body.status .itemTotalsTitle {
     padding: 6px 14px;
 	witdh: 10%;
 
-    /* background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
+    /* background-color: #1c1c1c;
+    border: 1px solid #333333;
     border-radius: 8px;*/
 
     font-size: 0.9em;
     font-weight: 600;
-    color: #1f1f1f;
+    color: #909090;
 
     letter-spacing: 0.3px;
     text-align: left;
@@ -516,19 +539,19 @@ body.status table.status {
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    background-color: #e0e0e0;
-    border: 1px solid #6f6f6f;
+    background-color: #232323;
+    border: 1px solid #333333;
     border-radius: 6px;
 
     padding: 4px 26px 4px 8px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #1f1f1f;
+    color: #c8cdd5;
 
     cursor: pointer;
     background-image:
-        linear-gradient(45deg, transparent 50%, #1f1f1f 50%),
-        linear-gradient(135deg, #1f1f1f 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, #c8cdd5 50%),
+        linear-gradient(135deg, #c8cdd5 50%, transparent 50%);
     background-position:
         calc(100% - 16px) 55%,
         calc(100% - 11px) 55%;
@@ -537,11 +560,278 @@ body.status table.status {
 }
 
 #result_limit select:hover {
-    background-color: #ededed;
+    background-color: #2d2d2d;
 }
 
 #result_limit select:focus {
     outline: none;
-    border-color: #7f96ad;
+    border-color: #1e3652;
     box-shadow: 0 0 0 2px rgba(127,150,173,0.3);
+}
+
+
+/* =========================================================
+   LINK READABILITY OVERRIDES (custom)
+   - Make links follow cell text color so they are readable on colored states
+   - Keep links un-underlined (underline looked bad in tables)
+   ========================================================= */
+/* Link normali: ereditano */
+body.status table.status td a:not(.statusOK):not(.statusWARNING):not(.statusCRITICAL):not(.statusUNKNOWN):not(.statusPENDING):not(.statusUP):not(.statusDOWN):not(.statusUNREACHABLE),
+body.status table.status th a:not(.statusOK):not(.statusWARNING):not(.statusCRITICAL):not(.statusUNKNOWN):not(.statusPENDING):not(.statusUP):not(.statusDOWN):not(.statusUNREACHABLE) {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+body.status table.status td a:hover,
+body.status table.status th a:hover {
+    text-decoration: none !important;
+    opacity: 0.90;
+}
+
+
+/* =========================================================
+   TOTALS COUNTERS LEGIBILITY (custom)
+   - The numeric counters in Host/Service Status Totals are plain text inside
+     colored <td> cells. Force a high-contrast text color.
+   ========================================================= */
+/* Host totals numbers */
+.hostTotalsUP,
+.hostTotalsDOWN,
+.hostTotalsUNREACHABLE,
+.hostTotalsPENDING,
+td.hostTotals {
+    color: #111111 !important;
+}
+
+/* Service totals numbers */
+.serviceTotalsOK,
+.serviceTotalsWARNING,
+.serviceTotalsUNKNOWN,
+.serviceTotalsCRITICAL,
+.serviceTotalsPENDING,
+td.serviceTotals {
+    color: #111111 !important;
+}
+
+/* "Unhandled" / "on Problem Hosts" nel riquadro TOTALI header (navbar):
+   sfondo navy, testo chiaro – OK lì */
+table.hostTotals .hostTotalsPROBLEMS,
+table.serviceTotals .serviceTotalsPROBLEMS {
+    background-color: #1e3652 !important;
+    color: #e8ecf0 !important;
+}
+table.hostTotals .hostTotalsPROBLEMS a,
+table.serviceTotals .serviceTotalsPROBLEMS a {
+    color: #e8ecf0 !important;
+}
+
+/* "Unhandled" / "on Problem Hosts" nella summary:
+   miniStatusXXX e serviceTotalsPROBLEMS sono td FRATELLI nella stessa tr,
+   quindi si usa il selettore fratello generale (~), non il discendente (spazio) */
+
+/* su WARNING (giallo): testo scuro */
+tr > td.miniStatusWARNING ~ td.serviceTotalsPROBLEMS,
+tr > td.miniStatusWARNING ~ td.hostTotalsPROBLEMS {
+    background-color: transparent !important;
+    border: none !important;
+    color: #3b2f00 !important;
+}
+tr > td.miniStatusWARNING ~ td.serviceTotalsPROBLEMS a,
+tr > td.miniStatusWARNING ~ td.hostTotalsPROBLEMS a {
+    color: #3b2f00 !important;
+}
+
+/* su CRITICAL (rosso), UNKNOWN (viola), DOWN: testo bianco */
+tr > td.miniStatusCRITICAL ~ td.serviceTotalsPROBLEMS,
+tr > td.miniStatusCRITICAL ~ td.hostTotalsPROBLEMS,
+tr > td.miniStatusUNKNOWN  ~ td.serviceTotalsPROBLEMS,
+tr > td.miniStatusUNKNOWN  ~ td.hostTotalsPROBLEMS,
+tr > td.miniStatusDOWN     ~ td.serviceTotalsPROBLEMS,
+tr > td.miniStatusDOWN     ~ td.hostTotalsPROBLEMS {
+    background-color: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+}
+tr > td.miniStatusCRITICAL ~ td.serviceTotalsPROBLEMS a,
+tr > td.miniStatusCRITICAL ~ td.hostTotalsPROBLEMS a,
+tr > td.miniStatusUNKNOWN  ~ td.serviceTotalsPROBLEMS a,
+tr > td.miniStatusUNKNOWN  ~ td.hostTotalsPROBLEMS a,
+tr > td.miniStatusDOWN     ~ td.serviceTotalsPROBLEMS a,
+tr > td.miniStatusDOWN     ~ td.hostTotalsPROBLEMS a {
+    color: #ffffff !important;
+}
+
+
+/* === Readability fix: hostdetail/service detail cells with light backgrounds (e.g. scheduled downtime) === */
+/* Ensure text and links are readable on light red/pink/orange backgrounds */
+td.statusBGDOWNSCHED,
+td.statusBGDOWNTIME,
+td.statusBGHOSTDOWNSCHED,
+td.statusBGHOSTDOWNTIME,
+td.statusBGUNREACHABLE,
+td.statusBGCRITICALACK,
+td.statusBGWARNINGACK {
+  color: #111 !important;
+}
+td.statusBGDOWNSCHED a,
+td.statusBGDOWNTIME a,
+td.statusBGHOSTDOWNSCHED a,
+td.statusBGHOSTDOWNTIME a,
+td.statusBGUNREACHABLE a,
+td.statusBGCRITICALACK a,
+td.statusBGWARNINGACK a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+
+
+
+/* === Readability fixes: host/service links in light-background host status cells === */
+.statusHOSTDOWNSCHED,
+.statusHOSTDOWNACK,
+.statusHOSTUNREACHABLE,
+.statusHOSTUNREACHABLEACK,
+.statusHOSTUNREACHABLESCHED {
+  color: #111 !important;
+}
+
+.statusHOSTDOWNSCHED a,
+.statusHOSTDOWNACK a,
+.statusHOSTUNREACHABLE a,
+.statusHOSTUNREACHABLEACK a,
+.statusHOSTUNREACHABLESCHED a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+
+/* GRID: testo leggibile dentro i badge dei servizi */
+table.status a.statusOK,
+table.status a.statusUP {
+  color: #111 !important;     /* nero, leggibile sul verde */
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Su giallo meglio scuro */
+table.status a.statusWARNING {
+  color: #111 !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Su rosso meglio bianco */
+table.status a.statusCRITICAL,
+table.status a.statusDOWN {
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Su viola/grigio: bianco (di solito) */
+table.status a.statusUNKNOWN,
+table.status a.statusUNREACHABLE,
+table.status a.statusPENDING {
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Hover: non far tornare azzurrino */
+table.status a.statusOK:hover,
+table.status a.statusWARNING:hover,
+table.status a.statusCRITICAL:hover,
+table.status a.statusUNKNOWN:hover,
+table.status a.statusPENDING:hover,
+table.status a.statusUNREACHABLE:hover {
+  color: inherit !important;
+  text-decoration: underline;
+}
+
+/* ===== SUMMARY (style=summary) badges ===== */
+
+body.status td.miniStatusUP a,
+body.status td.miniStatusOK a,
+body.status td.miniStatusWARNING a,
+body.status td.miniStatusCRITICAL a,
+body.status td.miniStatusUNKNOWN a,
+body.status td.miniStatusDOWN a,
+body.status td.miniStatusUNREACHABLE a,
+body.status td.miniStatusPENDING a {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-decoration: none !important;
+  border: 1px solid rgba(0,0,0,.35);
+}
+
+/* colori testo leggibili sui vari sfondi */
+body.status td.miniStatusUP a,
+body.status td.miniStatusOK a,
+body.status td.miniStatusWARNING a {
+  color: #111 !important;
+}
+
+body.status td.miniStatusCRITICAL a,
+body.status td.miniStatusUNKNOWN a,
+body.status td.miniStatusDOWN a,
+body.status td.miniStatusUNREACHABLE a {
+  color: #fff !important;
+}
+
+/* ===== SUMMARY sub-badges: Unhandled / on Problem Hosts ===== */
+/* Nota: in Nagios la classe è sull'elemento <a> stesso, non su un <td> padre */
+
+body.status a.serviceImportantProblem,
+body.status a.serviceUnimportantProblem,
+body.status a.hostUnimportantProblem {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-decoration: none !important;
+  /* nessun bordo */
+}
+
+/* su WARNING (giallo): testo scuro leggibile */
+body.status td.miniStatusWARNING a.serviceImportantProblem,
+body.status td.miniStatusWARNING a.serviceUnimportantProblem,
+body.status td.miniStatusWARNING a.hostUnimportantProblem {
+  color: #3b2f00 !important;
+}
+
+/* su CRITICAL (rosso), UNKNOWN (viola), DOWN: testo bianco */
+body.status td.miniStatusCRITICAL  a.serviceImportantProblem,
+body.status td.miniStatusCRITICAL  a.serviceUnimportantProblem,
+body.status td.miniStatusCRITICAL  a.hostUnimportantProblem,
+body.status td.miniStatusUNKNOWN   a.serviceImportantProblem,
+body.status td.miniStatusUNKNOWN   a.serviceUnimportantProblem,
+body.status td.miniStatusUNKNOWN   a.hostUnimportantProblem,
+body.status td.miniStatusDOWN      a.serviceImportantProblem,
+body.status td.miniStatusDOWN      a.serviceUnimportantProblem,
+body.status td.miniStatusDOWN      a.hostUnimportantProblem {
+  color: #fff !important;
+}
+
+/* ===== Modern OK Green ===== */
+
+.miniStatusOK,
+.statusOK,
+.serviceOK,
+td.miniStatusOK,
+td.statusOK,
+div.miniStatusOK {
+  background-color: #6BC497 !important;
+  border: 1px solid #5ab187 !important;
+  color: #0f2a1f !important;
+  font-weight: 600;
+}
+
+/* Link dentro OK */
+.miniStatusOK a,
+.statusOK a,
+.serviceOK a {
+  color: #0f2a1f !important;
 }

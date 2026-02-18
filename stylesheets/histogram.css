@@ -18,15 +18,16 @@
    ========================================================= */
 
 body.histogram {
-    background-color: #8a8a8a;
+    background-color: #111111;
+    color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.histogram a {
-    color: #0f2f4a;
+    color: #6ba3e8;
 }
 body.histogram a:hover {
-    color: #000000;
+    color: #99c0f5;
 }
 
 /* =========================================================
@@ -46,7 +47,7 @@ body.histogram div {
 
 body.histogram .infoBoxTitle,
 body.histogram .reportSelectTitle {
-    background: #7f96ad;
+    background: #1e3652;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -60,8 +61,8 @@ body.histogram .reportSelectTitle {
 body.histogram .reportSelectSubTitle,
 body.histogram .reportSelectItem,
 body.histogram .optBoxItem {
-    background-color: #a5a5a5;
-    color: #1f1f1f;
+    background-color: #1c1c1c;
+    color: #c8cdd5;
     padding: 6px 8px;
 }
 
@@ -72,9 +73,9 @@ body.histogram .optBoxItem {
 body.histogram select,
 body.histogram input[type="text"],
 body.histogram input[type="submit"] {
-    background-color: #9e9e9e;
-    border: 1px solid #6f6f6f;
-    color: #1f1f1f;
+    background-color: #232323;
+    border: 1px solid #333333;
+    color: #c8cdd5;
     padding: 4px 6px;
     border-radius: 4px;
 }
@@ -86,7 +87,7 @@ body.histogram input[type="submit"] {
 }
 
 body.histogram input[type="submit"]:hover {
-    background-color: #b0b0b0;
+    background-color: #2d2d2d;
 }
 
 /* =========================================================
@@ -104,22 +105,22 @@ body.histogram table {
 
 /* contenitore box */
 body.histogram table.infoBox {
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
+    background-color: #1c1c1c;
+    border: 1px solid #333333;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.histogram td.infoBox {
-    background-color: #a5a5a5;
+    background-color: #1c1c1c;
     padding: 8px;
 }
 
 /* titolo box */
 body.histogram .infoBoxTitle {
-    background-color: #7f96ad;
-    color: #ffffff;
+    background-color: #1e3652;
+    color: #e8ecf0;
     font-weight: 600;
     padding: 8px 12px;
     border-radius: 6px;
@@ -130,5 +131,5 @@ body.histogram .infoBoxTitle {
 body.histogram .infoBox,
 body.histogram .infoBox a,
 body.histogram .infoBox i {
-    color: #1f1f1f;
+    color: #c8cdd5;
 }

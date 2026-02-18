@@ -21,24 +21,24 @@
 body.cmd,
 body.extinfo,
 body {
-    background-color: #8a8a8a;
+    background-color: #111111;
 }
 
 /* link */
 body.cmd a,
 body.extinfo a {
-    color: #0f2f4a;
+    color: #6ba3e8;
 }
 
 body.cmd a:hover,
 body.extinfo a:hover {
-    color: #000000;
+    color: #99c0f5;
 }
 
 body.cmd .infoMessage {
-    background-color: #9fa6ad;
-    color: #1f2933;
-    border-left: 4px solid #4b5563;
+    background-color: #1c2a38;
+    color: #b0c8e0;
+    border-left: 4px solid #2d4a63;
     padding: 10px 14px;
 }
 
@@ -50,8 +50,8 @@ body.cmd .infoMessage {
 
 /* contenitore box */
 body.cmd table.infoBox {
-    background-color: #a5a5a5;
-    border: 1px solid #6f6f6f;
+    background-color: #1c1c1c;
+    border: 1px solid #333333;
     border-radius: 8px;
     padding: 5px 5px;
     withd: 80%
@@ -59,13 +59,13 @@ body.cmd table.infoBox {
 
 /* cella interna */
 body.cmd td.infoBox {
-    background-color: #a5a5a5;
+    background-color: #1c1c1c;
     padding: 8px;
 }
 
 /* titolo box */
 body.cmd .infoBoxTitle {
-    background-color: #7f96ad;
+    background-color: #1e3652;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -77,7 +77,7 @@ body.cmd .infoBoxTitle {
 body.cmd .infoBox,
 body.cmd .infoBox a,
 body.cmd .infoBox i {
-    color: #1f1f1f;
+    color: #c8cdd5;
 }
 
 
@@ -86,8 +86,8 @@ body.cmd .infoBox i {
    ========================================================= */
 
 body.cmd .cmdType {
-    background-color: #7f96ad;          /* azzurrino tema */
-    color: #ffffff;
+    background-color: #1e3652;          /* blu notte tema dark */
+    color: #e8ecf0;
     font-weight: 600;
     padding: 12px 16px;
     border-radius: 8px;
@@ -103,7 +103,7 @@ body.cmd .cmdType {
    ========================================================= */
 
 body.cmd .optBoxRequiredItem {
-    color: #0d1f95ff;        /* quasi nero */
+    color: #6ba3e8;        /* blu chiaro su sfondo scuro */
     font-weight: 600;
     padding-right: 8px;
 }
