@@ -77,7 +77,7 @@ No backend modifications required.
 
 Replace the following files in your Nagios Core installation:
 
-```text
+```
 [nagios_root_path]/share/stylesheets/avail.css
 [nagios_root_path]/share/stylesheets/cmd.css
 [nagios_root_path]/share/stylesheets/config.css
@@ -94,11 +94,12 @@ Replace the following files in your Nagios Core installation:
 ```
 
 For the new icons, replace:
+```
 [nagios_root_path]/share/images/comments.svg
 [nagios_root_path]/share/images/action.svg
 [nagios_root_path]/share/images/status2.svg
 [nagios_root_path]/share/images/flapping.svg
-
+```
 
 
 Restart is **not required**.  
