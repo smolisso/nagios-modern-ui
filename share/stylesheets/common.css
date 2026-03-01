@@ -1032,3 +1032,128 @@ body.status .errorMessage {
 }
 
 
+/* =========================================================
+   RESPONSIVE – BREAKPOINTS MOBILI
+   768px → tablet / smartphone landscape
+   480px → smartphone portrait
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* Margine body ridotto */
+    body {
+        margin: 0.4em;
+    }
+
+    /* Firma in basso a destra: più piccola, non invade */
+    body::after {
+        font-size: 9px;
+        padding: 2px 5px;
+        bottom: 3px;
+        right: 4px;
+    }
+
+    /* Header versione: va a capo su righe */
+    #currentversioninfo {
+        flex-wrap: wrap;
+        padding: 10px;
+        margin: -0.4em -0.4em 0 -0.4em;
+        gap: 8px;
+    }
+
+    /* Splash page: padding ridotto */
+    #mainsplash {
+        padding: 30px 16px;
+        gap: 32px;
+    }
+
+    #splashtexttitle {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    #splashbuttons {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    /* Container home page CLX: larghezza fissa → fluida */
+    .clx-container {
+        width: auto;
+        margin: 12px;
+    }
+
+    /* Grid link CLX: 3 colonne → 2 su tablet */
+    .clx-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Update version info box: larghezza fissa → fluida */
+    #updateversioninfo {
+        width: auto;
+        margin: 12px 8px 0 8px;
+    }
+
+    /* InfoBox: sempre full width su mobile */
+    table.infoBox {
+        width: 100% !important;
+    }
+
+    /* Tabelle dati: scroll orizzontale invece di overflow invisibile */
+    table.data,
+    table.status,
+    table.headertable,
+    table.notifications,
+    table.logEntries {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+    }
+
+    /* Paginazione: va a capo se troppo lunga */
+    #top_page_numbers .inner_numbers,
+    #bottom_page_numbers .inner_numbers {
+        flex-wrap: wrap;
+    }
+
+    /* Sidebar: search bar full width */
+    .navbarsearch input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Sidebar navbar: più compatta su mobile */
+    .navbar {
+        padding: 8px 10px;
+        gap: 3px;
+    }
+
+    .navbarlogo {
+        margin-bottom: 4px;
+    }
+
+    div.navsectiontitle {
+        font-size: 8pt;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Grid link CLX: colonna singola su telefono piccolo */
+    .clx-links {
+        grid-template-columns: 1fr;
+    }
+
+    /* Splash: testo proporzionato */
+    #splashtexttitle {
+        font-size: 1.2rem;
+        line-height: 1.6rem;
+    }
+
+    /* Splash: footer meno spazio */
+    #splashpage #mainfooter {
+        padding-top: 20px;
+    }
+}

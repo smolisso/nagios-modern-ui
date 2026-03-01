@@ -177,3 +177,23 @@ body.history .dateTimeBreak hr {
     height: 1px;
     background-color: #152840;
 }
+
+
+/* =========================================================
+   RESPONSIVE – HISTORY PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.history table.infoBox,
+    body.history table.linkBox {
+        width: 100%;
+    }
+
+    /* Form controls: full width */
+    body.history select {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

@@ -8,7 +8,7 @@
 .cmd { }
 
 .cmdType            { font-size: 12pt; font-weight: bold; color: #aa0000; padding-bottom: 40; }
-.commandDescription { font-size:  8pt; background-color: #f4f2f2; border: 1px solid #d0d0d0; margin: 4 0 0 0; padding: 4 4 4 4; }
+.commandDescription { font-size:  8pt; background-color: #333232; border: 1px solid #d0d0d0; margin: 4 0 0 0; padding: 4 4 4 4; }
 .descriptionTitle   { font-size: 10pt; font-weight: bold; }
 .infoMessage        { font-size:  8pt; background-color: #efefaa; border: 1px solid #777777; margin: 40 20% 0 20%; padding: 5 5 5 5; }
 .optBox             { font-size:  9pt; padding: 5 5 5 5; }
@@ -113,4 +113,35 @@ body.cmd .optBoxRequiredItem::after {
     content: " *";
     color: #8b2f2f;        /* rosso scuro soft (coerente con notif disabilitate) */
     font-weight: 700;
+}
+
+
+/* =========================================================
+   RESPONSIVE – CMD PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* InfoMessage: margini laterali percentuali → zero su mobile */
+    .infoMessage {
+        margin: 20px 0 0 0 !important;
+    }
+
+    /* InfoBox: full width */
+    body.cmd table.infoBox {
+        width: 100%;
+    }
+
+    /* cmdType banner: full width */
+    body.cmd .cmdType {
+        width: auto;
+        max-width: 100%;
+        margin: 12px 0;
+    }
+
+    /* Form optBox: non troncare */
+    body.cmd .optBox {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }

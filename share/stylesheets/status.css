@@ -835,3 +835,62 @@ div.miniStatusOK {
 .serviceOK a {
   color: #0f2a1f !important;
 }
+
+
+/* =========================================================
+   RESPONSIVE – STATUS PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* Header cards (infoBox + hostTotals + serviceTotals):
+       da affiancate a impilate verticalmente */
+    table.headertable {
+        display: block;
+        width: 100% !important;
+        margin: 10px 0;
+    }
+
+    table.headertable > tbody,
+    table.headertable > tbody > tr {
+        display: block;
+    }
+
+    table.headertable > tbody > tr > td {
+        display: block !important;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    /* Mantieni nascosta l'ultima cella anche su mobile */
+    table.headertable > tbody > tr > td:last-child {
+        display: none !important;
+    }
+
+    /* Status table principale: scroll orizzontale */
+    body.status table.status {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Filter box: full width */
+    body.status table.filter {
+        width: 100%;
+    }
+
+    /* Page limit bar: va a capo */
+    #pagelimit {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 4px 6px;
+    }
+
+    /* Status grid (style=grid): scroll */
+    table.statusGrid {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

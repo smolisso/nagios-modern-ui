@@ -722,3 +722,43 @@ body.extinfo .commandPanel {
 body.extinfo .commandPanel table {
     margin-bottom: -30px;
 }
+
+
+/* =========================================================
+   RESPONSIVE – EXTINFO PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* InfoBox e linkBox: full width */
+    body.extinfo table.infoBox,
+    body.extinfo table.linkBox {
+        width: 100%;
+    }
+
+    /* Tabelle dati: scroll orizzontale */
+    body.extinfo table.comment,
+    body.extinfo table.downtime,
+    body.extinfo table.queue {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Lista comandi: scroll se necessario */
+    body.extinfo table.command {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Rimuovi scale transform: su mobile si usa lo spazio nativo */
+    body.extinfo .commandPanel {
+        transform: none;
+    }
+
+    /* Ripristina margine rimosso dal transform */
+    body.extinfo .commandPanel table {
+        margin-bottom: 0;
+    }
+}

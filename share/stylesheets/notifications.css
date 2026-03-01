@@ -189,3 +189,36 @@ body.notifications .infoBox a,
 body.notifications .infoBox i {
     color: #c8cdd5;
 }
+
+
+/* =========================================================
+   RESPONSIVE – NOTIFICATIONS PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.notifications table.infoBox {
+        width: 100%;
+    }
+
+    /* Tabella notifiche: scroll orizzontale */
+    table.notifications {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Options box: non troncare */
+    body.notifications .optBox {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Form controls: full width */
+    body.notifications select,
+    body.notifications input[type="text"] {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

@@ -157,3 +157,23 @@ body.showlog .infoBox a,
 body.showlog .infoBox i {
     color: #c8cdd5;
 }
+
+
+/* =========================================================
+   RESPONSIVE – SHOWLOG PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.showlog table.infoBox {
+        width: 100%;
+    }
+
+    /* Log entries: font ridotto e scroll se necessario */
+    body.showlog .logEntries {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 7pt;
+        white-space: normal;
+    }
+}

@@ -137,3 +137,23 @@ body.outages .infoBox a,
 body.outages .infoBox i {
     color: #c8cdd5;
 }
+
+
+/* =========================================================
+   RESPONSIVE – OUTAGES PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.outages table.infoBox {
+        width: 100%;
+    }
+
+    /* Tabella outages: scroll orizzontale */
+    body.outages table.data {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100% !important;
+    }
+}

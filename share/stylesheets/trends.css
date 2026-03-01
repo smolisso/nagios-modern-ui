@@ -5,48 +5,44 @@
 /* purpose with or without fee is hereby granted, provided that the above  */
 /* copyright notice and this permission notice appear in all copies.       */
 
-.histogram { }
+.trends { }
 
-.helpfulHints { font-size: 10pt; font-style: italic; text-align: center; }
-
-/* =========================================================
-   NAGIOS MODERN UI – histogram.cgi (FINAL)
-   ========================================================= */
 
 /* =========================================================
-   BASE
+   TRENDS REPORT – VISUAL ALIGNMENT (MODERN UI)
    ========================================================= */
 
-body.histogram {
+/* === base === */
+body.trends {
     background-color: #111111;
     color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
-body.histogram a {
+body.trends a {
     color: #6ba3e8;
 }
-body.histogram a:hover {
+body.trends a:hover {
     color: #99c0f5;
 }
 
 /* =========================================================
-   RESET WHITE BACKGROUNDS (common.css)
+   RESET BACKGROUND DA common.css
    ========================================================= */
 
-body.histogram table,
-body.histogram td,
-body.histogram th,
-body.histogram div {
+body.trends table,
+body.trends td,
+body.trends th,
+body.trends div {
     background-color: transparent;
 }
 
 /* =========================================================
-   TITLES – AZZURRO COERENTE CON IL RESTO DEL TEMA
+   TITOLI – AZZURRINO COERENTE CON STATUS / AVAIL / TAC
    ========================================================= */
 
-body.histogram .infoBoxTitle,
-body.histogram .reportSelectTitle {
+body.trends .infoBoxTitle,
+body.trends .reportSelectTitle {
     background: #1e3652;
     color: #ffffff;
     font-weight: 600;
@@ -55,56 +51,47 @@ body.histogram .reportSelectTitle {
 }
 
 /* =========================================================
-   REPORT SELECTION / FORMS
+   SUBTITLE & FORM AREA
    ========================================================= */
 
-body.histogram .reportSelectSubTitle,
-body.histogram .reportSelectItem,
-body.histogram .optBoxItem {
+body.trends .reportSelectSubTitle {
+    font-weight: 600;
+    color: #b0b8c4;
+}
+
+body.trends .reportSelectItem,
+body.trends .dateSelectItem {
     background-color: #1c1c1c;
-    color: #c8cdd5;
     padding: 6px 8px;
+    border-radius: 4px;
+    color: #c8cdd5;
 }
 
 /* =========================================================
-   FORM CONTROLS
+   FORM ELEMENTS
    ========================================================= */
 
-body.histogram select,
-body.histogram input[type="text"],
-body.histogram input[type="submit"] {
+body.trends select,
+body.trends input[type="submit"] {
     background-color: #232323;
     border: 1px solid #333333;
-    color: #c8cdd5;
     padding: 4px 6px;
     border-radius: 4px;
+    color: #c8cdd5;
 }
 
-/* submit button */
-body.histogram input[type="submit"] {
-    font-weight: 600;
+body.trends input[type="submit"]:hover {
+    background-color: #2d2d2d;
     cursor: pointer;
 }
 
-body.histogram input[type="submit"]:hover {
-    background-color: #2d2d2d;
-}
-
 /* =========================================================
-   VISUAL SPACING
-   ========================================================= */
-
-body.histogram table {
-    border-spacing: 4px;
-}
-
-/* =========================================================
-   HISTOGRAM – InfoBox (header top-left)
-   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES / TRENDS / HISTORY / SUMMARY
+   TRENDS – InfoBox (header top-left)
+   Coerenza totale con STATUS / TAC / AVAIL / EXTINFO / OUTAGES
    ========================================================= */
 
 /* contenitore box */
-body.histogram table.infoBox {
+body.trends table.infoBox {
     background-color: #1c1c1c;
     border: 1px solid #333333;
     border-radius: 8px;
@@ -112,15 +99,15 @@ body.histogram table.infoBox {
 }
 
 /* cella interna */
-body.histogram td.infoBox {
+body.trends td.infoBox {
     background-color: #1c1c1c;
     padding: 8px;
 }
 
 /* titolo box */
-body.histogram .infoBoxTitle {
+body.trends .infoBoxTitle {
     background-color: #1e3652;
-    color: #e8ecf0;
+    color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
     border-radius: 6px;
@@ -128,8 +115,33 @@ body.histogram .infoBoxTitle {
 }
 
 /* testo interno */
-body.histogram .infoBox,
-body.histogram .infoBox a,
-body.histogram .infoBox i {
+body.trends .infoBox,
+body.trends .infoBox a,
+body.trends .infoBox i {
     color: #c8cdd5;
+}
+
+
+/* =========================================================
+   RESPONSIVE – TRENDS PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.trends table.infoBox {
+        width: 100%;
+    }
+
+    /* Form controls: full width */
+    body.trends select {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Grafico trend: non sborda */
+    body.trends img {
+        max-width: 100%;
+        height: auto;
+    }
 }

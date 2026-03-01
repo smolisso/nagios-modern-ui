@@ -134,3 +134,35 @@ body.avail .infoBox a,
 body.avail .infoBox i {
     color: #c8cdd5;
 }
+
+
+/* =========================================================
+   RESPONSIVE – AVAIL PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.avail table.infoBox {
+        width: 100%;
+    }
+
+    /* Log entries table: scroll */
+    table.logEntries {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Form controls: full width */
+    body.avail select {
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* OptBox: non troncare */
+    body.avail .optBox {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}

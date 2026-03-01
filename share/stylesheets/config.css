@@ -143,3 +143,27 @@ body.config .infoBox a,
 body.config .infoBox i {
     color: #c8cdd5;
 }
+
+
+/* =========================================================
+   RESPONSIVE – CONFIG PAGE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    body.config table.infoBox {
+        width: 100%;
+    }
+
+    /* Select: adattivo, non più larghezza fissa */
+    body.config select {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    body.config input[type="submit"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
