@@ -10,7 +10,7 @@
 .itemTotalsTitle { font-size: 8pt; font-style: italic; clear:both;}
 
 table.status { font-size: 9pt; padding: 0 0 10 0; }
-th.status    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
+th.status    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #d4d4d4; }
 div.status   { font-size: 10pt; text-align: center; }
 .statusOdd   { font-size: 8pt; background-color: #e7e7e7; line-height: 150%; padding: 0 4 0 4; }
 .statusEven  { font-size: 8pt; background-color: #f4f2f2; line-height: 150%; padding: 0 4 0 4; }
@@ -19,13 +19,13 @@ div.status   { font-size: 10pt; text-align: center; }
 .statusOK       { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusRECOVERY { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusUNKNOWN  { font-size: 8pt; background-color: #ffbb55; border: 1px solid #777777; padding: 0 5 0 5; }
-.statusWARNING  { font-size: 8pt; background-color: #ffff00; border: 1px solid #777777; padding: 0 5 0 5; }
+.statusWARNING  { font-size: 8pt; background-color: #e5ca3e; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusCRITICAL { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; padding: 0 5 0 5; }
 .statusCRITICALACK { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; padding: 0 5 0 5; }
 
 .statusHOSTPENDING          { font-size: 8pt; background-color: #acacac; line-height: 150%; padding: 0 4 0 4; }
 .statusHOSTUP               { font-size: 8pt; background-color: #cce8cc; line-height: 150%; padding: 0 4 0 4; }
-.statusHOSTDOWN             { font-size: 8pt; background-color: #ffdddd; line-height: 150%; padding: 0 4 0 4; }
+.statusHOSTDOWN             { font-size: 8pt; color: #111111, background-color: #f98181; line-height: 150%; padding: 0 4 0 4; }
 .statusHOSTDOWNACK          { font-size: 8pt; background-color: #ffdddd; line-height: 150%; padding: 0 4 0 4; }
 .statusHOSTDOWNSCHED        { font-size: 8pt; background-color: #ffdddd; line-height: 150%; padding: 0 4 0 4; }
 .statusHOSTUNREACHABLE      { font-size: 8pt; background-color: #ffddaa; line-height: 150%; padding: 0 4 0 4; }
@@ -35,9 +35,9 @@ div.status   { font-size: 10pt; text-align: center; }
 .statusBGUNKNOWN          { font-size: 8pt; background-color: #ffddaa; }
 .statusBGUNKNOWNACK       { font-size: 8pt; background-color: #ffddaa; }
 .statusBGUNKNOWNSCHED     { font-size: 8pt; background-color: #ffddaa; }
-.statusBGWARNING          { font-size: 8pt; background-color: #feffc1; }
-.statusBGWARNINGACK       { font-size: 8pt; background-color: #feffc1; }
-.statusBGWARNINGSCHED     { font-size: 8pt; background-color: #feffc1; }
+.statusBGWARNING          { font-size: 8pt; background-color: #e5ca3e; }
+.statusBGWARNINGACK       { font-size: 8pt; background-color: #e5ca3e; }
+.statusBGWARNINGSCHED     { font-size: 8pt; background-color: #e5ca3e; }
 .statusBGCRITICAL         { font-size: 8pt; background-color: #ffdddd; }
 .statusBGCRITICALACK      { font-size: 8pt; background-color: #ffdddd; }
 .statusBGCRITICALSCHED    { font-size: 8pt; background-color: #ffdddd; }
@@ -53,7 +53,7 @@ table.serviceTotals    { font-size: 10pt; font-weight: bold; }
 th.serviceTotals,a.serviceTotals { font-size: 8pt; }
 td.serviceTotals       { font-size: 8pt; text-align: center; background-color: #e0e0e0; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsOK       { font-size: 8pt; text-align: center; background-color: #6BC497; border: 1px solid #777777; padding: 2 4 2 4; }
-.serviceTotalsWARNING  { font-size: 8pt; text-align: center; background-color: #ffff00; border: 1px solid #777777; padding: 2 4 2 4; }
+.serviceTotalsWARNING  { font-size: 8pt; text-align: center; background-color: #e5ca3e; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsUNKNOWN  { font-size: 8pt; text-align: center; background-color: #ffbb55; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsCRITICAL { font-size: 8pt; text-align: center; background-color: #f88888; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsPENDING  { font-size: 8pt; text-align: center; background-color: #acacac; border: 1px solid #777777; padding: 2 4 2 4; }
@@ -93,8 +93,8 @@ a.pagenumber:hover { background-color: #EFEFEF;text-decoration:none;}
    ========================================================= */
 
 body.status {
-    background-color: #111111;
-    color: #c8cdd5;
+    background-color: #0f1117;
+    color: #d4d4d4;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
@@ -108,9 +108,20 @@ body.status a:hover {
 /* righe alternate */
 td.statusEven,
 td.statusOdd {
-    background-color: #2a2a2a !important;
-    color: #c8cdd5 !important;
+    background-color: #1a2133 !important;
+    color: #d4d4d4 !important;
 }
+
+/* miniStatus: forza sfondo corretto anche quando la td ha anche statusOdd/statusEven.
+   body.status td.miniStatusXXX ha specificità 0,2,1 > td.statusOdd 0,1,1 */
+body.status td.miniStatusUP,
+body.status td.miniStatusOK       { background-color: #6BC497 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusWARNING  { background-color: #e5ca3e !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusCRITICAL { background-color: #a84040 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusDOWN     { background-color: #a84040 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusUNKNOWN  { background-color: #9e82a0 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusUNREACHABLE { background-color: #9e82a0 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusPENDING  { background-color: #f2c94c !important; padding: 0 !important; border-left: none !important; }
 
 
 /* =========================================================
@@ -119,11 +130,24 @@ td.statusOdd {
 
 .statusTitle,
 td.statusTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 10px;
-    border-radius: 4px;
+    border-radius: 8px;
+}
+
+/* riga statusTitle: bordi arrotondati */
+tr td.statusTitle:first-child,
+tr td.statusTitle:only-child {
+    border-radius: 8px 0 0 8px;
+}
+tr td.statusTitle:last-child,
+tr td.statusTitle:only-child {
+    border-radius: 0 8px 8px 0;
+}
+tr td.statusTitle:only-child {
+    border-radius: 8px;
 }
 
 
@@ -138,9 +162,23 @@ td.statusHOSTUP {
 }
 
 /* DOWN */
-td.statusHOSTDOWN {
-    background-color: #ce6e6e !important;
+td.statusHOSTDOWN,
+body.status td.statusHOSTDOWN {
+    background-color: #a84040 !important;
     color: #ffffff !important;
+}
+
+/* Previeni che body.status a.statusDOWN trasformi il link host-name in una pillola */
+td.statusHOSTDOWN a,
+td.statusHOSTUNREACHABLE a,
+td.statusHOSTPENDING a,
+td.statusHOSTUP a {
+    display: inline !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: inherit !important;
 }
 
 /* UNREACHABLE */
@@ -152,7 +190,7 @@ td.statusHOSTUNREACHABLE {
 /* PENDING */
 td.statusHOSTPENDING {
     background-color: #f2c94c !important;
-    color: #3b2f00 !important;
+    color: #ffffff !important;
 }
 
 td.statusHOSTUP,
@@ -160,6 +198,40 @@ td.statusHOSTDOWN,
 td.statusHOSTUNREACHABLE,
 td.statusHOSTPENDING {
     border-left: 4px solid rgba(0,0,0,0.15);
+    transition: background-color 140ms ease, color 140ms ease;
+}
+
+/* bordi arrotondati celle host */
+td.statusHOSTUP:first-child,
+td.statusHOSTDOWN:first-child,
+td.statusHOSTUNREACHABLE:first-child,
+td.statusHOSTPENDING:first-child,
+td.statusEven:first-child,
+td.statusOdd:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+td.statusEven:first-child,
+td.statusOdd:first-child {
+    background-color: #1a2133 !important;
+    transition: background-color 140ms ease, box-shadow 140ms ease, color 140ms ease;
+    /* stesso colore degli altri td: nessun layer intermedio */
+}
+
+td.statusEven:first-child:hover,
+td.statusOdd:first-child:hover,
+td.statusEven:hover,
+td.statusOdd:hover {
+    background-color: #1e2d42 !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+td.statusHOSTUP:last-child,
+td.statusHOSTDOWN:last-child,
+td.statusHOSTUNREACHABLE:last-child,
+td.statusHOSTPENDING:last-child,
+td.statusEven:last-child,
+td.statusOdd:last-child {
+    border-radius: 0 6px 6px 0;
 }
 
 
@@ -179,7 +251,7 @@ td.statusBGOK {
 tr.statusWARNING td,
 td.statusWARNING,
 td.statusBGWARNING {
-    background-color: #efda3c !important;
+    background-color: #e5ca3e !important;
     color: #3b2f00 !important;
 }
 
@@ -187,7 +259,7 @@ td.statusBGWARNING {
 tr.statusCRITICAL td,
 td.statusCRITICAL,
 td.statusBGCRITICAL {
-    background-color: #ce6e6e !important;
+    background-color: #a84040 !important;
     color: #ffffff !important;
 }
 
@@ -195,7 +267,7 @@ td.statusBGCRITICAL {
 tr.statusUNKNOWN td,
 td.statusUNKNOWN,
 td.statusBGUNKNOWN {
-    background-color: #b59bb5 !important;
+    background-color: #9e82a0 !important;
     color: #ffffff !important;
 }
 
@@ -213,6 +285,96 @@ tr.statusCRITICAL td,
 tr.statusUNKNOWN td,
 tr.statusPENDING td {
     border-left: 4px solid rgba(0,0,0,0.15);
+    transition: background-color 140ms ease, color 140ms ease;
+}
+
+tr.statusOK:hover td,
+td.statusOK:hover,
+td.statusBGOK:hover {
+    background-color: #89ddb3 !important;
+    color: #143120 !important;
+}
+
+tr.statusWARNING:hover td,
+td.statusWARNING:hover,
+td.statusBGWARNING:hover {
+    background-color: #f0d765 !important;
+    color: #3b2f00 !important;
+}
+
+tr.statusCRITICAL:hover td,
+td.statusCRITICAL:hover,
+td.statusBGCRITICAL:hover {
+    background-color: #b85050 !important;
+    color: #ffffff !important;
+}
+
+tr.statusUNKNOWN:hover td,
+td.statusUNKNOWN:hover,
+td.statusBGUNKNOWN:hover {
+    background-color: #af93b1 !important;
+    color: #ffffff !important;
+}
+
+tr.statusPENDING:hover td,
+td.statusPENDING:hover {
+    background-color: #a5b2d0 !important;
+    color: #1f2d4a !important;
+}
+
+/* bordi arrotondati righe status */
+tr.statusOK td:first-child,
+tr.statusWARNING td:first-child,
+tr.statusCRITICAL td:first-child,
+tr.statusUNKNOWN td:first-child,
+tr.statusPENDING td:first-child {
+    border-radius: 6px 0 0 6px;
+}
+tr.statusOK td:last-child,
+tr.statusWARNING td:last-child,
+tr.statusCRITICAL td:last-child,
+tr.statusUNKNOWN td:last-child,
+tr.statusPENDING td:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+/* bordi arrotondati righe status – via td class (service detail) */
+td.statusBGOK:first-child,
+td.statusBGWARNING:first-child,
+td.statusBGWARNINGACK:first-child,
+td.statusBGWARNINGSCHED:first-child,
+td.statusBGCRITICAL:first-child,
+td.statusBGCRITICALACK:first-child,
+td.statusBGCRITICALSCHED:first-child,
+td.statusBGUNKNOWN:first-child,
+td.statusBGUNKNOWNACK:first-child,
+td.statusBGUNKNOWNSCHED:first-child,
+td.statusBGDOWN:first-child,
+td.statusBGDOWNACK:first-child,
+td.statusBGDOWNSCHED:first-child,
+td.statusBGUNREACHABLE:first-child,
+td.statusBGUNREACHABLEACK:first-child,
+td.statusBGUNREACHABLESCHED:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+td.statusBGOK:last-child,
+td.statusBGWARNING:last-child,
+td.statusBGWARNINGACK:last-child,
+td.statusBGWARNINGSCHED:last-child,
+td.statusBGCRITICAL:last-child,
+td.statusBGCRITICALACK:last-child,
+td.statusBGCRITICALSCHED:last-child,
+td.statusBGUNKNOWN:last-child,
+td.statusBGUNKNOWNACK:last-child,
+td.statusBGUNKNOWNSCHED:last-child,
+td.statusBGDOWN:last-child,
+td.statusBGDOWNACK:last-child,
+td.statusBGDOWNSCHED:last-child,
+td.statusBGUNREACHABLE:last-child,
+td.statusBGUNREACHABLEACK:last-child,
+td.statusBGUNREACHABLESCHED:last-child {
+    border-radius: 0 6px 6px 0;
 }
 
 /* link coerenti */
@@ -237,7 +399,7 @@ tr.statusUNKNOWN a {
 
 .miniStatusDOWN,
 .miniStatusDOWN a {
-    background-color: #ce6e6e !important;
+    background-color: #a84040 !important;
     color: #ffffff !important;
 }
 
@@ -255,26 +417,26 @@ tr.statusUNKNOWN a {
 
 .miniStatusWARNING,
 .miniStatusWARNING a {
-    background-color: #efda3c !important;
+    background-color: #e5ca3e !important;
     color: #3b2f00 !important;
 }
 
 .miniStatusCRITICAL,
 .miniStatusCRITICAL a {
-    background-color: #ce6e6e !important;
+    background-color: #a84040 !important;
     color: #ffffff !important;
 }
 
 .miniStatusUNKNOWN,
 .miniStatusUNKNOWN a {
-    background-color: #b59bb5 !important;
+    background-color: #9e82a0 !important;
     color: #2f2f2f !important;
 }
 
 .miniStatusPENDING,
 .miniStatusPENDING a {
     background-color: #f2c94c !important;
-    color: #3b2f00 !important;
+    color: #ffffff !important;
 }
 
 .miniStatusUP,
@@ -295,15 +457,16 @@ tr.statusUNKNOWN a {
    ========================================================= */
 
 table.statusGrid {
-    background-color: #1a1a1a;
+    background-color: #0f1117;
     border-collapse: separate;
-    border-spacing: 6px;
+    border-spacing: 6px 8px;
 }
 
 table.statusGrid td {
-    background-color: #252525;
-    border-radius: 4px;
-    padding: 4px 6px;
+    background-color: #141b26;
+    border-radius: 6px;
+    padding: 6px 8px;
+    vertical-align: middle;
 }
 
 table.statusGrid td.statusOK {
@@ -311,15 +474,15 @@ table.statusGrid td.statusOK {
 }
 
 table.statusGrid td.statusWARNING {
-    background-color: #efda3c !important;
+    background-color: #e5ca3e !important;
 }
 
 table.statusGrid td.statusCRITICAL {
-    background-color: #ce6e6e !important;
+    background-color: #a84040 !important;
 }
 
 table.statusGrid td.statusUNKNOWN {
-    background-color: #b59bb5 !important;
+    background-color: #9e82a0 !important;
 }
 
 table.statusGrid td.statusPENDING {
@@ -339,6 +502,93 @@ table.statusGrid td img:hover {
     opacity: 1;
 }
 
+/* =========================================================
+   GRID VIEW: badge <a class="statusXXX"> — border-radius + spacing
+   La classe è sull'elemento <a> direttamente, non su <td>
+   ========================================================= */
+
+body.status a.statusOK,
+body.status a.statusUP {
+    display: inline-block !important;
+    border-radius: 5px !important;
+    margin: 2px 3px !important;
+    padding: 2px 8px !important;
+    background-color: #6BC497 !important;
+    color: #1f3d2b !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.6 !important;
+}
+
+body.status a.statusWARNING {
+    display: inline-block !important;
+    border-radius: 5px !important;
+    margin: 2px 3px !important;
+    padding: 2px 8px !important;
+    background-color: #e5ca3e !important;
+    color: #3b2f00 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.6 !important;
+}
+
+body.status a.statusCRITICAL,
+body.status a.statusDOWN {
+    display: inline-block !important;
+    border-radius: 5px !important;
+    margin: 2px 3px !important;
+    padding: 2px 8px !important;
+    background-color: #a84040 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.6 !important;
+}
+
+body.status a.statusUNKNOWN,
+body.status a.statusUNREACHABLE {
+    display: inline-block !important;
+    border-radius: 5px !important;
+    margin: 2px 3px !important;
+    padding: 2px 8px !important;
+    background-color: #9e82a0 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.6 !important;
+}
+
+body.status a.statusPENDING {
+    display: inline-block !important;
+    border-radius: 5px !important;
+    margin: 2px 3px !important;
+    padding: 2px 8px !important;
+    background-color: #f2c94c !important;
+    color: #3b2f00 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.6 !important;
+}
+
+/* miniStatus (overview/summary): <a class="miniStatusXXX"> e <td class="miniStatusXXX"> */
+body.status a.miniStatusUP,
+body.status a.miniStatusDOWN,
+body.status a.miniStatusUNREACHABLE,
+body.status a.miniStatusOK,
+body.status a.miniStatusWARNING,
+body.status a.miniStatusCRITICAL,
+body.status a.miniStatusUNKNOWN,
+body.status a.miniStatusPENDING {
+    display: inline-block !important;
+    border-radius: 5px !important;
+    margin: 2px 3px !important;
+    padding: 2px 8px !important;
+    border-left: none !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1.6 !important;
+}
+
 
 /* =========================================================
    HOST NAME EMPHASIS
@@ -348,6 +598,53 @@ table.status a[href*="status.cgi?host="],
 table.status a[href*="extinfo.cgi?type=1"] {
     font-weight: 600;
     letter-spacing: 0.2px;
+    transition: color 160ms ease, opacity 160ms ease;
+}
+
+body.status table.status td.statusHOSTUP:first-child:hover,
+body.status table.status td.statusHOSTUP:first-child:hover {
+    background-color: #89ddb3 !important;
+    color: #143120 !important;
+}
+
+body.status table.status td.statusHOSTDOWN:first-child:hover,
+body.status table.status td.statusHOSTDOWNACK:first-child:hover,
+body.status table.status td.statusHOSTDOWNSCHED:first-child:hover {
+    background-color: #b85050 !important;
+    color: #ffffff !important;
+}
+
+body.status table.status td.statusHOSTUNREACHABLE:first-child:hover,
+body.status table.status td.statusHOSTUNREACHABLEACK:first-child:hover,
+body.status table.status td.statusHOSTUNREACHABLESCHED:first-child:hover {
+    background-color: #ea756d !important;
+    color: #ffffff !important;
+}
+
+body.status table.status td.statusHOSTPENDING:first-child:hover {
+    background-color: #f8df7d !important;
+    color: #ffffff !important;
+}
+
+body.status table.status td.statusHOSTUP:first-child:hover a,
+body.status table.status td.statusHOSTDOWN:first-child:hover a,
+body.status table.status td.statusHOSTUNREACHABLE:first-child:hover a,
+body.status table.status td.statusHOSTPENDING:first-child:hover a,
+body.status table.status td.statusHOSTDOWNACK:first-child:hover a,
+body.status table.status td.statusHOSTDOWNSCHED:first-child:hover a,
+body.status table.status td.statusHOSTUNREACHABLEACK:first-child:hover a,
+body.status table.status td.statusHOSTUNREACHABLESCHED:first-child:hover a,
+table.status a[href*="status.cgi?host="]:hover,
+table.status a[href*="extinfo.cgi?type=1"]:hover {
+    color: #010101 !important;
+    opacity: 1;
+}
+
+td.statusEven:first-child:hover a[href*="status.cgi?host="],
+td.statusOdd:first-child:hover a[href*="status.cgi?host="],
+td.statusEven:first-child:hover a[href*="extinfo.cgi?type=1"],
+td.statusOdd:first-child:hover a[href*="extinfo.cgi?type=1"] {
+    color: #ffffff !important;
 }
 
 /* =========================================================
@@ -363,8 +660,8 @@ table.headertable {
 
 /* celle header */
 table.headertable > tbody > tr > td {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 10px;
     padding: 16px 18px;
     vertical-align: top;
@@ -375,7 +672,7 @@ table.headertable > tbody > tr > td {
 
 /* Current Network Status */
 .infoBoxTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff !important;
     font-weight: 600;
     padding: 8px 12px;
@@ -386,7 +683,7 @@ table.headertable > tbody > tr > td {
 
 /* Host Status Totals */
 div.hostTotals {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -397,7 +694,7 @@ div.hostTotals {
 
 /* Service Status Totals */
 div.serviceTotals {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -422,17 +719,17 @@ table.serviceTotals td {
 }
 
 .serviceTotalsWARNING {
-    background-color: #d6c85c !important;
+    background-color: #e5ca3e !important;
     color: #3b2f00;
 }
 
 .serviceTotalsCRITICAL {
-    background-color: #c87070 !important;
+    background-color: #a84040 !important;
     color: #ffffff;
 }
 
 .serviceTotalsPROBLEMS {
-    background-color: #1e3652 !important;
+    background-color: #1a2133 !important;
     color: #e8ecf0 !important;
 }
 
@@ -450,8 +747,8 @@ table.headertable > tbody > tr > td:last-child {
 body.status table.filter {
     width: 70%;
 	margin: 10px 0 5px 0;
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
 }
 
@@ -462,7 +759,7 @@ body.status td.filter {
 
 /* titolo */
 body.status .filterTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 4px 6px;
@@ -474,7 +771,7 @@ body.status .filterTitle {
 /* righe nome/valore */
 body.status .filterName {
     font-weight: 600;
-    color: #c8cdd5;
+    color: #d4d4d4;
     padding: 2px 3px;
     white-space: nowrap;
 	text-align: left;
@@ -519,6 +816,12 @@ body.status .itemTotalsTitle {
 
 body.status table.status {
     margin-top: 15px;
+    border-collapse: separate;
+    border-spacing: 3px 2px;
+}
+
+body.status table.status td {
+    border-radius: 6px;
 }
 
 
@@ -539,14 +842,14 @@ body.status table.status {
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    background-color: #232323;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 6px;
 
     padding: 4px 26px 4px 8px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #c8cdd5;
+    color: #d4d4d4;
 
     cursor: pointer;
     background-image:
@@ -560,13 +863,13 @@ body.status table.status {
 }
 
 #result_limit select:hover {
-    background-color: #2d2d2d;
+    background-color: #1a2133;
 }
 
 #result_limit select:focus {
     outline: none;
     border-color: #1e3652;
-    box-shadow: 0 0 0 2px rgba(127,150,173,0.3);
+    box-shadow: 0 0 0 2px rgba(144, 144, 144, 0.25);
 }
 
 
@@ -617,7 +920,7 @@ td.serviceTotals {
    sfondo navy, testo chiaro – OK lì */
 table.hostTotals .hostTotalsPROBLEMS,
 table.serviceTotals .serviceTotalsPROBLEMS {
-    background-color: #1e3652 !important;
+    background-color: #1a2133 !important;
     color: #e8ecf0 !important;
 }
 table.hostTotals .hostTotalsPROBLEMS a,
@@ -664,6 +967,8 @@ tr > td.miniStatusDOWN     ~ td.hostTotalsPROBLEMS a {
 
 /* === Readability fix: hostdetail/service detail cells with light backgrounds (e.g. scheduled downtime) === */
 /* Ensure text and links are readable on light red/pink/orange backgrounds */
+td.statusBGDOWN,
+td.statusBGDOWNACK,
 td.statusBGDOWNSCHED,
 td.statusBGDOWNTIME,
 td.statusBGHOSTDOWNSCHED,
@@ -682,6 +987,16 @@ td.statusBGCRITICALACK a,
 td.statusBGWARNINGACK a {
   color: inherit !important;
   text-decoration: none !important;
+}
+
+body.status table.status td.statusBGDOWN,
+body.status table.status td.statusBGDOWNACK {
+  color: #111111 !important;
+}
+
+body.status table.status td.statusBGDOWN a,
+body.status table.status td.statusBGDOWNACK a {
+  color: #111111 !important;
 }
 
 
@@ -759,12 +1074,10 @@ body.status td.miniStatusUNKNOWN a,
 body.status td.miniStatusDOWN a,
 body.status td.miniStatusUNREACHABLE a,
 body.status td.miniStatusPENDING a {
-  display: inline-block;
+  display: block;
   padding: 3px 10px;
-  border-radius: 4px;
   font-weight: 700;
   text-decoration: none !important;
-  border: 1px solid rgba(0,0,0,.35);
 }
 
 /* colori testo leggibili sui vari sfondi */
@@ -779,6 +1092,28 @@ body.status td.miniStatusUNKNOWN a,
 body.status td.miniStatusDOWN a,
 body.status td.miniStatusUNREACHABLE a {
   color: #fff !important;
+}
+
+/* Forza testo scuro su TUTTO ciò che sta dentro la cella WARNING/OK/PENDING */
+body.status td.miniStatusWARNING,
+body.status td.miniStatusWARNING *,
+body.status td.miniStatusOK,
+body.status td.miniStatusUP,
+body.status td.miniStatusPENDING,
+body.status td.miniStatusPENDING * {
+  color: #1a1200 !important;
+}
+
+/* Forza testo chiaro su TUTTO ciò che sta dentro le celle scure */
+body.status td.miniStatusCRITICAL,
+body.status td.miniStatusCRITICAL *,
+body.status td.miniStatusDOWN,
+body.status td.miniStatusDOWN *,
+body.status td.miniStatusUNKNOWN,
+body.status td.miniStatusUNKNOWN *,
+body.status td.miniStatusUNREACHABLE,
+body.status td.miniStatusUNREACHABLE * {
+  color: #ffffff !important;
 }
 
 /* ===== SUMMARY sub-badges: Unhandled / on Problem Hosts ===== */
@@ -893,4 +1228,57 @@ div.miniStatusOK {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+}
+
+/* Centra il th "Status" (2a colonna hostdetail) */
+body.status table.status th.status:nth-child(2) { text-align: center !important; }
+
+/* Nome servizio (link a extinfo type=2) */
+body.status table.status td a[href*="extinfo.cgi?type=2"] {
+    font-weight: 400;
+}
+
+/* Badge di stato: bordi tondeggianti */
+body.status table.status td.statusWARNING,
+body.status table.status td.statusCRITICAL,
+body.status table.status td.statusOK,
+body.status table.status td.statusUNKNOWN,
+body.status table.status td.statusPENDING,
+body.status table.status td.statusHOSTUP,
+body.status table.status td.statusHOSTDOWN,
+body.status table.status td.statusHOSTDOWNACK,
+body.status table.status td.statusHOSTDOWNSCHED,
+body.status table.status td.statusHOSTUNREACHABLE,
+body.status table.status td.statusHOSTUNREACHABLEACK,
+body.status table.status td.statusHOSTUNREACHABLESCHED,
+body.status table.status td.statusHOSTPENDING {
+    border-radius: 6px !important;
+    text-align: center !important;
+}
+
+/* Cella nome servizio: bordi tondeggianti */
+body.status table.status td:has(a[href*="extinfo.cgi?type=2"]) {
+    border-radius: 6px !important;
+}
+
+/* === PAGINAZIONE – tema blu notte === */
+body.status .pagenumber {
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
+    color: #c8cdd5;
+    border-radius: 4px;
+}
+
+body.status a.pagenumber:hover {
+    background-color: #1e3652;
+    border-color: #1e3652;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+body.status .current_page {
+    background-color: #1e3652;
+    border-color: #1e3652;
+    color: #ffffff;
+    font-weight: 600;
 }

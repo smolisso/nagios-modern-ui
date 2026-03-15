@@ -50,10 +50,10 @@ if ($theme != 'dark' && $theme != 'light') {
 
 	<style>
 		:root {
-			--border: #28303E;
+			--border: #1e2d42;
 			--sidebar-width: 200px;
-			--toggle-bg: #1e3652;
-			--toggle-color: #e8ecf0;
+			--toggle-bg: #1a2133;
+			--toggle-color: #c8cdd5;
 		}
 
 		.light {
@@ -66,6 +66,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			margin: 0;
 			padding: 0;
 			overflow: hidden;
+			background-color: #0f1117;
 		}
 
 		#root {
@@ -83,6 +84,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			border-right: 1px solid var(--border);
 			z-index: 100;
 			transition: transform 0.3s ease;
+			background-color: #141b26;
 		}
 
 		/* Main: occupa tutto tranne lo spazio della sidebar */
@@ -128,7 +130,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		}
 
 		#sidebar-toggle:hover {
-			background: #2a4a6a;
+			background: #1e3652;
 		}
 
 		#sidebar-toggle img {

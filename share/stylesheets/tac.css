@@ -10,69 +10,69 @@
 .title     { font-weight: bold; }
 .titleItem { font-size: 8pt; font-weight: bold; }
 
-td.perfTitle { font-size: 10pt; font-weight: bold; background-color: #d0d0d0; border: 1px solid #aaaaaa; }
-.perfBox     { background-color: #eeeeee; border: 1px solid #cccccc; }
+td.perfTitle { font-size: 10pt; font-weight: bold; background-color: #1a2133; color: #ffffff; border: 1px solid #1e2d42; }
+.perfBox     { background-color: #141b26; border: 1px solid #1e2d42; }
 .perfItem    { font-size: 8pt; font-weight: bold; }
 .perfValue   { font-size: 8pt; }
 
-.healthTitle { font-weight: bold; font-size: 10pt; background-color: #d0d0d0; border: 1px solid #aaaaaa; }
+.healthTitle { font-weight: bold; font-size: 10pt; background-color: #1a2133; color: #ffffff; border: 1px solid #1e2d42; }
 .healthBox   { }
 .healthItem  { font-size: 10pt; font-weight: bold; }
-.healthBar   { background-color: grey; padding: 2 4 2 4; }
+.healthBar   { background-color: #1a2133; padding: 2 4 2 4; }
 
-.outageTitle     { font-weight: bold; background-color: #d0d0d0; border: 1px solid #aaaaaa; }
-.outageHeader    { font-weight: bold; border-bottom: 1px solid #aaaaaa; }
+.outageTitle     { font-weight: bold; background-color: #1a2133; color: #ffffff; border: 1px solid #1e2d42; }
+.outageHeader    { font-weight: bold; border-bottom: 1px solid #1e2d42; }
 
-.hostTitle       { font-weight: bold; background-color: #d0d0d0; border: 1px solid #aaaaaa; }
-td.hostHeader    { font-weight: bold; border-bottom: 1px solid #aaaaaa; }
+.hostTitle       { font-weight: bold; background-color: #1a2133; color: #ffffff; border: 1px solid #1e2d42; }
+td.hostHeader    { font-weight: bold; border-bottom: 1px solid #1e2d42; }
 
-.serviceTitle    { font-weight: bold; background-color: #d0d0d0; border: 1px solid #aaaaaa; }
-td.serviceHeader { font-weight: bold; border-bottom: 1px solid #aaaaaa; }
+.serviceTitle    { font-weight: bold; background-color: #1a2133; color: #ffffff; border: 1px solid #1e2d42; }
+td.serviceHeader { font-weight: bold; border-bottom: 1px solid #1e2d42; }
 
-.featureTitle    { font-weight: bold; background-color: #d0d0d0; border: 1px solid #aaaaaa; }
-td.featureHeader { font-weight: bold; border-bottom: 1px solid #aaaaaa; }
+.featureTitle    { font-weight: bold; background-color: #1a2133; color: #ffffff; border: 1px solid #1e2d42; }
+td.featureHeader { font-weight: bold; border-bottom: 1px solid #1e2d42; }
 
-.featureEnabled  { text-align: center; background-color: #ccffcc; }
-.featureDisabled { text-align: center; background-color: #ffcccc; }
+.featureEnabled  { text-align: center; background-color: #1f3d2b; color: #6BC497; }
+.featureDisabled { text-align: center; background-color: #3d1a1a; color: #a84040; }
 
 .featureEnabledFlapDetection             { text-align: center; font-weight: bold; }
 .featureDisabledFlapDetection            { text-align: center; font-weight: bold; }
-.featureItemEnabledServiceFlapDetection  { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledServiceFlapDetection { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemEnabledHostFlapDetection     { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledHostFlapDetection    { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemServicesNotFlapping          { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemServicesFlapping             { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemHostsNotFlapping             { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemHostsFlapping                { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
+.featureItemEnabledServiceFlapDetection  { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledServiceFlapDetection { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemEnabledHostFlapDetection     { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledHostFlapDetection    { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemServicesNotFlapping          { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemServicesFlapping             { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemHostsNotFlapping             { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemHostsFlapping                { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
 
 .featureEnabledNotifications             { text-align: center; font-weight: bold; }
 .featureDisabledNotifications            { text-align: center; font-weight: bold; }
-.featureItemEnabledServiceNotifications  { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledServiceNotifications { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemEnabledHostNotifications     { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledHostNotifications    { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
+.featureItemEnabledServiceNotifications  { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledServiceNotifications { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemEnabledHostNotifications     { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledHostNotifications    { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
 
 .featureEnabledHandlers                  { text-align: center; font-weight: bold; }
 .featureDisabledHandlers                 { text-align: center; font-weight: bold; }
-.featureItemEnabledServiceHandlers       { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledServiceHandlers      { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemEnabledHostHandlers          { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledHostHandlers         { font-size: 8pt; background-color: #f88888; }
+.featureItemEnabledServiceHandlers       { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledServiceHandlers      { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemEnabledHostHandlers          { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledHostHandlers         { font-size: 8pt; background-color: #a84040; color: #ffffff; }
 
 .featureEnabledActiveChecks              { text-align: center; font-weight: bold; }
 .featureDisabledActiveChecks             { text-align: center; font-weight: bold; }
-.featureItemEnabledActiveServiceChecks   { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledActiveServiceChecks  { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemEnabledActiveHostChecks      { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledActiveHostChecks     { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
+.featureItemEnabledActiveServiceChecks   { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledActiveServiceChecks  { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemEnabledActiveHostChecks      { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledActiveHostChecks     { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
 
 .featureEnabledPassiveChecks             { text-align: center; font-weight: bold; }
 .featureDisabledPassiveChecks            { text-align: center; font-weight: bold; }
-.featureItemEnabledPassiveServiceChecks  { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledPassiveServiceChecks { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
-.featureItemEnabledPassiveHostChecks     { font-size: 8pt; background-color: #6BC497; border: 1px solid #777777; }
-.featureItemDisabledPassiveHostChecks    { font-size: 8pt; background-color: #f88888; border: 1px solid #777777; }
+.featureItemEnabledPassiveServiceChecks  { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledPassiveServiceChecks { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemEnabledPassiveHostChecks     { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledPassiveHostChecks    { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
 
 /* =========================================================
    Nagios Modern UI – tac.cgi
@@ -80,7 +80,7 @@ td.featureHeader { font-weight: bold; border-bottom: 1px solid #aaaaaa; }
 
 /* background generale */
 body.tac {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family:
         system-ui,
@@ -107,8 +107,8 @@ body.tac div {
    ========================================================= */
 
 body.tac .healthBox {
-    background-color: #232323 !important;
-    border: 1px solid #333333;
+    background-color: #1a2133 !important;
+    border: 1px solid #1e2d42;
     padding: 6px;
 }
 
@@ -131,11 +131,11 @@ body.tac .outageTitle,
 body.tac .hostTitle,
 body.tac .serviceTitle,
 body.tac .featureTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #e8ecf0;
     font-weight: 600;
     letter-spacing: 0.3px;
-    border: 1px solid #152840;
+    border: 1px solid #5a5a5a;
 }
 
 /* =========================================================
@@ -146,8 +146,8 @@ body.tac .outageHeader,
 body.tac .hostHeader,
 body.tac .serviceHeader,
 body.tac .featureHeader {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     font-weight: 600;
 }
 
@@ -161,19 +161,19 @@ body.tac .featureEnabledHandlers,
 body.tac .featureEnabledActiveChecks,
 body.tac .featureEnabledPassiveChecks,
 body.tac .featureDisabledNotifications {
-    background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
+    background-color: #1a2133;
+    border: 1px solid #1e2d42;
     padding: 6px;
     border-radius: 3px;
 }
 
 body.tac a {
-    color: #6ba3e8;
+    color: #d4d4d4;
     font-weight: 500;
 }
 
 body.tac a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 /* =========================================================
@@ -183,21 +183,21 @@ body.tac a:hover {
 
 /* contenitore box */
 body.tac table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.tac td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 /* titolo box */
 body.tac .infoBoxTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -263,15 +263,15 @@ body.tac .featureDisabledPassiveChecks::before {
 
 /* container */
 body.tac .healthBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 6px;
 }
 
 /* title */
 body.tac .healthTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     border-radius: 6px;
     padding: 4px 8px;
     font-weight: 600;
@@ -297,15 +297,15 @@ body.tac table.tac {
 
 /* container */
 body.tac .perfBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 6px;
 }
 
 /* title */
 body.tac .perfTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     border-radius: 6px;
     padding: 4px 8px;
     font-weight: 600;
@@ -349,7 +349,7 @@ body.tac .perfItem a:hover,
 body.tac .perfValue a:hover {
     text-decoration: underline;
     opacity: 0.85;
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 
@@ -368,11 +368,11 @@ body.tac table.tac {
     transform: scale(1.03);
     transform-origin: top left;
     margin-bottom: 8px;
-} 
+}
 
 /* =========================================================
    TAC – Section containers (uniform look)
-   ========================================================= 
+   =========================================================
 
 body.tac table.tac {
     background-color: #a5a5a5;
@@ -389,13 +389,13 @@ body.tac .outageTitle,
 body.tac .hostTitle,
 body.tac .serviceTitle,
 body.tac .featureTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #e8ecf0;
     font-weight: 600;
     font-size: 1.05em;
     padding: 6px 10px;
     border-radius: 6px;
-    border: 1px solid #152840;
+    border: 1px solid #5a5a5a;
 }
 
 /* =========================================================
@@ -406,8 +406,8 @@ body.tac .outageHeader,
 body.tac .hostHeader,
 body.tac .serviceHeader,
 body.tac .featureHeader {
-    background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
+    background-color: #1a2133;
+    border: 1px solid #1e2d42;
     border-radius: 6px;
     padding: 6px 8px;
     font-size: 0.95em;
@@ -417,14 +417,14 @@ body.tac .featureHeader {
 body.tac .outageHeader a,
 body.tac .hostHeader a,
 body.tac .serviceHeader a {
-    color: #6ba3e8;
+    color: #d4d4d4;
     text-decoration: none;
 }
 
 body.tac .outageHeader a:hover,
 body.tac .hostHeader a:hover,
 body.tac .serviceHeader a:hover {
-    color: #99c0f5;
+    color: #ffffff;
     text-decoration: underline;
 }
 
@@ -454,8 +454,8 @@ body.tac .featureEnabledHandlers,
 body.tac .featureEnabledActiveChecks,
 body.tac .featureEnabledPassiveChecks,
 body.tac .featureDisabledNotifications {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 8px;
     font-size: 0.9em;
@@ -466,14 +466,14 @@ body.tac .featureDisabledNotifications {
    ========================================================= */
 
 body.tac .healthBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 8px;
 }
 
 body.tac .healthTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     border-radius: 6px;
     padding: 6px 10px;
     font-size: 1.05em;
@@ -560,7 +560,7 @@ body.tac
 body.tac .featureItemServicesFlapping a {
     font-size: inherit !important;
     font-weight: 400;
-    color: #6ba3e8;
+    color: #d4d4d4;
     text-decoration: none;
 }
 

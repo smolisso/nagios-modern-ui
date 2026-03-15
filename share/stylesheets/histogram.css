@@ -18,16 +18,16 @@
    ========================================================= */
 
 body.histogram {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.histogram a {
-    color: #6ba3e8;
+    color: #d4d4d4;
 }
 body.histogram a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 /* =========================================================
@@ -47,7 +47,7 @@ body.histogram div {
 
 body.histogram .infoBoxTitle,
 body.histogram .reportSelectTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -61,7 +61,7 @@ body.histogram .reportSelectTitle {
 body.histogram .reportSelectSubTitle,
 body.histogram .reportSelectItem,
 body.histogram .optBoxItem {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     color: #c8cdd5;
     padding: 6px 8px;
 }
@@ -73,8 +73,8 @@ body.histogram .optBoxItem {
 body.histogram select,
 body.histogram input[type="text"],
 body.histogram input[type="submit"] {
-    background-color: #232323;
-    border: 1px solid #333333;
+    background-color: #1a2133;
+    border: 1px solid #1e2d42;
     color: #c8cdd5;
     padding: 4px 6px;
     border-radius: 4px;
@@ -87,7 +87,7 @@ body.histogram input[type="submit"] {
 }
 
 body.histogram input[type="submit"]:hover {
-    background-color: #2d2d2d;
+    background-color: #1e2d42;
 }
 
 /* =========================================================
@@ -105,22 +105,22 @@ body.histogram table {
 
 /* contenitore box */
 body.histogram table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.histogram td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 /* titolo box */
 body.histogram .infoBoxTitle {
-    background-color: #1e3652;
-    color: #e8ecf0;
+    background-color: #1a2133;
+    color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
     border-radius: 6px;

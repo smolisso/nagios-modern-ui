@@ -13,7 +13,7 @@
    ========================================================= */
 
 body.showlog {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family:
         system-ui,
@@ -28,12 +28,12 @@ body.showlog {
 }
 
 body.showlog a {
-    color: #6ba3e8;
+    color: #d4d4d4;
     font-weight: 500;
 }
 
 body.showlog a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 
@@ -43,7 +43,7 @@ body.showlog a:hover {
    ========================================================= */
 
 body.showlog .dateTimeBreak {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #e8ecf0;
     font-weight: 600;
     padding: 4px 0;
@@ -53,7 +53,7 @@ body.showlog .dateTimeBreak {
 body.showlog .dateTimeBreak hr {
     border: none;
     height: 1px;
-    background-color: #152840;
+    background-color: #5a5a5a;
 }
 
 /* =========================================================
@@ -61,8 +61,8 @@ body.showlog .dateTimeBreak hr {
    ========================================================= */
 
 body.showlog .logEntries {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     padding: 6px;
     margin-bottom: 6px;
 }
@@ -73,32 +73,32 @@ body.showlog .logEntries {
 
 /* CRITICAL */
 body.showlog img[alt*="Critical"] {
-    background-color: #e06666;
+    background-color: #a84040;
     border-radius: 3px;
 }
 
 /* WARNING */
 body.showlog img[alt*="Warning"] {
-    background-color: #f2c94c;
+    background-color: #e5ca3e;
     border-radius: 3px;
 }
 
 /* UNKNOWN */
 body.showlog img[alt*="Unknown"] {
-    background-color: #bdbdbd;
+    background-color: #9e82a0;
     border-radius: 3px;
 }
 
 /* OK / RECOVERY */
 body.showlog img[alt*="Ok"],
 body.showlog img[alt*="Recovery"] {
-    background-color: #8fd19e;
+    background-color: #6BC497;
     border-radius: 3px;
 }
 
 /* INFO */
 body.showlog img[alt*="Informational"] {
-    background-color: #90caf9;
+    background-color: #d4d4d4;
     border-radius: 3px;
 }
 
@@ -106,7 +106,7 @@ body.showlog img[alt*="Informational"] {
 
 /* =========================================================
    NAVIGATION BOX
-   ========================================================= 
+   =========================================================
 
 body.showlog .navBox {
     background-color: #a5a5a5;
@@ -127,15 +127,15 @@ body.showlog .navBoxDate {
 
 /* contenitore box */
 body.showlog table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.showlog td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
@@ -143,7 +143,7 @@ body.showlog td.infoBox {
 body.showlog .infoBoxTitle,
 body.showlog .dataTitle,
 body.showlog .navBoxTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;

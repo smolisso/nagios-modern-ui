@@ -8,26 +8,26 @@
 .notifications { }
 
 TABLE.notifications { padding: 0; margin: 0; }
-TH.notifications    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
-.notificationsOdd   { font-size: 8pt; background-color: #1c1c1c; color: #c8cdd5; padding: 0 4 0 4; }
-.notificationsEven  { font-size: 8pt; background-color: #232323; color: #c8cdd5; padding: 0 4 0 4; }
+TH.notifications    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #c8cdd5; }
+.notificationsOdd   { font-size: 8pt; background-color: #141b26; color: #c8cdd5; padding: 0 4 0 4; }
+.notificationsEven  { font-size: 8pt; background-color: #1a2133; color: #c8cdd5; padding: 0 4 0 4; }
 
 /* these are dark colors */
-.notificationsOK              { background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsUNKNOWN         { background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsWARNING         { background-color: #ffff00; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsCRITICAL        { background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsACKNOWLEDGEMENT { background-color: #aaaaaa; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsCUSTOM          { background-color: #778899; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsDOWNTIME        { background-color: #aaccff; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsOK              { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsUNKNOWN         { background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsWARNING         { background-color: #e5ca3e; color: #3b2f00; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsCRITICAL        { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsACKNOWLEDGEMENT { background-color: #1a2133; color: #c8cdd5; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsCUSTOM          { background-color: #1a2133; color: #c8cdd5; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsDOWNTIME        { background-color: #1a2133; color: #c8cdd5; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
 /* these are dark colors */
-.notificationsHOSTUP              { background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsHOSTDOWN            { background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsHOSTUNREACHABLE     { background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsHOSTACKNOWLEDGEMENT { background-color: #aaaaaa; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsHOSTCUSTOM          { background-color: #778899; border: 1px solid #777777; padding: 0 4 0 4; }
-.notificationsHOSTDOWNTIME        { background-color: #aaccff; border: 1px solid #777777; padding: 0 4 0 4; }
+.notificationsHOSTUP              { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsHOSTDOWN            { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsHOSTUNREACHABLE     { background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsHOSTACKNOWLEDGEMENT { background-color: #1a2133; color: #c8cdd5; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsHOSTCUSTOM          { background-color: #1a2133; color: #c8cdd5; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.notificationsHOSTDOWNTIME        { background-color: #1a2133; color: #c8cdd5; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
 /* =========================================================
    NAGIOS MODERN UI – notifications.cgi (FINAL)
@@ -38,16 +38,16 @@ TH.notifications    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; bo
    ========================================================= */
 
 body.notifications {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.notifications a {
-    color: #6ba3e8;
+    color: #d4d4d4;
 }
 body.notifications a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 /* =========================================================
@@ -69,7 +69,7 @@ body.notifications div {
 body.notifications .infoBoxTitle,
 body.notifications .dataTitle,
 body.notifications .navBoxTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -78,7 +78,7 @@ body.notifications .navBoxTitle {
 
 /* =========================================================
    NAVIGATION BOX
-   ========================================================= 
+   =========================================================
 
 body.notifications .navBox {
     background-color: #a5a5a5;
@@ -95,8 +95,8 @@ body.notifications .navBoxDate {
    ========================================================= */
 
 body.notifications .optBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
 }
 
 body.notifications .optBoxItem {
@@ -111,8 +111,8 @@ body.notifications .optBoxItem {
 body.notifications select,
 body.notifications input[type="text"],
 body.notifications input[type="submit"] {
-    background-color: #232323;
-    border: 1px solid #333333;
+    background-color: #1a2133;
+    border: 1px solid #1e2d42;
     color: #c8cdd5;
     padding: 4px 6px;
     border-radius: 4px;
@@ -124,7 +124,7 @@ body.notifications input[type="submit"] {
 }
 
 body.notifications input[type="submit"]:hover {
-    background-color: #2d2d2d;
+    background-color: #1e2d42;
 }
 
 /* =========================================================
@@ -132,14 +132,14 @@ body.notifications input[type="submit"]:hover {
    ========================================================= */
 
 table.notifications {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     border-collapse: separate;
     border-spacing: 4px;
 }
 
 /* header */
 table.notifications th.notifications {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 6px 8px;
@@ -147,7 +147,7 @@ table.notifications th.notifications {
 
 /* rows */
 table.notifications td.notifications {
-    background-color: #2a2a2a;
+    background-color: #1a2133;
     color: #c8cdd5;
     padding: 6px 8px;
 }
@@ -160,8 +160,8 @@ table.notifications td.notifications {
 
 /* contenitore box */
 body.notifications table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
     witdh: 80%
@@ -169,13 +169,13 @@ body.notifications table.infoBox {
 
 /* cella interna */
 body.notifications td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 /* titolo box */
 body.notifications .infoBoxTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;

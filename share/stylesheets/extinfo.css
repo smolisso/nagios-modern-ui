@@ -11,8 +11,8 @@
 
 .stateInfoPanel { font-size: 9pt; }
 .stateStatisticsPanel { }
-.stateInfoTable1 { background-color: #f4f2f2; border: 1px solid #d0d0d0; }
-.stateInfoTable2 { background-color: #f4f2f2; border: 1px solid #d0d0d0; }
+.stateInfoTable1 { background-color: #141b26; border: 1px solid #1e2d42; }
+.stateInfoTable2 { background-color: #141b26; border: 1px solid #1e2d42; }
 
 .dataVar { font-size: 9pt; font-weight: bold; }
 .dataVal { font-size: 9pt; }
@@ -23,7 +23,7 @@ div.data   { font-size: 10pt; font-weight: normal; }
 .dataTitle { font-size: 10pt; font-weight: bold; padding-bottom: 5; }
 
 .commandTitle { font-size: 10pt; text-align: center; font-weight: bold; padding-bottom: 5; }
-TABLE.command { background-color: #f4f2f2; border: 1px solid #d0d0d0; }
+TABLE.command { background-color: #141b26; border: 1px solid #1e2d42; }
 .command      { font-size: 9pt; }
 .commandPanel { }
 .commentPanel { }
@@ -32,56 +32,56 @@ TABLE.command { background-color: #f4f2f2; border: 1px solid #d0d0d0; }
 DIV.commentNav { font-size: 10pt; text-align: center; }
 A.commentNav   { font-size: 10pt; }
 
-TABLE.comment { font-size: 10pt; background-color: #1c1c1c; padding: 2; }
-TH.comment    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
-.commentOdd   { font-size: 9pt; background-color: #1c1c1c; color: #c8cdd5; }
-.commentEven  { font-size: 9pt; background-color: #232323; color: #c8cdd5; }
-DIV.comment,A.comment { font-size: 10pt; background-color: #1c1c1c; color: #c8cdd5; text-align: center; }
+TABLE.comment { font-size: 10pt; background-color: #141b26; padding: 2; }
+TH.comment    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #c8cdd5; }
+.commentOdd   { font-size: 9pt; background-color: #141b26; color: #c8cdd5; }
+.commentEven  { font-size: 9pt; background-color: #1a2133; color: #c8cdd5; }
+DIV.comment,A.comment { font-size: 10pt; background-color: #141b26; color: #c8cdd5; text-align: center; }
 
 .downtimeTitle  { font-size: 12pt; text-align: center; font-weight: bold; }
 DIV.downtimeNav { font-size: 10pt; text-align: center; }
 A.downtimeNav   { font-size: 10pt; }
 
-TABLE.downtime { font-size: 10pt; background-color: #1c1c1c; padding: 2; }
-TH.downtime    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
-.downtimeOdd   { font-size: 9pt; background-color: #1c1c1c; color: #c8cdd5; }
-.downtimeEven  { font-size: 9pt; background-color: #232323; color: #c8cdd5; }
+TABLE.downtime { font-size: 10pt; background-color: #141b26; padding: 2; }
+TH.downtime    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #c8cdd5; }
+.downtimeOdd   { font-size: 9pt; background-color: #141b26; color: #c8cdd5; }
+.downtimeEven  { font-size: 9pt; background-color: #1a2133; color: #c8cdd5; }
 
-.notflapping           { background-color: #88d066; border: 1px solid #777777; font-weight: bold; float: left; }
-.flapping              { background-color: #f88888; border: 1px solid #777777; font-weight: bold; float: left; }
-.notificationsENABLED  { background-color: #88d066; border: 1px solid #777777; font-weight: bold; }
-.notificationsDISABLED { background-color: #f88888; border: 1px solid #777777; font-weight: bold; }
-.checksENABLED         { background-color: #88d066; border: 1px solid #777777; font-weight: bold; }
-.checksDISABLED        { background-color: #f88888; border: 1px solid #777777; font-weight: bold; }
-.eventhandlersENABLED  { background-color: #88d066; border: 1px solid #777777; font-weight: bold; }
-.eventhandlersDISABLED { background-color: #f88888; border: 1px solid #777777; font-weight: bold; }
-.flapdetectionENABLED  { background-color: #88d066; border: 1px solid #777777; font-weight: bold; }
-.flapdetectionDISABLED { background-color: #f88888; border: 1px solid #777777; font-weight: bold; }
-.downtimeACTIVE        { background-color: #f88888; border: 1px solid #777777; font-weight: bold; float: left; }
-.downtimeINACTIVE      { background-color: #88d066; border: 1px solid #777777; font-weight: bold; float: left; }
-.processOK             { background-color: #88d066; border: 1px solid #777777; font-weight: bold; }
-.processUNKNOWN        { background-color: #ffbb55; border: 1px solid #777777; font-weight: bold; }
-.processWARNING        { background-color: #ffff00; border: 1px solid #777777; font-weight: bold; }
-.processCRITICAL       { background-color: #f88888; border: 1px solid #777777; font-weight: bold; }
-.modeACTIVE            { background-color: #88d066; border: 1px solid #777777; font-weight: bold; }
-.modeSTANDBY           { background-color: #ffff00; border: 1px solid #777777; font-weight: bold; }
+.notflapping           { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.flapping              { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.notificationsENABLED  { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; }
+.notificationsDISABLED { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; }
+.checksENABLED         { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; }
+.checksDISABLED        { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; }
+.eventhandlersENABLED  { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; }
+.eventhandlersDISABLED { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; }
+.flapdetectionENABLED  { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; }
+.flapdetectionDISABLED { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; }
+.downtimeACTIVE        { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.downtimeINACTIVE      { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.processOK             { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; }
+.processUNKNOWN        { background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; }
+.processWARNING        { background-color: #e5ca3e; color: #3b2f00; border: 1px solid #1e2d42; font-weight: bold; }
+.processCRITICAL       { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; }
+.modeACTIVE            { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; }
+.modeSTANDBY           { background-color: #e5ca3e; color: #3b2f00; border: 1px solid #1e2d42; font-weight: bold; }
 
-.hostUP           { background-color: #88d066; border: 1px solid #777777; font-weight: bold; float: left; }
-.hostDOWN         { background-color: #f88888; border: 1px solid #777777; font-weight: bold; float: left; }
-.hostUNREACHABLE  { background-color: #f88888; border: 1px solid #777777; font-weight: bold; float: left; }
+.hostUP           { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.hostDOWN         { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.hostUNREACHABLE  { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; float: left; }
 
-.serviceOK        { background-color: #88d066; border: 1px solid #777777; font-weight: bold; float: left; }
-.serviceWARNING   { background-color: #ffff00; border: 1px solid #777777; font-weight: bold; float: left; }
-.serviceUNKNOWN   { background-color: #ffbb55; border: 1px solid #777777; font-weight: bold; float: left; }
-.serviceCRITICAL  { background-color: #f88888; border: 1px solid #777777; font-weight: bold; float: left; }
+.serviceOK        { background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.serviceWARNING   { background-color: #e5ca3e; color: #3b2f00; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.serviceUNKNOWN   { background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; float: left; }
+.serviceCRITICAL  { background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; font-weight: bold; float: left; }
 
 .queueTitle    { font-size: 12pt; text-align: center; font-weight: bold; }
 TABLE.queue    { font-size: 9pt; padding: 0; }
-TH.queue       { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
-.queueOdd      { font-size: 9pt; background-color: #1c1c1c; color: #c8cdd5; padding: 0 4 0 4; }
-.queueEven     { font-size: 9pt; background-color: #232323; color: #c8cdd5; padding: 0 4 0 4; }
-.queueENABLED  { font-size: 9pt; background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
-.queueDISABLED { font-size: 9pt; background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
+TH.queue       { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #c8cdd5; }
+.queueOdd      { font-size: 9pt; background-color: #141b26; color: #c8cdd5; padding: 0 4 0 4; }
+.queueEven     { font-size: 9pt; background-color: #1a2133; color: #c8cdd5; padding: 0 4 0 4; }
+.queueENABLED  { font-size: 9pt; background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.queueDISABLED { font-size: 9pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
 /* =========================================================
    EXTINFO – MODERN UI (ALL TYPES)
@@ -93,17 +93,17 @@ TH.queue       { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-
    ========================= */
 
 body.extinfo {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI",
                  Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.extinfo a {
-    color: #6ba3e8;
+    color: #d4d4d4;
 }
 body.extinfo a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 /* =========================
@@ -126,7 +126,7 @@ body.extinfo .dataTitle,
 body.extinfo .commentTitle,
 body.extinfo .downtimeTitle,
 body.extinfo .commandTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -140,12 +140,12 @@ body.extinfo .commandTitle {
 body.extinfo td.stateInfoTable1,
 body.extinfo td.stateInfoTable2,
 body.extinfo td.commandPanel {
-    background-color: #1c1c1c !important;
+    background-color: #141b26 !important;
 }
 
 body.extinfo td.dataVar,
 body.extinfo td.dataVal {
-    background-color: #1c1c1c !important;
+    background-color: #141b26 !important;
     color: #c8cdd5;
     padding: 4px 6px;
 }
@@ -176,13 +176,13 @@ body.extinfo table.comment th.comment {
 body.extinfo table.comment td.comment,
 body.extinfo table.comment td.commentOdd,
 body.extinfo table.comment td.commentEven {
-    background-color: #2a2a2a;
+    background-color: #1a2133;
     color: #c8cdd5;
 }
 
 /* riga COMMENTO: più spazio e leggibilità */
 body.extinfo table.comment td[colspan] {
-    background-color: #303030;
+    background-color: #141b26;
     padding: 10px 12px;
     font-size: 0.95em;
 }
@@ -196,7 +196,7 @@ body.extinfo table.comment td:last-child {
 /* separazione visiva tra un commento e l'altro */
 body.extinfo table.comment tr.commentOdd:not(:first-child),
 body.extinfo table.comment tr.commentEven:not(:first-child) {
-    border-top: 4px solid #111111;
+    border-top: 4px solid #0f1117;
 }
 
 
@@ -205,20 +205,20 @@ body.extinfo table.comment tr.commentEven:not(:first-child) {
    ========================= */
 
 body.extinfo .downtimeNav {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 6px 10px;
     border-radius: 4px;
     font-weight: 600;
 }
 
 body.extinfo table.downtime {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     border-collapse: separate;
     border-spacing: 4px;
 }
 
 body.extinfo th.downtime {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 6px 8px;
@@ -227,7 +227,7 @@ body.extinfo th.downtime {
 body.extinfo td.downtime,
 body.extinfo td.downtimeOdd,
 body.extinfo td.downtimeEven {
-    background-color: #2a2a2a;
+    background-color: #1a2133;
     color: #c8cdd5;
     padding: 6px 8px;
 }
@@ -269,13 +269,13 @@ body.extinfo table.comment th.comment {
 body.extinfo table.comment td.comment,
 body.extinfo table.comment td.commentOdd,
 body.extinfo table.comment td.commentEven {
-    background-color: #2a2a2a;
+    background-color: #1a2133;
     color: #c8cdd5;
 }
 
 /* riga COMMENTO: più spazio e leggibilità */
 body.extinfo table.comment td[colspan] {
-    background-color: #232020;
+    background-color: #141b26;
     padding: 10px 12px;
     font-size: 0.95em;
 }
@@ -289,7 +289,7 @@ body.extinfo table.comment td:last-child {
 /* separazione visiva tra un commento e l'altro */
 body.extinfo table.comment tr.commentOdd:not(:first-child),
 body.extinfo table.comment tr.commentEven:not(:first-child) {
-    border-top: 4px solid #111111;
+    border-top: 4px solid #0f1117;
 }
 
 
@@ -297,7 +297,7 @@ body.extinfo table.comment tr.commentEven:not(:first-child) {
 body.extinfo .stateInfoPanel > .dataTitle {
     width: 100%;
     text-align: center;
-    background: #111111;
+    background: #0f1117;
     box-sizing: border-box;
 }
 
@@ -326,30 +326,30 @@ body.extinfo table.command {
 /* contenitore box */
 body.extinfo table.infoBox {
     width: 80%;
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 
 body.extinfo table.linkBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.extinfo td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 
 /* titolo box */
 body.extinfo .infoBoxTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -375,8 +375,8 @@ body.extinfo table.command img {
 
 /* contenitore lista */
 body.extinfo table.command {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 6px;
 }
@@ -389,7 +389,7 @@ body.extinfo tr.data {
     margin: 4px 0;
     border-radius: 6px;
     border: 1px solid #1e3a5f;
-    background-color: #1e3652;
+    background-color: #1a2133;
 }
 
 /* hover */
@@ -436,6 +436,7 @@ body.extinfo a[href*="cmd_typ=17"]::before {
     content: "⏱";
 
 }
+
 
 /* =========================================================
    PRIMARY ACTION – SCHEDULE CHECK ALL SERVICES
@@ -594,7 +595,7 @@ body.extinfo .commentPanel td.comment a {
     display: inline-flex;
     align-items: center;
 
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #c8cdd5;
 
     padding: 4px 10px;
@@ -634,7 +635,7 @@ body.extinfo a[href$="cmd_typ=20"]::before {
 /* prende SOLO l'ultimo .data (che è l'IP) */
 body.extinfo td > div.data:last-of-type {
     padding: 6px 14px;
-    background-color: #1c1c1c;
+    background-color: #141b26;
     color: #c8cdd5;
     font-weight: 800;
     border-radius: 8px;
@@ -704,9 +705,9 @@ body.extinfo .hostUNREACHABLE {
    PENDING → neutro
    ========================= */
 body.extinfo .hostPENDING {
-    background-color: #2a2a2a;
-    color: #a0a0a0;
-    border-color: #404040;
+    background-color: #141b26;
+    color: #c8cdd5;
+    border-color: #1e2d42;
 }
 
 /* =========================================================
@@ -718,7 +719,7 @@ body.extinfo .commandPanel {
     transform-origin: top center;
 }
 
-/* evita che il panel “si mangi” spazio vuoto sotto */
+/* evita che il panel "si mangi" spazio vuoto sotto */
 body.extinfo .commandPanel table {
     margin-bottom: -30px;
 }

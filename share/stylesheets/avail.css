@@ -9,50 +9,50 @@
 
 .data { font-size: 9pt; }
 
-.hostUP          { background-color: #cce8cc; padding: 0 4 0 4; }
-.hostDOWN        { background-color: #ffdddd; padding: 0 4 0 4; }
-.hostUNREACHABLE { background-color: #ffddaa; padding: 0 4 0 4; }
+.hostUP          { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
+.hostDOWN        { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.hostUNREACHABLE { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
 
-.serviceOK       { background-color: #cce8cc; padding: 0 4 0 4; }
-.serviceWARNING  { background-color: #feffc1; padding: 0 4 0 4; }
-.serviceUNKNOWN  { background-color: #ffddaa; padding: 0 4 0 4; }
-.serviceCRITICAL { background-color: #ffdddd; padding: 0 4 0 4; }
+.serviceOK       { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
+.serviceWARNING  { background-color: #e5ca3e; color: #3b2f00; padding: 0 4 0 4; }
+.serviceUNKNOWN  { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
+.serviceCRITICAL { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
 
 table.logEntries { font-size: 9pt; padding: 5 0 0 0; }
-th.logEntries    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #444444; color: #c8cdd5; }
-.logEntriesOdd   { background-color: #1c1c1c; color: #c8cdd5; padding: 0 4 0 4; }
-.logEntriesEven  { background-color: #232323; color: #c8cdd5; padding: 0 4 0 4; }
+th.logEntries    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #c8cdd5; }
+.logEntriesOdd   { background-color: #141b26; color: #c8cdd5; padding: 0 4 0 4; }
+.logEntriesEven  { background-color: #1a2133; color: #c8cdd5; padding: 0 4 0 4; }
 
-.logEntriesOK            { background-color: #cce8cc; padding: 0 4 0 4; }
-.logEntriesUNKNOWN       { background-color: #ffddaa; padding: 0 4 0 4; }
-.logEntriesWARNING       { background-color: #feffc1; padding: 0 4 0 4; }
-.logEntriesCRITICAL      { background-color: #ffdddd; padding: 0 4 0 4; }
-.logEntriesUP            { background-color: #cce8cc; padding: 0 4 0 4; }
-.logEntriesDOWN          { background-color: #ffdddd; padding: 0 4 0 4; }
-.logEntriesUNREACHABLE   { background-color: #ffddaa; padding: 0 4 0 4; }
-.logEntriesINDETERMINATE { background-color: #ddccff; padding: 0 4 0 4; }
+.logEntriesOK            { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
+.logEntriesUNKNOWN       { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
+.logEntriesWARNING       { background-color: #e5ca3e; color: #3b2f00; padding: 0 4 0 4; }
+.logEntriesCRITICAL      { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.logEntriesUP            { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
+.logEntriesDOWN          { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.logEntriesUNREACHABLE   { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
+.logEntriesINDETERMINATE { background-color: #1a2133; color: #c8cdd5; padding: 0 4 0 4; }
 
 /* =========================================================
    AVAILABILITY REPORT – VISUAL ALIGNMENT
    ========================================================= */
 
 body.avail {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.avail a {
-    color: #6ba3e8;
+    color: #d4d4d4;
 }
 body.avail a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 
 body.avail .optBox {
-    background-color: #1c1c1c !important;
-    border: 1px solid #333333;
+    background-color: #141b26 !important;
+    border: 1px solid #1e2d42;
 }
 
 /* =========================================================
@@ -60,7 +60,7 @@ body.avail .optBox {
    ========================================================= */
 
 body.avail .reportSelectTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -76,7 +76,7 @@ body.avail .reportSelectTitle {
 /* celle select */
 .reportSelectItem,
 .dateSelectItem {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 6px 8px;
     border-radius: 4px;
 }
@@ -87,15 +87,15 @@ body.avail .reportSelectTitle {
 
 body.avail select,
 body.avail input[type="submit"] {
-    background-color: #232323;
-    border: 1px solid #333333;
+    background-color: #1a2133;
+    border: 1px solid #1e2d42;
     padding: 4px 6px;
     border-radius: 4px;
     color: #c8cdd5;
 }
 
 body.avail input[type="submit"]:hover {
-    background-color: #2d2d2d;
+    background-color: #1e2d42;
     cursor: pointer;
 }
 
@@ -106,21 +106,21 @@ body.avail input[type="submit"]:hover {
 
 /* contenitore box */
 body.avail table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.avail td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 /* titolo box */
 body.avail .infoBoxTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;

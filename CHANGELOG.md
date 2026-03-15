@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.3.0] - 2026-03-15
+
+### Added
+- New **Dark Blue** color palette — deep navy tones (`#0f1117`, `#141b26`, `#1a2133`, `#1e2d42`) replacing the previous neutral dark gray theme
+- **Rounded corners** on tables, status cards, info boxes and badges (`border-radius` applied consistently across all views)
+- New `side.php` — fully rewritten sidebar navigation in PHP, replaces the old static HTML sidebar; includes sections: General, Current Status, Reports, System, with Quick Search form
+- Theme-aware sidebar: reads `$cfg['theme']` and applies `dark` or `light` class to `<html>` element
+- Refined **status badge colors** for all states: OK/UP (green `#6BC497`), WARNING (amber `#e5ca3e`), CRITICAL/DOWN (red `#a84040`), UNKNOWN/UNREACHABLE (muted purple `#9e82a0`) — with matching high-contrast text colors
+
+### Changed
+- Complete dark theme overhaul across **all CSS files**: `status.css`, `tac.css`, `common.css`, `extinfo.css`, `notifications.css`, `avail.css`, `summary.css`, `outages.css`, `showlog.css`, `history.css`, `histogram.css`, `trends.css`, `cmd.css`, `config.css`
+- Table rows alternating colors updated to dark blue palette (`#141b26` / `#1a2133`)
+- Table headers and borders updated to match dark blue theme (`#1e2d42`)
+- Log entry rows (`logEntriesOdd`/`Even`) now use dark blue tones
+- `index.php` updated to reference new `side.php` sidebar
+
+### Notes
+- Tested on Nagios Core 4.5.x
+- Modifies CSS files, `index.php`, and introduces new `side.php`
+
+---
+
 ## [0.2.0] - 2026-03-01
 
 ### Added

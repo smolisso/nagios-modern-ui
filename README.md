@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.2.0-blue)
+![Version](https://img.shields.io/badge/version-0.3.0-blue)
 
 
 # Nagios Core – Modern UI Tweaks
@@ -14,7 +14,8 @@ Just cleaner colors, modern fonts, better readability and a fully responsive lay
 
 ## ✨ Features
 
-- Modern neutral dark background
+- **Dark Blue theme** — deep navy palette for a modern, professional look
+- Rounded corners on tables, badges and info boxes
 - Softer, more readable OK / WARNING / CRITICAL colors
 - Improved contrast for status counters
 - System UI font stack (Segoe UI / Roboto / Ubuntu / San Francisco)
@@ -23,6 +24,7 @@ Just cleaner colors, modern fonts, better readability and a fully responsive lay
 - Better readability for Unhandled / Problem indicators
 - Fully dark-mode optimized
 - **Responsive layout** — works on desktop, tablet and mobile screens
+- **Rewritten sidebar** (`side.php`) — clean PHP navigation with theme support
 
 Consistent styling across:
 
@@ -93,6 +95,7 @@ Replace the following files in your Nagios Core installation:
 
 ```
 [nagios_root_path]/share/index.php
+[nagios_root_path]/share/side.php
 
 [nagios_root_path]/share/stylesheets/avail.css
 [nagios_root_path]/share/stylesheets/cmd.css
@@ -126,7 +129,7 @@ and `images.zip` with all new icons.
 
 ## ⚠️ Notes
 - Tested on Nagios Core 4.5.x
-- Modifies CSS files, image files and `index.php`
+- Modifies CSS files, image files, `index.php` and `side.php`
 - No configuration changes
 - Fully reversible by restoring original files
 

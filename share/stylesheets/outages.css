@@ -9,16 +9,16 @@
 
 .itemTotalsTitle { font-size: 8pt; text-align: center; }
 
-.hostUP          { background-color: #88d066; font-weight: bold; }
-.hostDOWN        { background-color: #f88888; font-weight: bold; }
-.hostUNREACHABLE { background-color: #ffbb55; font-weight: bold; }
+.hostUP          { background-color: #6BC497; color: #1f3d2b; font-weight: bold; }
+.hostDOWN        { background-color: #a84040; color: #ffffff; font-weight: bold; }
+.hostUNREACHABLE { background-color: #9e82a0; color: #ffffff; font-weight: bold; }
 
 /* =========================================================
    OUTAGES – base layout
    ========================================================= */
 
 body.outages {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family:
         system-ui,
@@ -33,12 +33,12 @@ body.outages {
 }
 
 body.outages a {
-    color: #6ba3e8;
+    color: #d4d4d4;
     font-weight: 500;
 }
 
 body.outages a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 
@@ -48,7 +48,7 @@ body.outages a:hover {
    ========================================================= */
 
 body.outages .dataTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #e8ecf0;
     padding: 6px 10px;
     border-radius: 4px;
@@ -64,21 +64,21 @@ body.outages .dataTitle {
 body.outages table.data {
     width: 95%;
     border-collapse: collapse;
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
 }
 
 body.outages th.data {
-    background-color: #252525;
-    color: #b0b8c4;
+    background-color: #1a2133;
+    color: #c8cdd5;
     font-weight: 600;
     padding: 6px;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid #1e2d42;
 }
 
 body.outages td.data {
     padding: 6px;
-    border-bottom: 1px solid #2d2d2d;
+    border-bottom: 1px solid #1e2d42;
 }
 
 /* =========================================================
@@ -93,13 +93,13 @@ body.outages .itemTotalsTitle {
 
 /* Critical outage row */
 body.outages tr.outageCritical {
-    background-color: #e06666;
+    background-color: #a84040;
     color: #ffffff;
 }
 
 /* Warning outage row */
 body.outages tr.outageWarning {
-    background-color: #f2c94c;
+    background-color: #e5ca3e;
     color: #3b2f00;
 }
 /* =========================================================
@@ -109,21 +109,21 @@ body.outages tr.outageWarning {
 
 /* contenitore box */
 body.outages table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.outages td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 /* titolo box */
 body.outages .infoBoxTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;

@@ -17,39 +17,35 @@
 /* override so we get a bit of whitespace */
 table.data { padding-top: 15; }
 
-.reportDataOdd  { font-size: 9pt; background-color: #e7e7e7; padding: 0 4 0 4; }
-.reportDataEven { font-size: 9pt; background-color: #f4f2f2; padding: 0 4 0 4; }
+.reportDataOdd  { font-size: 9pt; background-color: #141b26; padding: 0 4 0 4; }
+.reportDataEven { font-size: 9pt; background-color: #1a2133; padding: 0 4 0 4; }
 
-.hostUP          { font-size: 9pt; background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
-.hostDOWN        { font-size: 9pt; background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
-.hostUNREACHABLE { font-size: 9pt; background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
+.hostUP          { font-size: 9pt; background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.hostDOWN        { font-size: 9pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.hostUNREACHABLE { font-size: 9pt; background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
-.serviceOK       { font-size: 9pt; background-color: #88d066; border: 1px solid #777777; padding: 0 4 0 4; }
-.serviceWARNING  { font-size: 9pt; background-color: #ffff00; border: 1px solid #777777; padding: 0 4 0 4; }
-.serviceUNKNOWN  { font-size: 9pt; background-color: #ffbb55; border: 1px solid #777777; padding: 0 4 0 4; }
-.serviceCRITICAL { font-size: 9pt; background-color: #f88888; border: 1px solid #777777; padding: 0 4 0 4; }
+.serviceOK       { font-size: 9pt; background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.serviceWARNING  { font-size: 9pt; background-color: #e5ca3e; color: #3b2f00; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.serviceUNKNOWN  { font-size: 9pt; background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.serviceCRITICAL { font-size: 9pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
 
 /* =========================================================
    Nagios Modern UI – summary.cgi
    ========================================================= */
 
-/* =========================================================
-   NAGIOS MODERN UI – summary.cgi (FINAL)
-   ========================================================= */
-
 /* === BASE === */
 body.summary {
-    background-color: #111111;
+    background-color: #0f1117;
     color: #c8cdd5;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, Arial, sans-serif;
 }
 
 body.summary a {
-    color: #6ba3e8;
+    color: #d4d4d4;
 }
 body.summary a:hover {
-    color: #99c0f5;
+    color: #ffffff;
 }
 
 /* =========================================================
@@ -69,7 +65,7 @@ body.summary div {
 
 body.summary .infoBoxTitle,
 body.summary .dateSelectTitle {
-    background: #1e3652;
+    background: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
@@ -84,7 +80,7 @@ body.summary .reportSelectSubTitle,
 body.summary .reportSelectItem,
 body.summary .dateSelectItem,
 body.summary .optBoxItem {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     color: #c8cdd5;
     padding: 6px 8px;
 }
@@ -96,8 +92,8 @@ body.summary .optBoxItem {
 body.summary select,
 body.summary input[type="text"],
 body.summary input[type="submit"] {
-    background-color: #232323;
-    border: 1px solid #333333;
+    background-color: #1a2133;
+    border: 1px solid #1e2d42;
     color: #c8cdd5;
     padding: 4px 6px;
     border-radius: 4px;
@@ -110,7 +106,7 @@ body.summary input[type="submit"] {
 }
 
 body.summary input[type="submit"]:hover {
-    background-color: #2d2d2d;
+    background-color: #1e2d42;
 }
 
 /* =========================================================
@@ -129,21 +125,21 @@ body.summary table {
 
 /* contenitore box */
 body.summary table.infoBox {
-    background-color: #1c1c1c;
-    border: 1px solid #333333;
+    background-color: #141b26;
+    border: 1px solid #1e2d42;
     border-radius: 8px;
     padding: 5px 5px;
 }
 
 /* cella interna */
 body.summary td.infoBox {
-    background-color: #1c1c1c;
+    background-color: #141b26;
     padding: 8px;
 }
 
 /* titolo box */
 body.summary .infoBoxTitle {
-    background-color: #1e3652;
+    background-color: #1a2133;
     color: #ffffff;
     font-weight: 600;
     padding: 8px 12px;
