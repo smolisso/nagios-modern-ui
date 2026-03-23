@@ -1230,8 +1230,26 @@ div.miniStatusOK {
     }
 }
 
-/* Centra il th "Status" (2a colonna hostdetail) */
-body.status table.status th.status:nth-child(2) { text-align: center !important; }
+/* Centra il th "Status" (3a colonna nei detail tables) */
+body.status table.status th.status:nth-child(3) { text-align: center !important; }
+
+/* Centra la colonna "Attempt" (6a colonna nei detail tables) */
+body.status table.status th.status:nth-child(6),
+body.status table.status td:nth-child(6) {
+    text-align: center !important;
+}
+
+/* Centra la colonna "Duration" (5a colonna nei detail tables) */
+body.status table.status th.status:nth-child(5),
+body.status table.status td:nth-child(5) {
+    text-align: center !important;
+}
+
+/* Centra la colonna "Last Check" (4a colonna nei detail tables) */
+body.status table.status th.status:nth-child(4),
+body.status table.status td:nth-child(4) {
+    text-align: center !important;
+}
 
 /* Nome servizio (link a extinfo type=2) */
 body.status table.status td a[href*="extinfo.cgi?type=2"] {
