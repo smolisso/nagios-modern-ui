@@ -64,6 +64,29 @@ Redesigned icons include:
 - 📊 Status (alternative icon)
 - 🔁 Flapping
 
+
+## 🖼️ Service Logos
+A set of service logos has been added.
+
+- Clean PNG icons, optimized for dark mode
+
+- Consistent sizing and lightweight
+
+- Transparent background where applicable
+
+📁 Location
+
+[nagios_root_path]/share/images/logos/
+
+Example:
+
+[nagios_root_path]/share/images/logos/debian.png
+[nagios_root_path]/share/images/logos/proxmox.png
+[nagios_root_path]/share/images/logos/opnsense.png
+[nagios_root_path]/share/images/logos/fortinet.png
+
+These logos enhance visual scanning without changing Nagios behavior or performance.
+
 ### Design Goals
 
 - Flat, minimal SVG style  
