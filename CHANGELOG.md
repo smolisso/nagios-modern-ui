@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.3.1] - 2026-03-24
+
+### Added
+- Curated set of service and host **logos** in PNG format, stored in `images/logos/`
+- Logos optimized for dark mode with transparent backgrounds where applicable
+- Consistent sizing: 256px width, proportional height scaling
+- Coverage includes: Operating Systems (Debian, CentOS, Ubuntu), Infrastructure (Proxmox, ESXi), Networking (Fortinet, OPNsense), Applications (Mattermost, Zammad, Nextcloud, and others)
+- Updated `README.md` to document logo set and asset conventions
+
+### Notes
+- Tested on Nagios Core 4.5.x
+- Image assets only — no CSS or PHP changes
+- All logos packaged in `share.zip` for easy distribution
+
+---
+
+
 ## [0.3.0] - 2026-03-15
 
 ### Added
