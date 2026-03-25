@@ -39,7 +39,8 @@ if ($theme != 'dark' && $theme != 'light') {
 	<div class="navsectiontitle">Current Status</div>
 	<div class="navsectionlinks">
 		<ul class="navsectionlinks">
-			<li><a href="<?php echo $cfg["cgi_base_url"];?>/tac.cgi" target="<?php echo $link_target;?>">Tactical Overview</a></li>
+			<!-- <li><a href="<?php echo $cfg["cgi_base_url"];?>/tac.cgi" target="<?php echo $link_target;?>">Tactical Overview</a></li> -->
+			<li><a href="live.php" target="<?php echo $link_target;?>">Live Overview</a></li>
 <li><a href="<?php echo $cfg["cgi_base_url"];?>/status.cgi?hostgroup=all&amp;style=hostdetail" target="<?php echo $link_target;?>">Hosts</a></li>
 			<li><a href="<?php echo $cfg["cgi_base_url"];?>/status.cgi?host=all" target="<?php echo $link_target;?>">Services</a></li>
 			<li>
@@ -79,6 +80,7 @@ if ($theme != 'dark' && $theme != 'light') {
 	<div class="navsectionlinks">
 		<ul class="navsectionlinks">
 			<li><a href="<?php echo $cfg["cgi_base_url"];?>/avail.cgi" target="<?php echo $link_target;?>">Availability</a></li>
+			<li><a href="/nagios/nagiosgraph_modern/show.php" target="<?php echo $link_target;?>">Nagiosgraph Modern</a></li>
 			<li><a href="<?php echo $cfg["cgi_base_url"];?>/trends.cgi" target="<?php echo $link_target;?>">Trends</a></li>
 			<li><a href="<?php echo $cfg["cgi_base_url"];?>/history.cgi?host=all" target="<?php echo $link_target;?>">Alerts</a>
 			<ul>

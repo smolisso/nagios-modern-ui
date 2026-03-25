@@ -47,6 +47,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		var n = Math.round(Math.random() * 10000000000);
 		document.cookie = "NagFormId=" + n.toString(16);
 	</script>
+	<script src="nagiosgraph_modern/popup.js"></script>
 
 	<style>
 		:root {
@@ -267,7 +268,12 @@ if ($theme != 'dark' && $theme != 'light') {
 		});
 
 		// Applica lo scale ogni volta che l'iframe main carica una nuova pagina
-		document.querySelector('iframe[name="main"]').addEventListener('load', applyScale);
+		document.querySelector('iframe[name="main"]').addEventListener('load', function () {
+			applyScale();
+			if (window.hideModernGraphPopup) {
+				window.hideModernGraphPopup();
+			}
+		});
 
 		// Posizione iniziale corretta al caricamento
 		updateTogglePosition();

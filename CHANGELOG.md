@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.4.0] - 2026-03-25
+
+### Added
+- New `live.php` standalone dashboard replacing the classic tactical overview with a modern operational layout
+- KPI rows for host and service states, active incidents, oldest service problems, and most impacted hosts
+- Historical availability trend powered by `live_trend_snapshot.php` and periodic JSON snapshots
+- `nagiosgraph_modern/` standalone graph frontend with:
+  - host and service selectors
+  - modern graph rendering from existing Nagiosgraph RRD files
+  - human-readable units for disk, memory and traffic metrics
+  - drag-to-zoom plus stepwise zoom-out
+  - hover preview popup via `popup.js`
+- Host logo support in dashboard and graph pages using `hostextinfo.cfg`
+- New sidebar entry for `Nagiosgraph Modern`
+
+### Changed
+- `README.md` updated for version `0.4.0`, deployment steps, cron setup and graph integration instructions
+- `index.php` extended to support the responsive shell and modern graph popup loader
+- `side.php` updated to link the Live Overview and Nagiosgraph Modern pages
+- Project scope now includes CSS, PHP and JavaScript changes, not just styling tweaks
+
+### Notes
+- Tested on Nagios Core 4.5.x
+- Includes optional Nagios configuration changes for `graphed-service` `action_url`
+- Includes optional cron configuration for historical availability snapshots
+- Reuses existing Nagiosgraph RRD data without modifying Nagios CGI binaries
+
+---
+
 ## [0.3.1] - 2026-03-24
 
 ### Added
