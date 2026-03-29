@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.5.0] - 2026-03-29
+
+### Added
+- New `problems.php` standalone problems overview sourced from `status.dat`
+- New `host_detail.php` standalone host detail page for host service status drill-down
+- New `hostgroups.php` modern host group overview
+- New `hostgroups_summary.php` modern host group summary page
+- Sidebar link integration for the new modern pages
+- Active page highlighting in the sidebar shell
+
+### Changed
+- `README.md` updated for version `0.5.0` and current project scope
+- `index.php` and `side.php` redesigned again to support:
+  - compact and expanded sidebar modes
+  - active navigation state
+  - modernized Nagios shell behavior
+- `live.php` refined with:
+  - more compact metadata and KPI blocks
+  - stronger severity highlighting on incident cards
+  - card-wide navigation to host detail
+  - graph shortcut visibility on service incidents
+- `hostgroups.php` and `hostgroups_summary.php` updated to resolve host group membership more accurately from Nagios object definitions and template inheritance
+- `hostgroups.php` and `hostgroups_summary.php` adjusted for more stable hero layout behavior across sidebar states
+- `problems.php` refined to focus more strongly on active incidents and severity-first triage
+- `nagiosgraph_modern/` refined with host selection flow, better host icon handling and deeper integration into the navigation shell
+
+### Notes
+- Tested on Nagios Core 4.5.x
+- Reuses `status.dat`, `hostextinfo.cfg` and Nagios object definitions as data sources
+- Reuses existing Nagiosgraph RRD data without modifying Nagios CGI binaries
+
+---
+
 ## [0.4.0] - 2026-03-25
 
 ### Added

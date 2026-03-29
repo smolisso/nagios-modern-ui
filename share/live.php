@@ -5,7 +5,11 @@ $trendSnapshotFile = __DIR__ . '/live_trend_snapshot.json';
 $hostExtInfoFile = __DIR__ . '/../etc/objects/hostextinfo.cfg';
 $hostIconBaseUrl = '/nagios/images/logos/';
 $hostDetailBaseUrl = '/nagios/cgi-bin/status.cgi?host=';
+$hostServicesDetailBaseUrl = '/nagios/host_detail.php?host=';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
+$graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
+$graphActionIconUrl = '/nagios/images/action.gif';
+$rrdRoot = '/usr/local/nagiosgraph/var/rrd';
 $criticalServicesUrl = '/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hostprops=42';
 $hostsDownUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=12';
 $hostsUpUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail';
@@ -465,6 +469,11 @@ function host_detail_url(string $baseUrl, string $hostName): string
     return $baseUrl . rawurlencode($hostName);
 }
 
+function host_services_detail_url(string $baseUrl, string $hostName): string
+{
+    return $baseUrl . rawurlencode($hostName);
+}
+
 function parse_hostextinfo_icons(string $path): array
 {
     if (!is_readable($path)) {
@@ -539,6 +548,41 @@ function service_detail_url(string $baseUrl, string $hostName, string $serviceNa
     return $baseUrl
         . '&host=' . rawurlencode($hostName)
         . '&service=' . rawurlencode($serviceName);
+}
+
+function graph_show_url(string $baseUrl, string $hostName, string $serviceName, bool $embed = false): string
+{
+    $url = $baseUrl
+        . '?host=' . rawurlencode($hostName)
+        . '&service=' . rawurlencode($serviceName);
+
+    if ($embed) {
+        $url .= '&range=24h&embed=1';
+    }
+
+    return $url;
+}
+
+function service_has_graph(string $rrdRoot, string $hostName, string $serviceName): bool
+{
+    static $cache = [];
+
+    $cacheKey = $hostName . "\0" . $serviceName;
+    if (isset($cache[$cacheKey])) {
+        return $cache[$cacheKey];
+    }
+
+    $hostDir = rtrim($rrdRoot, '/') . '/' . rawurlencode($hostName);
+    if (!is_dir($hostDir)) {
+        $cache[$cacheKey] = false;
+        return false;
+    }
+
+    $prefix = rawurlencode($serviceName) . '___';
+    $matches = glob($hostDir . '/' . $prefix . '*.rrd');
+    $cache[$cacheKey] = is_array($matches) && $matches !== [];
+
+    return $cache[$cacheKey];
 }
 
 $now = time();
@@ -874,7 +918,7 @@ $trendTicks = trend_scale_ticks($trendScale);
 
     .hero {
         display: grid;
-        grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.9fr);
+        grid-template-columns: minmax(0, 1.9fr) minmax(220px, 0.62fr);
         gap: 18px;
         padding: 22px;
         margin-bottom: 20px;
@@ -957,17 +1001,8 @@ $trendTicks = trend_scale_ticks($trendScale);
         min-height: 0;
     }
 
-    .pill-label {
-        color: var(--muted);
-        font-size: 12px;
-    }
-
-    .pill-value {
-        color: var(--text);
-        font-size: 12px;
-        font-weight: 700;
-        text-align: right;
-    }
+    .pill-label { color: var(--muted); font-size: 11px; }
+    .pill-value { color: var(--text); font-size: 12px; font-weight: 700; text-align: right; }
 
     .kpi-grid {
         display: grid;
@@ -985,11 +1020,11 @@ $trendTicks = trend_scale_ticks($trendScale);
     }
 
     .kpi-card {
-        padding: 20px;
+        padding: 16px;
         border-radius: var(--radius-lg);
         background: var(--panel-strong);
         border: 1px solid var(--border-soft);
-        min-height: 148px;
+        min-height: 126px;
     }
 
     .kpi-card.alert {
@@ -998,13 +1033,13 @@ $trendTicks = trend_scale_ticks($trendScale);
 
     .kpi-title {
         color: var(--muted);
-        font-size: 14px;
-        margin-bottom: 16px;
+        font-size: 12px;
+        margin-bottom: 12px;
     }
 
     .kpi-value {
         margin: 0;
-        font-size: 42px;
+        font-size: 30px;
         line-height: 1;
         letter-spacing: -0.04em;
     }
@@ -1022,9 +1057,9 @@ $trendTicks = trend_scale_ticks($trendScale);
     }
 
     .kpi-foot {
-        margin-top: 16px;
+        margin-top: 12px;
         color: var(--muted-2);
-        font-size: 12px;
+        font-size: 10px;
         letter-spacing: 0.18em;
         text-transform: uppercase;
     }
@@ -1303,10 +1338,25 @@ $trendTicks = trend_scale_ticks($trendScale);
 
     .list-row,
     .incident-row {
-        padding: 16px;
+        padding: 13px 16px;
         border-radius: var(--radius-md);
         background: var(--panel-soft);
         border: 1px solid var(--border-soft);
+    }
+
+    .incident-row.critical {
+        background: linear-gradient(180deg, rgba(88, 28, 40, 0.62), rgba(29, 32, 50, 0.92));
+        border-color: rgba(255, 141, 146, 0.26);
+    }
+
+    .incident-row.warning {
+        background: linear-gradient(180deg, rgba(89, 69, 18, 0.52), rgba(29, 32, 50, 0.92));
+        border-color: rgba(241, 201, 90, 0.24);
+    }
+
+    .incident-row.unknown {
+        background: linear-gradient(180deg, rgba(60, 68, 83, 0.5), rgba(29, 32, 50, 0.92));
+        border-color: rgba(192, 201, 214, 0.20);
     }
 
     .list-row {
@@ -1320,29 +1370,82 @@ $trendTicks = trend_scale_ticks($trendScale);
     .incident-title {
         margin: 0 0 6px 0;
         color: var(--text);
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 600;
+    }
+
+    .incident-title-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .graph-action {
+        flex: 0 0 auto;
+        width: 24px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        border: 1px solid rgba(111, 143, 177, 0.18);
+        background: rgba(8, 17, 29, 0.46);
+        opacity: 0;
+        transform: translateY(-2px);
+        pointer-events: none;
+        transition: opacity 140ms ease, transform 140ms ease, border-color 140ms ease, background 140ms ease;
+    }
+
+    .graph-action img {
+        width: 14px;
+        height: 14px;
+        display: block;
+    }
+
+    .incident-row:hover .graph-action,
+    .incident-row:focus-within .graph-action {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .graph-action:hover {
+        background: rgba(22, 42, 68, 0.72);
+        border-color: rgba(111, 143, 177, 0.28);
+        text-decoration: none;
     }
 
     .list-meta,
     .incident-meta {
         color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
+        font-size: 12px;
+        line-height: 1.4;
     }
 
     .incident-row {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: 16px;
+        gap: 14px;
         align-items: start;
+    }
+
+    .incident-row.is-clickable {
+        cursor: pointer;
+        transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    }
+
+    .incident-row.is-clickable:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+        border-color: rgba(111, 143, 177, 0.28);
     }
 
     .incident-flags {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 10px;
+        gap: 7px;
+        margin-top: 8px;
     }
 
     .chip,
@@ -1359,13 +1462,13 @@ $trendTicks = trend_scale_ticks($trendScale);
 
     .badge {
         min-width: 118px;
-        padding: 10px 14px;
+        padding: 8px 11px;
         font-size: 11px;
         border: 1px solid transparent;
     }
 
     .chip {
-        padding: 7px 10px;
+        padding: 6px 9px;
         font-size: 10px;
         color: var(--muted);
         background: rgba(8, 17, 29, 0.55);
@@ -1625,24 +1728,54 @@ $trendTicks = trend_scale_ticks($trendScale);
                     <?php else: ?>
                         <div class="list">
                             <?php foreach ($activeIncidents as $incident): ?>
-                                <article class="incident-row">
+                                <?php
+                                $incidentSeverityClass = '';
+                                if ($incident['state'] === 2) {
+                                    $incidentSeverityClass = 'critical';
+                                } elseif ($incident['state'] === 1) {
+                                    $incidentSeverityClass = 'warning';
+                                } elseif ($incident['state'] === 3) {
+                                    $incidentSeverityClass = 'unknown';
+                                }
+                                ?>
+                                <article
+                                    class="incident-row is-clickable <?= htmlspecialchars($incidentSeverityClass, ENT_QUOTES, 'UTF-8') ?>"
+                                    data-card-url="<?= htmlspecialchars(host_services_detail_url($hostServicesDetailBaseUrl, $incident['host_name']), ENT_QUOTES, 'UTF-8') ?>"
+                                >
                                     <div>
                                         <?php if ($incident['type'] === 'service'): ?>
-                                            <h3 class="incident-title">
-                                                <span class="host-link-wrap">
-                                                    <?php $incidentHostIcon = host_icon_url($hostIconMap, $hostIconBaseUrl, $incident['host_name']); ?>
-                                                    <?php if ($incidentHostIcon !== null): ?>
-                                                        <img class="host-icon" src="<?= htmlspecialchars($incidentHostIcon, ENT_QUOTES, 'UTF-8') ?>" alt="">
-                                                    <?php endif; ?>
-                                                    <a class="host-link" href="<?= htmlspecialchars(host_detail_url($hostDetailBaseUrl, $incident['host_name']), ENT_QUOTES, 'UTF-8') ?>">
-                                                        <?= htmlspecialchars($incident['host_name'], ENT_QUOTES, 'UTF-8') ?>
+                                            <div class="incident-title-row">
+                                                <h3 class="incident-title">
+                                                    <span class="host-link-wrap">
+                                                        <?php $incidentHostIcon = host_icon_url($hostIconMap, $hostIconBaseUrl, $incident['host_name']); ?>
+                                                        <?php if ($incidentHostIcon !== null): ?>
+                                                            <img class="host-icon" src="<?= htmlspecialchars($incidentHostIcon, ENT_QUOTES, 'UTF-8') ?>" alt="">
+                                                        <?php endif; ?>
+                                                        <a class="host-link" href="<?= htmlspecialchars(host_detail_url($hostDetailBaseUrl, $incident['host_name']), ENT_QUOTES, 'UTF-8') ?>">
+                                                            <?= htmlspecialchars($incident['host_name'], ENT_QUOTES, 'UTF-8') ?>
+                                                        </a>
+                                                    </span>
+                                                    /
+                                                    <a class="host-link" href="<?= htmlspecialchars(service_detail_url($serviceDetailBaseUrl, $incident['host_name'], $incident['service_description']), ENT_QUOTES, 'UTF-8') ?>">
+                                                        <?= htmlspecialchars($incident['service_description'], ENT_QUOTES, 'UTF-8') ?>
                                                     </a>
-                                                </span>
-                                                /
-                                                <a class="host-link" href="<?= htmlspecialchars(service_detail_url($serviceDetailBaseUrl, $incident['host_name'], $incident['service_description']), ENT_QUOTES, 'UTF-8') ?>">
-                                                    <?= htmlspecialchars($incident['service_description'], ENT_QUOTES, 'UTF-8') ?>
-                                                </a>
-                                            </h3>
+                                                </h3>
+                                                <?php if (service_has_graph($rrdRoot, $incident['host_name'], $incident['service_description'])): ?>
+                                                    <a
+                                                        class="graph-action"
+                                                        href="<?= htmlspecialchars(graph_show_url($graphShowBaseUrl, $incident['host_name'], $incident['service_description']), ENT_QUOTES, 'UTF-8') ?>"
+                                                        target="main"
+                                                        onClick="if(parent.hideModernGraphPopup){parent.hideModernGraphPopup();}"
+                                                        onMouseOver="if(parent.showModernGraphPopup){parent.showModernGraphPopup(this,event);}"
+                                                        onMouseMove="if(parent.moveModernGraphPopup){parent.moveModernGraphPopup(event,this);}"
+                                                        onMouseOut="if(parent.hideModernGraphPopup){parent.hideModernGraphPopup();}"
+                                                        rel="<?= htmlspecialchars(graph_show_url($graphShowBaseUrl, $incident['host_name'], $incident['service_description'], true), ENT_QUOTES, 'UTF-8') ?>"
+                                                        title="Open performance graph"
+                                                    >
+                                                        <img src="<?= htmlspecialchars($graphActionIconUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Open performance graph">
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
                                         <?php else: ?>
                                             <h3 class="incident-title">
                                                 <span class="host-link-wrap">
@@ -1828,5 +1961,19 @@ $trendTicks = trend_scale_ticks($trendScale);
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('click', function (event) {
+    var card = event.target.closest('[data-card-url]');
+    if (!card) {
+        return;
+    }
+
+    if (event.target.closest('a, button, input, select, textarea, label')) {
+        return;
+    }
+
+    window.location.href = card.getAttribute('data-card-url');
+});
+</script>
 </body>
 </html>

@@ -52,7 +52,8 @@ if ($theme != 'dark' && $theme != 'light') {
 	<style>
 		:root {
 			--border: #1e2d42;
-			--sidebar-width: 200px;
+			--sidebar-width-compact: 52px;
+			--sidebar-width-expanded: 236px;
 			--toggle-bg: #1a2133;
 			--toggle-color: #c8cdd5;
 		}
@@ -74,75 +75,64 @@ if ($theme != 'dark' && $theme != 'light') {
 			margin: 0;
 		}
 
-		/* Sidebar: sempre fixed, così non interferisce col layout */
 		iframe[name="side"] {
 			position: fixed;
 			top: 0;
 			left: 0;
 			height: 100vh;
-			width: var(--sidebar-width);
+			width: var(--sidebar-width-compact);
 			border: none;
 			border-right: 1px solid var(--border);
 			z-index: 100;
-			transition: transform 0.3s ease;
+			transition: width 0.22s ease;
 			background-color: #141b26;
 		}
 
-		/* Main: occupa tutto tranne lo spazio della sidebar */
 		iframe[name="main"] {
 			position: fixed;
 			top: 0;
-			left: var(--sidebar-width);
+			left: var(--sidebar-width-compact);
 			height: 100vh;
-			width: calc(100% - var(--sidebar-width));
+			width: calc(100% - var(--sidebar-width-compact));
 			border: none;
-			transition: left 0.3s ease, width 0.3s ease;
+			transition: left 0.22s ease, width 0.22s ease;
 		}
 
-		/* === Desktop: sidebar collassata === */
-		iframe[name="side"].sidebar-hidden {
-			transform: translateX(calc(-1 * var(--sidebar-width)));
+		body.desktop-sidebar-expanded iframe[name="side"] {
+			width: var(--sidebar-width-expanded);
 		}
 
-		iframe[name="main"].sidebar-hidden {
-			left: 0;
-			width: 100%;
+		body.desktop-sidebar-expanded iframe[name="main"] {
+			left: var(--sidebar-width-expanded);
+			width: calc(100% - var(--sidebar-width-expanded));
 		}
 
-		/* Hamburger button – visibile sempre, desktop e mobile */
 		#sidebar-toggle {
-			display: flex;
+			display: none;
 			align-items: center;
-			gap: 5px;
+			justify-content: center;
 			position: fixed;
-			top: 44px;
-			left: 60px;
+			top: 14px;
+			left: 14px;
 			z-index: 1001;
-			padding: 4px 8px 4px 6px;
+			width: 46px;
+			height: 46px;
 			background: var(--toggle-bg);
 			color: var(--toggle-color);
 			border: none;
-			border-radius: 6px;
-			font-size: 18px;
+			border-radius: 12px;
+			font-size: 20px;
 			cursor: pointer;
 			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-			transition: background 0.2s;
+			transition: background 0.2s ease, transform 0.2s ease;
 			line-height: 1;
 		}
 
 		#sidebar-toggle:hover {
 			background: #1e3652;
+			transform: translateY(-1px);
 		}
 
-		#sidebar-toggle img {
-			height: 20px;
-			width: 20px;
-			object-fit: contain;
-			border-radius: 50%;
-			display: block;
-		}
-
-		/* Backdrop – nascosto per default */
 		#sidebar-overlay {
 			display: none;
 			position: fixed;
@@ -152,41 +142,41 @@ if ($theme != 'dark' && $theme != 'light') {
 			cursor: pointer;
 		}
 
-		/* === MOBILE ≤ 768px === */
 		@media (max-width: 768px) {
-
-			/* Su mobile la sidebar parte fuori schermo */
-			iframe[name="side"] {
-				transform: translateX(calc(-1 * var(--sidebar-width)));
-				z-index: 1000;
-				box-shadow: 3px 0 12px rgba(0, 0, 0, 0.6);
+			body.desktop-sidebar-expanded iframe[name="side"] {
+				width: var(--sidebar-width-expanded);
 			}
 
-			/* Sidebar aperta come overlay */
+			iframe[name="side"] {
+				width: var(--sidebar-width-expanded);
+				transform: translateX(calc(-1 * var(--sidebar-width-expanded)));
+				z-index: 1000;
+				box-shadow: 3px 0 12px rgba(0, 0, 0, 0.6);
+				transition: transform 0.24s ease;
+			}
+
 			iframe[name="side"].sidebar-open {
 				transform: translateX(0);
 			}
 
-			/* Main: sempre full width su mobile */
-			iframe[name="main"],
-			iframe[name="main"].sidebar-hidden {
+			iframe[name="main"] {
 				left: 0;
 				width: 100%;
 			}
 
-			/* Backdrop visibile quando sidebar è aperta */
 			#sidebar-overlay.sidebar-open {
 				display: block;
+			}
+
+			#sidebar-toggle {
+				display: inline-flex;
 			}
 		}
 	</style>
 </head>
 
 <body id="root">
-	<button id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle navigazione">
-		<img src="nagios.png" alt="Nagios">
-		<span>&#9776;</span>
-	</button>
+	<button id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle navigazione">&#9776;</button>
 	<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 	<iframe src="side.php" name="side"></iframe>
 	<iframe src="<?php echo $url; ?>" name="main"></iframe>
@@ -219,64 +209,78 @@ if ($theme != 'dark' && $theme != 'light') {
 			setTimeout(applyScale, 320);
 		}
 
-		function updateTogglePosition() {
-			var btn     = document.getElementById('sidebar-toggle');
-			var sidebar = document.querySelector('iframe[name="side"]');
-			// Su mobile la sidebar è sempre overlay, il bottone resta a sinistra
-			if (window.innerWidth <= 768 || sidebar.classList.contains('sidebar-hidden')) {
-				btn.style.top  = '44px';
-				btn.style.left = '10px';
-			} else {
-				btn.style.top  = '44px';
-				btn.style.left = '120px';
+		function setSidebarCompact(compact) {
+			var side = document.querySelector('iframe[name="side"]');
+			try {
+				if (side.contentWindow && typeof side.contentWindow.setSidebarCompact === 'function') {
+					side.contentWindow.setSidebarCompact(compact);
+				}
+			} catch (e) {
+				// ignore same-origin timing errors during initial load
 			}
+		}
+
+		function setDesktopSidebarExpanded(expanded) {
+			if (window.innerWidth <= 768) {
+				return;
+			}
+
+			document.body.classList.toggle('desktop-sidebar-expanded', expanded);
+			setSidebarCompact(!expanded);
+			applyScaleDelayed();
 		}
 
 		function toggleSidebar() {
 			var sidebar = document.querySelector('iframe[name="side"]');
-			var main    = document.querySelector('iframe[name="main"]');
 			var overlay = document.getElementById('sidebar-overlay');
 
 			if (window.innerWidth <= 768) {
-				// Mobile: sidebar come overlay, backdrop visibile
 				sidebar.classList.toggle('sidebar-open');
 				overlay.classList.toggle('sidebar-open');
 			} else {
-				// Desktop: sidebar collassa, il main si espande
-				sidebar.classList.toggle('sidebar-hidden');
-				main.classList.toggle('sidebar-hidden');
+				setDesktopSidebarExpanded(!document.body.classList.contains('desktop-sidebar-expanded'));
 			}
-			updateTogglePosition();
-			applyScaleDelayed();
 		}
 
-		// Al resize pulisce le classi dell'altro breakpoint e ricalcola posizione + scale
 		window.addEventListener('resize', function () {
 			var sidebar = document.querySelector('iframe[name="side"]');
-			var main    = document.querySelector('iframe[name="main"]');
 			var overlay = document.getElementById('sidebar-overlay');
 
 			if (window.innerWidth > 768) {
 				sidebar.classList.remove('sidebar-open');
 				overlay.classList.remove('sidebar-open');
+				setDesktopSidebarExpanded(true);
 			} else {
-				sidebar.classList.remove('sidebar-hidden');
-				main.classList.remove('sidebar-hidden');
+				document.body.classList.remove('desktop-sidebar-expanded');
+				setSidebarCompact(false);
 			}
-			updateTogglePosition();
 			applyScale();
 		});
 
-		// Applica lo scale ogni volta che l'iframe main carica una nuova pagina
 		document.querySelector('iframe[name="main"]').addEventListener('load', function () {
 			applyScale();
 			if (window.hideModernGraphPopup) {
 				window.hideModernGraphPopup();
 			}
+			try {
+				var side = document.querySelector('iframe[name="side"]');
+				if (side.contentWindow && typeof side.contentWindow.syncActiveNav === 'function') {
+					side.contentWindow.syncActiveNav();
+				}
+			} catch (e) {
+				// ignore iframe timing issues
+			}
 		});
 
-		// Posizione iniziale corretta al caricamento
-		updateTogglePosition();
+		document.querySelector('iframe[name="side"]').addEventListener('load', function () {
+			if (window.innerWidth > 768) {
+				setDesktopSidebarExpanded(true);
+			}
+		});
+
+		if (window.innerWidth > 768) {
+			setDesktopSidebarExpanded(true);
+		}
 	</script>
 </body>
 

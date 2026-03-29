@@ -1,133 +1,95 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.4.0-blue)
+![Version](https://img.shields.io/badge/version-0.5.0-blue)
 
+# Nagios Core Modern UI
+A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
 
-# Nagios Core – Modern UI Tweaks
-A modern, responsive redesign of the Nagios Core web interface, including refreshed PHP pages and a modern standalone graph layer.
+This project keeps the original Nagios CGI backend intact while adding standalone modern pages, a redesigned sidebar shell, a custom live dashboard and a modern graph layer backed by the same Nagiosgraph RRD files.
 
-No theme engine.
+## Features
 
-Cleaner colors, modern fonts, better readability, responsive layout, custom live overview pages, and modern graph rendering — while keeping the original Nagios look & feel.
+- Dark blue UI refresh across the standard Nagios Core pages
+- Responsive `index.php` shell and a modernized `side.php`
+- Compact/expanded sidebar navigation with active page highlighting
+- `live.php` modern live overview sourced directly from `status.dat`
+- `problems.php` modern problems view with severity-first triage
+- `host_detail.php` modern host service detail view
+- `hostgroups.php` modern host group overview
+- `hostgroups_summary.php` modern host group summary
+- `nagiosgraph_modern/` modern graph frontend for existing Nagiosgraph RRD data
+- Host logo support via `hostextinfo.cfg`
+- Historical availability snapshots via `live_trend_snapshot.php`
+- Hover graph preview for graphed services through `popup.js`
 
+## Included Modern Pages
 
-## ✨ Features
+- `live.php`
+- `problems.php`
+- `host_detail.php`
+- `hostgroups.php`
+- `hostgroups_summary.php`
+- `nagiosgraph_modern/show.php`
 
-- **Dark Blue theme** — deep navy palette for a modern, professional look
-- Rounded corners on tables, badges and info boxes
-- Softer, more readable OK / WARNING / CRITICAL colors
-- Improved contrast for status counters
-- System UI font stack (Segoe UI / Roboto / Ubuntu / San Francisco)
-- Host names emphasized, services unchanged
-- Cleaner status summary layout
-- Better readability for Unhandled / Problem indicators
-- Fully dark-mode optimized
-- **Responsive layout** — works on desktop, tablet and mobile screens
-- **Rewritten sidebar** (`side.php`) — clean PHP navigation with theme support
-- **Live Overview dashboard** (`live.php`) — custom tactical overview powered by `status.dat`
-- **Historical trend snapshots** (`live_trend_snapshot.php`) — lightweight PHP collector for the Live Overview dashboard
-- **Nagiosgraph Modern** (`nagiosgraph_modern/`) — standalone PHP + JS frontend that reads the same RRD files used by Nagiosgraph and renders modern graphs
+These pages are standalone and reversible. They do not modify Nagios CGI binaries.
 
-Consistent styling across:
+## Responsive Shell
 
-- `avail.cgi`
-- `status.cgi`
-- `extinfo.cgi`
-- `cmd.cgi`
-- `tac.cgi`
-- `summary.cgi`
-- and all standard Nagios Core pages
+Starting from the responsive shell work and expanded further in `0.5.0`, the project includes:
 
+- a custom `index.php`
+- a modern `side.php`
+- JavaScript for active-nav syncing and graph popup preview
 
-## 📱 Responsive Layout
+Desktop and mobile are both supported:
 
-Starting from version 0.2.0, the UI is fully responsive.
+- Desktop: collapsible left sidebar with compact and expanded modes
+- Mobile: overlay sidebar with backdrop
+- Narrow layouts: iframe scaling for old fixed-width Nagios CGI pages
 
-To achieve this, a modification to `index.php` was necessary in addition to the CSS changes. The original fixed-width frameset layout has been replaced with a fluid structure that adapts to different screen sizes and orientations.
+## Screenshots
 
-Key changes introduced in `index.php`:
+| Live Overview | Problems Overview |
+|---|---|
+| ![](screenshots/live.png) | ![](screenshots/problems_modern.png) |
 
-- **Hamburger button** — a toggle button (☰) is always visible, on both desktop and mobile. It shows the Nagios logo and collapses/expands the sidebar with a smooth CSS transition.
-- **Desktop behavior** — clicking the hamburger collapses the sidebar and expands the main content area to full width.
-- **Mobile behavior** — on screens ≤ 768px, the sidebar slides in as an overlay with a semi-transparent backdrop, leaving the main content always full width underneath.
-- **Auto-scaling** — on narrow screens, a JavaScript zoom is applied to the main iframe content to compensate for Nagios CGI pages having a fixed native width (~1024px).
+| Host Detail | Nagiosgraph |
+|---|---|
+| ![](screenshots/hostdetail_modern.png) | ![](screenshots/graph.png) |
 
-This means the project now includes **CSS, PHP and JavaScript changes**.
+| Classic Status Restyle | Classic Service Status Restyle |
+|---|---|
+| ![](screenshots/status-all.png) | ![](screenshots/status-service-all.png) |
 
+## Installation
 
-## 🎨 New Icon Set
+Replace the relevant files in your Nagios Core installation.
 
-In addition to the CSS modernization, this project introduces a **new modern SVG icon set**.
+Core shell and modern pages:
 
-Redesigned icons include:
-
-- 💬 Comments
-- ⚙ Actions
-- 📊 Status (alternative icon)
-- 🔁 Flapping
-
-
-## 🖼️ Service Logos
-A set of service logos has been added.
-
-- Clean PNG icons, optimized for dark mode
-
-- Consistent sizing and lightweight
-
-- Transparent background where applicable
-
-📁 Location
-
-[nagios_root_path]/share/images/logos/
-
-Example:
-
-[nagios_root_path]/share/images/logos/debian.png
-[nagios_root_path]/share/images/logos/proxmox.png
-[nagios_root_path]/share/images/logos/opnsense.png
-[nagios_root_path]/share/images/logos/fortinet.png
-
-These logos enhance visual scanning without changing Nagios behavior or performance.
-
-### Design Goals
-
-- Flat, minimal SVG style  
-- Crisp rendering at 16–20px  
-- Consistent stroke weight  
-- Dark-mode friendly contrast  
-- Lightweight and scalable  
-
-Icons replace the original bitmap-style images while preserving:
-
-- Original behavior  
-- Original layout  
-- Original functionality  
-
-
-## 📸 Screenshots
-| Status Overview | Host Detail |
-|-----------------|------------|
-| ![](screenshots/status-service-all.png) | ![](screenshots/graph_modern1.png) |
-
-| Live Overview | Service Problems |
-|-----------------|------------|
-| ![](screenshots/live.png) | ![](screenshots/service-problems.png) |
-
-
-## 🛠 Installation
-
-Replace the following files in your Nagios Core installation:
-
-```
+```text
 [nagios_root_path]/share/index.php
+[nagios_root_path]/share/side.php
 [nagios_root_path]/share/live.php
 [nagios_root_path]/share/live_trend_snapshot.php
+[nagios_root_path]/share/problems.php
+[nagios_root_path]/share/host_detail.php
+[nagios_root_path]/share/hostgroups.php
+[nagios_root_path]/share/hostgroups_summary.php
 [nagios_root_path]/share/nagios.png
-[nagios_root_path]/share/side.php
+```
+
+Nagiosgraph Modern:
+
+```text
 [nagios_root_path]/share/nagiosgraph_modern/data.php
 [nagios_root_path]/share/nagiosgraph_modern/popup.js
 [nagios_root_path]/share/nagiosgraph_modern/show.php
+```
 
+Stylesheets:
+
+```text
 [nagios_root_path]/share/stylesheets/avail.css
 [nagios_root_path]/share/stylesheets/cmd.css
 [nagios_root_path]/share/stylesheets/config.css
@@ -141,27 +103,31 @@ Replace the following files in your Nagios Core installation:
 [nagios_root_path]/share/stylesheets/summary.css
 [nagios_root_path]/share/stylesheets/tac.css
 [nagios_root_path]/share/stylesheets/trends.css
-[nagios_root_path]/share/images/logos/*
 ```
 
-For the new icons, replace:
-```
+Icons and logos:
+
+```text
 [nagios_root_path]/share/images/comments.svg
 [nagios_root_path]/share/images/action.svg
 [nagios_root_path]/share/images/status2.svg
 [nagios_root_path]/share/images/flapping.svg
+[nagios_root_path]/share/images/logos/*
 ```
 
-If you want the historical trend in `live.php`, add this cron job:
+## Live Overview Historical Trend
+
+If you want the historical availability trend in `live.php`, add this cron job:
 
 ```cron
-*/5 * * * * root /usr/bin/php 
-[nagios_root_path]/share/live_trend_snapshot.php >/dev/null 2>&1
+*/5 * * * * root /usr/bin/php /usr/local/nagios/share/live_trend_snapshot.php >/dev/null 2>&1
 ```
 
-This populates the JSON snapshot file used by the Live Overview availability trend.
+This populates the JSON snapshot data used by the live availability widget.
 
-If you want to enable the new graph page and hover preview for graphed services, update your `graphed-service` template action URL:
+## Nagiosgraph Modern Integration
+
+If you want graphed services to use the new graph page and hover preview, update your `graphed-service` template:
 
 ```cfg
 define service {
@@ -172,28 +138,23 @@ define service {
 }
 ```
 
-To support the hover preview, make sure `index.php` loads:
+Make sure `index.php` loads:
 
 ```html
 <script src="nagiosgraph_modern/popup.js"></script>
 ```
 
-Restart is **not required**.  
-Just hard-refresh your browser (Ctrl+F5).
+## Notes
 
-You can package the whole `share/` tree as `share.zip` for deployment.
-
-
-## ⚠️ Notes
-- Tested on Nagios Core 4.5.x
-- Modifies CSS files, image files, PHP files and JavaScript files
+- Tested on Nagios Core `4.5.x`
+- Modifies CSS, images, PHP and JavaScript
 - Includes optional Nagios configuration changes for `action_url`
-- Includes optional cron configuration for historical snapshots
-- Fully reversible by restoring original files
+- Includes optional cron configuration for live trend history
+- Fully reversible by restoring the original files
 
+## Credits
 
-## ❤️ Credits
 Original UI: Nagios Core  
-Modifications: community-driven
+Modernization and standalone pages: community-driven
 
 PRs welcome.
