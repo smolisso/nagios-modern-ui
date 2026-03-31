@@ -1,6 +1,8 @@
 <?php
 
 $statusFile = '../var/status.dat';
+$objectCacheFile = __DIR__ . '/../var/objects.cache';
+$mainConfigFile = __DIR__ . '/../etc/nagios.cfg';
 $hostExtInfoFile = __DIR__ . '/../etc/objects/hostextinfo.cfg';
 $objectsDir = __DIR__ . '/../etc/objects';
 $hostIconBaseUrl = '/nagios/images/logos/';
@@ -212,16 +214,96 @@ function hostgroup_detail_url(string $baseUrl, string $groupName): string
     return $baseUrl . rawurlencode($groupName);
 }
 
-function parse_object_configs(string $objectsDir): array
+function resolve_config_path(string $path, string $configDir, string $installRoot): string
+{
+    $path = trim($path);
+    if ($path === '') {
+        return '';
+    }
+
+    if ($path[0] !== '/') {
+        return rtrim($configDir, '/') . '/' . $path;
+    }
+
+    $nagiosRoot = '/usr/local/nagios';
+    if (strpos($path, $nagiosRoot . '/') === 0) {
+        return rtrim($installRoot, '/') . substr($path, strlen($nagiosRoot));
+    }
+
+    return $path;
+}
+
+function discover_included_object_files(string $mainConfigFile, string $objectsDir): array
+{
+    if (!is_readable($mainConfigFile)) {
+        $files = glob(rtrim($objectsDir, '/') . '/*.cfg');
+        return $files === false ? [] : $files;
+    }
+
+    $lines = file($mainConfigFile, FILE_IGNORE_NEW_LINES);
+    if ($lines === false) {
+        return [];
+    }
+
+    $configDir = dirname($mainConfigFile);
+    $installRoot = realpath(__DIR__ . '/..');
+    if ($installRoot === false) {
+        $installRoot = dirname($configDir);
+    }
+
+    $files = [];
+    foreach ($lines as $line) {
+        $trimmed = trim($line);
+        if ($trimmed === '' || strpos($trimmed, '#') === 0 || strpos($trimmed, ';') === 0) {
+            continue;
+        }
+
+        if (strpos($trimmed, 'cfg_file=') === 0) {
+            $path = resolve_config_path(substr($trimmed, strlen('cfg_file=')), $configDir, $installRoot);
+            if ($path !== '' && is_readable($path)) {
+                $files[] = $path;
+            }
+            continue;
+        }
+
+        if (strpos($trimmed, 'cfg_dir=') === 0) {
+            $dir = resolve_config_path(substr($trimmed, strlen('cfg_dir=')), $configDir, $installRoot);
+            if ($dir === '' || !is_dir($dir)) {
+                continue;
+            }
+
+            $dirFiles = glob(rtrim($dir, '/') . '/*.cfg');
+            if ($dirFiles === false) {
+                continue;
+            }
+
+            sort($dirFiles);
+            foreach ($dirFiles as $dirFile) {
+                if (is_readable($dirFile)) {
+                    $files[] = $dirFile;
+                }
+            }
+        }
+    }
+
+    return array_values(array_unique($files));
+}
+
+function parse_object_configs(string $objectCacheFile, string $mainConfigFile, string $objectsDir): array
 {
     $hostAliases = [];
     $hostGroups = [];
     $hostTemplates = [];
     $hosts = [];
 
-    $files = glob(rtrim($objectsDir, '/') . '/*.cfg');
-    if ($files === false) {
-        return [$hostAliases, $hostGroups];
+    $files = [];
+    if (is_readable($objectCacheFile)) {
+        $files[] = $objectCacheFile;
+    } else {
+        $files = discover_included_object_files($mainConfigFile, $objectsDir);
+        if ($files === []) {
+            return [$hostAliases, $hostGroups];
+        }
     }
 
     foreach ($files as $path) {
@@ -391,7 +473,7 @@ $status = parse_status_dat($statusFile);
 $services = $status['service'];
 $hosts = $status['host'];
 $hostIconMap = parse_hostextinfo_icons($hostExtInfoFile);
-[$hostAliases, $hostGroups] = parse_object_configs($objectsDir);
+[$hostAliases, $hostGroups] = parse_object_configs($objectCacheFile, $mainConfigFile, $objectsDir);
 $now = time();
 
 $hostStatusMap = [];

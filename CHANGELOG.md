@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.5.1] - 2026-03-31
+
+### Changed
+- `hostgroups.php` and `hostgroups_summary.php` now prefer `objects.cache` for Nagios object discovery
+- Fallback object parsing now reads only files actually included by `nagios.cfg` via `cfg_file` and `cfg_dir`
+- Prevented stale `.cfg` files left in `objects/` from appearing in the modern host group pages when they are not loaded by Nagios
+
+### Notes
+- Tested against the new object discovery logic with `objects.cache` present and fallback enabled
+- `status.dat` remains the live status source, while object membership stays aligned with the effective Nagios configuration
+
+---
+
 ## [0.5.0] - 2026-03-29
 
 ### Added
