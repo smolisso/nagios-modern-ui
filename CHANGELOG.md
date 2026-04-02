@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.5.2] - 2026-04-02
+
+### Changed
+- `share/live.php` trend axis labels now switch format by zoom range:
+  - `1h`, `6h`, `12h`, `24h` keep hour-based labels (`H:i`)
+  - `7d`, `14d`, `30d` now show day-based labels (`d M`)
+- Trend range labels and bar timestamps in `share/live.php` now use day-oriented formatting for long ranges (`7d`, `14d`, `30d`)
+
+### Notes
+- Fixes the live overview bug where long-range zoom levels still displayed only hours on the timeline
+
+---
+
 ## [0.5.1] - 2026-03-31
 
 ### Changed

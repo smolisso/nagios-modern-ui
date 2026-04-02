@@ -261,7 +261,39 @@ function read_trend_snapshot(string $path): array
     return $decoded['samples'];
 }
 
-function trend_axis_labels(array $samples): array
+function trend_time_format(string $range): string
+{
+    switch ($range) {
+        case '7d':
+        case '14d':
+        case '30d':
+            return 'd M';
+        case '1h':
+        case '6h':
+        case '12h':
+        case '24h':
+        default:
+            return 'H:i';
+    }
+}
+
+function trend_time_range_format(string $range): string
+{
+    switch ($range) {
+        case '7d':
+        case '14d':
+        case '30d':
+            return 'd M Y';
+        case '1h':
+        case '6h':
+        case '12h':
+        case '24h':
+        default:
+            return 'd M H:i';
+    }
+}
+
+function trend_axis_labels(array $samples, string $range): array
 {
     $count = count($samples);
     if ($count === 0) {
@@ -277,12 +309,13 @@ function trend_axis_labels(array $samples): array
     ]);
 
     $labels = [];
+    $format = trend_time_format($range);
     foreach ($indexes as $index) {
         if (!isset($samples[$index]['timestamp'])) {
             continue;
         }
 
-        $labels[] = date('H:i', (int) $samples[$index]['timestamp']);
+        $labels[] = date($format, (int) $samples[$index]['timestamp']);
     }
 
     return $labels;
@@ -797,6 +830,7 @@ $trendSamples = bucket_trend_samples($trendSamples, 48);
 $trendScale = trend_scale($trendSamples);
 $hostIconMap = parse_hostextinfo_icons($hostExtInfoFile);
 $trendBars = [];
+$trendPointFormat = trend_time_range_format($trendRange);
 
 foreach ($trendSamples as $sample) {
     $availability = isset($sample['availability_pct']) ? (float) $sample['availability_pct'] : 0.0;
@@ -805,13 +839,14 @@ foreach ($trendSamples as $sample) {
     $trendBars[] = [
         'height' => max(6, min(100, (int) round($normalizedHeight))),
         'label' => number_format($availability, 1) . '%',
-        'timestamp' => isset($sample['timestamp']) ? date('d M H:i', (int) $sample['timestamp']) : 'n/a',
+        'timestamp' => isset($sample['timestamp']) ? date($trendPointFormat, (int) $sample['timestamp']) : 'n/a',
     ];
 }
 
-$trendAxis = trend_axis_labels($trendSamples);
+$trendAxis = trend_axis_labels($trendSamples, $trendRange);
+$trendRangeFormat = trend_time_range_format($trendRange);
 $trendRangeLabel = $trendSamples !== []
-    ? date('d M H:i', (int) $trendSamples[0]['timestamp']) . ' to ' . date('d M H:i', (int) $trendSamples[count($trendSamples) - 1]['timestamp'])
+    ? date($trendRangeFormat, (int) $trendSamples[0]['timestamp']) . ' to ' . date($trendRangeFormat, (int) $trendSamples[count($trendSamples) - 1]['timestamp'])
     : 'Waiting for samples';
 $trendZoomOutRange = trend_range_step($trendRange, 'out');
 $trendZoomInRange = trend_range_step($trendRange, 'in');
