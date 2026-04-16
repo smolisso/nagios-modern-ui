@@ -59,13 +59,13 @@ Desktop and mobile are both supported:
 |---|---|
 | ![](screenshots/hostdetail_modern.png) | ![](screenshots/graph.png) |
 
-| Light Live Overview | Light Problems Overview |
+| Light Live Overview | Light Host Detail |
 |---|---|
-| ![](screenshots/live_light.png) | ![](screenshots/problems_modern_light.png) |
+| ![](screenshots/live_light.png) | ![](screenshots/hostdetail_light.png) |
 
-| Light Host Detail |  |
+| Light Problems Overview |  |
 |---|---|
-| ![](screenshots/hostdetail_light.png) |  |
+| ![](screenshots/problems_modern_light.png) |  |
 
 | Classic Status Restyle | Classic Service Status Restyle |
 |---|---|
