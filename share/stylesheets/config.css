@@ -167,3 +167,78 @@ body.config .infoBox i {
         box-sizing: border-box;
     }
 }
+
+/* =========================================================
+   CONFIG – LIGHT THEME OVERRIDES
+   ========================================================= */
+html.light body.config,
+:root[data-theme="light"] body.config {
+    background-color: var(--classic-bg) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.config :is(table, td, th, div),
+:root[data-theme="light"] body.config :is(table, td, th, div) {
+    background-color: transparent;
+}
+
+html.light body.config .reportSelectTitle,
+html.light body.config .infoBoxTitle,
+:root[data-theme="light"] body.config .reportSelectTitle,
+:root[data-theme="light"] body.config .infoBoxTitle {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+}
+
+html.light body.config :is(.reportSelectSubTitle, .reportSelectItem),
+:root[data-theme="light"] body.config :is(.reportSelectSubTitle, .reportSelectItem) {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.config :is(select, input[type="submit"]),
+:root[data-theme="light"] body.config :is(select, input[type="submit"]) {
+    background-color: #f6f9ff !important;
+    border-color: var(--classic-border) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.config input[type="submit"]:hover,
+:root[data-theme="light"] body.config input[type="submit"]:hover {
+    background-color: #e8f0fb !important;
+}
+
+html.light body.config :is(table.infoBox, td.infoBox),
+:root[data-theme="light"] body.config :is(table.infoBox, td.infoBox) {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.config table.infoBox :is(td, div, span, small, strong, b, i, font),
+html.light body.config td.infoBox :is(td, div, span, small, strong, b, i, font),
+:root[data-theme="light"] body.config table.infoBox :is(td, div, span, small, strong, b, i, font),
+:root[data-theme="light"] body.config td.infoBox :is(td, div, span, small, strong, b, i, font) {
+    color: var(--classic-text) !important;
+}
+
+html.light body.config .infoBox a,
+:root[data-theme="light"] body.config .infoBox a {
+    color: var(--classic-link) !important;
+}
+
+html.light body.config .infoBox a:hover,
+:root[data-theme="light"] body.config .infoBox a:hover {
+    color: var(--classic-link-hover) !important;
+}
+
+/* Legacy Nagios inline colors */
+html.light body.config :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+html.light body.config :is([style*="background-color: #141b26"], [style*="background-color:#141b26"], [style*="background-color: #1a2133"], [style*="background-color:#1a2133"], [style*="background-color: #0f1117"], [style*="background-color:#0f1117"]),
+:root[data-theme="light"] body.config :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+:root[data-theme="light"] body.config :is([style*="background-color: #141b26"], [style*="background-color:#141b26"], [style*="background-color: #1a2133"], [style*="background-color:#1a2133"], [style*="background-color: #0f1117"], [style*="background-color:#0f1117"]) {
+    background-color: var(--classic-surface) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}

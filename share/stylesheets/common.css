@@ -115,7 +115,8 @@ not important:  blue             aaccff  777777
   --error-msg-bg: #1C0202;
 }
 
-.light {
+.light,
+:root[data-theme="light"] {
   --background: #FFFFFF;
   --foreground: #000000;
   --primary: #4D89F9;
@@ -139,6 +140,51 @@ not important:  blue             aaccff  777777
   --error-msg-text: #710B09;
   --error-msg-border: #DB2424;
   --error-msg-bg: #FCD9D9;
+
+  /* Modern page tokens used by live/problems/host detail/group pages */
+  --bg: #f2f6fc;
+  --bg-accent: #ffffff;
+  --panel: rgba(255, 255, 255, 0.95);
+  --panel-strong: rgba(255, 255, 255, 0.98);
+  --panel-soft: rgba(245, 250, 255, 0.94);
+  --text: #1b2a3f;
+  --muted: #4f6280;
+  --muted-2: #7385a0;
+  --border-soft: rgba(65, 98, 133, 0.20);
+  --shadow: 0 14px 26px rgba(31, 57, 88, 0.12);
+  --critical: #b91e2f;
+  --critical-bg: rgba(230, 56, 75, 0.14);
+  --critical-border: rgba(209, 49, 69, 0.32);
+  --warning: #8b6400;
+  --warning-bg: rgba(245, 181, 44, 0.20);
+  --warning-border: rgba(201, 141, 10, 0.30);
+  --ok: #0b7a49;
+  --ok-bg: rgba(31, 164, 99, 0.16);
+  --ok-border: rgba(22, 133, 81, 0.28);
+  --unknown: #4c627f;
+  --unknown-bg: rgba(78, 102, 135, 0.14);
+  --unknown-border: rgba(78, 102, 135, 0.24);
+  --crit: #b91e2f;
+  --warn: #8b6400;
+
+  /* Classic CGI pages */
+  --classic-bg: #f3f7fc;
+  --classic-surface: #ffffff;
+  --classic-surface-alt: #f4f8fd;
+  --classic-border: #c9d7e7;
+  --classic-text: #1f2f43;
+  --classic-link: #1f5ea8;
+  --classic-link-hover: #0d4b95;
+  --state-ok-bg: #a8dfc3;
+  --state-ok-fg: #124d2e;
+  --state-warning-bg: #f7dd90;
+  --state-warning-fg: #6b4e00;
+  --state-critical-bg: #f4b2b8;
+  --state-critical-fg: #7a1f2a;
+  --state-unknown-bg: #c9b3d9;
+  --state-unknown-fg: #3f2f55;
+  --state-pending-bg: #d9dee6;
+  --state-pending-fg: #33465c;
 }
 
 #side {
@@ -1162,4 +1208,105 @@ body.status .errorMessage {
     #splashpage #mainfooter {
         padding-top: 20px;
     }
+}
+
+/* Light theme overrides for classic CGI pages */
+html.light :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd),
+:root[data-theme="light"] :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) {
+  background-color: var(--classic-bg) !important;
+  color: var(--classic-text) !important;
+}
+
+html.light :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) a,
+:root[data-theme="light"] :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) a {
+  color: var(--classic-link) !important;
+}
+
+html.light :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) a:hover,
+:root[data-theme="light"] :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) a:hover {
+  color: var(--classic-link-hover) !important;
+}
+
+html.light :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) table.infoBox,
+:root[data-theme="light"] :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd) table.infoBox {
+  background-color: var(--classic-surface) !important;
+  border-color: var(--classic-border) !important;
+}
+
+html.light :is(.statusOdd, .statusEven, .reportDataOdd, .reportDataEven, .logEntriesOdd, .logEntriesEven, .notificationsOdd, .notificationsEven, .commentOdd, .commentEven, .downtimeOdd, .downtimeEven, .queueOdd, .queueEven, .dataOdd, .dataEven),
+:root[data-theme="light"] :is(.statusOdd, .statusEven, .reportDataOdd, .reportDataEven, .logEntriesOdd, .logEntriesEven, .notificationsOdd, .notificationsEven, .commentOdd, .commentEven, .downtimeOdd, .downtimeEven, .queueOdd, .queueEven, .dataOdd, .dataEven) {
+  background-color: var(--classic-surface-alt) !important;
+  color: var(--classic-text) !important;
+}
+
+html.light :is(th.status, th.logEntries, th.notifications, th.comment, th.downtime, th.queue, th.data),
+:root[data-theme="light"] :is(th.status, th.logEntries, th.notifications, th.comment, th.downtime, th.queue, th.data) {
+  color: var(--classic-text) !important;
+  border-bottom-color: var(--classic-border) !important;
+}
+
+html.light :is(.statusPENDING, .statusHOSTPENDING, .serviceTotalsPENDING, .hostTotalsPENDING, .miniStatusPENDING, .statusBGINDETERMINATE),
+:root[data-theme="light"] :is(.statusPENDING, .statusHOSTPENDING, .serviceTotalsPENDING, .hostTotalsPENDING, .miniStatusPENDING, .statusBGINDETERMINATE) {
+  background-color: var(--state-pending-bg) !important;
+  color: var(--state-pending-fg) !important;
+}
+
+html.light :is(.statusOK, .statusRECOVERY, .statusHOSTUP, .serviceOK, .hostUP, .logEntriesOK, .logEntriesUP, .serviceTotalsOK, .hostTotalsUP, .miniStatusOK, .miniStatusUP, .notificationsOK, .notificationsHOSTUP, .processOK, .modeACTIVE, .checksENABLED, .notificationsENABLED, .eventhandlersENABLED, .flapdetectionENABLED, .queueENABLED, .notflapping, .featureEnabled),
+:root[data-theme="light"] :is(.statusOK, .statusRECOVERY, .statusHOSTUP, .serviceOK, .hostUP, .logEntriesOK, .logEntriesUP, .serviceTotalsOK, .hostTotalsUP, .miniStatusOK, .miniStatusUP, .notificationsOK, .notificationsHOSTUP, .processOK, .modeACTIVE, .checksENABLED, .notificationsENABLED, .eventhandlersENABLED, .flapdetectionENABLED, .queueENABLED, .notflapping, .featureEnabled) {
+  background-color: var(--state-ok-bg) !important;
+  color: var(--state-ok-fg) !important;
+}
+
+html.light :is(.statusWARNING, .serviceWARNING, .logEntriesWARNING, .serviceTotalsWARNING, .miniStatusWARNING, .statusBGWARNING, .notificationsWARNING, .processWARNING, .modeSTANDBY),
+:root[data-theme="light"] :is(.statusWARNING, .serviceWARNING, .logEntriesWARNING, .serviceTotalsWARNING, .miniStatusWARNING, .statusBGWARNING, .notificationsWARNING, .processWARNING, .modeSTANDBY) {
+  background-color: var(--state-warning-bg) !important;
+  color: var(--state-warning-fg) !important;
+}
+
+html.light :is(.statusCRITICAL, .statusCRITICALACK, .statusHOSTDOWN, .statusHOSTDOWNACK, .statusHOSTDOWNSCHED, .serviceCRITICAL, .hostDOWN, .logEntriesCRITICAL, .logEntriesDOWN, .serviceTotalsCRITICAL, .hostTotalsDOWN, .miniStatusCRITICAL, .miniStatusDOWN, .statusBGCRITICAL, .statusBGDOWN, .notificationsCRITICAL, .notificationsHOSTDOWN, .processCRITICAL, .checksDISABLED, .notificationsDISABLED, .eventhandlersDISABLED, .flapdetectionDISABLED, .queueDISABLED, .flapping, .featureDisabled),
+:root[data-theme="light"] :is(.statusCRITICAL, .statusCRITICALACK, .statusHOSTDOWN, .statusHOSTDOWNACK, .statusHOSTDOWNSCHED, .serviceCRITICAL, .hostDOWN, .logEntriesCRITICAL, .logEntriesDOWN, .serviceTotalsCRITICAL, .hostTotalsDOWN, .miniStatusCRITICAL, .miniStatusDOWN, .statusBGCRITICAL, .statusBGDOWN, .notificationsCRITICAL, .notificationsHOSTDOWN, .processCRITICAL, .checksDISABLED, .notificationsDISABLED, .eventhandlersDISABLED, .flapdetectionDISABLED, .queueDISABLED, .flapping, .featureDisabled) {
+  background-color: var(--state-critical-bg) !important;
+  color: var(--state-critical-fg) !important;
+}
+
+html.light :is(.statusUNKNOWN, .statusHOSTUNREACHABLE, .statusHOSTUNREACHABLEACK, .statusHOSTUNREACHABLESCHED, .serviceUNKNOWN, .hostUNREACHABLE, .logEntriesUNKNOWN, .logEntriesUNREACHABLE, .serviceTotalsUNKNOWN, .hostTotalsUNREACHABLE, .miniStatusUNKNOWN, .miniStatusUNREACHABLE, .statusBGUNKNOWN, .statusBGUNREACHABLE, .notificationsUNKNOWN, .notificationsHOSTUNREACHABLE, .processUNKNOWN),
+:root[data-theme="light"] :is(.statusUNKNOWN, .statusHOSTUNREACHABLE, .statusHOSTUNREACHABLEACK, .statusHOSTUNREACHABLESCHED, .serviceUNKNOWN, .hostUNREACHABLE, .logEntriesUNKNOWN, .logEntriesUNREACHABLE, .serviceTotalsUNKNOWN, .hostTotalsUNREACHABLE, .miniStatusUNKNOWN, .miniStatusUNREACHABLE, .statusBGUNKNOWN, .statusBGUNREACHABLE, .notificationsUNKNOWN, .notificationsHOSTUNREACHABLE, .processUNKNOWN) {
+  background-color: var(--state-unknown-bg) !important;
+  color: var(--state-unknown-fg) !important;
+}
+
+html.light body.status td.statusOdd,
+html.light body.status td.statusEven,
+:root[data-theme="light"] body.status td.statusOdd,
+:root[data-theme="light"] body.status td.statusEven {
+  background-color: var(--classic-surface-alt) !important;
+  color: var(--classic-text) !important;
+}
+
+html.light body.status td.miniStatusUP,
+html.light body.status td.miniStatusOK,
+:root[data-theme="light"] body.status td.miniStatusUP,
+:root[data-theme="light"] body.status td.miniStatusOK {
+  background-color: var(--state-ok-bg) !important;
+  color: var(--state-ok-fg) !important;
+}
+
+html.light body.status td.miniStatusWARNING,
+:root[data-theme="light"] body.status td.miniStatusWARNING {
+  background-color: var(--state-warning-bg) !important;
+  color: var(--state-warning-fg) !important;
+}
+
+html.light body.status td.miniStatusCRITICAL,
+html.light body.status td.miniStatusDOWN,
+:root[data-theme="light"] body.status td.miniStatusCRITICAL,
+:root[data-theme="light"] body.status td.miniStatusDOWN {
+  background-color: var(--state-critical-bg) !important;
+  color: var(--state-critical-fg) !important;
+}
+
+html.light body.status td.miniStatusUNKNOWN,
+:root[data-theme="light"] body.status td.miniStatusUNKNOWN {
+  background-color: var(--state-unknown-bg) !important;
+  color: var(--state-unknown-fg) !important;
 }

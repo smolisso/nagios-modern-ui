@@ -48,6 +48,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		document.cookie = "NagFormId=" + n.toString(16);
 	</script>
 	<script src="nagiosgraph_modern/popup.js"></script>
+	<script src="stylesheets/theme.js"></script>
 
 	<style>
 		:root {
@@ -56,10 +57,17 @@ if ($theme != 'dark' && $theme != 'light') {
 			--sidebar-width-expanded: 236px;
 			--toggle-bg: #1a2133;
 			--toggle-color: #c8cdd5;
+			--page-bg: #0f1117;
+			--sidebar-bg: #141b26;
 		}
 
-		.light {
+		.light,
+		:root[data-theme="light"] {
 			--border: #D6D6D6;
+			--toggle-bg: #f4f7fb;
+			--toggle-color: #2a3c52;
+			--page-bg: #eef3f9;
+			--sidebar-bg: #ffffff;
 		}
 
 		* { box-sizing: border-box; }
@@ -68,7 +76,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			margin: 0;
 			padding: 0;
 			overflow: hidden;
-			background-color: #0f1117;
+			background-color: var(--page-bg);
 		}
 
 		#root {
@@ -85,7 +93,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			border-right: 1px solid var(--border);
 			z-index: 100;
 			transition: width 0.22s ease;
-			background-color: #141b26;
+			background-color: var(--sidebar-bg);
 		}
 
 		iframe[name="main"] {
@@ -209,6 +217,42 @@ if ($theme != 'dark' && $theme != 'light') {
 			setTimeout(applyScale, 320);
 		}
 
+		function applyThemeToFrame(frame, theme) {
+			try {
+				if (!frame || !frame.contentWindow || !frame.contentWindow.document) {
+					return;
+				}
+
+				var root = frame.contentWindow.document.documentElement;
+				if (!root) {
+					return;
+				}
+
+				root.classList.remove('dark', 'light');
+				root.classList.add(theme);
+				root.setAttribute('data-theme', theme);
+			} catch (e) {
+				// Cross-origin or iframe timing issue.
+			}
+		}
+
+		window.applyThemeToFrames = function (theme) {
+			var selectedTheme = theme;
+			if (!selectedTheme && window.NagiosTheme && typeof window.NagiosTheme.getTheme === 'function') {
+				selectedTheme = window.NagiosTheme.getTheme();
+			}
+			if (!selectedTheme) {
+				selectedTheme = 'dark';
+			}
+
+			document.documentElement.classList.remove('dark', 'light');
+			document.documentElement.classList.add(selectedTheme);
+			document.documentElement.setAttribute('data-theme', selectedTheme);
+
+			applyThemeToFrame(document.querySelector('iframe[name="side"]'), selectedTheme);
+			applyThemeToFrame(document.querySelector('iframe[name="main"]'), selectedTheme);
+		};
+
 		function setSidebarCompact(compact) {
 			var side = document.querySelector('iframe[name="side"]');
 			try {
@@ -258,6 +302,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		});
 
 		document.querySelector('iframe[name="main"]').addEventListener('load', function () {
+			window.applyThemeToFrames();
 			applyScale();
 			if (window.hideModernGraphPopup) {
 				window.hideModernGraphPopup();
@@ -273,10 +318,18 @@ if ($theme != 'dark' && $theme != 'light') {
 		});
 
 		document.querySelector('iframe[name="side"]').addEventListener('load', function () {
+			window.applyThemeToFrames();
 			if (window.innerWidth > 768) {
 				setDesktopSidebarExpanded(true);
 			}
 		});
+
+		window.addEventListener('nagios-theme-change', function (event) {
+			var theme = event && event.detail ? event.detail.theme : null;
+			window.applyThemeToFrames(theme);
+		});
+
+		window.applyThemeToFrames();
 
 		if (window.innerWidth > 768) {
 			setDesktopSidebarExpanded(true);

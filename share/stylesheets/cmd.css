@@ -145,3 +145,95 @@ body.cmd .optBoxRequiredItem::after {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+/* =========================================================
+   CMD – LIGHT THEME OVERRIDES
+   ========================================================= */
+html.light body.cmd,
+:root[data-theme="light"] body.cmd {
+    background-color: var(--classic-bg) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.cmd :is(table, td, th, div),
+:root[data-theme="light"] body.cmd :is(table, td, th, div) {
+    background-color: transparent;
+}
+
+html.light body.cmd :is(.infoBoxTitle, .descriptionTitle, .dataTitle, .reportSelectTitle),
+:root[data-theme="light"] body.cmd :is(.infoBoxTitle, .descriptionTitle, .dataTitle, .reportSelectTitle) {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+}
+
+html.light body.cmd :is(table.infoBox, td.infoBox, .optBox),
+:root[data-theme="light"] body.cmd :is(table.infoBox, td.infoBox, .optBox) {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.cmd .cmdType,
+:root[data-theme="light"] body.cmd .cmdType {
+    background-color: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+    box-shadow: 0 4px 14px rgba(45, 80, 116, 0.12) !important;
+}
+
+html.light body.cmd .commandDescription,
+:root[data-theme="light"] body.cmd .commandDescription {
+    background-color: var(--classic-surface) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.cmd .infoMessage,
+:root[data-theme="light"] body.cmd .infoMessage {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+    border-left-color: #9fb6cd !important;
+}
+
+html.light body.cmd .optBoxRequiredItem,
+:root[data-theme="light"] body.cmd .optBoxRequiredItem {
+    color: var(--classic-text) !important;
+}
+
+html.light body.cmd :is(select, input[type="text"], input[type="submit"], textarea),
+:root[data-theme="light"] body.cmd :is(select, input[type="text"], input[type="submit"], textarea) {
+    background-color: #f6f9ff !important;
+    border: 1px solid var(--classic-border) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.cmd input[type="submit"]:hover,
+:root[data-theme="light"] body.cmd input[type="submit"]:hover {
+    background-color: #e8f0fb !important;
+}
+
+html.light body.cmd :is(.infoBox, .infoBox i),
+:root[data-theme="light"] body.cmd :is(.infoBox, .infoBox i) {
+    color: var(--classic-text) !important;
+}
+
+html.light body.cmd .infoBox a,
+:root[data-theme="light"] body.cmd .infoBox a {
+    color: var(--classic-link) !important;
+}
+
+html.light body.cmd .infoBox a:hover,
+:root[data-theme="light"] body.cmd .infoBox a:hover {
+    color: var(--classic-link-hover) !important;
+}
+
+/* Legacy Nagios inline colors */
+html.light body.cmd :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+html.light body.cmd :is([style*="background-color: #141b26"], [style*="background-color:#141b26"], [style*="background-color: #1a2133"], [style*="background-color:#1a2133"], [style*="background-color: #0f1117"], [style*="background-color:#0f1117"]),
+:root[data-theme="light"] body.cmd :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+:root[data-theme="light"] body.cmd :is([style*="background-color: #141b26"], [style*="background-color:#141b26"], [style*="background-color: #1a2133"], [style*="background-color:#1a2133"], [style*="background-color: #0f1117"], [style*="background-color:#0f1117"]) {
+    background-color: var(--classic-surface) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}

@@ -134,6 +134,10 @@ body.histogram .infoBox i {
     color: #c8cdd5;
 }
 
+body.histogram .infoBox :is(div, span, strong, b, small) {
+    color: #d8e0ec !important;
+}
+
 
 /* =========================================================
    RESPONSIVE – HISTOGRAM PAGE
@@ -158,4 +162,79 @@ body.histogram .infoBox i {
         max-width: 100%;
         height: auto;
     }
+}
+
+/* =========================================================
+   HISTOGRAM – LIGHT THEME OVERRIDES
+   ========================================================= */
+html.light body.histogram,
+:root[data-theme="light"] body.histogram {
+    background-color: var(--classic-bg) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.histogram :is(table, td, th, div),
+:root[data-theme="light"] body.histogram :is(table, td, th, div) {
+    background-color: transparent;
+}
+
+html.light body.histogram :is(.infoBoxTitle, .reportSelectTitle),
+:root[data-theme="light"] body.histogram :is(.infoBoxTitle, .reportSelectTitle) {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+}
+
+html.light body.histogram :is(.reportSelectSubTitle, .reportSelectItem, .optBoxItem),
+:root[data-theme="light"] body.histogram :is(.reportSelectSubTitle, .reportSelectItem, .optBoxItem) {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.histogram :is(select, input[type="text"], input[type="submit"]),
+:root[data-theme="light"] body.histogram :is(select, input[type="text"], input[type="submit"]) {
+    background-color: #f6f9ff !important;
+    border-color: var(--classic-border) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.histogram input[type="submit"]:hover,
+:root[data-theme="light"] body.histogram input[type="submit"]:hover {
+    background-color: #e8f0fb !important;
+}
+
+html.light body.histogram :is(table.infoBox, td.infoBox),
+:root[data-theme="light"] body.histogram :is(table.infoBox, td.infoBox) {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.histogram table.infoBox :is(td, div, span, small, strong, b, i, font),
+html.light body.histogram td.infoBox :is(td, div, span, small, strong, b, i, font),
+:root[data-theme="light"] body.histogram table.infoBox :is(td, div, span, small, strong, b, i, font),
+:root[data-theme="light"] body.histogram td.infoBox :is(td, div, span, small, strong, b, i, font) {
+    color: var(--classic-text) !important;
+}
+
+html.light body.histogram table.infoBox :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+html.light body.histogram td.infoBox :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+:root[data-theme="light"] body.histogram table.infoBox :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+:root[data-theme="light"] body.histogram td.infoBox :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]) {
+    background-color: var(--classic-surface-muted) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.histogram .infoBox :is(div, span, strong, b, small, i),
+:root[data-theme="light"] body.histogram .infoBox :is(div, span, strong, b, small, i) {
+    color: var(--classic-text) !important;
+}
+
+html.light body.histogram .infoBox a,
+:root[data-theme="light"] body.histogram .infoBox a {
+    color: var(--classic-link) !important;
+}
+
+html.light body.histogram .infoBox a:hover,
+:root[data-theme="light"] body.histogram .infoBox a:hover {
+    color: var(--classic-link-hover) !important;
 }

@@ -763,3 +763,147 @@ body.extinfo .commandPanel table {
         margin-bottom: 0;
     }
 }
+
+/* =========================================================
+   EXTINFO – LIGHT THEME OVERRIDES (types 0/3/4/6/7)
+   ========================================================= */
+html.light body.extinfo,
+:root[data-theme="light"] body.extinfo {
+    background-color: var(--classic-bg) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.extinfo :is(table, td, th, div),
+:root[data-theme="light"] body.extinfo :is(table, td, th, div) {
+    background-color: transparent;
+}
+
+html.light body.extinfo :is(.dataTitle, .commentTitle, .downtimeTitle, .commandTitle, .infoBoxTitle, .navBoxTitle),
+:root[data-theme="light"] body.extinfo :is(.dataTitle, .commentTitle, .downtimeTitle, .commandTitle, .infoBoxTitle, .navBoxTitle) {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(table.infoBox, table.linkBox, td.infoBox, .stateInfoTable1, .stateInfoTable2, td.commandPanel),
+:root[data-theme="light"] body.extinfo :is(table.infoBox, table.linkBox, td.infoBox, .stateInfoTable1, .stateInfoTable2, td.commandPanel) {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(td.dataVar, td.dataVal, .downtimeNav, .commentNav),
+:root[data-theme="light"] body.extinfo :is(td.dataVar, td.dataVal, .downtimeNav, .commentNav) {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(table.comment, table.downtime, table.queue, table.command),
+:root[data-theme="light"] body.extinfo :is(table.comment, table.downtime, table.queue, table.command) {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(th.comment, th.downtime, th.queue),
+:root[data-theme="light"] body.extinfo :is(th.comment, th.downtime, th.queue) {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border-bottom-color: var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(.commentOdd, .commentEven, .downtimeOdd, .downtimeEven, .queueOdd, .queueEven),
+:root[data-theme="light"] body.extinfo :is(.commentOdd, .commentEven, .downtimeOdd, .downtimeEven, .queueOdd, .queueEven) {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.extinfo :is(tr.command, tr.data),
+:root[data-theme="light"] body.extinfo :is(tr.command, tr.data) {
+    background-color: var(--classic-surface-alt) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(tr.command:hover, tr.data:hover),
+:root[data-theme="light"] body.extinfo :is(tr.command:hover, tr.data:hover) {
+    background-color: #e8f0fb !important;
+}
+
+html.light body.extinfo :is(td.command a, .commentPanel td.comment a),
+:root[data-theme="light"] body.extinfo :is(td.command a, .commentPanel td.comment a) {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.extinfo :is(td.command a:hover, .commentPanel td.comment a:hover),
+:root[data-theme="light"] body.extinfo :is(td.command a:hover, .commentPanel td.comment a:hover) {
+    background-color: #e8f0fb !important;
+}
+
+html.light body.extinfo :is(.infoBox, .infoBox i),
+:root[data-theme="light"] body.extinfo :is(.infoBox, .infoBox i) {
+    color: var(--classic-text) !important;
+}
+
+html.light body.extinfo .infoBox a,
+:root[data-theme="light"] body.extinfo .infoBox a {
+    color: var(--classic-link) !important;
+}
+
+html.light body.extinfo .infoBox a:hover,
+:root[data-theme="light"] body.extinfo .infoBox a:hover {
+    color: var(--classic-link-hover) !important;
+}
+
+/* Host badge readability in light */
+html.light body.extinfo .hostUP,
+:root[data-theme="light"] body.extinfo .hostUP {
+    background-color: #d9f3e5 !important;
+    color: #175239 !important;
+    border-color: #95d1b2 !important;
+}
+
+html.light body.extinfo .hostDOWN,
+:root[data-theme="light"] body.extinfo .hostDOWN {
+    background-color: #f7d9df !important;
+    color: #7a1f2a !important;
+    border-color: #d6a1ad !important;
+}
+
+html.light body.extinfo .hostUNREACHABLE,
+:root[data-theme="light"] body.extinfo .hostUNREACHABLE {
+    background-color: #e8dcf3 !important;
+    color: #4b3565 !important;
+    border-color: #baa6cf !important;
+}
+
+html.light body.extinfo .hostPENDING,
+:root[data-theme="light"] body.extinfo .hostPENDING {
+    background-color: #e4ebf4 !important;
+    color: #3a4f66 !important;
+    border-color: #b6c4d4 !important;
+}
+
+/* Host address box (type=1) */
+html.light body.extinfo td > div.data:last-of-type,
+:root[data-theme="light"] body.extinfo td > div.data:last-of-type {
+    background-color: var(--classic-surface-alt) !important;
+    color: #2b4868 !important;
+    border-color: #9fb6cd !important;
+}
+
+html.light body.extinfo td > div.data:last-of-type::before,
+:root[data-theme="light"] body.extinfo td > div.data:last-of-type::before {
+    color: #2b4868 !important;
+    opacity: 0.85;
+}
+
+/* Legacy Nagios inline colors */
+html.light body.extinfo :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+html.light body.extinfo :is([style*="background-color: #141b26"], [style*="background-color:#141b26"], [style*="background-color: #1a2133"], [style*="background-color:#1a2133"], [style*="background-color: #0f1117"], [style*="background-color:#0f1117"]),
+:root[data-theme="light"] body.extinfo :is([bgcolor="#141b26"], [bgcolor="#1a2133"], [bgcolor="#0f1117"]),
+:root[data-theme="light"] body.extinfo :is([style*="background-color: #141b26"], [style*="background-color:#141b26"], [style*="background-color: #1a2133"], [style*="background-color:#1a2133"], [style*="background-color: #0f1117"], [style*="background-color:#0f1117"]) {
+    background-color: var(--classic-surface) !important;
+    color: var(--classic-text) !important;
+    border-color: var(--classic-border) !important;
+}

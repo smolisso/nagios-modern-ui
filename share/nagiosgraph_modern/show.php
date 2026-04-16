@@ -87,12 +87,13 @@ $hostIconMap = parse_hostextinfo_icons($hostExtInfoFile);
 $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $host) : null;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nagiosgraph Modern</title>
+<script src="../stylesheets/theme.js"></script>
 <link rel="icon" href="../nagios.png" type="image/png">
 <style>
     :root {
@@ -110,6 +111,33 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         --radius-xl: 26px;
         --radius-lg: 18px;
         --radius-md: 14px;
+        --chart-grid: rgba(115, 135, 161, 0.18);
+        --chart-axis-text: #8092ab;
+        --chart-tooltip-bg: rgba(7, 17, 29, 0.96);
+        --chart-wrap-grad-top: rgba(71, 102, 142, 0.08);
+        --chart-wrap-grad-bottom: rgba(8, 17, 29, 0.94);
+        --chart-wrap-base: #091321;
+    }
+
+    html.light,
+    :root[data-theme="light"] {
+        --bg: #e9eef6;
+        --panel: rgba(247, 250, 255, 0.98);
+        --panel-soft: rgba(231, 239, 249, 0.92);
+        --border: rgba(93, 122, 154, 0.24);
+        --text: #1b2a3f;
+        --muted: #4e607a;
+        --muted-2: #647b99;
+        --ok: #2fba7f;
+        --warn: #c5961f;
+        --crit: #d84f64;
+        --shadow: 0 12px 28px rgba(30, 54, 83, 0.10);
+        --chart-grid: rgba(93, 122, 154, 0.20);
+        --chart-axis-text: #5f7695;
+        --chart-tooltip-bg: rgba(248, 251, 255, 0.98);
+        --chart-wrap-grad-top: rgba(120, 155, 196, 0.10);
+        --chart-wrap-grad-bottom: rgba(232, 240, 249, 0.90);
+        --chart-wrap-base: #eef3fa;
     }
 
     * {
@@ -131,6 +159,11 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         overflow: hidden;
         background:
             linear-gradient(180deg, rgba(12, 25, 41, 0.98), rgba(8, 17, 29, 0.98));
+    }
+
+    html.light body.embed,
+    :root[data-theme="light"] body.embed {
+        background: linear-gradient(180deg, rgba(241, 246, 253, 0.99), rgba(232, 239, 248, 0.99));
     }
 
     .page {
@@ -199,6 +232,12 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         border-radius: var(--radius-lg);
         background: var(--panel-soft);
         border: 1px solid rgba(99, 126, 156, 0.18);
+    }
+
+    html.light .info-card,
+    :root[data-theme="light"] .info-card {
+        border-color: rgba(93, 122, 154, 0.22);
+        background: rgba(231, 239, 249, 0.92);
     }
 
     .info-label {
@@ -293,6 +332,12 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         font-size: 15px;
     }
 
+    html.light .browser-field select,
+    :root[data-theme="light"] .browser-field select {
+        border-color: rgba(93, 122, 154, 0.26);
+        background: #f5f9ff;
+    }
+
     .browser-action {
         display: flex;
         align-items: flex-end;
@@ -315,6 +360,13 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         letter-spacing: 0.16em;
         text-transform: uppercase;
         cursor: pointer;
+    }
+
+    html.light .range-tab,
+    :root[data-theme="light"] .range-tab {
+        border-color: rgba(93, 122, 154, 0.25);
+        background: rgba(236, 244, 253, 0.95);
+        color: #5a7090;
     }
 
     .range-tab.active {
@@ -343,6 +395,13 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         cursor: pointer;
     }
 
+    html.light .ghost-button,
+    :root[data-theme="light"] .ghost-button {
+        border-color: rgba(93, 122, 154, 0.28);
+        background: rgba(236, 244, 253, 0.95);
+        color: #4f6584;
+    }
+
     .ghost-button:disabled {
         opacity: 0.45;
         cursor: default;
@@ -352,11 +411,16 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         position: relative;
         border-radius: 22px;
         background:
-            linear-gradient(180deg, rgba(71, 102, 142, 0.08), rgba(8, 17, 29, 0.94)),
-            #091321;
+            linear-gradient(180deg, var(--chart-wrap-grad-top), var(--chart-wrap-grad-bottom)),
+            var(--chart-wrap-base);
         border: 1px solid rgba(99, 126, 156, 0.18);
         min-height: 420px;
         overflow: hidden;
+    }
+
+    html.light .chart-wrap,
+    :root[data-theme="light"] .chart-wrap {
+        border-color: rgba(93, 122, 154, 0.24);
     }
 
     body.embed .chart-wrap {
@@ -397,7 +461,7 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         padding: 10px 12px;
         border-radius: 12px;
         border: 1px solid rgba(99, 126, 156, 0.18);
-        background: rgba(7, 17, 29, 0.96);
+        background: var(--chart-tooltip-bg);
         color: var(--text);
         font-size: 12px;
         line-height: 1.45;
@@ -428,6 +492,11 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         border-radius: var(--radius-md);
         border: 1px solid rgba(99, 126, 156, 0.16);
         background: var(--panel-soft);
+    }
+
+    html.light .legend-item,
+    :root[data-theme="light"] .legend-item {
+        border-color: rgba(93, 122, 154, 0.21);
     }
 
     .legend-left {
@@ -470,6 +539,11 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         background: var(--panel-soft);
     }
 
+    html.light .stat-card,
+    :root[data-theme="light"] .stat-card {
+        border-color: rgba(93, 122, 154, 0.21);
+    }
+
     .stat-name {
         color: var(--muted);
         font-size: 12px;
@@ -502,6 +576,12 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         color: var(--muted);
         border: 1px dashed rgba(99, 126, 156, 0.18);
         background: rgba(18, 38, 61, 0.48);
+    }
+
+    html.light .empty,
+    :root[data-theme="light"] .empty {
+        border-color: rgba(93, 122, 154, 0.25);
+        background: rgba(236, 244, 253, 0.85);
     }
 
     body.embed .empty {
@@ -1185,6 +1265,9 @@ function renderChart() {
     }
 
     const gridTicks = 5;
+    const computedStyle = getComputedStyle(document.documentElement);
+    const chartGridColor = (computedStyle.getPropertyValue('--chart-grid') || 'rgba(115, 135, 161, 0.18)').trim();
+    const chartAxisTextColor = (computedStyle.getPropertyValue('--chart-axis-text') || '#8092ab').trim();
     let svg = '';
 
     for (let i = 0; i <= gridTicks; i++) {
@@ -1192,8 +1275,8 @@ function renderChart() {
         const tickValue = bounds.max - (valSpan * ratio);
         const py = margin.top + ratio * innerHeight;
 
-        svg += `<line x1="${margin.left}" y1="${py}" x2="${width - margin.right}" y2="${py}" stroke="rgba(115,135,161,0.18)" stroke-width="1" />`;
-        svg += `<text x="${margin.left - 12}" y="${py + 4}" fill="#8092ab" font-size="12" text-anchor="end">${formatValue(tickValue)}</text>`;
+        svg += `<line x1="${margin.left}" y1="${py}" x2="${width - margin.right}" y2="${py}" stroke="${chartGridColor}" stroke-width="1" />`;
+        svg += `<text x="${margin.left - 12}" y="${py + 4}" fill="${chartAxisTextColor}" font-size="12" text-anchor="end">${formatValue(tickValue)}</text>`;
     }
 
     const xTicks = 5;
@@ -1202,7 +1285,7 @@ function renderChart() {
         const tickTs = Math.round(minTs + tsSpan * ratio);
         const px = margin.left + ratio * innerWidth;
 
-        svg += `<text x="${px}" y="${height - 14}" fill="#8092ab" font-size="12" text-anchor="middle">${formatTimestamp(tickTs)}</text>`;
+        svg += `<text x="${px}" y="${height - 14}" fill="${chartAxisTextColor}" font-size="12" text-anchor="middle">${formatTimestamp(tickTs)}</text>`;
     }
 
     seriesList.forEach((series, index) => {

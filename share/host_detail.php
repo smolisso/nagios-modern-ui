@@ -389,13 +389,14 @@ $hostChangedAt = $hostRow !== null ? format_timestamp(value_int($hostRow, 'last_
 $hostAttempt = $hostRow !== null ? value_int($hostRow, 'current_attempt') . '/' . max(1, value_int($hostRow, 'max_attempts')) : 'n/a';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>">
 <title><?= htmlspecialchars($requestedHost !== '' ? $requestedHost . ' Services' : 'Host Detail', ENT_QUOTES) ?></title>
+<script src="stylesheets/theme.js"></script>
 <link href="stylesheets/common.css" rel="stylesheet">
 <style>
     :root {
@@ -731,9 +732,9 @@ $hostAttempt = $hostRow !== null ? value_int($hostRow, 'current_attempt') . '/' 
         border-radius: 8px;
         border: 1px solid rgba(111, 143, 177, 0.18);
         background: rgba(8, 17, 29, 0.46);
-        opacity: 0;
-        transform: translateY(-2px);
-        pointer-events: none;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
         transition: opacity 140ms ease, transform 140ms ease, border-color 140ms ease, background 140ms ease;
     }
 
@@ -778,6 +779,54 @@ $hostAttempt = $hostRow !== null ? value_int($hostRow, 'current_attempt') . '/' 
         background: rgba(70, 214, 145, 0.08);
         border: 1px solid rgba(70, 214, 145, 0.18);
         color: var(--text);
+    }
+
+    html.light .service-card,
+    :root[data-theme="light"] .service-card {
+        background: rgba(235, 242, 250, 0.92);
+        border-color: rgba(103, 132, 165, 0.26);
+    }
+
+    html.light .service-card.critical,
+    :root[data-theme="light"] .service-card.critical {
+        background: linear-gradient(180deg, rgba(248, 214, 220, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(209, 49, 69, 0.26);
+    }
+
+    html.light .service-card.warning,
+    :root[data-theme="light"] .service-card.warning {
+        background: linear-gradient(180deg, rgba(252, 239, 204, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(201, 141, 10, 0.28);
+    }
+
+    html.light .service-card.unknown,
+    :root[data-theme="light"] .service-card.unknown {
+        background: linear-gradient(180deg, rgba(230, 237, 247, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(78, 102, 135, 0.24);
+    }
+
+    html.light .chip,
+    :root[data-theme="light"] .chip {
+        background: rgba(226, 236, 247, 0.9);
+        border-color: rgba(103, 132, 165, 0.24);
+    }
+
+    html.light .graph-action,
+    :root[data-theme="light"] .graph-action {
+        border-color: rgba(103, 132, 165, 0.28);
+        background: rgba(244, 249, 255, 0.95);
+    }
+
+    html.light .graph-action:hover,
+    :root[data-theme="light"] .graph-action:hover {
+        background: rgba(227, 238, 249, 0.98);
+        border-color: rgba(103, 132, 165, 0.36);
+    }
+
+    html.light .side-item,
+    :root[data-theme="light"] .side-item {
+        background: rgba(235, 242, 250, 0.92);
+        border-color: rgba(103, 132, 165, 0.24);
     }
 
     @media (max-width: 1280px) {

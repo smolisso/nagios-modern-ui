@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.0] - 2026-04-16
+
+### Added
+- Global theme switch (`dark` / `light`) with persistent user preference via `localStorage`
+- New `share/stylesheets/theme.js` used across shell and modern pages
+
+### Changed
+- `share/index.php` updated to synchronize selected theme across `side` and `main` frames
+- `share/side.php` updated with theme toggle button and improved light-mode behavior
+- `share/live.php`, `share/problems.php`, `share/host_detail.php`, `share/hostgroups.php`, `share/hostgroups_summary.php`, `share/nagiosgraph_modern/show.php` updated for full light-theme compatibility
+- Graph shortcut icon in modern pages is now always visible (not only on hover)
+- Classic CGI styles updated for light mode across:
+  - `status.cgi` views
+  - `avail.cgi`
+  - `trends.cgi`
+  - `history.cgi`
+  - `summary.cgi`
+  - `histogram.cgi`
+  - `notifications.cgi`
+  - `showlog.cgi`
+  - `extinfo.cgi` (types `0/1/3/4/6/7`)
+  - `config.cgi`
+  - `cmd.cgi`
+- Main shared stylesheet (`share/stylesheets/common.css`) extended with broader classic light-theme token overrides
+
+### Notes
+- Dark theme remains the default fallback
+- Light/dark selection is preserved across browser restarts (standard mode) and resets in private/incognito sessions
+
+---
+
 ## [0.5.2] - 2026-04-02
 
 ### Changed

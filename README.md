@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.5.0-blue)
+![Version](https://img.shields.io/badge/version-0.6.0-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -10,6 +10,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 ## Features
 
 - Dark blue UI refresh across the standard Nagios Core pages
+- Global dark/light theme switch with persisted preference
 - Responsive `index.php` shell and a modernized `side.php`
 - Compact/expanded sidebar navigation with active page highlighting
 - `live.php` modern live overview sourced directly from `status.dat`
@@ -21,6 +22,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - Host logo support via `hostextinfo.cfg`
 - Historical availability snapshots via `live_trend_snapshot.php`
 - Hover graph preview for graphed services through `popup.js`
+- Light-theme coverage extended to modern pages and classic CGI pages (`status`, `avail`, `trends`, `history`, `summary`, `histogram`, `notifications`, `showlog`, `extinfo`, `config`, `cmd`)
 
 ## Included Modern Pages
 
@@ -39,7 +41,7 @@ Starting from the responsive shell work and expanded further in `0.5.0`, the pro
 
 - a custom `index.php`
 - a modern `side.php`
-- JavaScript for active-nav syncing and graph popup preview
+- JavaScript for active-nav syncing, theme persistence/sync and graph popup preview
 
 Desktop and mobile are both supported:
 
@@ -77,6 +79,7 @@ Core shell and modern pages:
 [nagios_root_path]/share/hostgroups.php
 [nagios_root_path]/share/hostgroups_summary.php
 [nagios_root_path]/share/nagios.png
+[nagios_root_path]/share/stylesheets/theme.js
 ```
 
 Nagiosgraph Modern:
@@ -148,6 +151,7 @@ Make sure `index.php` loads:
 
 - Tested on Nagios Core `4.5.x`
 - Modifies CSS, images, PHP and JavaScript
+- Theme preference is persisted in browser storage (`localStorage`)
 - Includes optional Nagios configuration changes for `action_url`
 - Includes optional cron configuration for live trend history
 - Fully reversible by restoring the original files

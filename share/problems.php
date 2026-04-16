@@ -589,13 +589,14 @@ $pageTitle = 'Problems Overview';
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>">
 <title><?= htmlspecialchars($pageTitle, ENT_QUOTES) ?></title>
+<script src="stylesheets/theme.js"></script>
 <link href="stylesheets/common.css" rel="stylesheet">
 <style>
     :root {
@@ -877,16 +878,16 @@ $pageTitle = 'Problems Overview';
 
     .incident-list {
         display: grid;
-        gap: 12px;
+        gap: 8px;
     }
 
     .incident {
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
-        gap: 14px;
+        gap: 10px;
         align-items: start;
-        padding: 13px 16px;
-        border-radius: 18px;
+        padding: 9px 12px;
+        border-radius: 14px;
         background: rgba(18, 38, 61, 0.62);
         border: 1px solid var(--border-soft);
     }
@@ -918,13 +919,13 @@ $pageTitle = 'Problems Overview';
     }
 
     .incident-badge {
-        min-width: 108px;
-        padding: 8px 11px;
-        border-radius: 14px;
+        min-width: 94px;
+        padding: 6px 9px;
+        border-radius: 11px;
         text-align: center;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 800;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.10em;
         text-transform: uppercase;
     }
 
@@ -945,15 +946,15 @@ $pageTitle = 'Problems Overview';
 
     .incident-title {
         margin: 0;
-        font-size: 16px;
-        line-height: 1.3;
+        font-size: 14px;
+        line-height: 1.2;
     }
 
     .incident-title-row {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 12px;
+        gap: 8px;
     }
 
     .graph-action {
@@ -966,9 +967,9 @@ $pageTitle = 'Problems Overview';
         border-radius: 8px;
         border: 1px solid rgba(111, 143, 177, 0.18);
         background: rgba(8, 17, 29, 0.46);
-        opacity: 0;
-        transform: translateY(-2px);
-        pointer-events: none;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
         transition: opacity 140ms ease, transform 140ms ease, border-color 140ms ease, background 140ms ease;
     }
 
@@ -994,13 +995,13 @@ $pageTitle = 'Problems Overview';
     .host-link-wrap {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         vertical-align: middle;
     }
 
     .host-icon {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         border-radius: 4px;
         object-fit: contain;
         flex: 0 0 auto;
@@ -1014,31 +1015,31 @@ $pageTitle = 'Problems Overview';
     .incident-output,
     .mini-list-meta {
         color: var(--muted);
-        font-size: 12px;
-        line-height: 1.45;
+        font-size: 11px;
+        line-height: 1.3;
     }
 
     .incident-meta {
-        margin-top: 6px;
+        margin-top: 4px;
     }
 
     .incident-output {
-        margin-top: 8px;
+        margin-top: 6px;
     }
 
     .flags {
         display: flex;
         flex-wrap: wrap;
-        gap: 7px;
+        gap: 5px;
         justify-content: flex-end;
     }
 
     .flag {
-        padding: 6px 9px;
+        padding: 4px 8px;
         border-radius: 999px;
-        font-size: 10px;
+        font-size: 9px;
         font-weight: 700;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.10em;
         text-transform: uppercase;
         border: 1px solid var(--border-soft);
         background: rgba(255, 255, 255, 0.03);
@@ -1081,6 +1082,107 @@ $pageTitle = 'Problems Overview';
         background: rgba(70, 214, 145, 0.08);
         border: 1px solid rgba(70, 214, 145, 0.18);
         color: var(--text);
+    }
+
+    html.light,
+    :root[data-theme="light"] {
+        --bg: #f2f6fc;
+        --bg-accent: #ffffff;
+        --panel: rgba(255, 255, 255, 0.95);
+        --panel-strong: rgba(255, 255, 255, 0.98);
+        --panel-soft: rgba(245, 250, 255, 0.94);
+        --border: rgba(65, 98, 133, 0.24);
+        --border-soft: rgba(65, 98, 133, 0.20);
+        --text: #1b2a3f;
+        --muted: #4f6280;
+        --muted-2: #7385a0;
+        --critical: #b91e2f;
+        --critical-bg: rgba(230, 56, 75, 0.14);
+        --warning: #8b6400;
+        --warning-bg: rgba(245, 181, 44, 0.20);
+        --ok: #0b7a49;
+        --ok-bg: rgba(31, 164, 99, 0.16);
+        --unknown: #4c627f;
+        --unknown-bg: rgba(78, 102, 135, 0.14);
+        --shadow: 0 14px 26px rgba(31, 57, 88, 0.12);
+    }
+
+    html.light body,
+    :root[data-theme="light"] body {
+        background:
+            radial-gradient(circle at top left, rgba(127, 175, 230, 0.22), transparent 36%),
+            linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 100%);
+    }
+
+    html.light .toolbar,
+    html.light .list-panel,
+    html.light .summary-panel,
+    :root[data-theme="light"] .toolbar,
+    :root[data-theme="light"] .list-panel,
+    :root[data-theme="light"] .summary-panel {
+        background: rgba(255, 255, 255, 0.95);
+        border-color: rgba(65, 98, 133, 0.24);
+    }
+
+    html.light .field select,
+    html.light .field input,
+    html.light .button,
+    :root[data-theme="light"] .field select,
+    :root[data-theme="light"] .field input,
+    :root[data-theme="light"] .button {
+        background: rgba(241, 247, 255, 0.94);
+        border-color: rgba(86, 120, 158, 0.26);
+        color: #1b2a3f;
+    }
+
+    html.light .scope-link,
+    :root[data-theme="light"] .scope-link {
+        background: rgba(226, 236, 247, 0.9);
+        border-color: rgba(103, 132, 165, 0.24);
+        color: #4f6280;
+    }
+
+    html.light .scope-link.is-active,
+    :root[data-theme="light"] .scope-link.is-active {
+        color: #1b2a3f;
+        border-color: rgba(22, 133, 81, 0.32);
+        box-shadow: inset 0 0 0 1px rgba(22, 133, 81, 0.16);
+    }
+
+    html.light .incident,
+    :root[data-theme="light"] .incident {
+        background: rgba(235, 242, 250, 0.92);
+        border-color: rgba(103, 132, 165, 0.24);
+    }
+
+    html.light .incident.critical,
+    :root[data-theme="light"] .incident.critical {
+        background: linear-gradient(180deg, rgba(248, 214, 220, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(209, 49, 69, 0.26);
+    }
+
+    html.light .incident.warning,
+    :root[data-theme="light"] .incident.warning {
+        background: linear-gradient(180deg, rgba(252, 239, 204, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(201, 141, 10, 0.28);
+    }
+
+    html.light .incident.unknown,
+    :root[data-theme="light"] .incident.unknown {
+        background: linear-gradient(180deg, rgba(230, 237, 247, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(78, 102, 135, 0.24);
+    }
+
+    html.light .flag,
+    :root[data-theme="light"] .flag {
+        background: rgba(226, 236, 247, 0.9);
+        border-color: rgba(103, 132, 165, 0.24);
+    }
+
+    html.light .side-item,
+    :root[data-theme="light"] .side-item {
+        background: rgba(235, 242, 250, 0.92);
+        border-color: rgba(103, 132, 165, 0.24);
     }
 
     @media (max-width: 1240px) {

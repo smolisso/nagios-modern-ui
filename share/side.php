@@ -15,8 +15,13 @@ if ($theme != 'dark' && $theme != 'light') {
 <head>
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <title>Nagios Core</title>
+<script src="stylesheets/theme.js"></script>
 <link href="stylesheets/common.css?<?php echo $this_version; ?>" type="text/css" rel="stylesheet">
 <style>
+html#side {
+	background-color: #08111d;
+}
+
 body.navbar {
 	background:
 		radial-gradient(circle at top left, rgba(78, 123, 178, 0.16), transparent 32%),
@@ -24,6 +29,7 @@ body.navbar {
 	color: #e8eef8;
 	gap: 8px;
 	padding: 12px 10px 12px 10px;
+	min-height: 100vh;
 	transition: padding 0.18s ease;
 }
 
@@ -31,6 +37,7 @@ body.navbar {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	flex-wrap: wrap;
 	position: sticky;
 	top: 0;
 	z-index: 20;
@@ -76,6 +83,48 @@ body.navbar {
 .navbar-toggle:hover {
 	background: rgba(27, 48, 74, 0.88);
 	transform: translateY(-1px);
+}
+
+.theme-switch {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	height: 30px;
+	margin-left: 0;
+	padding: 0 10px;
+	border: 1px solid rgba(111, 143, 177, 0.16);
+	border-radius: 9px;
+	background: rgba(20, 36, 58, 0.62);
+	color: #d8e2ef;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.14s ease, transform 0.14s ease, border-color 0.14s ease;
+}
+
+.theme-switch:hover {
+	background: rgba(27, 48, 74, 0.88);
+	border-color: rgba(111, 143, 177, 0.28);
+	transform: translateY(-1px);
+}
+
+.theme-switch-icon {
+	line-height: 1;
+}
+
+.navbarlogo .theme-switch {
+	order: 3;
+	flex: 0 0 100%;
+	width: 30px;
+	padding: 0;
+	margin-left: 0;
+	margin-top: 6px;
+}
+
+.navbarlogo .theme-switch .theme-switch-label {
+	display: none;
 }
 
 div.navsection {
@@ -368,6 +417,16 @@ body.compact .navbarbrand {
 	display: none;
 }
 
+body.compact .theme-switch {
+	width: 40px;
+	padding: 0;
+	margin-left: 0;
+}
+
+body.compact .theme-switch .theme-switch-label {
+	display: none;
+}
+
 body.compact .navlink-text,
 body.compact .label-main,
 body.compact .navlink-main,
@@ -411,6 +470,100 @@ body.compact .nav-inline-links .navlink {
 	justify-content: center;
 	gap: 0;
 }
+
+html.light body.navbar,
+:root[data-theme="light"] body.navbar {
+	background:
+		radial-gradient(circle at top left, rgba(127, 175, 230, 0.22), transparent 36%),
+		linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+	color: #1d2d41;
+}
+
+html.light html#side,
+:root[data-theme="light"] html#side {
+	background-color: #eef4fb;
+}
+
+html.light .navlink,
+html.light .navgroup-label,
+html.light .navbarsearch,
+html.light .theme-switch,
+:root[data-theme="light"] .navlink,
+:root[data-theme="light"] .navgroup-label,
+:root[data-theme="light"] .navbarsearch,
+:root[data-theme="light"] .theme-switch {
+	background: rgba(255, 255, 255, 0.84);
+	border-color: rgba(66, 101, 141, 0.16);
+}
+
+html.light .navlink:hover,
+html.light .navgroup:hover > .navgroup-label,
+html.light .theme-switch:hover,
+:root[data-theme="light"] .navlink:hover,
+:root[data-theme="light"] .navgroup:hover > .navgroup-label,
+:root[data-theme="light"] .theme-switch:hover {
+	background: rgba(236, 243, 252, 0.96);
+}
+
+html.light .navlink-text,
+html.light .navgroup-label .label-main,
+html.light .navgroup-label::before,
+html.light .navlink[data-icon]::before,
+html.light .navgroup-label[data-icon]::before,
+html.light .theme-switch,
+html.light .search-title,
+:root[data-theme="light"] .navlink-text,
+:root[data-theme="light"] .navgroup-label .label-main,
+:root[data-theme="light"] .navgroup-label::before,
+:root[data-theme="light"] .navlink[data-icon]::before,
+:root[data-theme="light"] .navgroup-label[data-icon]::before,
+:root[data-theme="light"] .theme-switch,
+:root[data-theme="light"] .search-title {
+	color: #23405d;
+}
+
+html.light .navgroup > ul .navlink,
+:root[data-theme="light"] .navgroup > ul .navlink {
+	background: rgba(244, 248, 255, 0.88);
+}
+
+html.light .navbarsearch,
+:root[data-theme="light"] .navbarsearch {
+	background: #ffffff;
+	border-color: rgba(66, 101, 141, 0.18);
+}
+
+html.light .navbarsearch input,
+:root[data-theme="light"] .navbarsearch input {
+	background: #ffffff;
+	border-color: rgba(86, 120, 158, 0.26);
+	color: #173a5c;
+}
+
+html.light .navbarsearch input::placeholder,
+:root[data-theme="light"] .navbarsearch input::placeholder {
+	color: #6b7f99;
+}
+
+html.light .navgroup > ul .navlink.is-active,
+:root[data-theme="light"] .navgroup > ul .navlink.is-active {
+	background: linear-gradient(135deg, rgba(173, 226, 206, 0.55), rgba(169, 208, 242, 0.50));
+	border-color: rgba(66, 131, 109, 0.34);
+}
+
+html.light .navgroup > ul .navlink.is-active .navlink-text,
+html.light .navgroup > ul .navlink.is-active::before,
+:root[data-theme="light"] .navgroup > ul .navlink.is-active .navlink-text,
+:root[data-theme="light"] .navgroup > ul .navlink.is-active::before {
+	color: #173a5c;
+}
+
+html.light .navbadge.classic,
+:root[data-theme="light"] .navbadge.classic {
+	color: #48627e;
+	background: rgba(87, 122, 160, 0.12);
+	border-color: rgba(87, 122, 160, 0.14);
+}
 </style>
 </head>
 
@@ -423,6 +576,11 @@ body.compact .nav-inline-links .navlink {
 		<img class="navbarbrand-mark" src="nagios.png" alt="Nagios">
 		<div class="navbarbrand-full fulllogo nagioslogo"></div>
 	</a>
+	<button class="theme-switch" id="theme-toggle" type="button" aria-label="Cambia tema">
+		<span class="theme-switch-icon" aria-hidden="true">&#9728;</span>
+		<span class="theme-switch-label">Tema</span>
+		<span class="theme-switch-icon" aria-hidden="true">&#9790;</span>
+	</button>
 </div>
 
 <div class="navsection">
@@ -530,6 +688,17 @@ body.compact .nav-inline-links .navlink {
 <script>
 window.setSidebarCompact = function (compact) {
 	document.body.classList.toggle('compact', !!compact);
+};
+
+window.updateThemeToggle = function (theme) {
+	var button = document.getElementById('theme-toggle');
+	if (!button) {
+		return;
+	}
+
+	var mode = theme === 'light' ? 'chiaro' : 'scuro';
+	button.setAttribute('title', 'Tema attivo: ' + mode + ' (clicca per cambiare)');
+	button.setAttribute('aria-label', 'Cambia tema, ora: ' + mode);
 };
 
 window.syncCompactGroupIcons = function () {
@@ -697,6 +866,33 @@ document.addEventListener('click', function (event) {
 });
 
 window.addEventListener('load', function () {
+	var themeToggle = document.getElementById('theme-toggle');
+	if (themeToggle) {
+		themeToggle.addEventListener('click', function () {
+			if (!window.NagiosTheme || typeof window.NagiosTheme.toggleTheme !== 'function') {
+				return;
+			}
+			var theme = window.NagiosTheme.toggleTheme();
+			window.updateThemeToggle(theme);
+			if (window.parent && typeof window.parent.applyThemeToFrames === 'function') {
+				window.parent.applyThemeToFrames(theme);
+			}
+		});
+	}
+
+	var initialTheme = (window.NagiosTheme && typeof window.NagiosTheme.getTheme === 'function')
+		? window.NagiosTheme.getTheme()
+		: 'dark';
+	window.updateThemeToggle(initialTheme);
+
+	window.addEventListener('nagios-theme-change', function (event) {
+		var theme = event && event.detail ? event.detail.theme : 'dark';
+		window.updateThemeToggle(theme);
+		if (window.parent && typeof window.parent.applyThemeToFrames === 'function') {
+			window.parent.applyThemeToFrames(theme);
+		}
+	});
+
 	if (typeof window.syncCompactGroupIcons === 'function') {
 		window.syncCompactGroupIcons();
 	}

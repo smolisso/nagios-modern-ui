@@ -854,13 +854,14 @@ $trendScaleLabel = number_format($trendScale['min'], 1) . '% to ' . number_forma
 $trendTicks = trend_scale_ticks($trendScale);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>">
 <title>Live Overview</title>
+<script src="stylesheets/theme.js"></script>
 <link href="stylesheets/common.css" rel="stylesheet">
 <style>
     :root {
@@ -890,6 +891,33 @@ $trendTicks = trend_scale_ticks($trendScale);
         --radius-xl: 28px;
         --radius-lg: 22px;
         --radius-md: 16px;
+    }
+
+    html.light,
+    :root[data-theme="light"] {
+        --bg: #f2f6fc;
+        --bg-accent: #ffffff;
+        --panel: rgba(255, 255, 255, 0.95);
+        --panel-strong: rgba(255, 255, 255, 0.98);
+        --panel-soft: rgba(245, 250, 255, 0.94);
+        --border: rgba(65, 98, 133, 0.24);
+        --border-soft: rgba(65, 98, 133, 0.20);
+        --text: #1b2a3f;
+        --muted: #4f6280;
+        --muted-2: #7385a0;
+        --critical: #b91e2f;
+        --critical-bg: rgba(230, 56, 75, 0.14);
+        --critical-border: rgba(209, 49, 69, 0.32);
+        --warning: #8b6400;
+        --warning-bg: rgba(245, 181, 44, 0.20);
+        --warning-border: rgba(201, 141, 10, 0.30);
+        --ok: #0b7a49;
+        --ok-bg: rgba(31, 164, 99, 0.16);
+        --ok-border: rgba(22, 133, 81, 0.28);
+        --unknown: #4c627f;
+        --unknown-bg: rgba(78, 102, 135, 0.14);
+        --unknown-border: rgba(78, 102, 135, 0.24);
+        --shadow: 0 14px 26px rgba(31, 57, 88, 0.12);
     }
 
     * {
@@ -1426,9 +1454,9 @@ $trendTicks = trend_scale_ticks($trendScale);
         border-radius: 8px;
         border: 1px solid rgba(111, 143, 177, 0.18);
         background: rgba(8, 17, 29, 0.46);
-        opacity: 0;
-        transform: translateY(-2px);
-        pointer-events: none;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
         transition: opacity 140ms ease, transform 140ms ease, border-color 140ms ease, background 140ms ease;
     }
 
@@ -1590,6 +1618,91 @@ $trendTicks = trend_scale_ticks($trendScale);
         .badge {
             min-width: 0;
         }
+    }
+
+    html.light body,
+    :root[data-theme="light"] body {
+        background:
+            radial-gradient(circle at top left, rgba(127, 175, 230, 0.22), transparent 36%),
+            linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 100%);
+    }
+
+    html.light .kpi-card.alert,
+    :root[data-theme="light"] .kpi-card.alert {
+        background: linear-gradient(180deg, rgba(248, 229, 232, 0.92), rgba(236, 244, 253, 0.98));
+        border-color: rgba(209, 49, 69, 0.18);
+    }
+
+    html.light .trend-box,
+    :root[data-theme="light"] .trend-box {
+        background:
+            linear-gradient(180deg, rgba(125, 165, 208, 0.14), rgba(234, 242, 251, 0.98)),
+            #eaf2fb;
+        border-color: rgba(86, 120, 158, 0.22);
+    }
+
+    html.light .trend-grid-line,
+    :root[data-theme="light"] .trend-grid-line {
+        border-top-color: rgba(88, 118, 154, 0.22);
+    }
+
+    html.light .trend-bar,
+    :root[data-theme="light"] .trend-bar {
+        background: rgba(86, 120, 158, 0.14);
+    }
+
+    html.light .trend-bar:hover span,
+    :root[data-theme="light"] .trend-bar:hover span {
+        box-shadow: 0 0 0 1px rgba(248, 212, 102, 0.25), 0 8px 14px rgba(52, 89, 132, 0.20);
+    }
+
+    html.light .trend-tooltip,
+    :root[data-theme="light"] .trend-tooltip {
+        border-color: rgba(86, 120, 158, 0.24);
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 8px 16px rgba(52, 89, 132, 0.16);
+    }
+
+    html.light .incident-row.critical,
+    :root[data-theme="light"] .incident-row.critical {
+        background: linear-gradient(180deg, rgba(248, 214, 220, 0.92), rgba(239, 246, 253, 0.98));
+        border-color: rgba(209, 49, 69, 0.22);
+    }
+
+    html.light .incident-row.warning,
+    :root[data-theme="light"] .incident-row.warning {
+        background: linear-gradient(180deg, rgba(252, 239, 204, 0.92), rgba(239, 246, 253, 0.98));
+        border-color: rgba(201, 141, 10, 0.24);
+    }
+
+    html.light .incident-row.unknown,
+    :root[data-theme="light"] .incident-row.unknown {
+        background: linear-gradient(180deg, rgba(230, 237, 247, 0.92), rgba(239, 246, 253, 0.98));
+        border-color: rgba(78, 102, 135, 0.22);
+    }
+
+    html.light .graph-action,
+    :root[data-theme="light"] .graph-action {
+        border-color: rgba(86, 120, 158, 0.24);
+        background: rgba(242, 247, 253, 0.92);
+    }
+
+    html.light .graph-action:hover,
+    :root[data-theme="light"] .graph-action:hover {
+        background: rgba(227, 237, 249, 0.98);
+        border-color: rgba(86, 120, 158, 0.34);
+    }
+
+    html.light .chip,
+    :root[data-theme="light"] .chip {
+        background: rgba(231, 239, 249, 0.85);
+        border-color: rgba(86, 120, 158, 0.20);
+    }
+
+    html.light .chip.unhandled,
+    :root[data-theme="light"] .chip.unhandled {
+        border-color: rgba(209, 49, 69, 0.30);
+        background: rgba(230, 56, 75, 0.12);
     }
 </style>
 </head>

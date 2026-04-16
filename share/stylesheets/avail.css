@@ -166,3 +166,74 @@ body.avail .infoBox i {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+/* =========================================================
+   AVAIL – LIGHT THEME OVERRIDES
+   ========================================================= */
+html.light body.avail,
+:root[data-theme="light"] body.avail {
+    background-color: var(--classic-bg) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.avail .optBox,
+:root[data-theme="light"] body.avail .optBox {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.avail .reportSelectTitle,
+html.light body.avail .infoBoxTitle,
+:root[data-theme="light"] body.avail .reportSelectTitle,
+:root[data-theme="light"] body.avail .infoBoxTitle {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+}
+
+html.light body.avail :is(.reportSelectSubTitle, .reportSelectItem, .dateSelectItem),
+:root[data-theme="light"] body.avail :is(.reportSelectSubTitle, .reportSelectItem, .dateSelectItem) {
+    background-color: var(--classic-surface-alt) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.avail :is(select, input[type="submit"]),
+:root[data-theme="light"] body.avail :is(select, input[type="submit"]) {
+    background-color: #f6f9ff !important;
+    border-color: var(--classic-border) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.avail input[type="submit"]:hover,
+:root[data-theme="light"] body.avail input[type="submit"]:hover {
+    background-color: #e8f0fb !important;
+}
+
+html.light body.avail table.infoBox,
+html.light body.avail td.infoBox,
+:root[data-theme="light"] body.avail table.infoBox,
+:root[data-theme="light"] body.avail td.infoBox {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.avail :is(.infoBox, .infoBox i),
+:root[data-theme="light"] body.avail :is(.infoBox, .infoBox i) {
+    color: var(--classic-text) !important;
+}
+
+html.light body.avail .infoBox a,
+:root[data-theme="light"] body.avail .infoBox a {
+    color: var(--classic-link) !important;
+}
+
+html.light body.avail .infoBox a:hover,
+:root[data-theme="light"] body.avail .infoBox a:hover {
+    color: var(--classic-link-hover) !important;
+}
+
+html.light body.avail th.logEntries,
+:root[data-theme="light"] body.avail th.logEntries {
+    color: var(--classic-text) !important;
+    border-bottom-color: var(--classic-border) !important;
+}

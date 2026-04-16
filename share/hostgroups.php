@@ -664,13 +664,14 @@ $lastUpdateLabel = $statusFileMtime ? date('d M Y H:i:s', $statusFileMtime) : 's
 $freshnessLabel = $statusFileMtime ? format_duration(max(0, $now - (int) $statusFileMtime)) . ' ago' : 'n/a';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="utf-8">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>">
 <title>Host Groups Modern View</title>
+<script src="stylesheets/theme.js"></script>
 <link href="stylesheets/common.css" rel="stylesheet">
 <style>
     :root {
@@ -692,6 +693,25 @@ $freshnessLabel = $statusFileMtime ? format_duration(max(0, $now - (int) $status
         --radius-xl: 28px;
         --radius-lg: 22px;
         --radius-md: 16px;
+    }
+
+    html.light,
+    :root[data-theme="light"] {
+        --bg: #f2f6fc;
+        --bg-accent: #ffffff;
+        --panel: rgba(255, 255, 255, 0.95);
+        --panel-strong: rgba(255, 255, 255, 0.98);
+        --panel-soft: rgba(245, 250, 255, 0.94);
+        --border: rgba(65, 98, 133, 0.24);
+        --border-soft: rgba(65, 98, 133, 0.20);
+        --text: #1b2a3f;
+        --muted: #4f6280;
+        --muted-2: #7385a0;
+        --critical: #b91e2f;
+        --warning: #8b6400;
+        --ok: #0b7a49;
+        --unknown: #4c627f;
+        --shadow: 0 14px 26px rgba(31, 57, 88, 0.12);
     }
 
     * { box-sizing: border-box; }
@@ -997,6 +1017,71 @@ $freshnessLabel = $statusFileMtime ? format_duration(max(0, $now - (int) $status
         background: rgba(70, 214, 145, 0.08);
         border: 1px solid rgba(70, 214, 145, 0.18);
         color: var(--text);
+    }
+
+    html.light body,
+    :root[data-theme="light"] body {
+        background:
+            radial-gradient(circle at top left, rgba(127, 175, 230, 0.22), transparent 36%),
+            linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 100%);
+    }
+
+    html.light .group-card,
+    :root[data-theme="light"] .group-card {
+        background: rgba(235, 242, 250, 0.92);
+        border-color: rgba(103, 132, 165, 0.26);
+    }
+
+    html.light .group-card.critical,
+    :root[data-theme="light"] .group-card.critical {
+        background: linear-gradient(180deg, rgba(248, 214, 220, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(209, 49, 69, 0.26);
+    }
+
+    html.light .group-card.warning,
+    :root[data-theme="light"] .group-card.warning {
+        background: linear-gradient(180deg, rgba(252, 239, 204, 0.92), rgba(237, 245, 253, 0.98));
+        border-color: rgba(201, 141, 10, 0.28);
+    }
+
+    html.light .group-link,
+    :root[data-theme="light"] .group-link {
+        background: rgba(226, 236, 247, 0.9);
+        border-color: rgba(103, 132, 165, 0.24);
+    }
+
+    html.light .stat,
+    :root[data-theme="light"] .stat {
+        background: rgba(235, 242, 250, 0.9);
+        border-color: rgba(103, 132, 165, 0.22);
+    }
+
+    html.light .members-panel,
+    :root[data-theme="light"] .members-panel {
+        background: rgba(235, 242, 250, 0.82);
+        border-color: rgba(103, 132, 165, 0.22);
+    }
+
+    html.light .member,
+    :root[data-theme="light"] .member {
+        background: rgba(231, 239, 249, 0.94);
+        border-color: rgba(103, 132, 165, 0.24);
+    }
+
+    html.light .member.is-clickable:hover,
+    :root[data-theme="light"] .member.is-clickable:hover {
+        box-shadow: 0 10px 18px rgba(52, 89, 132, 0.16);
+        border-color: rgba(103, 132, 165, 0.36);
+    }
+
+    html.light .members::-webkit-scrollbar-track,
+    :root[data-theme="light"] .members::-webkit-scrollbar-track {
+        background: rgba(103, 132, 165, 0.10);
+    }
+
+    html.light .members::-webkit-scrollbar-thumb,
+    :root[data-theme="light"] .members::-webkit-scrollbar-thumb {
+        background: rgba(103, 132, 165, 0.34);
     }
 
     @media (max-width: 1080px) {

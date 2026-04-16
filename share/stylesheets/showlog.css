@@ -177,3 +177,58 @@ body.showlog .infoBox i {
         white-space: normal;
     }
 }
+
+/* =========================================================
+   SHOWLOG – LIGHT THEME OVERRIDES
+   ========================================================= */
+html.light body.showlog,
+:root[data-theme="light"] body.showlog {
+    background-color: var(--classic-bg) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.showlog :is(a, .infoBox a),
+:root[data-theme="light"] body.showlog :is(a, .infoBox a) {
+    color: var(--classic-link) !important;
+}
+
+html.light body.showlog :is(a:hover, .infoBox a:hover),
+:root[data-theme="light"] body.showlog :is(a:hover, .infoBox a:hover) {
+    color: var(--classic-link-hover) !important;
+}
+
+html.light body.showlog .dateTimeBreak,
+:root[data-theme="light"] body.showlog .dateTimeBreak {
+    background-color: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.showlog .dateTimeBreak hr,
+:root[data-theme="light"] body.showlog .dateTimeBreak hr {
+    background-color: var(--classic-border) !important;
+}
+
+html.light body.showlog .logEntries,
+:root[data-theme="light"] body.showlog .logEntries {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+    color: var(--classic-text) !important;
+}
+
+html.light body.showlog :is(table.infoBox, td.infoBox),
+:root[data-theme="light"] body.showlog :is(table.infoBox, td.infoBox) {
+    background-color: var(--classic-surface) !important;
+    border-color: var(--classic-border) !important;
+}
+
+html.light body.showlog :is(.infoBoxTitle, .dataTitle, .navBoxTitle),
+:root[data-theme="light"] body.showlog :is(.infoBoxTitle, .dataTitle, .navBoxTitle) {
+    background: var(--classic-surface-muted) !important;
+    color: var(--classic-text) !important;
+    border: 1px solid var(--classic-border) !important;
+}
+
+html.light body.showlog :is(.infoBox, .infoBox i),
+:root[data-theme="light"] body.showlog :is(.infoBox, .infoBox i) {
+    color: var(--classic-text) !important;
+}

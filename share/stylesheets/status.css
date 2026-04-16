@@ -1300,3 +1300,257 @@ body.status .current_page {
     color: #ffffff;
     font-weight: 600;
 }
+
+/* =========================================================
+   LIGHT THEME – STATUS CGI FIXES
+   ========================================================= */
+html.light body.status table.headertable > tbody > tr > td,
+:root[data-theme="light"] body.status table.headertable > tbody > tr > td {
+    background-color: #ffffff;
+    border-color: #c9d7e7;
+    color: #1f2f43;
+}
+
+html.light body.status table.headertable > tbody > tr > td :is(span, div, small, strong),
+:root[data-theme="light"] body.status table.headertable > tbody > tr > td :is(span, div, small, strong) {
+    color: #1f2f43 !important;
+}
+
+html.light body.status table.headertable > tbody > tr > td a,
+:root[data-theme="light"] body.status table.headertable > tbody > tr > td a {
+    color: #1f5ea8 !important;
+}
+
+html.light body.status table.headertable > tbody > tr > td a:hover,
+:root[data-theme="light"] body.status table.headertable > tbody > tr > td a:hover {
+    color: #0d4b95 !important;
+}
+
+html.light body.status .infoBoxTitle,
+html.light body.status div.hostTotals,
+html.light body.status div.serviceTotals,
+html.light body.status .statusTitle,
+html.light body.status td.statusTitle,
+:root[data-theme="light"] body.status .infoBoxTitle,
+:root[data-theme="light"] body.status div.hostTotals,
+:root[data-theme="light"] body.status div.serviceTotals,
+:root[data-theme="light"] body.status .statusTitle,
+:root[data-theme="light"] body.status td.statusTitle {
+    background: #e9f1fb;
+    color: #173a5c !important;
+    border: 1px solid #c9d7e7;
+}
+
+html.light body.status table.hostTotals td,
+html.light body.status table.serviceTotals td,
+:root[data-theme="light"] body.status table.hostTotals td,
+:root[data-theme="light"] body.status table.serviceTotals td {
+    border-color: #c9d7e7;
+}
+
+html.light body.status table.hostTotals td.hostTotals,
+html.light body.status table.serviceTotals td.serviceTotals,
+:root[data-theme="light"] body.status table.hostTotals td.hostTotals,
+:root[data-theme="light"] body.status table.serviceTotals td.serviceTotals {
+    background-color: #eef3f9 !important;
+    color: #1f2f43 !important;
+}
+
+html.light body.status table.hostTotals .hostTotalsPROBLEMS,
+html.light body.status table.serviceTotals .serviceTotalsPROBLEMS,
+:root[data-theme="light"] body.status table.hostTotals .hostTotalsPROBLEMS,
+:root[data-theme="light"] body.status table.serviceTotals .serviceTotalsPROBLEMS {
+    background-color: #d9e9fb !important;
+    color: #173a5c !important;
+}
+
+html.light body.status table.hostTotals .hostTotalsPROBLEMS a,
+html.light body.status table.serviceTotals .serviceTotalsPROBLEMS a,
+:root[data-theme="light"] body.status table.hostTotals .hostTotalsPROBLEMS a,
+:root[data-theme="light"] body.status table.serviceTotals .serviceTotalsPROBLEMS a {
+    color: #173a5c !important;
+}
+
+html.light body.status table.filter,
+:root[data-theme="light"] body.status table.filter {
+    background-color: #ffffff !important;
+    border-color: #c9d7e7 !important;
+}
+
+html.light body.status .filterTitle,
+:root[data-theme="light"] body.status .filterTitle {
+    background: #e9f1fb !important;
+    color: #173a5c !important;
+    border: 1px solid #c9d7e7;
+}
+
+html.light body.status .filterName,
+:root[data-theme="light"] body.status .filterName {
+    color: #2f465f !important;
+}
+
+html.light body.status .filterValue,
+:root[data-theme="light"] body.status .filterValue {
+    color: #1f5ea8 !important;
+}
+
+html.light body.status #pagelimit,
+:root[data-theme="light"] body.status #pagelimit {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+html.light body.status #result_limit,
+:root[data-theme="light"] body.status #result_limit {
+    color: #1f2f43;
+}
+
+html.light body.status #result_limit select,
+:root[data-theme="light"] body.status #result_limit select {
+    background-color: #ffffff;
+    border-color: #b9cce1;
+    color: #1f2f43;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #53769b 50%),
+        linear-gradient(135deg, #53769b 50%, transparent 50%);
+}
+
+html.light body.status #result_limit select:hover,
+:root[data-theme="light"] body.status #result_limit select:hover {
+    background-color: #f2f7fd;
+}
+
+html.light body.status #result_limit select:focus,
+:root[data-theme="light"] body.status #result_limit select:focus {
+    border-color: #7ea4cc;
+    box-shadow: 0 0 0 2px rgba(126, 164, 204, 0.20);
+}
+
+html.light body.status .pagenumber,
+:root[data-theme="light"] body.status .pagenumber {
+    background-color: #ffffff;
+    border-color: #b9cce1;
+    color: #23405d;
+}
+
+html.light body.status #top_page_numbers .inner_numbers,
+html.light body.status #bottom_page_numbers .inner_numbers,
+:root[data-theme="light"] body.status #top_page_numbers .inner_numbers,
+:root[data-theme="light"] body.status #bottom_page_numbers .inner_numbers {
+    background: transparent;
+    border: none;
+    padding: 0;
+    gap: 4px;
+}
+
+html.light body.status a.pagenumber:hover,
+:root[data-theme="light"] body.status a.pagenumber:hover {
+    background-color: #e9f1fb;
+    border-color: #7ea4cc;
+    color: #173a5c;
+}
+
+html.light body.status .current_page,
+:root[data-theme="light"] body.status .current_page {
+    background-color: #d9e9fb;
+    border-color: #7ea4cc;
+    color: #173a5c;
+}
+
+html.light body.status table.status td.statusOdd,
+html.light body.status table.status td.statusEven,
+:root[data-theme="light"] body.status table.status td.statusOdd,
+:root[data-theme="light"] body.status table.status td.statusEven {
+    background-color: #f4f8fd !important;
+    color: #2f465f !important;
+    border: 1px solid #d3dfec !important;
+    border-radius: 6px !important;
+}
+
+html.light body.status table.status td.statusOdd:hover,
+html.light body.status table.status td.statusEven:hover,
+:root[data-theme="light"] body.status table.status td.statusOdd:hover,
+:root[data-theme="light"] body.status table.status td.statusEven:hover {
+    background-color: #e8f1fb !important;
+    border-color: #9fbedf !important;
+    box-shadow: inset 0 0 0 1px rgba(159, 190, 223, 0.26);
+}
+
+html.light body.status table.status td.statusOdd a,
+html.light body.status table.status td.statusEven a,
+:root[data-theme="light"] body.status table.status td.statusOdd a,
+:root[data-theme="light"] body.status table.status td.statusEven a {
+    color: inherit !important;
+}
+
+body.status table.status td a:has(img),
+body.status table.status td a:has(img):hover,
+html.light body.status table.status td a:has(img),
+html.light body.status table.status td a:has(img):hover,
+:root[data-theme="light"] body.status table.status td a:has(img),
+:root[data-theme="light"] body.status table.status td a:has(img):hover {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+
+body.status table.status td img,
+html.light body.status table.status td img,
+:root[data-theme="light"] body.status table.status td img {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.status table.status td:nth-child(1) a,
+html.light body.status table.status td:nth-child(1) a,
+:root[data-theme="light"] body.status table.status td:nth-child(1) a {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+body.status table.status td:nth-child(1) a img,
+html.light body.status table.status td:nth-child(1) a img,
+:root[data-theme="light"] body.status table.status td:nth-child(1) a img {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+html.light body.status table.status td.statusOdd:nth-child(-n+2),
+html.light body.status table.status td.statusEven:nth-child(-n+2),
+:root[data-theme="light"] body.status table.status td.statusOdd:nth-child(-n+2),
+:root[data-theme="light"] body.status table.status td.statusEven:nth-child(-n+2) {
+    background-color: #dde7f3 !important;
+    border: none !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+}
+
+html.light body.status table.status td.statusOdd:nth-child(-n+2):hover,
+html.light body.status table.status td.statusEven:nth-child(-n+2):hover,
+:root[data-theme="light"] body.status table.status td.statusOdd:nth-child(-n+2):hover,
+:root[data-theme="light"] body.status table.status td.statusEven:nth-child(-n+2):hover {
+    background-color: #d1ddec !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+html.light body.status table.status td:nth-child(1) table td.statusOdd,
+html.light body.status table.status td:nth-child(1) table td.statusEven,
+:root[data-theme="light"] body.status table.status td:nth-child(1) table td.statusOdd,
+:root[data-theme="light"] body.status table.status td:nth-child(1) table td.statusEven {
+    background-color: #dde7f3 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
