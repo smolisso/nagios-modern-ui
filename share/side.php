@@ -33,6 +33,11 @@ body.navbar {
 	transition: padding 0.18s ease;
 }
 
+body.navbar::after {
+	content: none !important;
+	display: none !important;
+}
+
 .navbarlogo {
 	display: flex;
 	align-items: center;

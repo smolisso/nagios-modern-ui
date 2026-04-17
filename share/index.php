@@ -103,7 +103,12 @@ if ($theme != 'dark' && $theme != 'light') {
 			height: 100vh;
 			width: calc(100% - var(--sidebar-width-compact));
 			border: none;
-			transition: left 0.22s ease, width 0.22s ease;
+			opacity: 1;
+			transition: left 0.22s ease, width 0.22s ease, opacity 0.06s ease;
+		}
+
+		body.main-loading iframe[name="main"] {
+			opacity: 0;
 		}
 
 		body.desktop-sidebar-expanded iframe[name="side"] {
@@ -192,6 +197,33 @@ if ($theme != 'dark' && $theme != 'light') {
 	<script>
 		// Larghezza di riferimento delle pagine CGI di Nagios (layout fisso anni 2000)
 		var NATIVE_WIDTH = 1024;
+		var mainBeforeUnloadBound = false;
+
+		function setMainLoading(isLoading) {
+			document.body.classList.toggle('main-loading', !!isLoading);
+		}
+
+		function bindMainBeforeUnload() {
+			var main = document.querySelector('iframe[name="main"]');
+			if (!main) {
+				return;
+			}
+
+			try {
+				var mainWindow = main.contentWindow;
+				if (!mainWindow || mainBeforeUnloadBound) {
+					return;
+				}
+
+				mainWindow.addEventListener('beforeunload', function () {
+					setMainLoading(true);
+				}, { once: true });
+
+				mainBeforeUnloadBound = true;
+			} catch (e) {
+				// Cross-origin or timing issue.
+			}
+		}
 
 		// Applica zoom al contenuto dell'iframe main per adattarlo alla finestra
 		function applyScale() {
@@ -304,6 +336,11 @@ if ($theme != 'dark' && $theme != 'light') {
 		document.querySelector('iframe[name="main"]').addEventListener('load', function () {
 			window.applyThemeToFrames();
 			applyScale();
+			mainBeforeUnloadBound = false;
+			bindMainBeforeUnload();
+			requestAnimationFrame(function () {
+				setMainLoading(false);
+			});
 			if (window.hideModernGraphPopup) {
 				window.hideModernGraphPopup();
 			}
@@ -319,6 +356,20 @@ if ($theme != 'dark' && $theme != 'light') {
 
 		document.querySelector('iframe[name="side"]').addEventListener('load', function () {
 			window.applyThemeToFrames();
+			try {
+				var sideFrame = document.querySelector('iframe[name="side"]');
+				var sideDoc = sideFrame && sideFrame.contentDocument;
+				if (sideDoc) {
+					sideDoc.addEventListener('click', function (event) {
+						var link = event.target && event.target.closest ? event.target.closest('a[target="main"]') : null;
+						if (link) {
+							setMainLoading(true);
+						}
+					});
+				}
+			} catch (e) {
+				// Cross-origin or timing issue.
+			}
 			if (window.innerWidth > 768) {
 				setDesktopSidebarExpanded(true);
 			}
@@ -330,6 +381,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		});
 
 		window.applyThemeToFrames();
+		bindMainBeforeUnload();
 
 		if (window.innerWidth > 768) {
 			setDesktopSidebarExpanded(true);

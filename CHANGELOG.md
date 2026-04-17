@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.1] - 2026-04-17
+
+### Changed
+- `share/index.php`: improved anti-flicker theme handling while navigating between pages (prevents transient dark/light flash in frame transitions)
+- `share/side.php`: fixed light-theme rendering edge case on Firefox for the lower sidebar area
+- `share/stylesheets/outages.css`: completed light-theme restyle for `outages.cgi`
+- `share/stylesheets/common.css` + `share/stylesheets/status.css`: normalized `Notifications are disabled` badge style and text color across classic CGI pages
+- `share/stylesheets/common.css`: adjusted Page Tour widget position to avoid overlap with the signature badge
+
+### Notes
+- Maintenance release focused on visual consistency and navigation polish after `0.6.0`
+
+---
+
 ## [0.6.0] - 2026-04-16
 
 ### Added

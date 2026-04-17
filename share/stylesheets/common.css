@@ -945,25 +945,24 @@ body.clx-home {
    GLOBAL – BAD PROCESS STATUS (Notifications disabled, etc.)
    ========================================================= */
 
-body.status .infoBoxBadProcStatus,
-body.tac .infoBoxBadProcStatus,
-body.outages .infoBoxBadProcStatus,
-body.avail .infoBoxBadProcStatus,
-body.cmd .infoBoxBadProcStatus,
-body.trends .infoBoxBadProcStatus,
-body.history .infoBoxBadProcStatus,
-body.histogram .infoBoxBadProcStatus,
-body.notifications .infoBoxBadProcStatus,
-body.summary .infoBoxBadProcStatus,
-body.showlog .infoBoxBadProcStatus,
-body.config .infoBoxBadProcStatus,
-body.extinfo .infoBoxBadProcStatus {
+:is(body.status, body.tac, body.outages, body.avail, body.cmd, body.trends, body.history, body.histogram, body.notifications, body.summary, body.showlog, body.config, body.extinfo) [class*="badprocstatus" i] {
     color: #f08080;
     background: rgba(139,47,47,0.25);
     padding: 4px 8px;
     border-radius: 4px;
     font-weight: 600;
     display: inline-block;
+}
+
+html.light :is(body.status, body.tac, body.outages, body.avail, body.cmd, body.trends, body.history, body.histogram, body.notifications, body.summary, body.showlog, body.config, body.extinfo) [class*="badprocstatus" i],
+:root[data-theme="light"] :is(body.status, body.tac, body.outages, body.avail, body.cmd, body.trends, body.history, body.histogram, body.notifications, body.summary, body.showlog, body.config, body.extinfo) [class*="badprocstatus" i] {
+  color: #7a1f2a !important;
+  background: rgba(207, 86, 102, 0.22) !important;
+  border: 1px solid rgba(191, 84, 99, 0.26) !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  display: inline-block !important;
 }
 
 /* =========================================================
@@ -984,6 +983,37 @@ body::after {
     pointer-events: none;
     user-select: none;
     backdrop-filter: blur(2px);
+}
+
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is(#tlyPageGuideToggle, #tlyPageGuideWrapper, .tlyPageGuideToggle, .page-tour, .pageTour, .page-tour-toggle, .pageTourToggle, [id*="pagetour" i], [class*="pagetour" i], [aria-label*="page tour" i], [title*="page tour" i], [id*="tour" i][style*="position: fixed"], [class*="tour" i][style*="position: fixed"]) {
+    top: auto !important;
+    bottom: 72px !important;
+}
+
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position: fixed"][style*="right:0"],
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position:fixed"][style*="right:0"],
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position: fixed"][style*="right: 0"],
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position:fixed"][style*="right: 0"],
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position: fixed"][style*="right: 0px"],
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+:is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position:fixed"][style*="right: 0px"] {
+    top: auto !important;
+    bottom: 92px !important;
+}
+
+/* Explicit Page Tour widget selectors (vidbox) */
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+.vidboxContainer,
+:is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+.vidboxTab {
+    top: auto !important;
+    bottom: 96px !important;
 }
 
 /* ===============================
@@ -1103,6 +1133,36 @@ body.status .errorMessage {
         padding: 2px 5px;
         bottom: 3px;
         right: 4px;
+    }
+
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is(#tlyPageGuideToggle, #tlyPageGuideWrapper, .tlyPageGuideToggle, .page-tour, .pageTour, .page-tour-toggle, .pageTourToggle, [id*="pagetour" i], [class*="pagetour" i], [aria-label*="page tour" i], [title*="page tour" i], [id*="tour" i][style*="position: fixed"], [class*="tour" i][style*="position: fixed"]) {
+        top: auto !important;
+        bottom: 64px !important;
+    }
+
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position: fixed"][style*="right:0"],
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position:fixed"][style*="right:0"],
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position: fixed"][style*="right: 0"],
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position:fixed"][style*="right: 0"],
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position: fixed"][style*="right: 0px"],
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    :is([id*="tly" i], [class*="tly" i], div, a, button, iframe)[style*="position:fixed"][style*="right: 0px"] {
+        top: auto !important;
+        bottom: 84px !important;
+    }
+
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    .vidboxContainer,
+    :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
+    .vidboxTab {
+        top: auto !important;
+        bottom: 88px !important;
     }
 
     /* Header versione: va a capo su righe */

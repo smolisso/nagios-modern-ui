@@ -1326,6 +1326,13 @@ html.light body.status table.headertable > tbody > tr > td a:hover,
     color: #0d4b95 !important;
 }
 
+html.light body.status table.headertable > tbody > tr > td [class*="badprocstatus" i],
+html.light body.status table.headertable > tbody > tr > td [class*="badprocstatus" i] :is(span, div, small, strong),
+:root[data-theme="light"] body.status table.headertable > tbody > tr > td [class*="badprocstatus" i],
+:root[data-theme="light"] body.status table.headertable > tbody > tr > td [class*="badprocstatus" i] :is(span, div, small, strong) {
+    color: #7a1f2a !important;
+}
+
 html.light body.status .infoBoxTitle,
 html.light body.status div.hostTotals,
 html.light body.status div.serviceTotals,
