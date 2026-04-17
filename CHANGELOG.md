@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.2] - 2026-04-17
+
+### Added
+- `share/modern_ui_version.txt`: single source of truth for Modern UI version display
+- `share/modern_ui_update.php`: backend endpoint for update checks against GitHub latest release
+- `share/side.php`: `Check updates` action with inline status feedback (`up to date` / `update available` / error)
+
+### Changed
+- `share/side.php`: added visible `Modern UI v ...` label below logo, sourced from version file
+- `share/side.php`: redesigned theme switch area (`Theme` panel + dynamic single icon: sun/moon by active theme)
+- `share/side.php`: improved sidebar active-state highlight consistency in light theme (main menu and submenus)
+- `share/side.php`: refined sidebar overflow behavior so vertical scroll appears only when needed
+- `share/side.php`: spacing/alignment polish for theme toggle and top controls
+
+### Notes
+- Feature release focused on sidebar UX and maintainability (`versioned UI` + `update check` flow)
+
+---
+
 ## [0.6.1] - 2026-04-17
 
 ### Changed

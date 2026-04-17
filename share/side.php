@@ -7,6 +7,14 @@ $theme = isset($cfg['theme']) ? $cfg['theme'] : 'dark';
 if ($theme != 'dark' && $theme != 'light') {
 	$theme = 'dark';
 }
+$modern_ui_version_file = dirname(__FILE__) . '/modern_ui_version.txt';
+$modern_ui_version = '0.0.0';
+if (is_readable($modern_ui_version_file)) {
+	$version_from_file = trim((string)@file_get_contents($modern_ui_version_file));
+	if ($version_from_file !== '') {
+		$modern_ui_version = $version_from_file;
+	}
+}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
@@ -20,9 +28,12 @@ if ($theme != 'dark' && $theme != 'light') {
 <style>
 html#side {
 	background-color: #08111d;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 body.navbar {
+	margin: 0;
 	background:
 		radial-gradient(circle at top left, rgba(78, 123, 178, 0.16), transparent 32%),
 		linear-gradient(180deg, #0a1421 0%, #08111d 100%);
@@ -30,6 +41,9 @@ body.navbar {
 	gap: 8px;
 	padding: 12px 10px 12px 10px;
 	min-height: 100vh;
+	box-sizing: border-box;
+	overflow-y: auto;
+	overflow-x: hidden;
 	transition: padding 0.18s ease;
 }
 
@@ -70,6 +84,102 @@ body.navbar::after {
 	display: block;
 }
 
+.modern-ui-meta {
+	flex: 0 0 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-top: -2px;
+	padding: 0 4px 0 2px;
+}
+
+.modern-ui-version {
+	flex: 1 1 auto;
+	text-align: left;
+	color: rgba(194, 209, 229, 0.82);
+	font-size: 9px;
+	font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	line-height: 1.2;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.modern-ui-updates {
+	flex: 0 0 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	align-items: stretch;
+	padding: 0 4px 0 2px;
+}
+
+.update-check-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	height: 22px;
+	padding: 0 8px;
+	border: 1px solid rgba(111, 143, 177, 0.24);
+	border-radius: 8px;
+	background: rgba(20, 36, 58, 0.55);
+	color: #d8e2ef;
+	font-size: 9px;
+	font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+	font-weight: 700;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.14s ease, border-color 0.14s ease, transform 0.14s ease;
+}
+
+.update-check-btn:hover {
+	background: rgba(27, 48, 74, 0.82);
+	border-color: rgba(111, 143, 177, 0.34);
+	transform: translateY(-1px);
+}
+
+.update-check-btn:disabled {
+	opacity: 0.7;
+	cursor: default;
+	transform: none;
+}
+
+.update-status {
+	max-width: 100%;
+	padding: 0;
+	text-align: left;
+	font-size: 8px;
+	font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	line-height: 1.2;
+	color: rgba(187, 202, 222, 0.86);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.update-status.is-ok {
+	color: #79d7a5;
+}
+
+.update-status.is-update {
+	color: #ffd27d;
+}
+
+.update-status.is-error {
+	color: #f0a2a7;
+}
+
+.update-status a {
+	color: inherit;
+	text-decoration: underline;
+}
+
 .navbar-toggle {
 	display: inline-flex;
 	align-items: center;
@@ -94,15 +204,16 @@ body.navbar::after {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 6px;
-	height: 30px;
+	width: 32px;
+	height: 28px;
 	margin-left: 0;
-	padding: 0 10px;
+	margin-right: 10px;
+	padding: 0;
 	border: 1px solid rgba(111, 143, 177, 0.16);
 	border-radius: 9px;
 	background: rgba(20, 36, 58, 0.62);
 	color: #d8e2ef;
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 700;
 	line-height: 1;
 	cursor: pointer;
@@ -119,17 +230,43 @@ body.navbar::after {
 	line-height: 1;
 }
 
-.navbarlogo .theme-switch {
+.theme-switch-row {
 	order: 3;
 	flex: 0 0 100%;
-	width: 30px;
-	padding: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
 	margin-left: 0;
-	margin-top: 6px;
+	margin-top: 0;
+	padding: 0;
 }
 
-.navbarlogo .theme-switch .theme-switch-label {
-	display: none;
+.theme-switch-section {
+	order: 3;
+	flex: 0 0 100%;
+	margin-top: 4px;
+	padding-top: 7px;
+	border-top: 1px solid rgba(104, 133, 169, 0.12);
+}
+
+.theme-switch-panel {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 10px;
+	background: rgba(20, 36, 58, 0.48);
+	border: 1px solid rgba(111, 143, 177, 0.10);
+}
+
+.theme-switch-title {
+	color: #7789a3;
+	font-size: 9px;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	line-height: 1;
 }
 
 div.navsection {
@@ -408,6 +545,18 @@ body.compact .navbarbrand-mark {
 	display: none;
 }
 
+body.compact .modern-ui-version {
+	display: none !important;
+}
+
+body.compact .modern-ui-meta {
+	display: none !important;
+}
+
+body.compact .modern-ui-updates {
+	display: none !important;
+}
+
 body.compact .navlink,
 body.compact .navgroup-label {
 	min-height: 40px;
@@ -423,13 +572,32 @@ body.compact .navbarbrand {
 }
 
 body.compact .theme-switch {
-	width: 40px;
+	width: 32px;
+	height: 32px;
 	padding: 0;
 	margin-left: 0;
+	margin-right: 0;
 }
 
-body.compact .theme-switch .theme-switch-label {
+body.compact .theme-switch-row {
+	margin-left: 0;
+	justify-content: center;
+}
+
+body.compact .theme-switch-title {
 	display: none;
+}
+
+body.compact .theme-switch-section {
+	margin-top: 0;
+	padding-top: 0;
+	border-top: none;
+}
+
+body.compact .theme-switch-panel {
+	padding: 0;
+	background: transparent;
+	border: none;
 }
 
 body.compact .navlink-text,
@@ -492,10 +660,14 @@ html.light html#side,
 html.light .navlink,
 html.light .navgroup-label,
 html.light .navbarsearch,
+html.light .theme-switch-panel,
 html.light .theme-switch,
+html.light .update-check-btn,
+:root[data-theme="light"] .update-check-btn,
 :root[data-theme="light"] .navlink,
 :root[data-theme="light"] .navgroup-label,
 :root[data-theme="light"] .navbarsearch,
+:root[data-theme="light"] .theme-switch-panel,
 :root[data-theme="light"] .theme-switch {
 	background: rgba(255, 255, 255, 0.84);
 	border-color: rgba(66, 101, 141, 0.16);
@@ -504,14 +676,41 @@ html.light .theme-switch,
 html.light .navlink:hover,
 html.light .navgroup:hover > .navgroup-label,
 html.light .theme-switch:hover,
+html.light .update-check-btn:hover,
+:root[data-theme="light"] .update-check-btn:hover,
 :root[data-theme="light"] .navlink:hover,
 :root[data-theme="light"] .navgroup:hover > .navgroup-label,
 :root[data-theme="light"] .theme-switch:hover {
 	background: rgba(236, 243, 252, 0.96);
 }
 
+html.light .navlink.is-active,
+html.light .navgroup-label.is-active,
+:root[data-theme="light"] .navlink.is-active,
+:root[data-theme="light"] .navgroup-label.is-active {
+	background: linear-gradient(135deg, rgba(173, 226, 206, 0.55), rgba(169, 208, 242, 0.50));
+	border-color: rgba(66, 131, 109, 0.34);
+	box-shadow: 0 10px 22px rgba(45, 102, 150, 0.16);
+}
+
+html.light .navlink.is-active .navlink-text,
+html.light .navgroup-label.is-active .label-main,
+html.light .navlink.is-active::before,
+html.light .navgroup-label.is-active::before,
+html.light .navgroup-label.is-active .navgroup-caret,
+:root[data-theme="light"] .navlink.is-active .navlink-text,
+:root[data-theme="light"] .navgroup-label.is-active .label-main,
+:root[data-theme="light"] .navlink.is-active::before,
+:root[data-theme="light"] .navgroup-label.is-active::before,
+:root[data-theme="light"] .navgroup-label.is-active .navgroup-caret {
+	color: #173a5c;
+}
+
 html.light .navlink-text,
 html.light .navgroup-label .label-main,
+html.light .modern-ui-version,
+html.light .update-status,
+html.light .update-check-btn,
 html.light .navgroup-label::before,
 html.light .navlink[data-icon]::before,
 html.light .navgroup-label[data-icon]::before,
@@ -519,6 +718,9 @@ html.light .theme-switch,
 html.light .search-title,
 :root[data-theme="light"] .navlink-text,
 :root[data-theme="light"] .navgroup-label .label-main,
+:root[data-theme="light"] .modern-ui-version,
+:root[data-theme="light"] .update-status,
+:root[data-theme="light"] .update-check-btn,
 :root[data-theme="light"] .navgroup-label::before,
 :root[data-theme="light"] .navlink[data-icon]::before,
 :root[data-theme="light"] .navgroup-label[data-icon]::before,
@@ -569,6 +771,21 @@ html.light .navbadge.classic,
 	background: rgba(87, 122, 160, 0.12);
 	border-color: rgba(87, 122, 160, 0.14);
 }
+
+html.light .update-status.is-ok,
+:root[data-theme="light"] .update-status.is-ok {
+	color: #198754;
+}
+
+html.light .update-status.is-update,
+:root[data-theme="light"] .update-status.is-update {
+	color: #9a6700;
+}
+
+html.light .update-status.is-error,
+:root[data-theme="light"] .update-status.is-error {
+	color: #b4232d;
+}
 </style>
 </head>
 
@@ -581,11 +798,23 @@ html.light .navbadge.classic,
 		<img class="navbarbrand-mark" src="nagios.png" alt="Nagios">
 		<div class="navbarbrand-full fulllogo nagioslogo"></div>
 	</a>
-	<button class="theme-switch" id="theme-toggle" type="button" aria-label="Cambia tema">
-		<span class="theme-switch-icon" aria-hidden="true">&#9728;</span>
-		<span class="theme-switch-label">Tema</span>
-		<span class="theme-switch-icon" aria-hidden="true">&#9790;</span>
-	</button>
+	<div class="modern-ui-meta">
+		<div class="modern-ui-version">Modern UI v <?php echo htmlspecialchars($modern_ui_version, ENT_QUOTES, 'UTF-8'); ?></div>
+		<button class="update-check-btn" id="check-updates-btn" type="button">Check updates</button>
+	</div>
+	<div class="modern-ui-updates">
+		<div class="update-status" id="update-status" aria-live="polite"></div>
+	</div>
+	<div class="theme-switch-section">
+		<div class="theme-switch-panel">
+			<div class="theme-switch-row">
+				<span class="theme-switch-title">Theme</span>
+				<button class="theme-switch" id="theme-toggle" type="button" aria-label="Cambia tema">
+					<span class="theme-switch-icon" id="theme-toggle-icon" aria-hidden="true">&#9728;</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="navsection">
@@ -697,13 +926,40 @@ window.setSidebarCompact = function (compact) {
 
 window.updateThemeToggle = function (theme) {
 	var button = document.getElementById('theme-toggle');
+	var icon = document.getElementById('theme-toggle-icon');
 	if (!button) {
 		return;
 	}
 
-	var mode = theme === 'light' ? 'chiaro' : 'scuro';
-	button.setAttribute('title', 'Tema attivo: ' + mode + ' (clicca per cambiare)');
-	button.setAttribute('aria-label', 'Cambia tema, ora: ' + mode);
+	var isLight = theme === 'light';
+	var mode = isLight ? 'chiaro' : 'scuro';
+	var nextMode = isLight ? 'scuro' : 'chiaro';
+	button.setAttribute('title', 'Tema attivo: ' + mode + ' (clicca per passare a ' + nextMode + ')');
+	button.setAttribute('aria-label', 'Passa al tema ' + nextMode);
+	if (icon) {
+		icon.innerHTML = isLight ? '&#9790;' : '&#9728;';
+	}
+};
+
+window.setUpdateStatus = function (message, statusType, releaseUrl) {
+	var statusNode = document.getElementById('update-status');
+	if (!statusNode) {
+		return;
+	}
+
+	statusNode.classList.remove('is-ok', 'is-update', 'is-error');
+	if (statusType) {
+		statusNode.classList.add(statusType);
+	}
+
+	if (releaseUrl) {
+		var safeMessage = String(message || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		var safeUrl = String(releaseUrl || '').replace(/"/g, '&quot;');
+		statusNode.innerHTML = '<a href="' + safeUrl + '" target="_blank" rel="noopener noreferrer">' + safeMessage + '</a>';
+		return;
+	}
+
+	statusNode.textContent = message || '';
 };
 
 window.syncCompactGroupIcons = function () {
@@ -882,6 +1138,49 @@ window.addEventListener('load', function () {
 			if (window.parent && typeof window.parent.applyThemeToFrames === 'function') {
 				window.parent.applyThemeToFrames(theme);
 			}
+		});
+	}
+
+	var checkUpdatesButton = document.getElementById('check-updates-btn');
+	if (checkUpdatesButton) {
+		checkUpdatesButton.addEventListener('click', function () {
+			checkUpdatesButton.disabled = true;
+			window.setUpdateStatus('Checking...', null);
+
+			fetch('modern_ui_update.php?action=check', {
+				method: 'GET',
+				credentials: 'same-origin',
+				cache: 'no-store'
+			})
+				.then(function (response) {
+					if (!response.ok) {
+						throw new Error('HTTP ' + response.status);
+					}
+					return response.json();
+				})
+				.then(function (payload) {
+					if (payload && payload.success && payload.update_available) {
+						window.setUpdateStatus(
+							'Update available: ' + payload.latest_version,
+							'is-update',
+							payload.release_url || ''
+						);
+						return;
+					}
+
+					if (payload && payload.success) {
+						window.setUpdateStatus('Up to date (' + (payload.current_version || 'n/a') + ')', 'is-ok');
+						return;
+					}
+
+					window.setUpdateStatus('Update check failed', 'is-error');
+				})
+				.catch(function () {
+					window.setUpdateStatus('Update check failed', 'is-error');
+				})
+				.finally(function () {
+					checkUpdatesButton.disabled = false;
+				});
 		});
 	}
 
