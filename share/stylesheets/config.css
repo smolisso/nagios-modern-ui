@@ -242,3 +242,20 @@ html.light body.config :is([style*="background-color: #141b26"], [style*="backgr
     color: var(--classic-text) !important;
     border-color: var(--classic-border) !important;
 }
+
+/* Keep "Notifications are disabled" badge consistent with other CGI pages */
+html.light body.config [class*="badprocstatus" i],
+:root[data-theme="light"] body.config [class*="badprocstatus" i] {
+    color: #7a1f2a !important;
+    background: rgba(207, 86, 102, 0.22) !important;
+    border: 1px solid rgba(191, 84, 99, 0.26) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+}
+
+html.light body.config [class*="badprocstatus" i] :is(span, b, strong, i, font, small),
+:root[data-theme="light"] body.config [class*="badprocstatus" i] :is(span, b, strong, i, font, small) {
+    color: inherit !important;
+}

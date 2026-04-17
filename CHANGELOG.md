@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.3] - 2026-04-17
+
+### Changed
+- `share/stylesheets/config.css`: fixed light-theme rendering for the `Notifications are disabled` badge in `config.cgi`, now consistent with other CGI pages (dark red text + matching badge style)
+- `share/modern_ui_version.txt`: bumped version to `0.6.3`
+
+### Notes
+- Patch release used also to validate the new sidebar `Check updates` flow against a newer published tag
+
+---
+
 ## [0.6.2] - 2026-04-17
 
 ### Added
