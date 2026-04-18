@@ -988,7 +988,31 @@ $trendTicks = trend_scale_ticks($trendScale);
         align-items: start;
     }
 
+    .hero-corner-logo {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        align-self: start;
+        width: 32px;
+        height: 32px;
+        padding: 2px;
+        border-radius: 999px;
+        border: 1px solid rgba(118, 159, 201, 0.34);
+        background: rgba(20, 36, 58, 0.46);
+        box-shadow: 0 6px 14px rgba(5, 12, 23, 0.22);
+    }
+
+    .hero-corner-logo img {
+        width: 100%;
+        height: 100%;
+        border-radius: 999px;
+        display: block;
+        object-fit: cover;
+    }
+
     .hero-main {
+        grid-column: 1;
+        grid-row: 1;
         min-width: 0;
     }
 
@@ -1003,9 +1027,35 @@ $trendTicks = trend_scale_ticks($trendScale);
 
     .hero h1 {
         margin: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
         font-size: 32px;
         line-height: 1.1;
         letter-spacing: -0.03em;
+    }
+
+    @keyframes live-overview-title-icon-blink {
+        0%,
+        45%,
+        100% {
+            opacity: 1;
+        }
+        55%,
+        90% {
+            opacity: 0.24;
+        }
+    }
+
+    .hero-title-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 0.9em;
+        color: #7be2ae;
+        font-size: 0.88em;
+        line-height: 1;
+        animation: live-overview-title-icon-blink 1.2s ease-in-out infinite;
     }
 
     .hero p {
@@ -1018,34 +1068,34 @@ $trendTicks = trend_scale_ticks($trendScale);
     }
 
     .hero-side {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 100%;
-    }
-
-    .hero-logo {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 12px;
-        padding-top: 12px;
-    }
-
-    .hero-logo img {
-        width: 128px;
-        height: auto;
-        opacity: 0.92;
+        grid-column: 2;
+        grid-row: 2;
+        display: grid;
+        align-content: start;
+        gap: 12px;
+        min-height: 0;
     }
 
     .hero-meta {
         display: grid;
         gap: 10px;
-        margin-top: auto;
-        margin-bottom: 28px;
+        margin: 0;
+    }
+
+    .hero-side-kicker {
+        color: var(--muted-2);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        text-align: right;
+        padding-right: 2px;
     }
 
     .hero-trend {
-        margin-top: 20px;
+        grid-column: 1;
+        grid-row: 2;
+        margin-top: 0;
         padding: 18px;
         border-radius: 22px;
         background: var(--panel-soft);
@@ -1057,25 +1107,83 @@ $trendTicks = trend_scale_ticks($trendScale);
         justify-content: space-between;
         gap: 14px;
         align-items: center;
-        padding: 10px 12px;
-        background: var(--panel-soft);
-        border: 1px solid var(--border-soft);
+        position: relative;
+        padding: 12px 14px 12px 42px;
+        background: linear-gradient(145deg, rgba(22, 38, 60, 0.60), rgba(15, 29, 47, 0.38));
+        border: 1px solid rgba(116, 145, 178, 0.24);
         border-radius: 14px;
         min-height: 0;
+        box-shadow:
+            inset 0 1px 0 rgba(184, 206, 232, 0.08),
+            0 0 0 1px rgba(110, 170, 232, 0.12),
+            0 8px 20px rgba(5, 13, 24, 0.18);
+        transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
     }
 
-    .pill-label { color: var(--muted); font-size: 11px; }
-    .pill-value { color: var(--text); font-size: 12px; font-weight: 700; text-align: right; }
+    .pill::before {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid rgba(134, 171, 212, 0.30);
+        background: rgba(57, 94, 136, 0.18);
+        color: #c9dcf4;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1;
+        transition: transform 0.16s ease, background-color 0.16s ease, border-color 0.16s ease;
+    }
+
+    .pill-source::before { content: "◉"; }
+    .pill-update::before { content: "◷"; }
+    .pill-freshness::before { content: "↻"; }
+    .pill-refresh::before { content: "⟳"; }
+
+    .pill:hover {
+        transform: translateY(-1px);
+        border-color: rgba(126, 172, 220, 0.36);
+        box-shadow:
+            inset 0 1px 0 rgba(196, 220, 245, 0.12),
+            0 0 0 1px rgba(124, 188, 255, 0.24),
+            0 11px 24px rgba(6, 15, 27, 0.26);
+    }
+
+    .pill:hover::before {
+        transform: scale(1.06);
+        border-color: rgba(145, 193, 245, 0.48);
+        background: rgba(74, 119, 168, 0.24);
+    }
+
+    .pill-label {
+        color: var(--muted-2);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .pill-value {
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 700;
+        text-align: right;
+    }
 
     .kpi-grid {
         display: grid;
-        gap: 18px;
-        margin-bottom: 20px;
+        gap: 12px;
+        margin-bottom: 14px;
     }
 
     .kpi-grid.hosts {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        margin-bottom: 18px;
+        margin-bottom: 12px;
     }
 
     .kpi-grid.services {
@@ -1083,11 +1191,11 @@ $trendTicks = trend_scale_ticks($trendScale);
     }
 
     .kpi-card {
-        padding: 16px;
+        padding: 10px 11px 9px;
         border-radius: var(--radius-lg);
         background: var(--panel-strong);
         border: 1px solid var(--border-soft);
-        min-height: 126px;
+        min-height: 88px;
     }
 
     .kpi-card.alert {
@@ -1096,13 +1204,13 @@ $trendTicks = trend_scale_ticks($trendScale);
 
     .kpi-title {
         color: var(--muted);
-        font-size: 12px;
-        margin-bottom: 12px;
+        font-size: 10px;
+        margin-bottom: 6px;
     }
 
     .kpi-value {
         margin: 0;
-        font-size: 30px;
+        font-size: 28px;
         line-height: 1;
         letter-spacing: -0.04em;
     }
@@ -1120,10 +1228,10 @@ $trendTicks = trend_scale_ticks($trendScale);
     }
 
     .kpi-foot {
-        margin-top: 12px;
+        margin-top: 6px;
         color: var(--muted-2);
-        font-size: 10px;
-        letter-spacing: 0.18em;
+        font-size: 8px;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
     }
 
@@ -1399,10 +1507,16 @@ $trendTicks = trend_scale_ticks($trendScale);
         gap: 10px;
     }
 
-    .list-row,
-    .incident-row {
+    .list-row {
         padding: 13px 16px;
         border-radius: var(--radius-md);
+        background: var(--panel-soft);
+        border: 1px solid var(--border-soft);
+    }
+
+    .incident-row {
+        padding: 9px 12px;
+        border-radius: 14px;
         background: var(--panel-soft);
         border: 1px solid var(--border-soft);
     }
@@ -1429,11 +1543,18 @@ $trendTicks = trend_scale_ticks($trendScale);
         align-items: center;
     }
 
-    .list-title,
-    .incident-title {
+    .list-title {
         margin: 0 0 6px 0;
         color: var(--text);
         font-size: 16px;
+        font-weight: 600;
+    }
+
+    .incident-title {
+        margin: 0;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.2;
         font-weight: 600;
     }
 
@@ -1441,7 +1562,7 @@ $trendTicks = trend_scale_ticks($trendScale);
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 12px;
+        gap: 8px;
     }
 
     .graph-action {
@@ -1479,17 +1600,23 @@ $trendTicks = trend_scale_ticks($trendScale);
         text-decoration: none;
     }
 
-    .list-meta,
-    .incident-meta {
+    .list-meta {
         color: var(--muted);
         font-size: 12px;
         line-height: 1.4;
     }
 
+    .incident-meta {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.3;
+        margin-top: 4px;
+    }
+
     .incident-row {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: 14px;
+        gap: 10px;
         align-items: start;
     }
 
@@ -1507,8 +1634,8 @@ $trendTicks = trend_scale_ticks($trendScale);
     .incident-flags {
         display: flex;
         flex-wrap: wrap;
-        gap: 7px;
-        margin-top: 8px;
+        gap: 5px;
+        margin-top: 6px;
     }
 
     .chip,
@@ -1536,6 +1663,28 @@ $trendTicks = trend_scale_ticks($trendScale);
         color: var(--muted);
         background: rgba(8, 17, 29, 0.55);
         border: 1px solid rgba(111, 143, 177, 0.12);
+    }
+
+    .incidents-panel .badge {
+        min-width: 94px;
+        padding: 6px 9px;
+        font-size: 10px;
+        letter-spacing: 0.10em;
+    }
+
+    .incidents-panel .chip {
+        padding: 4px 8px;
+        font-size: 9px;
+        letter-spacing: 0.10em;
+    }
+
+    .incident-row .host-link-wrap {
+        gap: 6px;
+    }
+
+    .incident-row .host-icon {
+        width: 16px;
+        height: 16px;
     }
 
     .chip.unhandled {
@@ -1592,6 +1741,19 @@ $trendTicks = trend_scale_ticks($trendScale);
         .layout,
         .hero {
             grid-template-columns: 1fr;
+        }
+
+        .hero-main,
+        .hero-trend,
+        .hero-side {
+            grid-column: 1;
+            grid-row: auto;
+        }
+
+        .hero-corner-logo {
+            grid-column: 1;
+            grid-row: 1;
+            margin-top: 2px;
         }
     }
 
@@ -1704,85 +1866,134 @@ $trendTicks = trend_scale_ticks($trendScale);
         border-color: rgba(209, 49, 69, 0.30);
         background: rgba(230, 56, 75, 0.12);
     }
+
+    html.light .pill,
+    :root[data-theme="light"] .pill {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(244, 250, 255, 0.90));
+        border-color: rgba(86, 120, 158, 0.24);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.78),
+            0 0 0 1px rgba(134, 176, 221, 0.20),
+            0 10px 22px rgba(61, 99, 139, 0.10);
+    }
+
+    html.light .pill::before,
+    :root[data-theme="light"] .pill::before {
+        color: #33597f;
+        border-color: rgba(86, 120, 158, 0.30);
+        background: rgba(126, 169, 214, 0.16);
+    }
+
+    html.light .pill:hover,
+    :root[data-theme="light"] .pill:hover {
+        border-color: rgba(86, 120, 158, 0.36);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.92),
+            0 0 0 1px rgba(110, 159, 209, 0.26),
+            0 12px 26px rgba(61, 99, 139, 0.15);
+    }
+
+    html.light .pill:hover::before,
+    :root[data-theme="light"] .pill:hover::before {
+        border-color: rgba(86, 120, 158, 0.42);
+        background: rgba(126, 169, 214, 0.26);
+    }
+
+    html.light .hero-side-kicker,
+    :root[data-theme="light"] .hero-side-kicker {
+        color: #6b7f99;
+    }
+
+    html.light .hero-corner-logo,
+    :root[data-theme="light"] .hero-corner-logo {
+        background: rgba(255, 255, 255, 0.94);
+        border-color: rgba(86, 120, 158, 0.34);
+        box-shadow: 0 8px 18px rgba(61, 99, 139, 0.14);
+    }
+
+    html.light .hero-title-icon,
+    :root[data-theme="light"] .hero-title-icon {
+        color: #1e7a56;
+    }
 </style>
 </head>
 <body>
 <div class="page">
     <div class="wrap">
         <section class="panel hero">
+            <div class="hero-corner-logo" aria-hidden="true">
+                <img src="nagios.png" alt="">
+            </div>
             <div class="hero-main">
                 <div class="eyebrow">Live Monitoring</div>
-                <h1>Nagios Live Overview</h1>
+                <h1>Nagios Live Overview<span class="hero-title-icon" aria-hidden="true">◉</span></h1>
                 <p>Standalone operational dashboard sourced directly from `status.dat`</p>
-
-                <section class="hero-trend">
-                    <div class="panel-head">
-                        <div>
-                            <h2>Availability trend</h2>
-                        </div>
-                        <div class="trend-toolbar">
-                            <div class="range"><?= htmlspecialchars(trend_range_label($trendRange), ENT_QUOTES, 'UTF-8') ?></div>
-                            <div class="zoom-controls">
-                                <a class="zoom-button <?= $trendRange === '1h' ? 'is-disabled' : '' ?>" href="?range=<?= htmlspecialchars($trendZoomInRange, ENT_QUOTES, 'UTF-8') ?>">-</a>
-                                <a class="zoom-button <?= $trendRange === '30d' ? 'is-disabled' : '' ?>" href="?range=<?= htmlspecialchars($trendZoomOutRange, ENT_QUOTES, 'UTF-8') ?>">+</a>
-                            </div>
+            </div>
+            <section class="hero-trend">
+                <div class="panel-head">
+                    <div>
+                        <h2>Availability trend</h2>
+                    </div>
+                    <div class="trend-toolbar">
+                        <div class="range"><?= htmlspecialchars(trend_range_label($trendRange), ENT_QUOTES, 'UTF-8') ?></div>
+                        <div class="zoom-controls">
+                            <a class="zoom-button <?= $trendRange === '1h' ? 'is-disabled' : '' ?>" href="?range=<?= htmlspecialchars($trendZoomInRange, ENT_QUOTES, 'UTF-8') ?>">-</a>
+                            <a class="zoom-button <?= $trendRange === '30d' ? 'is-disabled' : '' ?>" href="?range=<?= htmlspecialchars($trendZoomOutRange, ENT_QUOTES, 'UTF-8') ?>">+</a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="trend-box" aria-hidden="true">
-                        <?php if ($trendBars === []): ?>
-                            <div class="trend-empty">
-                                No trend samples available for the selected range. Populate <?= htmlspecialchars(basename($trendSnapshotFile), ENT_QUOTES, 'UTF-8') ?> from cron to render history here.
-                            </div>
-                        <?php else: ?>
-                            <div class="trend-plot">
-                                <?php foreach ($trendTicks as $tick): ?>
-                                    <div class="trend-grid-line" style="top: <?= htmlspecialchars((string) $tick['position'], ENT_QUOTES, 'UTF-8') ?>%;">
-                                        <strong><?= htmlspecialchars($tick['label'], ENT_QUOTES, 'UTF-8') ?></strong>
+                <div class="trend-box" aria-hidden="true">
+                    <?php if ($trendBars === []): ?>
+                        <div class="trend-empty">
+                            No trend samples available for the selected range. Populate <?= htmlspecialchars(basename($trendSnapshotFile), ENT_QUOTES, 'UTF-8') ?> from cron to render history here.
+                        </div>
+                    <?php else: ?>
+                        <div class="trend-plot">
+                            <?php foreach ($trendTicks as $tick): ?>
+                                <div class="trend-grid-line" style="top: <?= htmlspecialchars((string) $tick['position'], ENT_QUOTES, 'UTF-8') ?>%;">
+                                    <strong><?= htmlspecialchars($tick['label'], ENT_QUOTES, 'UTF-8') ?></strong>
+                                </div>
+                            <?php endforeach; ?>
+                            <div class="trend-bars">
+                                <?php foreach ($trendBars as $bar): ?>
+                                    <div class="trend-bar">
+                                        <div class="trend-tooltip">
+                                            <div><?= htmlspecialchars($bar['label'], ENT_QUOTES, 'UTF-8') ?></div>
+                                            <div><?= htmlspecialchars($bar['timestamp'], ENT_QUOTES, 'UTF-8') ?></div>
+                                        </div>
+                                        <span style="height: <?= (int) $bar['height'] ?>%"></span>
                                     </div>
                                 <?php endforeach; ?>
-                                <div class="trend-bars">
-                                    <?php foreach ($trendBars as $bar): ?>
-                                        <div class="trend-bar">
-                                            <div class="trend-tooltip">
-                                                <div><?= htmlspecialchars($bar['label'], ENT_QUOTES, 'UTF-8') ?></div>
-                                                <div><?= htmlspecialchars($bar['timestamp'], ENT_QUOTES, 'UTF-8') ?></div>
-                                            </div>
-                                            <span style="height: <?= (int) $bar['height'] ?>%"></span>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
                             </div>
-                            <div class="trend-axis">
-                                <?php foreach ($trendAxis as $axisLabel): ?>
-                                    <span><?= htmlspecialchars($axisLabel, ENT_QUOTES, 'UTF-8') ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="footer-note">
-                        <?= htmlspecialchars($trendRangeLabel, ENT_QUOTES, 'UTF-8') ?> | Visible scale: <?= htmlspecialchars($trendScaleLabel, ENT_QUOTES, 'UTF-8') ?>
-                    </div>
-                </section>
-            </div>
-            <div class="hero-side">
-                <div class="hero-logo">
-                    <img src="nagios.png" alt="Nagios">
+                        </div>
+                        <div class="trend-axis">
+                            <?php foreach ($trendAxis as $axisLabel): ?>
+                                <span><?= htmlspecialchars($axisLabel, ENT_QUOTES, 'UTF-8') ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
+                <div class="footer-note">
+                    <?= htmlspecialchars($trendRangeLabel, ENT_QUOTES, 'UTF-8') ?> | Visible scale: <?= htmlspecialchars($trendScaleLabel, ENT_QUOTES, 'UTF-8') ?>
+                </div>
+            </section>
+            <div class="hero-side">
+                <div class="hero-side-kicker">Live Runtime</div>
                 <div class="hero-meta">
-                    <div class="pill">
+                    <div class="pill pill-source">
                         <span class="pill-label">Data source</span>
                         <span class="pill-value"><?= htmlspecialchars($dataSourceStatus, ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
-                    <div class="pill">
+                    <div class="pill pill-update">
                         <span class="pill-label">Last file update</span>
                         <span class="pill-value"><?= htmlspecialchars($lastUpdateLabel, ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
-                    <div class="pill">
+                    <div class="pill pill-freshness">
                         <span class="pill-label">Data freshness</span>
                         <span class="pill-value"><?= htmlspecialchars($lastAgeLabel, ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
-                    <div class="pill">
+                    <div class="pill pill-refresh">
                         <span class="pill-label">Auto refresh</span>
                         <span class="pill-value">Every <?= (int) $refreshSeconds ?>s</span>
                     </div>

@@ -333,6 +333,22 @@ ul.navsectionlinks li:hover:not(:has(li:hover)) {
 	text-align: center;
 }
 
+@keyframes live-overview-icon-blink {
+	0%,
+	45%,
+	100% {
+		opacity: 1;
+	}
+	55%,
+	90% {
+		opacity: 0.25;
+	}
+}
+
+.navlink.live-overview-link[data-icon]::before {
+	animation: live-overview-icon-blink 1.2s ease-in-out infinite;
+}
+
 .navlink:hover,
 .navgroup:hover > .navgroup-label {
 	background: rgba(27, 48, 74, 0.82);
@@ -832,7 +848,7 @@ html.light .update-status.is-error,
 	<div class="navsectionlinks">
 		<ul class="navsectionlinks">
 			<!-- <li><a href="<?php echo $cfg["cgi_base_url"];?>/tac.cgi" target="<?php echo $link_target;?>">Tactical Overview</a></li> -->
-			<li><a class="navlink" data-icon="◉" href="live.php" target="<?php echo $link_target;?>" title="Live Overview"><span class="navlink-main"><span class="navlink-text">Live Overview</span></span><span class="navlink-meta"><span class="navbadge modern">Modern</span></span></a></li>
+			<li><a class="navlink live-overview-link" data-icon="◉" href="live.php" target="<?php echo $link_target;?>" title="Live Overview"><span class="navlink-main"><span class="navlink-text">Live Overview</span></span><span class="navlink-meta"><span class="navbadge modern">Modern</span></span></a></li>
 			<li><a class="navlink" data-icon="▣" href="<?php echo $cfg["cgi_base_url"];?>/status.cgi?hostgroup=all&amp;style=hostdetail" target="<?php echo $link_target;?>" title="Hosts"><span class="navlink-text">Hosts</span></a></li>
 			<li><a class="navlink" data-icon="◎" href="host_detail.php?host=" target="<?php echo $link_target;?>" title="Host Detail"><span class="navlink-text">Host Detail</span><span class="navlink-meta"><span class="navbadge modern">Modern</span></span></a></li>
 			<li><a class="navlink" data-icon="≣" href="<?php echo $cfg["cgi_base_url"];?>/status.cgi?host=all" target="<?php echo $link_target;?>" title="Services"><span class="navlink-text">Services</span></a></li>

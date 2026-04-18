@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.4] - 2026-04-18
+
+### Changed
+- `share/live.php`: hero and KPI refinement pass (compact KPI cards, aligned runtime meta cards with trend area, new icon polish, and resized Active incidents cards to match `problems.php`)
+- `share/side.php`: blinking Live Overview menu icon behavior retained and synchronized with latest live page styling pass
+- `share/modern_ui_version.txt`: bumped version to `0.6.4`
+
+### Notes
+- Visual/UI polish release focused on dashboard density and consistency between `live.php` and `problems.php` card sizing
+
+---
+
 ## [0.6.3] - 2026-04-17
 
 ### Changed
