@@ -82,15 +82,16 @@ body.navbar::after {
 
 .navbarbrand-full {
 	display: block;
+	margin-bottom: 4px;
 }
 
 .modern-ui-meta {
 	flex: 0 0 100%;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	gap: 8px;
-	margin-top: -2px;
+	justify-content: flex-start;
+	gap: 0;
+	margin-top: 2px;
 	padding: 0 4px 0 2px;
 }
 
@@ -113,7 +114,8 @@ body.navbar::after {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
-	align-items: stretch;
+	align-items: flex-start;
+	margin-top: 1px;
 	padding: 0 4px 0 2px;
 }
 
@@ -121,7 +123,9 @@ body.navbar::after {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	align-self: flex-start;
 	flex: 0 0 auto;
+	width: auto;
 	height: 22px;
 	padding: 0 8px;
 	border: 1px solid rgba(111, 143, 177, 0.24);
@@ -149,6 +153,7 @@ body.navbar::after {
 }
 
 .update-status {
+	width: 100%;
 	max-width: 100%;
 	padding: 0;
 	text-align: left;
@@ -816,9 +821,9 @@ html.light .update-status.is-error,
 	</a>
 	<div class="modern-ui-meta">
 		<div class="modern-ui-version">Modern UI v <?php echo htmlspecialchars($modern_ui_version, ENT_QUOTES, 'UTF-8'); ?></div>
-		<button class="update-check-btn" id="check-updates-btn" type="button">Check updates</button>
 	</div>
 	<div class="modern-ui-updates">
+		<button class="update-check-btn" id="check-updates-btn" type="button">Check updates</button>
 		<div class="update-status" id="update-status" aria-live="polite"></div>
 	</div>
 	<div class="theme-switch-section">

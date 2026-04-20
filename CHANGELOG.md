@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.5] - 2026-04-20
+
+### Changed
+- `share/side.php`: moved `Check updates` directly under `Modern UI v ...`
+- `share/side.php`: refined width/alignment of `Check updates` button so it no longer stretches across sidebar
+- `share/side.php`: adjusted vertical spacing below Nagios logo and lowered version/update controls for cleaner top section balance
+- `share/modern_ui_version.txt`: bumped version to `0.6.5`
+
+### Notes
+- UI polish release focused on top-sidebar hierarchy and spacing consistency
+
+---
+
 ## [0.6.4] - 2026-04-18
 
 ### Changed
