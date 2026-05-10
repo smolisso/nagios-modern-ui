@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.6.0-blue)
+![Version](https://img.shields.io/badge/version-0.6.6-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -135,6 +135,17 @@ If you want the historical availability trend in `live.php`, add this cron job:
 ```
 
 This populates the JSON snapshot data used by the live availability widget.
+
+## Live Overview Timezone
+
+`live.php` formats timestamps using a configurable variable at the top of the file:
+
+```php
+$liveTimezone = 'Europe/Rome';
+```
+
+Set it to any valid PHP timezone identifier (for example `UTC`, `Europe/Rome`, `America/New_York`).
+If the value is invalid, `live.php` automatically falls back to `UTC`.
 
 ## Nagiosgraph Modern Integration
 

@@ -15,6 +15,7 @@ $hostsDownUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail&hosts
 $hostsUpUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail';
 $servicesOkUrl = '/nagios/cgi-bin/status.cgi?host=all';
 $refreshSeconds = 30;
+$liveTimezone = 'Europe/Rome';
 
 function parse_status_dat(string $path): array
 {
@@ -619,6 +620,8 @@ function service_has_graph(string $rrdRoot, string $hostName, string $serviceNam
 }
 
 $now = time();
+$timezone = in_array($liveTimezone, timezone_identifiers_list(), true) ? $liveTimezone : 'UTC';
+date_default_timezone_set($timezone);
 $status = parse_status_dat($statusFile);
 $services = $status['service'];
 $hosts = $status['host'];
