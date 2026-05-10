@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.6.6-blue)
+![Version](https://img.shields.io/badge/version-0.6.7-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.

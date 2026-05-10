@@ -1147,6 +1147,7 @@ $trendTicks = trend_scale_ticks($trendScale);
     .pill-update::before { content: "◷"; }
     .pill-freshness::before { content: "↻"; }
     .pill-refresh::before { content: "⟳"; }
+    .pill-timezone::before { content: "◔"; }
 
     .pill:hover {
         transform: translateY(-1px);
@@ -1999,6 +2000,10 @@ $trendTicks = trend_scale_ticks($trendScale);
                     <div class="pill pill-refresh">
                         <span class="pill-label">Auto refresh</span>
                         <span class="pill-value">Every <?= (int) $refreshSeconds ?>s</span>
+                    </div>
+                    <div class="pill pill-timezone">
+                        <span class="pill-label">Timezone</span>
+                        <span class="pill-value"><?= htmlspecialchars($timezone, ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
                 </div>
             </div>
