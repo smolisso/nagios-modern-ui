@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.6.8] - 2026-11-01
+
+### Fixed
+- `share/index.php`: fixed the mobile sidebar toggle turning dark after a tap in the light theme
+- Limited the toggle hover effect to devices with a fine pointer and hover support, with theme-aware hover colors
+
+### Changed
+- Bumped the Modern UI version and README badge to `0.6.8`
+- Rebuilt `share.zip` with the updated release files
+
+---
+
 ## [0.6.5] - 2026-04-20
 
 ### Changed

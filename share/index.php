@@ -56,6 +56,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			--sidebar-width-compact: 52px;
 			--sidebar-width-expanded: 236px;
 			--toggle-bg: #1a2133;
+			--toggle-hover-bg: #1e3652;
 			--toggle-color: #c8cdd5;
 			--page-bg: #0f1117;
 			--sidebar-bg: #141b26;
@@ -65,6 +66,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		:root[data-theme="light"] {
 			--border: #D6D6D6;
 			--toggle-bg: #f4f7fb;
+			--toggle-hover-bg: #e3ebf5;
 			--toggle-color: #2a3c52;
 			--page-bg: #eef3f9;
 			--sidebar-bg: #ffffff;
@@ -141,9 +143,12 @@ if ($theme != 'dark' && $theme != 'light') {
 			line-height: 1;
 		}
 
-		#sidebar-toggle:hover {
-			background: #1e3652;
-			transform: translateY(-1px);
+		/* Touch browsers can retain :hover after a tap. */
+		@media (hover: hover) and (pointer: fine) {
+			#sidebar-toggle:hover {
+				background: var(--toggle-hover-bg);
+				transform: translateY(-1px);
+			}
 		}
 
 		#sidebar-overlay {
