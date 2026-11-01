@@ -237,3 +237,42 @@ html.light body.cmd :is([style*="background-color: #141b26"], [style*="backgroun
     color: var(--classic-text) !important;
     border-color: var(--classic-border) !important;
 }
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – CMD
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.cmd .cmdType {
+    margin: 18px 0 12px;
+    padding: 0;
+    font-size: var(--cgi-heading-font);
+    color: var(--cgi-text);
+    font-weight: 650;
+}
+html:root body.cmd .optBox {
+    padding: 10px 12px;
+    background: var(--cgi-panel);
+    border: 1px solid var(--cgi-border);
+    border-radius: 9px;
+}
+html:root body.cmd .commandDescription {
+    margin: 12px 0;
+    padding: 10px 12px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 9px;
+    background: var(--cgi-panel);
+    font-size: var(--cgi-font);
+    line-height: 1.4;
+}
+html:root body.cmd .descriptionTitle {
+    margin-bottom: 6px;
+    font-size: var(--cgi-section-font);
+    font-weight: 600;
+}
+html:root body.cmd .infoMessage {
+    margin: 20px auto;
+    padding: 10px 12px;
+    border-radius: 9px;
+    font-size: var(--cgi-font);
+    line-height: 1.4;
+}

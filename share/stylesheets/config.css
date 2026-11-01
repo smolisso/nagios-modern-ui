@@ -259,3 +259,25 @@ html.light body.config [class*="badprocstatus" i] :is(span, b, strong, i, font, 
 :root[data-theme="light"] body.config [class*="badprocstatus" i] :is(span, b, strong, i, font, small) {
     color: inherit !important;
 }
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – CONFIG
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.config :is(.reportSelectItem, .dateSelectItem) {
+    padding: 5px 8px;
+    background-color: var(--cgi-panel);
+    color: var(--cgi-text);
+}
+html:root body.config :is(.reportSelectSubTitle, .dateSelectSubTitle) {
+    padding: 5px 8px;
+    color: var(--cgi-muted);
+    font-weight: 400;
+}
+html:root body.config .optBox {
+    border-color: var(--cgi-border);
+    border-radius: 9px;
+}
+html:root body.config table.data {
+    width: 100%;
+}

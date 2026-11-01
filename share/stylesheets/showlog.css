@@ -73,7 +73,7 @@ body.showlog .logEntries {
 
 /* CRITICAL */
 body.showlog img[alt*="Critical"] {
-    background-color: #a84040;
+    background-color: #9c3838;
     border-radius: 3px;
 }
 
@@ -231,4 +231,32 @@ html.light body.showlog :is(.infoBoxTitle, .dataTitle, .navBoxTitle),
 html.light body.showlog :is(.infoBox, .infoBox i),
 :root[data-theme="light"] body.showlog :is(.infoBox, .infoBox i) {
     color: var(--classic-text) !important;
+}
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – SHOWLOG
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.showlog .logEntries {
+    margin-top: var(--cgi-content-gap);
+    font-size: var(--cgi-font);
+    line-height: 1.6;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+html:root body.showlog .dateTimeBreak {
+    margin: 20px 0 10px;
+    color: var(--cgi-text);
+    font-size: var(--cgi-section-font);
+    font-weight: 600;
+}
+html:root body.showlog .dateTimeBreak hr {
+    border: 0;
+    border-top: 1px solid var(--cgi-border);
+    margin: 8px 0;
+}
+html:root body.showlog .logEntries img {
+    max-width: 20px;
+    max-height: 20px;
+    vertical-align: middle;
 }

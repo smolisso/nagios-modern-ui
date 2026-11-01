@@ -10,7 +10,7 @@
 .itemTotalsTitle { font-size: 8pt; text-align: center; }
 
 .hostUP          { background-color: #6BC497; color: #1f3d2b; font-weight: bold; }
-.hostDOWN        { background-color: #a84040; color: #ffffff; font-weight: bold; }
+.hostDOWN        { background-color: #9c3838; color: #ffffff; font-weight: bold; }
 .hostUNREACHABLE { background-color: #9e82a0; color: #ffffff; font-weight: bold; }
 
 /* =========================================================
@@ -93,7 +93,7 @@ body.outages .itemTotalsTitle {
 
 /* Critical outage row */
 body.outages tr.outageCritical {
-    background-color: #a84040;
+    background-color: #9c3838;
     color: #ffffff;
 }
 
@@ -233,4 +233,23 @@ html.light body.outages :is([style*="background-color: #141b26"], [style*="backg
     background-color: var(--classic-surface) !important;
     color: var(--classic-text) !important;
     border-color: var(--classic-border) !important;
+}
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – OUTAGES
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.outages table.data {
+    width: 100%;
+}
+html:root body.outages tr.outageCritical {
+    background-color: var(--cgi-critical);
+    color: var(--cgi-critical-text);
+}
+html:root body.outages tr.outageWarning {
+    background-color: var(--cgi-warning);
+    color: var(--cgi-warning-text);
+}
+html:root body.outages tr:is(.outageCritical, .outageWarning) a {
+    color: inherit;
 }

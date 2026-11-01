@@ -1370,3 +1370,326 @@ html.light body.status td.miniStatusUNKNOWN,
   background-color: var(--state-unknown-bg) !important;
   color: var(--state-unknown-fg) !important;
 }
+
+/* =========================================================
+   CLASSIC CGI – SHARED COMPACT LAYOUT
+   Matches the approved status detail layout. Modern PHP pages and the
+   approved seven-column status view keep their own styles.
+   Page-specific adapters are at the end of each CGI stylesheet.
+   ========================================================= */
+:root {
+  --cgi-bg: #15181d;
+  --cgi-panel: #1b222c;
+  --cgi-panel-alt: #222b39;
+  --cgi-border: #2b3543;
+  --cgi-text: #e3e8ef;
+  --cgi-muted: #9baabb;
+  --cgi-link: #8bb9ed;
+  --cgi-hover: #303d4e;
+  --cgi-ok: #6bc497;
+  --cgi-ok-text: #1f3d2b;
+  --cgi-warning: #e5ca3e;
+  --cgi-warning-text: #3b2f00;
+  --cgi-critical: #9c3838;
+  --cgi-critical-text: #ffffff;
+  --cgi-unknown: #9e82a0;
+  --cgi-unknown-text: #ffffff;
+  --cgi-font: 13px;
+  --cgi-heading-font: 20px;
+  --cgi-section-font: 13px;
+  --cgi-table-heading-font: 12.5px;
+  --cgi-meta-font: 12px;
+  --cgi-content-gap: 50px;
+}
+
+html:is(.light, [data-theme="light"]) {
+  --cgi-bg: #f3f7fc;
+  --cgi-panel: #ffffff;
+  --cgi-panel-alt: #f4f8fd;
+  --cgi-border: #c9d7e7;
+  --cgi-text: #1f2f43;
+  --cgi-muted: #4f6280;
+  --cgi-link: #1f5ea8;
+  --cgi-hover: #e8f0fb;
+  --cgi-ok: #a8dfc3;
+  --cgi-ok-text: #124d2e;
+  --cgi-warning: #f7dd90;
+  --cgi-warning-text: #6b4e00;
+  --cgi-critical: #f4b2b8;
+  --cgi-critical-text: #7a1f2a;
+  --cgi-unknown: #c9b3d9;
+  --cgi-unknown-text: #3f2f55;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) {
+  zoom: 0.85;
+  margin: 0;
+  padding: 16px 20px;
+  background: var(--cgi-bg);
+  color: var(--cgi-text);
+  font: var(--cgi-font)/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) a {
+  color: var(--cgi-link);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) a:hover {
+  text-decoration: underline;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--cgi-link);
+  outline-offset: 2px;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(td, th) {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) td :is(table, a, span) {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table.infoBox {
+  width: 100%;
+  max-width: 640px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--cgi-border);
+  border-radius: 12px;
+  background: var(--cgi-panel) !important;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) td.infoBox {
+  padding: 0;
+  border: 0;
+  background: transparent !important;
+  color: var(--cgi-muted);
+  font-size: var(--cgi-meta-font);
+  line-height: 1.4;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table.infoBox :is(div, span, small, i, font) {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table.infoBox a {
+  color: var(--cgi-link);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) .infoBoxTitle {
+  margin: 0 0 7px;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--cgi-text) !important;
+  font-size: var(--cgi-section-font) !important;
+  font-weight: 650;
+  text-align: left;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) [class*="badprocstatus" i] {
+  margin-top: 5px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: var(--cgi-meta-font);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table.linkBox {
+  margin-top: 7px;
+  padding: 6px 0 0;
+  border: 0;
+  background: transparent;
+  font-size: var(--cgi-meta-font);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) td.linkBox {
+  padding: 0;
+  font-size: inherit;
+  line-height: 1.4;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(table.optBox, table.optionBox, table.navBox) {
+  padding: 10px 12px;
+  border: 1px solid var(--cgi-border);
+  border-radius: 9px;
+  background: var(--cgi-panel) !important;
+  font-size: var(--cgi-meta-font);
+  white-space: normal;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.optBoxTitle, .optionBoxTitle, .navBoxTitle) {
+  padding: 0 0 5px;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--cgi-text) !important;
+  font-size: var(--cgi-section-font);
+  font-weight: 650;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.optBoxItem, .optBoxValue, .optBoxRequiredItem, .navBoxItem, .navBoxDate, .navBoxFile) {
+  font-size: var(--cgi-meta-font);
+  line-height: 1.4;
+  padding: 2px 4px;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.dataTitle, .reportSelectTitle, .dateSelectTitle) {
+  margin: 14px 0 10px;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--cgi-text) !important;
+  font-size: var(--cgi-heading-font);
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.dataSubTitle, .reportRange, .reportDuration, .reportTime, .reportSelectSubTitle, .reportSelectItem, .dateSelectSubTitle, .dateSelectItem) {
+  font-size: var(--cgi-font);
+  line-height: 1.4;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.reportSelectTip, .helpfulHint, .helpfulHints) {
+  color: var(--cgi-muted);
+  font-size: var(--cgi-meta-font);
+  line-height: 1.4;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(select, textarea, button, input[type="text"], input[type="search"], input[type="number"], input[type="date"], input[type="time"], input[type="submit"], input[type="reset"]) {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid var(--cgi-border);
+  border-radius: 6px;
+  background-color: var(--cgi-panel-alt);
+  color: var(--cgi-text);
+  font: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(button, input[type="submit"], input[type="reset"]) {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(button, input[type="submit"], input[type="reset"]):hover {
+  background-color: var(--cgi-hover);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table:is(.data, .notifications, .logEntries, .comment, .downtime, .queue) {
+  margin-top: var(--cgi-content-gap);
+  padding: 0;
+  border: 1px solid var(--cgi-border);
+  border-radius: 9px;
+  border-collapse: separate;
+  border-spacing: 3px 2px;
+  background: var(--cgi-panel);
+  font-size: var(--cgi-font);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table:is(.data, .notifications, .logEntries, .comment, .downtime, .queue) > tbody > tr > th {
+  padding: 6px;
+  border: 0;
+  background: transparent !important;
+  color: var(--cgi-muted) !important;
+  font-size: var(--cgi-table-heading-font);
+  font-weight: 600;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table:is(.data, .notifications, .logEntries, .comment, .downtime, .queue) > tbody > tr > td:not([colspan]) {
+  padding: 6px;
+  border-radius: 4px;
+  font-size: var(--cgi-font);
+  line-height: 1.4;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table:is(.data, .notifications, .logEntries, .comment, .downtime, .queue) td :is(table, td) {
+  padding: 0 1px;
+  border: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.dataOdd, .reportDataOdd, .notificationsOdd, .commentOdd, .downtimeOdd, .queueOdd, .logEntriesOdd) {
+  background-color: var(--cgi-panel-alt);
+  color: var(--cgi-text);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.dataEven, .reportDataEven, .notificationsEven, .commentEven, .downtimeEven, .queueEven, .logEntriesEven) {
+  background-color: var(--cgi-panel);
+  color: var(--cgi-text);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.hostUP, .serviceOK, .logEntriesOK, .logEntriesUP, .notificationsOK, .notificationsHOSTUP, .processOK) {
+  background-color: var(--cgi-ok);
+  color: var(--cgi-ok-text);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.hostUP, .serviceOK, .logEntriesOK, .logEntriesUP, .notificationsOK, .notificationsHOSTUP, .processOK) a {
+  color: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.serviceWARNING, .logEntriesWARNING, .notificationsWARNING, .processWARNING, .modeSTANDBY) {
+  background-color: var(--cgi-warning);
+  color: var(--cgi-warning-text);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.serviceWARNING, .logEntriesWARNING, .notificationsWARNING, .processWARNING, .modeSTANDBY) a {
+  color: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.hostDOWN, .serviceCRITICAL, .logEntriesCRITICAL, .logEntriesDOWN, .notificationsCRITICAL, .notificationsHOSTDOWN, .processCRITICAL) {
+  background-color: var(--cgi-critical);
+  color: var(--cgi-critical-text);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.hostDOWN, .serviceCRITICAL, .logEntriesCRITICAL, .logEntriesDOWN, .notificationsCRITICAL, .notificationsHOSTDOWN, .processCRITICAL) a {
+  color: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.hostUNREACHABLE, .serviceUNKNOWN, .logEntriesUNKNOWN, .logEntriesUNREACHABLE, .notificationsUNKNOWN, .notificationsHOSTUNREACHABLE, .processUNKNOWN) {
+  background-color: var(--cgi-unknown);
+  color: var(--cgi-unknown-text);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) :is(.hostUNREACHABLE, .serviceUNKNOWN, .logEntriesUNKNOWN, .logEntriesUNREACHABLE, .notificationsUNKNOWN, .notificationsHOSTUNREACHABLE, .processUNKNOWN) a {
+  color: inherit;
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) .itemTotalsTitle {
+  margin: 13px 0 0;
+  padding: 0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--cgi-muted);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) #pagelimit {
+  margin: var(--cgi-content-gap) 0 7px;
+  padding: 0;
+  font-size: var(--cgi-meta-font);
+  color: var(--cgi-muted);
+}
+
+html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) .pagenumber {
+  padding: 3px 7px;
+  border-color: var(--cgi-border);
+  border-radius: 4px;
+  background-color: var(--cgi-panel-alt);
+  color: var(--cgi-text);
+}
+
+@media (max-width: 768px) {
+  html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) { padding: 12px 14px; }
+  html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table.infoBox { max-width: 100%; }
+}

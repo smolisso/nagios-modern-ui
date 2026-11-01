@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.6.8-blue)
+![Version](https://img.shields.io/badge/version-0.7.0-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -9,16 +9,17 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 
 ## Features
 
+- Compact classic CGI layout with consistent typography, panels, tables and spacing across all 14 stylesheets
 - Dark blue UI refresh across the standard Nagios Core pages
 - Global dark/light theme switch with persisted preference
 - Responsive `index.php` shell and a modernized `side.php`
 - Compact/expanded sidebar navigation with active page highlighting
 - `live.php` modern live overview sourced directly from `status.dat`
-- `problems.php` modern problems view with severity-first triage
-- `host_detail.php` modern host service detail view
+- `problems.php` modern problems view with severity-first triage and host autocomplete in the search filter
+- `host_detail.php` modern host service detail view with partial-name host autocomplete and keyboard navigation
 - `hostgroups.php` modern host group overview
 - `hostgroups_summary.php` modern host group summary
-- `nagiosgraph_modern/` modern graph frontend for existing Nagiosgraph RRD data
+- `nagiosgraph_modern/` modern graph frontend for existing Nagiosgraph RRD data, with host autocomplete in `show.php`
 - Host logo support via `hostextinfo.cfg`
 - Historical availability snapshots via `live_trend_snapshot.php`
 - Hover graph preview for graphed services through `popup.js`
@@ -101,6 +102,7 @@ Nagiosgraph Modern:
 Stylesheets:
 
 ```text
+[nagios_root_path]/share/stylesheets/common.css
 [nagios_root_path]/share/stylesheets/avail.css
 [nagios_root_path]/share/stylesheets/cmd.css
 [nagios_root_path]/share/stylesheets/config.css
@@ -179,5 +181,11 @@ Make sure `index.php` loads:
 
 Original UI: Nagios Core  
 Modernization and standalone pages: community-driven
+
+### Contributors
+
+- Stefano Molisso — project author and maintainer
+- Claude Sonnet / Claude Code (Anthropic) — AI-assisted development
+- Codex (OpenAI) — AI-assisted development, classic CGI layout refinement and release preparation
 
 PRs welcome.

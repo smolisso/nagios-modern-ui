@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.0] - 2026-11-01
+
+### Added
+- Host autocomplete with partial-name matching and keyboard navigation in `host_detail.php`, `problems.php` and `nagiosgraph_modern/show.php`
+- Explicit contributor credits for Claude Code and OpenAI Codex in the README
+
+### Changed
+- Refined the classic service status view with compact header panels, filters, consistent table typography and an 85% page scale
+- Extended the compact visual style to all classic CGI stylesheets, including reports, logs, notifications, configuration, commands, extended information and tactical overview
+- Centralized shared classic CGI colors, typography and spacing in `common.css`, with page-specific adaptations and light-theme support
+- Darkened the classic CRITICAL red slightly while preserving the original WARNING yellow
+- Increased separation between the status header and service results
+- Improved dark-theme contrast for neutral host/service cells and enlarged service action icons and click targets
+- Bumped the Modern UI version and README badge to `0.7.0`
+- Rebuilt `share.zip` with the current release files; local preview files are not included
+
+---
+
 ## [0.6.8] - 2026-11-01
 
 ### Fixed

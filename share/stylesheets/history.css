@@ -290,3 +290,31 @@ html.light body.history .dateTimeBreak hr,
 :root[data-theme="light"] body.history .dateTimeBreak hr {
     background-color: var(--classic-border) !important;
 }
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – HISTORY
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.history .logEntries {
+    margin-top: var(--cgi-content-gap);
+    font-size: var(--cgi-font);
+    line-height: 1.6;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+html:root body.history .dateTimeBreak {
+    margin: 20px 0 10px;
+    color: var(--cgi-text);
+    font-size: var(--cgi-section-font);
+    font-weight: 600;
+}
+html:root body.history .dateTimeBreak hr {
+    border: 0;
+    border-top: 1px solid var(--cgi-border);
+    margin: 8px 0;
+}
+html:root body.history .logEntries img {
+    max-width: 20px;
+    max-height: 20px;
+    vertical-align: middle;
+}

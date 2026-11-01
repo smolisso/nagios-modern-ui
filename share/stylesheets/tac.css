@@ -38,41 +38,41 @@ td.featureHeader { font-weight: bold; border-bottom: 1px solid #1e2d42; }
 .featureEnabledFlapDetection             { text-align: center; font-weight: bold; }
 .featureDisabledFlapDetection            { text-align: center; font-weight: bold; }
 .featureItemEnabledServiceFlapDetection  { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledServiceFlapDetection { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledServiceFlapDetection { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemEnabledHostFlapDetection     { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledHostFlapDetection    { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledHostFlapDetection    { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemServicesNotFlapping          { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemServicesFlapping             { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemServicesFlapping             { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemHostsNotFlapping             { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemHostsFlapping                { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemHostsFlapping                { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 
 .featureEnabledNotifications             { text-align: center; font-weight: bold; }
 .featureDisabledNotifications            { text-align: center; font-weight: bold; }
 .featureItemEnabledServiceNotifications  { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledServiceNotifications { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledServiceNotifications { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemEnabledHostNotifications     { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledHostNotifications    { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledHostNotifications    { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 
 .featureEnabledHandlers                  { text-align: center; font-weight: bold; }
 .featureDisabledHandlers                 { text-align: center; font-weight: bold; }
 .featureItemEnabledServiceHandlers       { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledServiceHandlers      { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledServiceHandlers      { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemEnabledHostHandlers          { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledHostHandlers         { font-size: 8pt; background-color: #a84040; color: #ffffff; }
+.featureItemDisabledHostHandlers         { font-size: 8pt; background-color: #9c3838; color: #ffffff; }
 
 .featureEnabledActiveChecks              { text-align: center; font-weight: bold; }
 .featureDisabledActiveChecks             { text-align: center; font-weight: bold; }
 .featureItemEnabledActiveServiceChecks   { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledActiveServiceChecks  { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledActiveServiceChecks  { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemEnabledActiveHostChecks      { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledActiveHostChecks     { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledActiveHostChecks     { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 
 .featureEnabledPassiveChecks             { text-align: center; font-weight: bold; }
 .featureDisabledPassiveChecks            { text-align: center; font-weight: bold; }
 .featureItemEnabledPassiveServiceChecks  { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledPassiveServiceChecks { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledPassiveServiceChecks { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 .featureItemEnabledPassiveHostChecks     { font-size: 8pt; background-color: #6BC497; color: #ffffff; border: 1px solid #1e2d42; }
-.featureItemDisabledPassiveHostChecks    { font-size: 8pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; }
+.featureItemDisabledPassiveHostChecks    { font-size: 8pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; }
 
 /* =========================================================
    Nagios Modern UI – tac.cgi
@@ -599,4 +599,58 @@ body.tac .featureItemServicesFlapping a:hover {
     body.tac table.infoBox {
         width: 100%;
     }
+}
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – TAC
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.tac table.tac {
+    transform: none;
+    transform-origin: top left;
+    margin-bottom: 12px;
+    font-size: var(--cgi-font);
+    line-height: 1.4;
+}
+html:root body.tac :is(.healthBox, .perfBox) {
+    padding: 10px 12px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel);
+}
+html:root body.tac :is(.healthTitle, .perfTitle, .outageTitle, .hostTitle, .serviceTitle, .featureTitle) {
+    padding: 6px 8px;
+    border: 0;
+    background: transparent;
+    color: var(--cgi-text);
+    font-size: var(--cgi-section-font);
+    font-weight: 650;
+    line-height: 1.4;
+}
+html:root body.tac :is(.outageHeader, .hostHeader, .serviceHeader, .featureHeader) {
+    padding: 6px;
+    border-color: var(--cgi-border);
+    border-radius: 6px;
+    background: var(--cgi-panel-alt);
+    color: var(--cgi-text);
+    font-size: var(--cgi-font);
+    line-height: 1.4;
+}
+html:root body.tac :is(.healthItem, .perfItem, .perfValue) {
+    padding: 3px 5px;
+    font-size: var(--cgi-font);
+    line-height: 1.4;
+}
+html:root body.tac .perfBox table tr {
+    line-height: 1.4;
+}
+html:root body.tac [class^="feature"] td,
+html:root body.tac [class^="featureItem"],
+html:root body.tac [class^="featureEnabled"],
+html:root body.tac [class^="featureDisabled"] {
+    font-size: var(--cgi-meta-font) !important;
+    line-height: 1.4 !important;
+}
+html:root body.tac [class^="featureItem"] {
+    padding: 3px 5px;
 }

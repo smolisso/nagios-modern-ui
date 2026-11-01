@@ -238,3 +238,31 @@ html.light body.histogram .infoBox a:hover,
 :root[data-theme="light"] body.histogram .infoBox a:hover {
     color: var(--classic-link-hover) !important;
 }
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – HISTOGRAM
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.histogram :is(.reportSelectItem, .dateSelectItem) {
+    padding: 5px 8px;
+    background-color: var(--cgi-panel);
+    color: var(--cgi-text);
+}
+html:root body.histogram :is(.reportSelectSubTitle, .dateSelectSubTitle) {
+    padding: 5px 8px;
+    color: var(--cgi-muted);
+    font-weight: 400;
+}
+html:root body.histogram .optBox {
+    border-color: var(--cgi-border);
+    border-radius: 9px;
+}
+html:root body.histogram .helpfulHints {
+    max-width: 80ch;
+    margin: 12px auto;
+    text-align: left;
+}
+html:root body.histogram :is(.reportRange, .reportDuration, .reportTime) {
+    margin: 6px 0;
+    color: var(--cgi-muted);
+}

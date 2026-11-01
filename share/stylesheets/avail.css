@@ -10,13 +10,13 @@
 .data { font-size: 9pt; }
 
 .hostUP          { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
-.hostDOWN        { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.hostDOWN        { background-color: #9c3838; color: #ffffff; padding: 0 4 0 4; }
 .hostUNREACHABLE { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
 
 .serviceOK       { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
 .serviceWARNING  { background-color: #e5ca3e; color: #3b2f00; padding: 0 4 0 4; }
 .serviceUNKNOWN  { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
-.serviceCRITICAL { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.serviceCRITICAL { background-color: #9c3838; color: #ffffff; padding: 0 4 0 4; }
 
 table.logEntries { font-size: 9pt; padding: 5 0 0 0; }
 th.logEntries    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; border-bottom: 1px solid #1e2d42; color: #c8cdd5; }
@@ -26,9 +26,9 @@ th.logEntries    { font-size: 9pt; text-align: left; padding: 0 3px 0 3px; borde
 .logEntriesOK            { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
 .logEntriesUNKNOWN       { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
 .logEntriesWARNING       { background-color: #e5ca3e; color: #3b2f00; padding: 0 4 0 4; }
-.logEntriesCRITICAL      { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.logEntriesCRITICAL      { background-color: #9c3838; color: #ffffff; padding: 0 4 0 4; }
 .logEntriesUP            { background-color: #6BC497; color: #1f3d2b; padding: 0 4 0 4; }
-.logEntriesDOWN          { background-color: #a84040; color: #ffffff; padding: 0 4 0 4; }
+.logEntriesDOWN          { background-color: #9c3838; color: #ffffff; padding: 0 4 0 4; }
 .logEntriesUNREACHABLE   { background-color: #9e82a0; color: #ffffff; padding: 0 4 0 4; }
 .logEntriesINDETERMINATE { background-color: #1a2133; color: #c8cdd5; padding: 0 4 0 4; }
 
@@ -236,4 +236,29 @@ html.light body.avail th.logEntries,
 :root[data-theme="light"] body.avail th.logEntries {
     color: var(--classic-text) !important;
     border-bottom-color: var(--classic-border) !important;
+}
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – AVAIL
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.avail :is(.reportSelectItem, .dateSelectItem) {
+    padding: 5px 8px;
+    background-color: var(--cgi-panel);
+    color: var(--cgi-text);
+}
+html:root body.avail :is(.reportSelectSubTitle, .dateSelectSubTitle) {
+    padding: 5px 8px;
+    color: var(--cgi-muted);
+    font-weight: 400;
+}
+html:root body.avail .optBox {
+    border-color: var(--cgi-border);
+    border-radius: 9px;
+}
+html:root body.avail table.data {
+    width: 100%;
+}
+html:root body.avail table.logEntries {
+    width: 100%;
 }

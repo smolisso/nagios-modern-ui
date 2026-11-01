@@ -117,8 +117,8 @@ td.statusOdd {
 body.status td.miniStatusUP,
 body.status td.miniStatusOK       { background-color: #6BC497 !important; padding: 0 !important; border-left: none !important; }
 body.status td.miniStatusWARNING  { background-color: #e5ca3e !important; padding: 0 !important; border-left: none !important; }
-body.status td.miniStatusCRITICAL { background-color: #a84040 !important; padding: 0 !important; border-left: none !important; }
-body.status td.miniStatusDOWN     { background-color: #a84040 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusCRITICAL { background-color: #9c3838 !important; padding: 0 !important; border-left: none !important; }
+body.status td.miniStatusDOWN     { background-color: #9c3838 !important; padding: 0 !important; border-left: none !important; }
 body.status td.miniStatusUNKNOWN  { background-color: #9e82a0 !important; padding: 0 !important; border-left: none !important; }
 body.status td.miniStatusUNREACHABLE { background-color: #9e82a0 !important; padding: 0 !important; border-left: none !important; }
 body.status td.miniStatusPENDING  { background-color: #f2c94c !important; padding: 0 !important; border-left: none !important; }
@@ -164,7 +164,7 @@ td.statusHOSTUP {
 /* DOWN */
 td.statusHOSTDOWN,
 body.status td.statusHOSTDOWN {
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
     color: #ffffff !important;
 }
 
@@ -259,7 +259,7 @@ td.statusBGWARNING {
 tr.statusCRITICAL td,
 td.statusCRITICAL,
 td.statusBGCRITICAL {
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
     color: #ffffff !important;
 }
 
@@ -305,7 +305,7 @@ td.statusBGWARNING:hover {
 tr.statusCRITICAL:hover td,
 td.statusCRITICAL:hover,
 td.statusBGCRITICAL:hover {
-    background-color: #b85050 !important;
+    background-color: #ac4848 !important;
     color: #ffffff !important;
 }
 
@@ -399,7 +399,7 @@ tr.statusUNKNOWN a {
 
 .miniStatusDOWN,
 .miniStatusDOWN a {
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
     color: #ffffff !important;
 }
 
@@ -423,7 +423,7 @@ tr.statusUNKNOWN a {
 
 .miniStatusCRITICAL,
 .miniStatusCRITICAL a {
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
     color: #ffffff !important;
 }
 
@@ -478,7 +478,7 @@ table.statusGrid td.statusWARNING {
 }
 
 table.statusGrid td.statusCRITICAL {
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
 }
 
 table.statusGrid td.statusUNKNOWN {
@@ -538,7 +538,7 @@ body.status a.statusDOWN {
     border-radius: 5px !important;
     margin: 2px 3px !important;
     padding: 2px 8px !important;
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
     color: #ffffff !important;
     text-decoration: none !important;
     white-space: nowrap !important;
@@ -610,7 +610,7 @@ body.status table.status td.statusHOSTUP:first-child:hover {
 body.status table.status td.statusHOSTDOWN:first-child:hover,
 body.status table.status td.statusHOSTDOWNACK:first-child:hover,
 body.status table.status td.statusHOSTDOWNSCHED:first-child:hover {
-    background-color: #b85050 !important;
+    background-color: #ac4848 !important;
     color: #ffffff !important;
 }
 
@@ -724,7 +724,7 @@ table.serviceTotals td {
 }
 
 .serviceTotalsCRITICAL {
-    background-color: #a84040 !important;
+    background-color: #9c3838 !important;
     color: #ffffff;
 }
 
@@ -1559,5 +1559,286 @@ html.light body.status table.status td:nth-child(1) table td.statusEven,
     background-color: #dde7f3 !important;
     border: none !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* =========================================================
+   COMPACT SERVICE DETAILS
+   Seven-column service detail view only; native CGI links, forms,
+   sorting, host grouping and graph actions remain in the original DOM.
+   Remove this block to restore the previous layout.
+   ========================================================= */
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) {
+    --detail-bg: #15181d;
+    --detail-panel: #1b222c;
+    --detail-border: #2b3543;
+    --detail-text: #e3e8ef;
+    --detail-muted: #9baabb;
+    --detail-link: #8bb9ed;
+    --detail-neutral: #252e3a;
+    zoom: 0.85;
+    margin: 0;
+    padding: 16px 20px;
+    background: var(--detail-bg);
+    color: var(--detail-text);
+    font: 13px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html:is(.light, [data-theme="light"]) body.status:has(> table.status > tbody > tr > th:nth-child(7)) {
+    --detail-bg: #f3f7fc;
+    --detail-panel: #ffffff;
+    --detail-border: #c9d7e7;
+    --detail-text: #1f2f43;
+    --detail-muted: #4f6280;
+    --detail-link: #1f5ea8;
+    --detail-neutral: #e5edf7;
+}
+
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) a { color: var(--detail-link); }
+
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable {
+    width: 100%; margin: 0 0 14px; border-spacing: 0;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody { display: block; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr {
+    display: grid; grid-template-columns: 1.4fr 1fr 1.15fr; gap: 12px; align-items: start;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr > td {
+    width: auto; min-width: 0; box-sizing: border-box; padding: 10px 12px;
+    background: var(--detail-panel); border: 1px solid var(--detail-border); border-radius: 12px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr > td:first-child { padding: 12px 14px; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) table.infoBox {
+    width: 100% !important; margin: 0; padding: 0; border: 0 !important; background: transparent !important;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) td.infoBox {
+    padding: 0; border: 0; color: var(--detail-muted); font-size: 12px; line-height: 1.4;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(.infoBoxTitle, div.hostTotals, div.serviceTotals) {
+    margin: 0 0 7px; padding: 0; border: 0; background: transparent;
+    color: var(--detail-text) !important; font-size: 13px; font-weight: 650; text-align: left;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .infoBoxBadProcStatus {
+    display: inline-block; margin-top: 5px; padding: 1px 6px; border-radius: 5px; font-size: 12px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) table.linkBox {
+    width: 100%; margin: 7px 0 0; padding-top: 6px; border: 0;
+    border-top: 1px solid var(--detail-border); background: transparent;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) td.linkBox {
+    display: flex; flex-wrap: wrap; gap: 2px 12px; padding: 0; font-size: 12px; line-height: 1.4;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) td.linkBox > br { display: none; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) table:is(.hostTotals, .serviceTotals) {
+    width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 5px 0;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .headertable > tbody > tr > td > table:not(.infoBox):not(.linkBox) { width: 100%; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(th.hostTotals, th.serviceTotals) {
+    padding: 0 0 4px; font-size: 12px; font-weight: 550;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(a.hostTotals, a.serviceTotals) { font-size: inherit; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(table.hostTotals, table.serviceTotals) td {
+    height: 24px; padding: 0 4px; border: 1px solid var(--detail-border); border-radius: 6px;
+    font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(td.hostTotals, td.serviceTotals) {
+    background: var(--detail-neutral); color: var(--detail-text) !important;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .headertable :is(td.hostTotalsDOWN, td.serviceTotalsCRITICAL) { color: #fff !important; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .headertable td > table > tbody > tr + tr > td > table {
+    width: auto; margin-top: 6px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .headertable td > table > tbody > tr + tr > td > table td {
+    height: 20px; font-size: 12px;
+}
+
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle {
+    width: 100%; margin: 0 0 12px; border-spacing: 0;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle > tbody { display: block; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle > tbody > tr {
+    display: grid; grid-template-columns: minmax(360px, .95fr) 1.7fr; gap: 20px; align-items: center;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle > tbody > tr > td { width: auto; padding: 0; min-width: 0; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle > tbody > tr > td:last-child { display: none; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) table.filter {
+    width: 100%; box-sizing: border-box; margin: 0; padding: 7px 10px;
+    background: var(--detail-panel); border: 1px solid var(--detail-border); border-radius: 9px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(td.filter, td.filterTitle) { padding: 0; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .filterTitle {
+    margin: 0 0 4px; background: transparent; color: var(--detail-text); font-size: 12px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) :is(.filterName, .filterValue) { font-size: 12px; padding: 0 2px; line-height: 1.4; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .filterName { color: var(--detail-muted); font-weight: 400; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .filterValue { color: var(--detail-link); }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) div.statusTitle {
+    padding: 0; background: transparent; color: var(--detail-text); text-align: left;
+    font-size: 20px; line-height: 1.3; font-weight: 650; letter-spacing: -.4px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .pageTitle td > br { display: none; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) #pagelimit {
+    margin: 50px 0 7px; padding: 0; align-items: center; font-size: 12px; color: var(--detail-muted);
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) #limit { font-size: 12px; font-weight: 400; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status {
+    margin: 0; padding: 0; border: 1px solid var(--detail-border); border-radius: 9px;
+    border-spacing: 3px 2px; background: var(--detail-panel); font-size: 13px;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > th {
+    padding: 6px; border: 0; color: var(--detail-muted); font-size: 12.5px; font-weight: 600; white-space: nowrap;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:not([colspan]) {
+    padding: 6px; border-radius: 4px !important; font-size: 13px; line-height: 1.4; vertical-align: middle;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td > table {
+    margin: 0; border-spacing: 0; background: transparent;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td table td {
+    padding: 0 1px; border: 0; border-radius: 0; font-size: inherit; line-height: inherit;
+}
+/* Reset every nested table, not just its cells: otherwise the browser's
+   table font size interrupts inheritance from the compact outer row. */
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td :is(table, a, span) {
+    font-size: inherit; line-height: inherit;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:first-child a { font-weight: 600; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td a[href*="extinfo.cgi?type=2"] { font-weight: 400; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:nth-child(n+3):nth-child(-n+6) { font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:nth-child(3) { font-size: 13px; font-weight: 600; }
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td img {
+    max-width: 17px; max-height: 17px; object-fit: contain; vertical-align: middle;
+}
+body.status:has(> table.status > tbody > tr > th:nth-child(7)) .itemTotalsTitle {
+    margin: 13px 0 0; padding: 0; font-size: 14px; font-style: normal; font-weight: 400; color: var(--detail-muted);
+}
+
+@media (max-width: 1000px) {
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) { padding: 12px 14px; }
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr { grid-template-columns: 1fr 1fr; }
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr > td:first-child { grid-column: 1 / -1; }
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle > tbody > tr { grid-template-columns: 1fr; gap: 16px; }
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle > tbody > tr > td:nth-child(2) { grid-row: 1; }
+}
+@media (max-width: 768px) {
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable { display: table; width: 100% !important; }
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr > td { width: auto; margin-bottom: 0; }
+}
+@media (max-width: 600px) {
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.headertable > tbody > tr { grid-template-columns: 1fr; }
+    body.status:has(> table.status > tbody > tr > th:nth-child(7)) div.statusTitle { font-size: 18px; }
+}
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – STATUS
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) table.headertable {
+    width: 100%;
+    margin: 0 0 14px;
+    border-spacing: 12px 0;
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) .headertable > tbody > tr > td {
+    padding: 10px 12px;
+    border-color: var(--cgi-border);
+    border-radius: 12px;
+    background-color: var(--cgi-panel);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) .headertable table.infoBox {
+    padding: 0;
+    border: 0;
+    background: transparent !important;
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) :is(div.hostTotals, div.serviceTotals) {
+    margin: 0 0 7px;
+    padding: 0;
+    background: transparent;
+    color: var(--cgi-text);
+    font-size: var(--cgi-section-font);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) :is(table.hostTotals, table.serviceTotals) td {
+    height: 24px;
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) :is(th.hostTotals, th.serviceTotals) {
+    font-size: var(--cgi-meta-font);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) :is(div.statusTitle, .statusTitle) {
+    padding: 0;
+    background: transparent;
+    color: var(--cgi-text);
+    font-size: var(--cgi-heading-font);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) table.filter {
+    margin: 0;
+    padding: 7px 10px;
+    border-color: var(--cgi-border);
+    border-radius: 9px;
+    background-color: var(--cgi-panel);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) :is(.filterTitle, .filterName, .filterValue) {
+    font-size: var(--cgi-meta-font);
+    line-height: 1.4;
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) table:is(.status, .statusGrid) {
+    margin-top: 0;
+    border: 1px solid var(--cgi-border);
+    border-radius: 9px;
+    border-spacing: 3px 2px;
+    background: var(--cgi-panel);
+    font-size: var(--cgi-font);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) table.status > tbody > tr > th {
+    padding: 6px;
+    font-size: var(--cgi-table-heading-font);
+    color: var(--cgi-muted);
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) table.status > tbody > tr > td:not([colspan]) {
+    padding: 6px;
+    border-radius: 4px;
+    font-size: var(--cgi-font);
+    line-height: 1.4;
+}
+html:root body.status:not(:has(> table.status > tbody > tr > th:nth-child(7))) table.status td :is(table, td, a, span) {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Service action icons: restore a comfortable size and click target in
+   both themes. Host logos and sorting arrows keep their existing size. */
+html:root body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:nth-child(2) a:has(> img) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 26px;
+    min-height: 26px;
+    padding: 2px !important;
+    vertical-align: middle;
+}
+html:root body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:nth-child(2) a > img {
+    width: 22px;
+    height: 22px;
+    max-width: 22px !important;
+    max-height: 22px !important;
+    object-fit: contain;
+}
+
+/* Neutral host/service cells need their own visible surface in dark
+   mode. Restrict this to the outer two columns so nested CGI tables do
+   not create extra patches or override WARNING/CRITICAL state colors. */
+html:not(.light):not([data-theme="light"]) body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status {
+    background-color: #15181d;
+}
+html:not(.light):not([data-theme="light"]) body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > :is(td.statusOdd, td.statusEven):nth-child(-n+2) {
+    background-color: #242d3b !important;
+    box-shadow: inset 0 0 0 1px #2d3849;
+}
+html:not(.light):not([data-theme="light"]) body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > :is(td.statusOdd, td.statusEven):nth-child(-n+2):hover {
+    background-color: #2b3749 !important;
+}
+html:not(.light):not([data-theme="light"]) body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > :is(td.statusOdd, td.statusEven):nth-child(-n+2) :is(table, td) {
+    background: transparent !important;
     box-shadow: none !important;
 }

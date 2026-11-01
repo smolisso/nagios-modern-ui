@@ -21,13 +21,13 @@ table.data { padding-top: 15; }
 .reportDataEven { font-size: 9pt; background-color: #1a2133; padding: 0 4 0 4; }
 
 .hostUP          { font-size: 9pt; background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
-.hostDOWN        { font-size: 9pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.hostDOWN        { font-size: 9pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 .hostUNREACHABLE { font-size: 9pt; background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
 .serviceOK       { font-size: 9pt; background-color: #6BC497; color: #1f3d2b; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 .serviceWARNING  { font-size: 9pt; background-color: #e5ca3e; color: #3b2f00; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 .serviceUNKNOWN  { font-size: 9pt; background-color: #9e82a0; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
-.serviceCRITICAL { font-size: 9pt; background-color: #a84040; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
+.serviceCRITICAL { font-size: 9pt; background-color: #9c3838; color: #ffffff; border: 1px solid #1e2d42; padding: 0 4 0 4; }
 
 
 /* =========================================================
@@ -258,4 +258,26 @@ html.light body.summary .infoBox a,
 html.light body.summary .infoBox a:hover,
 :root[data-theme="light"] body.summary .infoBox a:hover {
     color: var(--classic-link-hover) !important;
+}
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – SUMMARY
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.summary :is(.reportSelectItem, .dateSelectItem) {
+    padding: 5px 8px;
+    background-color: var(--cgi-panel);
+    color: var(--cgi-text);
+}
+html:root body.summary :is(.reportSelectSubTitle, .dateSelectSubTitle) {
+    padding: 5px 8px;
+    color: var(--cgi-muted);
+    font-weight: 400;
+}
+html:root body.summary .optBox {
+    border-color: var(--cgi-border);
+    border-radius: 9px;
+}
+html:root body.summary table.data {
+    width: 100%;
 }

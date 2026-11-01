@@ -306,8 +306,10 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
     }
 
     .browser-bar {
+        position: relative;
+        z-index: 4;
         display: grid;
-        grid-template-columns: minmax(220px, 1fr) minmax(260px, 1fr) auto;
+        grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr) minmax(220px, 1fr) auto;
         gap: 12px;
         padding: 16px 18px;
         margin-bottom: 18px;
@@ -322,7 +324,8 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
         text-transform: uppercase;
     }
 
-    .browser-field select {
+    .browser-field select,
+    .browser-field input {
         width: 100%;
         padding: 12px 14px;
         border-radius: 14px;
@@ -333,9 +336,44 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
     }
 
     html.light .browser-field select,
-    :root[data-theme="light"] .browser-field select {
+    :root[data-theme="light"] .browser-field select,
+    html.light .browser-field input,
+    :root[data-theme="light"] .browser-field input {
         border-color: rgba(93, 122, 154, 0.26);
         background: #f5f9ff;
+    }
+
+    .host-search { position: relative; min-width: 0; }
+    .host-suggestions {
+        position: absolute;
+        z-index: 10;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 280px;
+        overflow-y: auto;
+        margin: 6px 0 0;
+        padding: 6px;
+        list-style: none;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+    }
+    .host-suggestions [role="option"] {
+        padding: 10px;
+        border-radius: 8px;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+    }
+    .host-suggestions [role="option"]:hover,
+    .host-suggestions [aria-selected="true"] { background: var(--panel-soft); }
+    .search-status {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
     }
 
     .browser-action {
@@ -683,6 +721,14 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
                     <option value="">Select host</option>
                 </select>
             </div>
+            <div class="browser-field host-search" id="host-search-field" hidden>
+                <label for="host-search">Search host</label>
+                <input id="host-search" type="search" disabled placeholder="Type part of a host name…"
+                       autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list"
+                       aria-expanded="false" aria-controls="host-suggestions" aria-describedby="host-search-status">
+                <ul class="host-suggestions" id="host-suggestions" role="listbox" aria-label="Matching hosts" hidden></ul>
+                <span class="search-status" id="host-search-status" role="status" aria-live="polite"></span>
+            </div>
             <div class="browser-field">
                 <label for="service-select">Service</label>
                 <select id="service-select" disabled>
@@ -1024,6 +1070,118 @@ async function loadHosts() {
         }
         hostSelect.appendChild(option);
     });
+}
+
+function setupHostSearch() {
+    const select = hostSelect;
+    const input = document.getElementById('host-search');
+    if (!select || !input) return;
+    const list = document.getElementById('host-suggestions');
+    const status = document.getElementById('host-search-status');
+    const hosts = Array.from(select.options, option => option.value).filter(Boolean);
+    let matches = [];
+    let active = -1;
+
+    document.getElementById('host-search-field').hidden = false;
+    input.disabled = false;
+
+    function close() {
+        list.hidden = true;
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+        active = -1;
+    }
+
+    function showMatches() {
+        const query = input.value.trim().toLowerCase();
+        matches = query ? hosts.filter(host => host.toLowerCase().includes(query)) : [];
+        list.replaceChildren();
+        close();
+        matches.forEach((host, index) => {
+            const option = document.createElement('li');
+            option.id = 'host-suggestion-' + index;
+            option.setAttribute('role', 'option');
+            option.setAttribute('aria-selected', 'false');
+            option.textContent = host;
+            option.addEventListener('pointerdown', event => event.preventDefault());
+            option.addEventListener('click', () => choose(host));
+            list.appendChild(option);
+        });
+        list.hidden = matches.length === 0;
+        input.setAttribute('aria-expanded', String(matches.length > 0));
+        status.textContent = !query ? '' : matches.length
+            ? matches.length + ' matching hosts. Use arrow keys to select and Enter to open.'
+            : 'No matching hosts.';
+    }
+
+    function choose(host) {
+        select.value = host;
+        input.setCustomValidity('');
+        close();
+        select.dispatchEvent(new Event('change'));
+        input.value = host;
+    }
+
+    input.addEventListener('input', () => {
+        input.setCustomValidity('');
+        showMatches();
+    });
+    input.addEventListener('focus', showMatches);
+    input.addEventListener('blur', close);
+    input.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            close();
+        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            if (list.hidden) showMatches();
+            if (!matches.length) return;
+            active = active < 0 ? (event.key === 'ArrowDown' ? 0 : matches.length - 1)
+                : (active + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length;
+            Array.from(list.children).forEach((option, index) => {
+                option.setAttribute('aria-selected', String(index === active));
+            });
+            const option = list.children[active];
+            input.setAttribute('aria-activedescendant', option.id);
+            option.scrollIntoView({ block: 'nearest' });
+        } else if (event.key === 'Enter' && active >= 0 && !list.hidden) {
+            event.preventDefault();
+            choose(matches[active]);
+        }
+    });
+    select.addEventListener('change', () => {
+        input.value = '';
+        input.setCustomValidity('');
+        status.textContent = '';
+        close();
+    });
+    function resolveSearch() {
+        const query = input.value.trim().toLowerCase();
+        if (!query) return true;
+        const exact = hosts.find(host => host.toLowerCase() === query);
+        const candidates = hosts.filter(host => host.toLowerCase().includes(query));
+        if (exact || candidates.length === 1) {
+            const host = exact || candidates[0];
+            if (select.value !== host) {
+                choose(host);
+                return false;
+            }
+            close();
+            return true;
+        }
+        input.setCustomValidity(candidates.length ? 'Select a host from the suggestions.' : 'No matching hosts.');
+        input.reportValidity();
+        return false;
+    }
+    input.addEventListener('keydown', event => {
+        if (event.key === 'Enter' && !event.defaultPrevented) {
+            event.preventDefault();
+            resolveSearch();
+        }
+    });
+    updateGraphButton.addEventListener('click', event => {
+        if (!resolveSearch()) event.stopImmediatePropagation();
+    }, true);
 }
 
 async function loadServices(selectedHost) {
@@ -1533,6 +1691,7 @@ if (updateGraphButton) {
     updateSelectionLabels();
     updateHeroLabels();
     await loadHosts();
+    setupHostSearch();
     await loadServices(state.host);
     loadData();
 }());

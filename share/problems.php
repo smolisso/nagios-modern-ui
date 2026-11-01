@@ -433,6 +433,14 @@ function compare_incidents(array $left, array $right): int
 $status = parse_status_dat($statusFile);
 $services = $status['service'];
 $hosts = $status['host'];
+$availableHosts = [];
+foreach (array_merge($hosts, $services) as $row) {
+    $hostName = value_string($row, 'host_name', '');
+    if ($hostName !== '') {
+        $availableHosts[$hostName] = $hostName;
+    }
+}
+ksort($availableHosts, SORT_NATURAL | SORT_FLAG_CASE);
 $now = time();
 $hostIconMap = parse_hostextinfo_icons($hostExtInfoFile);
 
@@ -740,6 +748,8 @@ $pageTitle = 'Problems Overview';
     .kpi-foot { margin-top: 12px; color: var(--muted-2); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; }
 
     .toolbar {
+        position: relative;
+        z-index: 1;
         padding: 18px 20px;
         margin-bottom: 20px;
     }
@@ -770,6 +780,39 @@ $pageTitle = 'Problems Overview';
         background: var(--panel-soft);
         color: var(--text);
         font: inherit;
+    }
+
+    .host-search { position: relative; min-width: 0; }
+    .host-suggestions {
+        position: absolute;
+        z-index: 10;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 280px;
+        overflow-y: auto;
+        margin: 6px 0 0;
+        padding: 6px;
+        list-style: none;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--panel-strong);
+        box-shadow: var(--shadow);
+    }
+    .host-suggestions [role="option"] {
+        padding: 10px;
+        border-radius: 8px;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+    }
+    .host-suggestions [role="option"]:hover,
+    .host-suggestions [aria-selected="true"] { background: var(--panel-soft); }
+    .search-status {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
     }
 
     .button {
@@ -1298,7 +1341,7 @@ $pageTitle = 'Problems Overview';
         </section>
 
         <section class="panel toolbar">
-            <form method="get">
+            <form id="problem-filters" method="get">
                 <div class="toolbar-grid">
                     <div class="field">
                         <label for="kind">Object type</label>
@@ -1326,9 +1369,13 @@ $pageTitle = 'Problems Overview';
                             <option value="unhandled"<?= $scope === 'unhandled' ? ' selected' : '' ?>>Unhandled only</option>
                         </select>
                     </div>
-                    <div class="field search">
+                    <div class="field search host-search">
                         <label for="q">Search</label>
-                        <input id="q" name="q" type="text" value="<?= htmlspecialchars($query, ENT_QUOTES) ?>" placeholder="Host, service or plugin output">
+                        <input id="q" name="q" type="text" value="<?= htmlspecialchars($query, ENT_QUOTES) ?>" placeholder="Host, service or plugin output"
+                               autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list"
+                               aria-expanded="false" aria-controls="host-suggestions" aria-describedby="host-search-status">
+                        <ul class="host-suggestions" id="host-suggestions" role="listbox" aria-label="Matching hosts" hidden></ul>
+                        <span class="search-status" id="host-search-status" role="status" aria-live="polite"></span>
                     </div>
                     <div class="field submit">
                         <label>&nbsp;</label>
@@ -1480,6 +1527,79 @@ $pageTitle = 'Problems Overview';
     </div>
 </div>
 <script>
+(() => {
+    const form = document.getElementById('problem-filters');
+    const input = document.getElementById('q');
+    const list = document.getElementById('host-suggestions');
+    const status = document.getElementById('host-search-status');
+    const hosts = <?= json_encode(array_values($availableHosts), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+    let matches = [];
+    let active = -1;
+
+
+    function close() {
+        list.hidden = true;
+        input.setAttribute('aria-expanded', 'false');
+        input.removeAttribute('aria-activedescendant');
+        active = -1;
+    }
+
+    function showMatches() {
+        const query = input.value.trim().toLowerCase();
+        matches = query ? hosts.filter(host => host.toLowerCase().includes(query)) : [];
+        list.replaceChildren();
+        close();
+        matches.forEach((host, index) => {
+            const option = document.createElement('li');
+            option.id = 'host-suggestion-' + index;
+            option.setAttribute('role', 'option');
+            option.setAttribute('aria-selected', 'false');
+            option.textContent = host;
+            option.addEventListener('pointerdown', event => event.preventDefault());
+            option.addEventListener('click', () => choose(host));
+            list.appendChild(option);
+        });
+        list.hidden = matches.length === 0;
+        input.setAttribute('aria-expanded', String(matches.length > 0));
+        status.textContent = !query ? '' : matches.length
+            ? matches.length + ' matching hosts. Use arrow keys to select and Enter to open.'
+            : 'No matching hosts.';
+    }
+
+    function choose(host) {
+        input.value = host;
+        close();
+        form.requestSubmit();
+    }
+
+    input.addEventListener('input', () => {
+        showMatches();
+    });
+    input.addEventListener('focus', showMatches);
+    input.addEventListener('blur', close);
+    input.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            close();
+        } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            if (list.hidden) showMatches();
+            if (!matches.length) return;
+            active = active < 0 ? (event.key === 'ArrowDown' ? 0 : matches.length - 1)
+                : (active + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length;
+            Array.from(list.children).forEach((option, index) => {
+                option.setAttribute('aria-selected', String(index === active));
+            });
+            const option = list.children[active];
+            input.setAttribute('aria-activedescendant', option.id);
+            option.scrollIntoView({ block: 'nearest' });
+        } else if (event.key === 'Enter' && active >= 0 && !list.hidden) {
+            event.preventDefault();
+            choose(matches[active]);
+        }
+    });
+})();
+
 document.addEventListener('click', function (event) {
     var card = event.target.closest('[data-card-url]');
     if (!card) {

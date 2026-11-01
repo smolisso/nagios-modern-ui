@@ -248,3 +248,26 @@ html.light body.trends :is(th, td)[style*="color:#c8cdd5"],
 :root[data-theme="light"] body.trends :is(th, td)[style*="color:#c8cdd5"] {
     color: var(--classic-text) !important;
 }
+
+/* =========================================================
+   COMPACT CLASSIC LAYOUT – TRENDS
+   Shared palette, type and spacing: common.css (--cgi-*).
+   ========================================================= */
+html:root body.trends :is(.reportSelectItem, .dateSelectItem) {
+    padding: 5px 8px;
+    background-color: var(--cgi-panel);
+    color: var(--cgi-text);
+}
+html:root body.trends :is(.reportSelectSubTitle, .dateSelectSubTitle) {
+    padding: 5px 8px;
+    color: var(--cgi-muted);
+    font-weight: 400;
+}
+html:root body.trends .optBox {
+    border-color: var(--cgi-border);
+    border-radius: 9px;
+}
+html:root body.trends :is(.reportRange, .reportDuration, .reportTime) {
+    margin: 6px 0;
+    color: var(--cgi-muted);
+}
