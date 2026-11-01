@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.7.0-blue)
+![Version](https://img.shields.io/badge/version-7.0.1-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -16,7 +16,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - Compact/expanded sidebar navigation with active page highlighting
 - `live.php` modern live overview sourced directly from `status.dat`
 - `problems.php` modern problems view with severity-first triage and host autocomplete in the search filter
-- `host_detail.php` modern host service detail view with partial-name host autocomplete and keyboard navigation
+- `host_detail.php` modern host service detail view with partial-name host autocomplete, keyboard navigation and a prominent configured host address below the host name
 - `hostgroups.php` modern host group overview
 - `hostgroups_summary.php` modern host group summary
 - `nagiosgraph_modern/` modern graph frontend for existing Nagiosgraph RRD data, with host autocomplete in `show.php`

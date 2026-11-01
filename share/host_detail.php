@@ -1,6 +1,7 @@
 <?php
 
 $statusFile = '../var/status.dat';
+$objectCacheFile = __DIR__ . '/../var/objects.cache';
 $hostExtInfoFile = __DIR__ . '/../etc/objects/hostextinfo.cfg';
 $hostIconBaseUrl = '/nagios/images/logos/';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
@@ -73,6 +74,50 @@ function parse_status_dat(string $path): array
 function value_int(array $row, string $key): int
 {
     return isset($row[$key]) ? (int) $row[$key] : 0;
+}
+
+function host_address_from_cache(string $path, string $hostName): ?string
+{
+    if ($hostName === '' || !is_readable($path)) {
+        return null;
+    }
+
+    $handle = fopen($path, 'rb');
+    if ($handle === false) {
+        return null;
+    }
+
+    $inHost = false;
+    $host = [];
+    while (($line = fgets($handle)) !== false) {
+        $line = trim($line);
+        if ($line === '' || $line[0] === '#' || $line[0] === ';') {
+            continue;
+        }
+        if (preg_match('/^define\s+host\s*\{?$/', $line) === 1) {
+            $inHost = true;
+            $host = [];
+            continue;
+        }
+        if (!$inHost) {
+            continue;
+        }
+        if ($line === '}') {
+            if (($host['host_name'] ?? '') === $hostName) {
+                fclose($handle);
+                $address = trim($host['address'] ?? '');
+                return $address !== '' ? $address : null;
+            }
+            $inHost = false;
+            continue;
+        }
+        if (preg_match('/^(host_name|address)\s+(.+)$/', $line, $matches) === 1) {
+            $host[$matches[1]] = trim($matches[2]);
+        }
+    }
+
+    fclose($handle);
+    return null;
 }
 
 function value_string(array $row, string $key, string $fallback = '-'): string
@@ -381,6 +426,9 @@ $statusFileMtime = is_readable($statusFile) ? @filemtime($statusFile) : false;
 $lastUpdateLabel = $statusFileMtime ? date('d M Y H:i:s', $statusFileMtime) : 'status.dat not readable';
 $freshnessLabel = $statusFileMtime ? format_duration(max(0, time() - (int) $statusFileMtime)) . ' ago' : 'n/a';
 $hostIcon = $requestedHost !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $requestedHost) : null;
+$hostAddress = host_address_from_cache($objectCacheFile, $requestedHost);
+$hostAddressLabel = $hostAddress === null || filter_var($hostAddress, FILTER_VALIDATE_IP) !== false
+    ? 'IP address' : 'Host address';
 $hostState = $hostRow !== null ? value_int($hostRow, 'current_state') : 3;
 $hostStateLabel = $hostRow !== null ? state_label($hostState, 'host') : 'UNKNOWN';
 $hostStateTheme = state_theme($hostState, 'host');
@@ -575,6 +623,47 @@ $hostAttempt = $hostRow !== null ? value_int($hostRow, 'current_attempt') . '/' 
         object-fit: contain;
         flex: 0 0 auto;
     }
+
+    .host-address {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        min-width: min(210px, 100%);
+        max-width: 100%;
+        margin-top: 12px;
+        padding: 8px 11px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--panel-soft);
+    }
+    .host-address-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 30px;
+        height: 30px;
+        border-radius: 10px;
+        background: var(--panel-strong);
+        color: var(--text);
+    }
+    .host-address-icon svg { width: 19px; height: 19px; }
+    .host-address-text { min-width: 0; }
+    .host-address-label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    .host-address-value {
+        display: block;
+        color: var(--text);
+        font: 700 17px/1.3 ui-monospace, SFMono-Regular, Consolas, monospace;
+        overflow-wrap: anywhere;
+    }
+    .host-address-unavailable { color: var(--muted); font-size: 16px; }
 
     .hero-meta {
         display: grid;
@@ -920,6 +1009,20 @@ $hostAttempt = $hostRow !== null ? value_int($hostRow, 'current_attempt') . '/' 
                             <img class="host-icon" src="<?= htmlspecialchars($hostIcon, ENT_QUOTES) ?>" alt="">
                         <?php endif; ?>
                         <h1><?= htmlspecialchars($requestedHost, ENT_QUOTES) ?></h1>
+                    </div>
+                    <div class="host-address">
+                        <span class="host-address-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="8" y="2" width="8" height="6" rx="1.5"/>
+                                <path d="M12 8v5M5 16v-3h14v3"/>
+                                <rect x="2" y="16" width="6" height="6" rx="1.5"/>
+                                <rect x="16" y="16" width="6" height="6" rx="1.5"/>
+                            </svg>
+                        </span>
+                        <div class="host-address-text">
+                            <span class="host-address-label"><?= htmlspecialchars($hostAddressLabel, ENT_QUOTES) ?></span>
+                            <span class="host-address-value<?= $hostAddress === null ? ' host-address-unavailable' : '' ?>"><?= htmlspecialchars($hostAddress ?? 'Not available', ENT_QUOTES) ?></span>
+                        </div>
                     </div>
                 <?php else: ?>
                     <h1>Host Detail</h1>

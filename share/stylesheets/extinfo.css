@@ -976,3 +976,390 @@ html:root body.extinfo td > div.data:last-of-type {
     font-size: var(--cgi-font);
     letter-spacing: normal;
 }
+
+/* =========================================================
+   HOST / SERVICE DETAILS – NAVIGATION AND PANELS
+   Scope to type=1/type=2 structures. Other extinfo reports retain their
+   existing layout; all native links and command destinations are kept.
+   ========================================================= */
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) {
+    display: block;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto 24px;
+    border-spacing: 0;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody {
+    display: block;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr {
+    display: grid;
+    grid-template-columns: minmax(380px, .95fr) minmax(0, 1.05fr) auto;
+    gap: 16px;
+    align-items: stretch;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td {
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+    vertical-align: top;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.infoBox {
+    max-width: none;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.linkBox {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel) !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.linkBox {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0;
+    background: transparent !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.linkBox > br {
+    display: none;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.linkBox a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 7px;
+    background: var(--cgi-panel-alt);
+    color: var(--cgi-link);
+    font-size: 12px;
+    line-height: 1.4;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.linkBox a::before {
+    content: "↗";
+    flex-shrink: 0;
+    color: var(--cgi-muted);
+    font-size: 14px;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.linkBox a:hover {
+    border-color: var(--cgi-link);
+    background: var(--cgi-hover);
+}
+
+/* Identity card: bound the original, sometimes very large, logo. */
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 128px;
+    gap: 4px 20px;
+    box-sizing: border-box;
+    padding: 20px 22px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel) !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .data {
+    grid-column: 1;
+    margin: 4px 0 0;
+    color: var(--cgi-muted);
+    font-size: 13px;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .dataTitle {
+    grid-column: 1;
+    margin: 0 0 6px;
+    text-align: left;
+    font-size: 17px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .dataTitle:nth-child(2) {
+    font-size: 28px;
+    font-weight: 650;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .dataTitle a {
+    display: inline-block;
+    padding: 4px 9px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 5px;
+    background: var(--cgi-panel-alt);
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .data:last-of-type {
+    grid-column: 1 / -1;
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 14px 0 0;
+    padding: 12px 16px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 8px;
+    background: var(--cgi-bg) !important;
+    color: var(--cgi-text) !important;
+    border-color: var(--cgi-border) !important;
+    font-size: 16px;
+    font-weight: 650;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > img {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: center;
+    justify-self: center;
+    width: 120px;
+    height: 120px;
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: contain;
+    opacity: 1;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > br {
+    display: none;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > font {
+    grid-column: 2;
+    grid-row: 5;
+    align-self: start;
+    text-align: center;
+    color: var(--cgi-muted);
+    font-size: 13px;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(3):not(:has(a, img)) {
+    display: none;
+}
+
+/* The CGI nests the command column inside a second table. Flatten only
+   the outer layout row, leaving the state data tables as actual tables. */
+html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) {
+    display: block;
+    width: 100%;
+    max-width: 1320px;
+    border: 0;
+    margin: 8px auto 0;
+}
+html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) > tbody {
+    display: block;
+}
+html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) > tbody > tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 400px);
+    gap: 20px;
+    align-items: start;
+}
+html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) > tbody > tr > td {
+    display: block;
+    min-width: 0;
+    width: auto;
+    padding: 0;
+}
+html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) > tbody > tr > td:has(.commandPanel) > table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.stateInfoPanel,
+html:root body.extinfo:has(.stateInfoPanel) td.commandPanel {
+    box-sizing: border-box;
+    padding: 16px !important;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel) !important;
+    text-align: left;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel :is(table, td.stateInfoTable1, td.stateInfoTable2) {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-spacing: 0;
+    background: transparent !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel > table > tbody > tr > td {
+    padding: 0;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoTable2 {
+    padding-top: 14px !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel :is(.dataVar, .dataVal) {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--cgi-border);
+    text-align: left;
+    vertical-align: top;
+    font-size: 13px;
+    line-height: 1.5;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel .dataVar {
+    width: 28%;
+    color: var(--cgi-muted);
+    font-weight: 500;
+    white-space: normal;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel .dataVal {
+    color: var(--cgi-text);
+    overflow-wrap: anywhere;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel .dataVal > div[class] {
+    display: inline-flex;
+    align-items: center;
+    float: none;
+    margin: 0 5px 0 0;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel :is(.checksENABLED, .notificationsENABLED, .eventhandlersENABLED, .flapdetectionENABLED, .notflapping, .downtimeINACTIVE) {
+    background: var(--cgi-ok);
+    color: var(--cgi-ok-text);
+    border-color: transparent;
+}
+html:root body.extinfo:has(.stateInfoPanel) :is(.stateInfoPanel > .dataTitle, .commandTitle) {
+    margin: 0 0 12px;
+    text-align: left;
+    font-size: 15px;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.command {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-spacing: 0 6px;
+    background: transparent !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.command :is(tr.command, tr.data) {
+    display: table-row;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.command td {
+    padding: 0;
+    border: 0;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.command a {
+    box-sizing: border-box;
+    min-height: 34px;
+    padding: 8px 10px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.command a:hover {
+    border-color: var(--cgi-link);
+}
+html:root body.extinfo:has(.stateInfoPanel) td.commentPanel {
+    grid-column: 1 / -1;
+}
+html:root body.extinfo:has(.stateInfoPanel) :is(.commentTitle, .downtimeTitle) {
+    margin: 24px 0 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--cgi-border) !important;
+    border-radius: 9px;
+    background: var(--cgi-panel) !important;
+    text-align: left;
+    font-size: 14px;
+}
+
+/* Keep notes below the identity fields rather than in the logo column. */
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > p {
+    grid-column: 1 / -1;
+    margin: 8px 0 0;
+}
+
+/* Identity hierarchy: name, muted object name, membership, then a
+   full-width address bar. The caption stays directly under the logo. */
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .dataTitle:nth-child(3) {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--cgi-muted) !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > .data:has(+ .dataTitle + br + .data:last-of-type) {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--cgi-border);
+}
+html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > p {
+    order: 1;
+}
+
+/* The native command menu has an unclassified wrapper table. It must
+   fill the card too; otherwise its buttons stop before the right edge. */
+html:root body.extinfo:has(.stateInfoPanel) .commandPanel > table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    background: transparent !important;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.command {
+    table-layout: fixed;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.command > tbody > tr > td:first-child:not(.command):has(> img) {
+    display: none;
+}
+html:root body.extinfo:has(.stateInfoPanel) table.command td.command {
+    width: 100%;
+}
+html:root body.extinfo:has(.stateInfoPanel) td.command a {
+    display: flex;
+    width: 100%;
+}
+
+@media (max-width: 1100px) {
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr {
+        grid-template-columns: 1fr 1fr;
+    }
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+    html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) > tbody > tr {
+        grid-template-columns: minmax(0, 1fr) 340px;
+        gap: 14px;
+    }
+}
+@media (max-width: 800px) {
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr,
+    html:root body.extinfo:has(.stateInfoPanel) table:has(> tbody > tr > td.stateInfoPanel) > tbody > tr {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) {
+        grid-row: 1;
+    }
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(3) {
+        grid-column: auto;
+    }
+}
+@media (max-width: 480px) {
+    html:root body.extinfo:has(.stateInfoPanel) td.linkBox {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) {
+        grid-template-columns: minmax(0, 1fr) 88px;
+        gap: 4px 12px;
+        padding: 16px;
+    }
+    html:root body.extinfo:has(.stateInfoPanel) > table:has(> tbody > tr > td > table.infoBox) > tbody > tr > td:nth-child(2) > img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Light detail headers should be plain text like their dark equivalents.
+   Keep the real cards, group link chip and address bar bordered. */
+html:root:is(.light, [data-theme="light"]) body.extinfo:has(.stateInfoPanel) :is(.infoBoxTitle, .dataTitle) {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}

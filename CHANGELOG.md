@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [7.0.1] - 2026-11-01
+
+### Added
+- `host_detail.php`: prominent address card below the host name, sourced from `objects.cache`, with IPv4, IPv6 and configured DNS-name support
+
+### Changed
+- Modernized classic host/service extended information with navigation buttons, a compact identity card, a larger logo, a dedicated address bar and aligned state/command panels
+- Redesigned classic hostgroup Summary and Overview with responsive group cards, readable state counts and accessible action targets
+- Refreshed screenshots for the updated interfaces
+- Bumped the Modern UI version and README badge to `7.0.1`
+- Rebuilt `share.zip` with the current files
+
+### Fixed
+- Removed unwanted light-theme borders around classic extended-information headings without changing dark mode
+- Fixed unreadable host names caused by nested row backgrounds in hostgroup Overview
+
+---
+
 ## [0.7.0] - 2026-11-01
 
 ### Added

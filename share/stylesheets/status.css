@@ -1842,3 +1842,630 @@ html:not(.light):not([data-theme="light"]) body.status:has(> table.status > tbod
     background: transparent !important;
     box-shadow: none !important;
 }
+
+/* =========================================================
+   HOSTGROUP SUMMARY / OVERVIEW
+   Select the native group layouts by their links and table structure.
+   Service detail, host detail, grid and servicegroup views are excluded.
+   All filters, state breakdowns and action links stay in the CGI DOM.
+   ========================================================= */
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable {
+    display: block;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 24px;
+    border-spacing: 0;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable > tbody {
+    display: block;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable > tbody > tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable > tbody > tr > td {
+    width: auto;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 14px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel);
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable table.infoBox {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent !important;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) :is(.infoBoxTitle, div.hostTotals, div.serviceTotals) {
+    margin: 0 0 8px;
+    padding: 0;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--cgi-text) !important;
+    font-size: 13px;
+    font-weight: 650;
+    text-align: left;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable table.linkBox {
+    width: 100%;
+    margin-top: 10px;
+    padding-top: 8px;
+    border: 0;
+    border-top: 1px solid var(--cgi-border);
+    background: transparent;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable td.linkBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable td.linkBox > br {
+    display: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable td.linkBox a {
+    padding: 5px 7px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 5px;
+    background: var(--cgi-panel-alt);
+    color: var(--cgi-link);
+    font-size: 11px;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable td.linkBox a:hover {
+    background: var(--cgi-hover);
+    border-color: var(--cgi-link);
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable :is(table.hostTotals, table.serviceTotals) {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 4px 2px;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable :is(table.hostTotals, table.serviceTotals) td {
+    height: 26px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable :is(td.hostTotals, td.serviceTotals) {
+    border-color: var(--cgi-border);
+    background: var(--cgi-panel-alt);
+    color: var(--cgi-text) !important;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable :is(.hostTotalsDOWN, .serviceTotalsCRITICAL) {
+    background: var(--cgi-critical) !important;
+    color: var(--cgi-critical-text) !important;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .headertable :is(.hostTotalsUNREACHABLE, .serviceTotalsUNKNOWN) {
+    background: var(--cgi-unknown) !important;
+    color: var(--cgi-unknown-text) !important;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) {
+    display: block;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    border-spacing: 0;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) > tbody {
+    display: block;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) > tbody > tr {
+    display: grid;
+    grid-template-columns: minmax(320px, .8fr) minmax(0, 1.4fr);
+    gap: 24px;
+    align-items: center;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) > tbody > tr > td {
+    width: auto;
+    min-width: 0;
+    padding: 0;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) > tbody > tr > td:last-child {
+    display: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) > tbody > tr > td > br {
+    display: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) table.filter {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 9px;
+    background: var(--cgi-panel);
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .filterTitle {
+    padding: 0;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--cgi-text);
+    font-size: 13px;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) :is(.filterName, .filterValue) {
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) .statusTitle {
+    padding: 0;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--cgi-text) !important;
+    font-size: 20px;
+    font-weight: 650;
+    text-align: left;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) {
+    display: block;
+    width: 100%;
+    max-width: 1600px;
+    margin: var(--cgi-content-gap) auto 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr:first-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr:not(:first-child) {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: 12px 16px;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel);
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td {
+    min-width: 0;
+    padding: 0 !important;
+    border: 0;
+    background: transparent !important;
+    color: var(--cgi-text);
+    text-align: left !important;
+    vertical-align: top;
+    font-size: 13px;
+    box-shadow: none;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:first-child {
+    grid-column: 1 / -1;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid var(--cgi-border) !important;
+    border-radius: 0;
+    overflow-wrap: anywhere;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:first-child > a:first-child {
+    color: var(--cgi-link) !important;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:first-child > a + a {
+    color: var(--cgi-muted) !important;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:nth-child(2)::before {
+    content: "Host Status Summary";
+    display: block;
+    margin-bottom: 8px;
+    color: var(--cgi-muted);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:nth-child(3)::before {
+    content: "Service Status Summary";
+    display: block;
+    margin-bottom: 8px;
+    color: var(--cgi-muted);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:nth-child(n+2) > table {
+    display: block;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    border-spacing: 0;
+    background: transparent;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:nth-child(n+2) > table > tbody {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:nth-child(n+2) > table > tbody > tr {
+    display: block;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr > td:nth-child(n+2) > table > tbody > tr > td {
+    display: block;
+    min-width: 0;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 6px;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) td[class^="miniStatus"] table {
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    border: 0;
+    border-spacing: 0;
+    background: transparent;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) td[class^="miniStatus"] td {
+    padding: 0 2px !important;
+    border: 0;
+    font-size: 11px;
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) :is(.hostImportantProblem, .hostUnimportantProblem, .serviceImportantProblem, .serviceUnimportantProblem) {
+    background: transparent !important;
+    color: inherit !important;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) {
+    display: block;
+    width: 100%;
+    max-width: 1600px;
+    margin: var(--cgi-content-gap) auto 0;
+    border: 0;
+    border-spacing: 0;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr {
+    display: contents;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:not(:has(> div.status > a[href*="hostgroup="][href*="style=detail"])) {
+    display: none;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) {
+    display: block;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid var(--cgi-border);
+    border-radius: 12px;
+    background: var(--cgi-panel);
+    text-align: left;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status:first-child {
+    margin: 0 0 10px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--cgi-border);
+    color: var(--cgi-muted);
+    font-size: 12px;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status:first-child > a:first-child {
+    color: var(--cgi-link);
+    font-size: 16px;
+    font-weight: 650;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status {
+    text-align: left;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-spacing: 3px 4px;
+    table-layout: fixed;
+    background: transparent;
+    font-size: 13px;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > th {
+    padding: 6px;
+    border: 0;
+    background: transparent;
+    color: var(--cgi-muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left !important;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > th:nth-child(1) {
+    width: 34%;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > th:nth-child(2) {
+    width: 76px;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > th:nth-child(4) {
+    width: 116px;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td {
+    padding: 7px 6px !important;
+    border: 0 !important;
+    border-radius: 6px !important;
+    background: var(--cgi-panel-alt) !important;
+    color: var(--cgi-text) !important;
+    font-size: 13px;
+    line-height: 1.4;
+    vertical-align: middle;
+    text-align: left !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    box-shadow: none;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:first-child :is(table, tbody, tr, td) {
+    width: auto;
+    padding: 0 1px;
+    border: 0;
+    background: transparent !important;
+    color: inherit !important;
+    font-size: inherit;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:first-child > table {
+    width: 100%;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:first-child a {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: var(--cgi-text) !important;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:first-child img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(2) {
+    font-size: 11px;
+    font-weight: 650;
+    text-align: center !important;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td.statusHOSTUP {
+    background: var(--cgi-ok) !important;
+    color: var(--cgi-ok-text) !important;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td.statusHOSTDOWN {
+    background: var(--cgi-critical) !important;
+    color: var(--cgi-critical-text) !important;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td.statusHOSTUNREACHABLE {
+    background: var(--cgi-unknown) !important;
+    color: var(--cgi-unknown-text) !important;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(3) > table {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    background: transparent;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(3) > table > tbody {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(3) > table > tbody > tr {
+    display: block;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(3) > table > tbody > tr > td {
+    display: block;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 5px;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(4) a {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    min-height: 26px;
+    margin: 1px;
+    padding: 2px !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status > tbody > tr > td:nth-child(4) img {
+    width: 22px;
+    height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    object-fit: contain;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td:is(.miniStatusUP, .miniStatusOK) {
+    background: var(--cgi-ok) !important;
+    color: var(--cgi-ok-text) !important;
+    border: 0 !important;
+    box-shadow: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td:is(.miniStatusWARNING) {
+    background: var(--cgi-warning) !important;
+    color: var(--cgi-warning-text) !important;
+    border: 0 !important;
+    box-shadow: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td:is(.miniStatusDOWN, .miniStatusCRITICAL) {
+    background: var(--cgi-critical) !important;
+    color: var(--cgi-critical-text) !important;
+    border: 0 !important;
+    box-shadow: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td:is(.miniStatusUNKNOWN, .miniStatusUNREACHABLE) {
+    background: var(--cgi-unknown) !important;
+    color: var(--cgi-unknown-text) !important;
+    border: 0 !important;
+    box-shadow: none;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td.miniStatusPENDING {
+    background: var(--cgi-panel-alt) !important;
+    color: var(--cgi-text) !important;
+    border: 0 !important;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td[class^="miniStatus"] a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 5px 8px !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font-size: 12px !important;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    white-space: normal;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td[class^="miniStatus"] a:hover {
+    text-decoration: underline;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) td[class^="miniStatus"] :is(.hostImportantProblem, .hostUnimportantProblem, .serviceImportantProblem, .serviceUnimportantProblem) a {
+    min-height: 22px;
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    font-weight: 400;
+}
+
+@media (max-width: 1100px) {
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+}
+@media (max-width: 800px) {
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable > tbody > tr {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable > tbody > tr > td:first-child {
+    grid-column: 1 / -1;
+}
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table:has(> tbody > tr > td > table.filter) > tbody > tr {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+}
+
+}
+@media (max-width: 600px) {
+
+html:root body.status:is(:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]), :has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4))) > table.headertable > tbody > tr {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+html:root body.status:has(table.status > tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) table.status:has(> tbody > tr > td:first-child > a[href*="hostgroup="][href*="style=overview"]) > tbody > tr:not(:first-child) {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status:has(> table.status) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail"]):has(div.status > table.status > tbody > tr > th:nth-child(4)) table:has(> tbody > tr > td > div.status > a[href*="hostgroup="][href*="style=detail"]) > tbody > tr > td:has(> div.status > a[href*="hostgroup="][href*="style=detail"]) > div.status > table.status {
+    display: table;
+    min-width: 540px;
+}
+
+}
