@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.2] - 2026-11-01
+
+### Fixed
+- Applied the compact service-detail layout to classic host details, including Hosts, Host Problems and Unhandled filters, even when no hosts match
+- Unified host-detail header panels, status counters, navigation, filters and table spacing in both themes, with column alignment adapted to the five-column host table
+
+### Changed
+- Bumped the Modern UI version and README badge to `0.7.2`
+- Rebuilt `share.zip` with the corrected classic host-detail layout
+
+---
+
 ## [0.7.1] - 2026-11-01
 
 ### Added
