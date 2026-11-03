@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.3] - 2026-11-03
+
+### Changed
+- Enlarged only the classic command form card by 18%, including its fields, checkboxes and Commit/Reset buttons, while retaining the shared page scale and information header
+- Added more spacing before Command Options and Command Description in both themes
+- Bumped the Modern UI version and README badge to `0.7.3` and rebuilt `share.zip`
+
+---
+
 ## [0.7.2] - 2026-11-01
 
 ### Fixed
