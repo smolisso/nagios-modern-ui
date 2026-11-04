@@ -975,6 +975,7 @@ td.statusBGHOSTDOWNSCHED,
 td.statusBGHOSTDOWNTIME,
 td.statusBGUNREACHABLE,
 td.statusBGCRITICALACK,
+td.statusBGCRITICALSCHED,
 td.statusBGWARNINGACK {
   color: #111 !important;
 }
@@ -984,9 +985,16 @@ td.statusBGHOSTDOWNSCHED a,
 td.statusBGHOSTDOWNTIME a,
 td.statusBGUNREACHABLE a,
 td.statusBGCRITICALACK a,
+td.statusBGCRITICALSCHED a,
 td.statusBGWARNINGACK a {
   color: inherit !important;
   text-decoration: none !important;
+}
+
+/* Match the CRITICAL badge to the light-red scheduled-downtime row. */
+body.status table.status tr:has(> td.statusBGCRITICALSCHED) > td.statusCRITICAL {
+  background-color: #ffdddd !important;
+  color: #111 !important;
 }
 
 body.status table.status td.statusBGDOWN,

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.4] - 2026-11-04
+
+### Fixed
+- Restored readable dark text and service links on light-red CRITICAL service rows during scheduled downtime
+- Matched the CRITICAL status badge to the light-red downtime row in both themes, while preserving the active CRITICAL styling
+
+### Changed
+- Bumped the Modern UI version and README badge to `0.7.4` and rebuilt `share.zip`
+
+---
+
 ## [0.7.3] - 2026-11-03
 
 ### Changed
