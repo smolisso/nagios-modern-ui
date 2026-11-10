@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.5] - 2026-11-10
+
+### Added
+- Host autocomplete in the sidebar Quick Search, with case-insensitive partial-name matching and mouse or keyboard selection
+- Scrollable suggestions with wrapping host names and colors for both themes
+
+### Changed
+- Preserved free-text CGI searches and results in the central panel; suggestions remain optional and search stays available when `status.dat` is unreadable
+- Bumped the Modern UI version and README badge to `0.7.5` and rebuilt `share.zip`
+
+---
+
 ## [0.7.4] - 2026-11-04
 
 ### Fixed

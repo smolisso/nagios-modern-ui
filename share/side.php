@@ -3,6 +3,28 @@ include_once(dirname(__FILE__).'/includes/utils.inc.php');
 
 $this_version = '4.5.11';
 $link_target = 'main';
+// Read only host names; keep the normal CGI search available if status.dat is unavailable.
+$quick_search_hosts = [];
+$quick_search_status = @fopen(__DIR__ . '/../var/status.dat', 'rb');
+if ($quick_search_status !== false) {
+	$quick_search_in_status = false;
+	while (($quick_search_line = fgets($quick_search_status)) !== false) {
+		$quick_search_line = trim($quick_search_line);
+		if ($quick_search_line === 'hoststatus {' || $quick_search_line === 'servicestatus {') {
+			$quick_search_in_status = true;
+		} elseif ($quick_search_line === '}') {
+			$quick_search_in_status = false;
+		} elseif ($quick_search_in_status && strpos($quick_search_line, 'host_name=') === 0) {
+			$quick_search_host = trim(substr($quick_search_line, 10));
+			if ($quick_search_host !== '') {
+				$quick_search_hosts[$quick_search_host] = $quick_search_host;
+			}
+		}
+	}
+	fclose($quick_search_status);
+}
+natcasesort($quick_search_hosts);
+$quick_search_hosts_json = json_encode(array_values($quick_search_hosts), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $theme = isset($cfg['theme']) ? $cfg['theme'] : 'dark';
 if ($theme != 'dark' && $theme != 'light') {
 	$theme = 'dark';
@@ -542,6 +564,58 @@ ul.navsectionlinks li:hover:not(:has(li:hover)) {
 	border: 1px solid rgba(111, 143, 177, 0.14);
 }
 
+/* Stay inside the sidebar frame and move following links down while open. */
+.navbarsearch .quick-search-suggestions {
+	list-style: none;
+	margin: 6px 0 0;
+	padding: 4px;
+	max-height: 220px;
+	overflow-y: auto;
+	background: #101e30;
+	border: 1px solid #526b87;
+	border-radius: 9px;
+	color: #e8eef8;
+}
+
+.navbarsearch .quick-search-suggestions[hidden] { display: none; }
+
+.quick-search-suggestions [role="option"] {
+	padding: 8px 6px;
+	border-radius: 5px;
+	font-size: 12px;
+	line-height: 1.4;
+	overflow-wrap: anywhere;
+	cursor: pointer;
+}
+
+.quick-search-suggestions [role="option"]:hover,
+.quick-search-suggestions [aria-selected="true"] {
+	background: #294362;
+}
+
+html.light .quick-search-suggestions,
+:root[data-theme="light"] .quick-search-suggestions {
+	background: #ffffff;
+	border-color: #71869e;
+	color: #173a5c;
+}
+
+html.light .quick-search-suggestions [role="option"]:hover,
+html.light .quick-search-suggestions [aria-selected="true"],
+:root[data-theme="light"] .quick-search-suggestions [role="option"]:hover,
+:root[data-theme="light"] .quick-search-suggestions [aria-selected="true"] {
+	background: #dce9f7;
+}
+
+.quick-search-status {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+}
+
 body.compact {
 	padding: 12px 6px;
 }
@@ -897,10 +971,12 @@ html.light .update-status.is-error,
 		</ul>
 	</div>
 	<div class="navbarsearch">
-		<form method="get" action="<?php echo $cfg["cgi_base_url"];?>/status.cgi" target="<?php echo $link_target;?>">
-			<div class="search-title">Quick Search</div>
+		<form id="quick-search-form" method="get" action="<?php echo $cfg["cgi_base_url"];?>/status.cgi" target="<?php echo $link_target;?>">
+			<label class="search-title" for="quick-search-host">Quick Search</label>
 			<input type='hidden' name='navbarsearch' value='1'>
-			<input type='text' name='host' size='15' class="NavBarSearchItem">
+			<input id="quick-search-host" type="text" name="host" size="15" class="NavBarSearchItem" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="quick-search-suggestions" aria-describedby="quick-search-status">
+			<ul id="quick-search-suggestions" class="quick-search-suggestions" role="listbox" aria-label="Matching hosts" hidden></ul>
+			<span id="quick-search-status" class="quick-search-status" role="status" aria-live="polite"></span>
 		</form>
 	</div>
 </div>
@@ -941,6 +1017,78 @@ html.light .update-status.is-error,
 </div>
 
 <script>
+(function () {
+	var hosts = <?php echo $quick_search_hosts_json !== false ? $quick_search_hosts_json : '[]'; ?>;
+	var form = document.getElementById('quick-search-form');
+	var input = document.getElementById('quick-search-host');
+	var list = document.getElementById('quick-search-suggestions');
+	var status = document.getElementById('quick-search-status');
+	var matches = [];
+	var active = -1;
+
+	function close() {
+		list.hidden = true;
+		input.setAttribute('aria-expanded', 'false');
+		input.removeAttribute('aria-activedescendant');
+		status.textContent = '';
+		active = -1;
+	}
+
+	function choose(host) {
+		input.value = host;
+		close();
+		form.requestSubmit();
+	}
+
+	function showMatches() {
+		var query = input.value.trim().toLowerCase();
+		matches = query ? hosts.filter(function (host) { return host.toLowerCase().includes(query); }) : [];
+		list.replaceChildren();
+		close();
+		matches.forEach(function (host, index) {
+			var option = document.createElement('li');
+			option.id = 'quick-search-option-' + index;
+			option.setAttribute('role', 'option');
+			option.setAttribute('aria-selected', 'false');
+			option.textContent = host;
+			option.addEventListener('pointerdown', function (event) { event.preventDefault(); });
+			option.addEventListener('click', function () { choose(host); });
+			list.appendChild(option);
+		});
+		list.hidden = matches.length === 0;
+		input.setAttribute('aria-expanded', String(matches.length > 0));
+		status.textContent = !query || !hosts.length ? '' : matches.length
+			? matches.length + ' matching hosts. Use arrow keys to select and Enter to open.'
+			: 'No matching hosts. Press Enter to search.';
+	}
+
+	input.addEventListener('input', showMatches);
+	input.addEventListener('focus', showMatches);
+	input.addEventListener('blur', close);
+	input.addEventListener('keydown', function (event) {
+		if (event.key === 'Escape') {
+			event.preventDefault();
+			close();
+		} else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+			event.preventDefault();
+			if (list.hidden) showMatches();
+			if (!matches.length) return;
+			active = active < 0 ? (event.key === 'ArrowDown' ? 0 : matches.length - 1)
+				: (active + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length;
+			Array.from(list.children).forEach(function (option, index) {
+				option.setAttribute('aria-selected', String(index === active));
+			});
+			var option = list.children[active];
+			input.setAttribute('aria-activedescendant', option.id);
+			option.scrollIntoView({ block: 'nearest' });
+		} else if (event.key === 'Enter' && active >= 0 && !list.hidden) {
+			event.preventDefault();
+			choose(matches[active]);
+		}
+	});
+	form.addEventListener('submit', close);
+})();
+
 window.setSidebarCompact = function (compact) {
 	document.body.classList.toggle('compact', !!compact);
 };
