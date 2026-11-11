@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.7.5-blue)
+![Version](https://img.shields.io/badge/version-0.7.6-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -20,6 +20,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - `hostgroups.php` modern host group overview
 - `hostgroups_summary.php` modern host group summary
 - `nagiosgraph_modern/` modern graph frontend for existing Nagiosgraph RRD data, with host autocomplete in `show.php`
+- Copy icons for the host name and address on classic Host Information pages inside Modern UI, with a temporary green checkmark after copying
 - Host logo support via `hostextinfo.cfg`
 - Historical availability snapshots via `live_trend_snapshot.php`
 - Hover graph preview for graphed services through `popup.js`
@@ -89,6 +90,7 @@ Core shell and modern pages:
 [nagios_root_path]/share/hostgroups_summary.php
 [nagios_root_path]/share/nagios.png
 [nagios_root_path]/share/stylesheets/theme.js
+[nagios_root_path]/share/stylesheets/host-copy.js
 ```
 
 Nagiosgraph Modern:

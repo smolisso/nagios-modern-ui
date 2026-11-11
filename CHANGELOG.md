@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.6] - 2026-11-11
+
+### Added
+- Compact copy icons beside the actual host name and configured address on classic Host Information pages opened inside Modern UI
+- Temporary green checkmark after a successful copy, with clipboard fallback and accessible button labels
+
+### Changed
+- Kept copy feedback inside the icon, without adding visible messages or changing the identity card layout
+- Load copy-control styles alongside the script to avoid stale CGI stylesheet caches
+- Bumped the Modern UI version and README badge to `0.7.6` and rebuilt `share.zip`
+
+---
+
 ## [0.7.5] - 2026-11-10
 
 ### Added
