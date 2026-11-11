@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.7.7] - 2026-11-11
+
+### Added
+- Sidebar Quick Search matches complete or partial configured IP addresses as well as host names, including IPv6
+- Configured addresses below host names in suggestions, with a host-name-or-IP input hint
+
+### Changed
+- Read addresses from `objects.cache` for hosts present in `status.dat`; preserve name suggestions when the object cache is unavailable
+- Selecting an address match opens the corresponding host, while retaining optional free-text CGI searches
+- Bumped the Modern UI version and README badge to `0.7.7` and rebuilt `share.zip`
+
+---
+
 ## [0.7.6] - 2026-11-11
 
 ### Added

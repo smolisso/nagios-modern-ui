@@ -3,7 +3,7 @@ include_once(dirname(__FILE__).'/includes/utils.inc.php');
 
 $this_version = '4.5.11';
 $link_target = 'main';
-// Read only host names; keep the normal CGI search available if status.dat is unavailable.
+// Keep the normal CGI search available if the local Nagios files are unavailable.
 $quick_search_hosts = [];
 $quick_search_status = @fopen(__DIR__ . '/../var/status.dat', 'rb');
 if ($quick_search_status !== false) {
@@ -24,6 +24,35 @@ if ($quick_search_status !== false) {
 	fclose($quick_search_status);
 }
 natcasesort($quick_search_hosts);
+// Join configured addresses only to hosts already present in the status data.
+$quick_search_addresses = [];
+$quick_search_cache = @fopen(__DIR__ . '/../var/objects.cache', 'rb');
+if ($quick_search_cache !== false) {
+	$quick_search_in_host = false;
+	$quick_search_object = [];
+	while (($quick_search_line = fgets($quick_search_cache)) !== false) {
+		$quick_search_line = trim($quick_search_line);
+		if (preg_match('/^define\s+host\s*\{?$/', $quick_search_line) === 1) {
+			$quick_search_in_host = true;
+			$quick_search_object = [];
+		} elseif ($quick_search_in_host && $quick_search_line === '}') {
+			$quick_search_name = $quick_search_object['host_name'] ?? '';
+			if (isset($quick_search_hosts[$quick_search_name])) {
+				$quick_search_addresses[$quick_search_name] = $quick_search_object['address'] ?? '';
+			}
+			$quick_search_in_host = false;
+		} elseif ($quick_search_in_host && preg_match('/^(host_name|address)\s+(.+)$/', $quick_search_line, $quick_search_fields) === 1) {
+			$quick_search_object[$quick_search_fields[1]] = trim($quick_search_fields[2]);
+		}
+	}
+	fclose($quick_search_cache);
+}
+foreach ($quick_search_hosts as $quick_search_name => $quick_search_host) {
+	$quick_search_hosts[$quick_search_name] = [
+		'name' => $quick_search_host,
+		'address' => $quick_search_addresses[$quick_search_name] ?? '',
+	];
+}
 $quick_search_hosts_json = json_encode(array_values($quick_search_hosts), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $theme = isset($cfg['theme']) ? $cfg['theme'] : 'dark';
 if ($theme != 'dark' && $theme != 'light') {
@@ -593,6 +622,11 @@ ul.navsectionlinks li:hover:not(:has(li:hover)) {
 	background: #294362;
 }
 
+.quick-search-address {
+	display: block;
+	font-size: 11px;
+}
+
 html.light .quick-search-suggestions,
 :root[data-theme="light"] .quick-search-suggestions {
 	background: #ffffff;
@@ -974,7 +1008,7 @@ html.light .update-status.is-error,
 		<form id="quick-search-form" method="get" action="<?php echo $cfg["cgi_base_url"];?>/status.cgi" target="<?php echo $link_target;?>">
 			<label class="search-title" for="quick-search-host">Quick Search</label>
 			<input type='hidden' name='navbarsearch' value='1'>
-			<input id="quick-search-host" type="text" name="host" size="15" class="NavBarSearchItem" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="quick-search-suggestions" aria-describedby="quick-search-status">
+			<input id="quick-search-host" type="text" name="host" size="15" class="NavBarSearchItem" placeholder="Host name or IP" aria-label="Search by host name or IP address" autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="quick-search-suggestions" aria-describedby="quick-search-status">
 			<ul id="quick-search-suggestions" class="quick-search-suggestions" role="listbox" aria-label="Matching hosts" hidden></ul>
 			<span id="quick-search-status" class="quick-search-status" role="status" aria-live="polite"></span>
 		</form>
@@ -1035,14 +1069,16 @@ html.light .update-status.is-error,
 	}
 
 	function choose(host) {
-		input.value = host;
+		input.value = host.name;
 		close();
 		form.requestSubmit();
 	}
 
 	function showMatches() {
 		var query = input.value.trim().toLowerCase();
-		matches = query ? hosts.filter(function (host) { return host.toLowerCase().includes(query); }) : [];
+		matches = query ? hosts.filter(function (host) {
+			return host.name.toLowerCase().includes(query) || host.address.toLowerCase().includes(query);
+		}) : [];
 		list.replaceChildren();
 		close();
 		matches.forEach(function (host, index) {
@@ -1050,7 +1086,13 @@ html.light .update-status.is-error,
 			option.id = 'quick-search-option-' + index;
 			option.setAttribute('role', 'option');
 			option.setAttribute('aria-selected', 'false');
-			option.textContent = host;
+			option.textContent = host.name;
+			if (host.address) {
+				var address = document.createElement('span');
+				address.className = 'quick-search-address';
+				address.textContent = host.address;
+				option.appendChild(address);
+			}
 			option.addEventListener('pointerdown', function (event) { event.preventDefault(); });
 			option.addEventListener('click', function () { choose(host); });
 			list.appendChild(option);
