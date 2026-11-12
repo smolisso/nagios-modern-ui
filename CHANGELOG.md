@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.8.0] - 2026-11-12
+
+### Added
+- Consistent SVG icons for graphs, comments, downtime, flapping and information, with matching GIF exports at the original sizes for classic CGI compatibility
+- A rendering script to regenerate the GIF icons from the SVG sources
+
+### Changed
+- Refined the shared light-theme state palette with subtle row backgrounds and distinct WARNING, CRITICAL and UNKNOWN badges
+- Modern PHP pages use the SVG graph icon; classic CGI icon paths remain compatible
+- Inset command-result messages to match the Host Information content width while retaining left-aligned text and responsive sizing
+- Updated icon installation instructions and rebuilt `share.zip` for `0.8.0`
+
+### Fixed
+- Readable text and distinct pale-yellow styling for WARNING services during scheduled downtime
+- Softer purple rows and badges with readable text for UNKNOWN services during scheduled downtime, in both themes
+- Nested state links and summary text contrast in the light theme
+- Removed the unwanted light-theme page-title border on classic status pages
+
+---
+
 ## [0.7.7] - 2026-11-11
 
 ### Added

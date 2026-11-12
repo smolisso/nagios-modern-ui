@@ -976,6 +976,7 @@ td.statusBGHOSTDOWNTIME,
 td.statusBGUNREACHABLE,
 td.statusBGCRITICALACK,
 td.statusBGCRITICALSCHED,
+td.statusBGWARNINGSCHED,
 td.statusBGWARNINGACK {
   color: #111 !important;
 }
@@ -986,6 +987,7 @@ td.statusBGHOSTDOWNTIME a,
 td.statusBGUNREACHABLE a,
 td.statusBGCRITICALACK a,
 td.statusBGCRITICALSCHED a,
+td.statusBGWARNINGSCHED a,
 td.statusBGWARNINGACK a {
   color: inherit !important;
   text-decoration: none !important;
@@ -995,6 +997,64 @@ td.statusBGWARNINGACK a {
 body.status table.status tr:has(> td.statusBGCRITICALSCHED) > td.statusCRITICAL {
   background-color: #ffdddd !important;
   color: #111 !important;
+}
+
+/* Distinguish scheduled WARNING downtime with a pale-yellow row and badge. */
+td.statusBGWARNINGSCHED,
+body.status table.status tr:has(> td.statusBGWARNINGSCHED) > td.statusWARNING {
+  background-color: #fff0b3 !important;
+  color: #111 !important;
+}
+
+/* Scheduled UNKNOWN must use a softer purple, not the legacy orange. */
+body.status table.status td.statusBGUNKNOWNSCHED,
+body.status table.status tr:has(> td.statusBGUNKNOWNSCHED) > td.statusUNKNOWN {
+  background-color: #d9cbe3 !important;
+  color: #21172c !important;
+}
+
+body.status table.status td.statusBGUNKNOWNSCHED :is(td, a, span, strong, b, small, font),
+body.status table.status tr:has(> td.statusBGUNKNOWNSCHED) > td.statusUNKNOWN :is(a, a *, span, strong) {
+  color: #21172c !important;
+}
+
+body.status table.status tr:has(> td.statusBGUNKNOWNSCHED) > td.statusUNKNOWN :is(a, a *, span, strong) {
+  background-color: inherit !important;
+}
+
+html:is(.light, [data-theme="light"]) body.status table.status td.statusBGUNKNOWNSCHED {
+  background-color: #f8f4fb !important;
+}
+
+html:is(.light, [data-theme="light"]) body.status table.status tr:has(> td.statusBGUNKNOWNSCHED) > td.statusUNKNOWN {
+  background-color: #e3d6ee !important;
+}
+
+/* Light-theme downtime stays quiet; active incidents use stronger badges. */
+html:is(.light, [data-theme="light"]) body.status table.status td.statusBGWARNINGSCHED {
+  background-color: #fffdf5 !important;
+  color: #111 !important;
+}
+
+html:is(.light, [data-theme="light"]) body.status table.status td.statusBGCRITICALSCHED {
+  background-color: #fff9f8 !important;
+  color: #111 !important;
+}
+
+html:is(.light, [data-theme="light"]) body.status table.status tr:has(> td.statusBGWARNINGSCHED) > td.statusWARNING {
+  background-color: #fff0c2 !important;
+  color: #111 !important;
+}
+
+html:is(.light, [data-theme="light"]) body.status table.status tr:has(> td.statusBGCRITICALSCHED) > td.statusCRITICAL {
+  background-color: #fce3df !important;
+  color: #111 !important;
+}
+
+/* Keep nested summary links readable on the light-theme state surfaces. */
+html:is(.light, [data-theme="light"]) body.status td:is(.miniStatusCRITICAL, .miniStatusDOWN) *,
+html:is(.light, [data-theme="light"]) body.status td:is(.miniStatusCRITICAL, .miniStatusDOWN) {
+  color: var(--state-critical-fg) !important;
 }
 
 body.status table.status td.statusBGDOWN,
@@ -1353,6 +1413,10 @@ html.light body.status td.statusTitle,
 :root[data-theme="light"] body.status td.statusTitle {
     background: #e9f1fb;
     color: #173a5c !important;
+}
+
+html.light body.status :is(.infoBoxTitle, div.hostTotals, div.serviceTotals),
+:root[data-theme="light"] body.status :is(.infoBoxTitle, div.hostTotals, div.serviceTotals) {
     border: 1px solid #c9d7e7;
 }
 

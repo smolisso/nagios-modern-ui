@@ -293,6 +293,14 @@ html:root body.cmd .infoMessage {
     margin: 32px auto;
 }
 
+/* Inset command-result messages like the Host Information content column. */
+html:root body.cmd > .infoMessage {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1320px;
+    text-align: left;
+}
+
 /* Scale only the outer command form card, once, including its controls. */
 html:root body.cmd table.optBox:has(> tbody > tr > td > form) {
     zoom: 1.18;

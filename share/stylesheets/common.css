@@ -177,12 +177,15 @@ not important:  blue             aaccff  777777
   --classic-link-hover: #0d4b95;
   --state-ok-bg: #a8dfc3;
   --state-ok-fg: #124d2e;
-  --state-warning-bg: #f7dd90;
-  --state-warning-fg: #6b4e00;
-  --state-critical-bg: #f4b2b8;
-  --state-critical-fg: #7a1f2a;
-  --state-unknown-bg: #c9b3d9;
+  --state-warning-bg: #fff4df;
+  --state-warning-fg: #451a03;
+  --state-critical-bg: #fce9e6;
+  --state-critical-fg: #450a0a;
+  --state-warning-badge-bg: #edbf57;
+  --state-critical-badge-bg: #b93832;
+  --state-unknown-bg: #f0edf7;
   --state-unknown-fg: #3f2f55;
+  --state-unknown-badge-bg: #72559a;
   --state-pending-bg: #d9dee6;
   --state-pending-fg: #33465c;
 }
@@ -1335,6 +1338,28 @@ html.light :is(.statusUNKNOWN, .statusHOSTUNREACHABLE, .statusHOSTUNREACHABLEACK
   color: var(--state-unknown-fg) !important;
 }
 
+/* Colored light-theme surfaces need state text, including nested links. */
+html:is(.light, [data-theme="light"]) body :is(.statusWARNING, .serviceWARNING, .logEntriesWARNING, .serviceTotalsWARNING, .miniStatusWARNING, .statusBGWARNING, .notificationsWARNING, .processWARNING, .modeSTANDBY) :is(a, a *),
+html:is(.light, [data-theme="light"]) body :is(.statusWARNING, .serviceWARNING, .logEntriesWARNING, .serviceTotalsWARNING, .miniStatusWARNING, .statusBGWARNING, .notificationsWARNING, .processWARNING, .modeSTANDBY):is(a) {
+  color: var(--state-warning-fg) !important;
+}
+
+html:is(.light, [data-theme="light"]) body :is(.statusCRITICAL, .statusCRITICALACK, .statusHOSTDOWN, .statusHOSTDOWNACK, .serviceCRITICAL, .hostDOWN, .logEntriesCRITICAL, .logEntriesDOWN, .serviceTotalsCRITICAL, .hostTotalsDOWN, .miniStatusCRITICAL, .miniStatusDOWN, .statusBGCRITICAL, .statusBGDOWN, .notificationsCRITICAL, .notificationsHOSTDOWN, .processCRITICAL) :is(a, a *),
+html:is(.light, [data-theme="light"]) body :is(.statusCRITICAL, .statusCRITICALACK, .statusHOSTDOWN, .statusHOSTDOWNACK, .serviceCRITICAL, .hostDOWN, .logEntriesCRITICAL, .logEntriesDOWN, .serviceTotalsCRITICAL, .hostTotalsDOWN, .miniStatusCRITICAL, .miniStatusDOWN, .statusBGCRITICAL, .statusBGDOWN, .notificationsCRITICAL, .notificationsHOSTDOWN, .processCRITICAL):is(a) {
+  color: var(--state-critical-fg) !important;
+}
+
+/* Reserve the stronger color for compact state badges, not whole rows. */
+html:root:is(.light, [data-theme="light"]) body :is(td, a, span).statusWARNING {
+  background-color: var(--state-warning-badge-bg) !important;
+}
+
+html:root:is(.light, [data-theme="light"]) body :is(td, a, span):is(.statusCRITICAL, .statusHOSTDOWN),
+html:root:is(.light, [data-theme="light"]) body :is(td, a, span):is(.statusCRITICAL, .statusHOSTDOWN) :is(a, a *) {
+  background-color: var(--state-critical-badge-bg) !important;
+  color: #fff !important;
+}
+
 html.light body.status td.statusOdd,
 html.light body.status td.statusEven,
 :root[data-theme="light"] body.status td.statusOdd,
@@ -1377,6 +1402,17 @@ html.light body.status td.miniStatusUNKNOWN,
    approved seven-column status view keep their own styles.
    Page-specific adapters are at the end of each CGI stylesheet.
    ========================================================= */
+/* Light UNKNOWN follows the same quiet-surface / distinct-badge hierarchy. */
+html:root:where(.light, [data-theme="light"]) body :is(.statusUNKNOWN, .statusHOSTUNREACHABLE, .statusHOSTUNREACHABLEACK, .serviceUNKNOWN, .hostUNREACHABLE, .logEntriesUNKNOWN, .logEntriesUNREACHABLE, .serviceTotalsUNKNOWN, .hostTotalsUNREACHABLE, .miniStatusUNKNOWN, .miniStatusUNREACHABLE, .statusBGUNKNOWN, .statusBGUNKNOWNACK, .statusBGUNREACHABLE, .notificationsUNKNOWN, .notificationsHOSTUNREACHABLE, .processUNKNOWN) :is(a, a *, span, strong, b, small, font) {
+  color: var(--state-unknown-fg) !important;
+}
+
+html:root:is(.light, [data-theme="light"]) body :is(td, a, span):is(.statusUNKNOWN, .statusHOSTUNREACHABLE),
+html:root:is(.light, [data-theme="light"]) body :is(td, a, span):is(.statusUNKNOWN, .statusHOSTUNREACHABLE) :is(a, a *, span, strong) {
+  background-color: var(--state-unknown-badge-bg) !important;
+  color: #fff !important;
+}
+
 :root {
   --cgi-bg: #15181d;
   --cgi-panel: #1b222c;
@@ -1413,12 +1449,12 @@ html:is(.light, [data-theme="light"]) {
   --cgi-hover: #e8f0fb;
   --cgi-ok: #a8dfc3;
   --cgi-ok-text: #124d2e;
-  --cgi-warning: #f7dd90;
-  --cgi-warning-text: #6b4e00;
-  --cgi-critical: #f4b2b8;
-  --cgi-critical-text: #7a1f2a;
-  --cgi-unknown: #c9b3d9;
-  --cgi-unknown-text: #3f2f55;
+  --cgi-warning: var(--state-warning-bg);
+  --cgi-warning-text: var(--state-warning-fg);
+  --cgi-critical: var(--state-critical-bg);
+  --cgi-critical-text: var(--state-critical-fg);
+  --cgi-unknown: var(--state-unknown-bg);
+  --cgi-unknown-text: var(--state-unknown-fg);
 }
 
 html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) {

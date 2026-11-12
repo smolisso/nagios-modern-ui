@@ -200,14 +200,14 @@ html.light body.outages .itemTotalsTitle,
 
 html.light body.outages tr.outageCritical,
 :root[data-theme="light"] body.outages tr.outageCritical {
-    background-color: #f4b2b8 !important;
-    color: #7a1f2a !important;
+    background-color: var(--state-critical-bg) !important;
+    color: var(--state-critical-fg) !important;
 }
 
 html.light body.outages tr.outageWarning,
 :root[data-theme="light"] body.outages tr.outageWarning {
-    background-color: #f7dd90 !important;
-    color: #6b4e00 !important;
+    background-color: var(--state-warning-bg) !important;
+    color: var(--state-warning-fg) !important;
 }
 
 html.light body.outages :is(.infoBox, .infoBox i),

@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.7.7-blue)
+![Version](https://img.shields.io/badge/version-0.8.0-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -123,12 +123,20 @@ Stylesheets:
 Icons and logos:
 
 ```text
-[nagios_root_path]/share/images/comments.svg
+[nagios_root_path]/share/images/comment.svg
 [nagios_root_path]/share/images/action.svg
+[nagios_root_path]/share/images/downtime.svg
 [nagios_root_path]/share/images/status2.svg
 [nagios_root_path]/share/images/flapping.svg
+[nagios_root_path]/share/images/*.gif
 [nagios_root_path]/share/images/logos/*
 ```
+
+The five interface icons share a neutral background and uniform strokes. Modern
+PHP pages use SVG; matching GIF exports retain the original filenames and pixel
+dimensions for classic Nagios CGI pages. Install both formats. To regenerate the
+GIF exports from their SVG sources, run `bash scripts/render-icons.sh` with
+`rsvg-convert` (librsvg) and `magick` (ImageMagick) installed.
 
 ## Live Overview Historical Trend
 

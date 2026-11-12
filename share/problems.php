@@ -7,7 +7,7 @@ $hostDetailBaseUrl = '/nagios/cgi-bin/status.cgi?host=';
 $hostServicesDetailBaseUrl = '/nagios/host_detail.php?host=';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
 $graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
-$graphActionIconUrl = '/nagios/images/action.gif';
+$graphActionIconUrl = '/nagios/images/action.svg';
 $rrdRoot = '/usr/local/nagiosgraph/var/rrd';
 $refreshSeconds = 30;
 

@@ -6,7 +6,7 @@ $hostExtInfoFile = __DIR__ . '/../etc/objects/hostextinfo.cfg';
 $hostIconBaseUrl = '/nagios/images/logos/';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
 $graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
-$graphActionIconUrl = '/nagios/images/action.gif';
+$graphActionIconUrl = '/nagios/images/action.svg';
 $rrdRoot = '/usr/local/nagiosgraph/var/rrd';
 $refreshSeconds = 30;
 

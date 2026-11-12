@@ -8,7 +8,7 @@ $hostDetailBaseUrl = '/nagios/cgi-bin/status.cgi?host=';
 $hostServicesDetailBaseUrl = '/nagios/host_detail.php?host=';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
 $graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
-$graphActionIconUrl = '/nagios/images/action.gif';
+$graphActionIconUrl = '/nagios/images/action.svg';
 $rrdRoot = '/usr/local/nagiosgraph/var/rrd';
 $criticalServicesUrl = '/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hostprops=42';
 $hostsDownUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=12';
