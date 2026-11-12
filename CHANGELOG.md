@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.8.1] - 2026-11-12
+
+### Added
+- Clean SVG sorting controls with active-direction highlighting, accessible labels and keyboard focus, retaining the native CGI links and filters
+- A continuous, theme-aware vertical divider between Attempt and Status Information that follows column resizing
+
+### Changed
+- Reduced the gap between service filters and results
+- Made timing and attempt columns slightly smaller while emphasizing service names
+- Moved the native sorting summary above the table, opposite Limit Results
+- Retained the original row colors across all columns, including Status Information
+- Bumped the Modern UI version and README badge to `0.8.1` and rebuilt `share.zip`
+
+---
+
 ## [0.8.0] - 2026-11-12
 
 ### Added

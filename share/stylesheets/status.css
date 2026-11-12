@@ -1752,6 +1752,16 @@ body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.sta
 body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.status > tbody > tr > th:nth-child(5)) #pagelimit {
     margin: 50px 0 7px; padding: 0; align-items: center; font-size: 12px; color: var(--detail-muted);
 }
+
+/* Bring service results closer to the title/filter row without changing
+   the header cards, filter contents or the host-detail layout. */
+html:root body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.pageTitle {
+    margin-bottom: 0;
+}
+
+html:root body.status:has(> table.status > tbody > tr > th:nth-child(7)) #pagelimit {
+    margin-top: 16px;
+}
 body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.status > tbody > tr > th:nth-child(5)) #limit { font-size: 12px; font-weight: 400; }
 body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.status > tbody > tr > th:nth-child(5)) table.status {
     margin: 0; padding: 0; border: 1px solid var(--detail-border); border-radius: 9px;
@@ -1778,6 +1788,96 @@ body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.sta
 body.status:has(> table.status > tbody > tr > th:nth-child(7)) table.status > tbody > tr > td a[href*="extinfo.cgi?type=2"] { font-weight: 400; }
 body.status:has(> table.status > tbody > tr > th:nth-child(7)) table.status > tbody > tr > td:nth-child(n+3):nth-child(-n+6) { font-variant-numeric: tabular-nums; white-space: nowrap; }
 body.status:has(> table.status > tbody > tr > th:nth-child(7)) table.status > tbody > tr > td:nth-child(3) { font-size: 13px; font-weight: 600; }
+
+/* Service and output stay primary; timing and attempts are secondary. */
+html:root body.status > table.status:has(> tbody > tr > th:nth-child(7)) > tbody > tr > td:nth-child(n+4):nth-child(-n+6) {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+html:root body.status > table.status:has(> tbody > tr > th:nth-child(7)) > tbody > tr > th:nth-child(n+4):nth-child(-n+6) {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+html:root body.status > table.status:has(> tbody > tr > th:nth-child(7)) > tbody > tr > td:nth-child(2) a[href*="extinfo.cgi?type=2"] {
+    font-weight: 500;
+}
+
+/* Enhanced native sort links: no URL or CGI behavior is replaced. */
+html:root body.status > table.status.has-status-output-divider {
+    position: relative;
+    --status-output-divider-color: #94a3b8;
+}
+
+html:root:is(.light, [data-theme="light"]) body.status > table.status.has-status-output-divider {
+    --status-output-divider-color: #64748b;
+}
+
+html:root body.status > table.status.has-status-output-divider::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: var(--status-output-divider-x);
+    width: 3px;
+    background: var(--status-output-divider-color);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+html:root body.status #pagelimit.has-sort-summary {
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+}
+
+html:root body.status #pagelimit > .status-sort-summary {
+    margin: 0 0 0 auto;
+    max-width: 100%;
+    color: var(--detail-muted);
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: right;
+}
+
+html:root body.status > table.status > tbody > tr > th .status-sort-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 20px;
+    vertical-align: middle;
+    border-radius: 4px;
+    color: var(--detail-muted) !important;
+    text-decoration: none !important;
+}
+
+html:root body.status > table.status > tbody > tr > th .status-sort-link > img {
+    display: none;
+}
+
+html:root body.status > table.status > tbody > tr > th .status-sort-link > svg {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+html:root body.status > table.status > tbody > tr > th .status-sort-link:is(:hover, :focus-visible, .is-active) {
+    color: var(--detail-text) !important;
+    background: var(--detail-neutral);
+}
+
+html:root body.status > table.status > tbody > tr > th .status-sort-link:focus-visible {
+    outline: 2px solid var(--detail-link);
+    outline-offset: 2px;
+}
 body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.status > tbody > tr > th:nth-child(5)) table.status > tbody > tr > td img {
     max-width: 17px; max-height: 17px; object-fit: contain; vertical-align: middle;
 }

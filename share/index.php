@@ -50,6 +50,7 @@ if ($theme != 'dark' && $theme != 'light') {
 	<script src="nagiosgraph_modern/popup.js"></script>
 	<script src="stylesheets/theme.js"></script>
 	<script src="stylesheets/host-copy.js?v=0.7.6"></script>
+	<script src="stylesheets/status-sort.js?v=0.8.1"></script>
 
 	<style>
 		:root {
@@ -342,6 +343,7 @@ if ($theme != 'dark' && $theme != 'light') {
 		document.querySelector('iframe[name="main"]').addEventListener('load', function () {
 			window.applyThemeToFrames();
 			window.addNagiosHostCopyButtons(this);
+			if (window.enhanceNagiosStatusSorting) window.enhanceNagiosStatusSorting(this);
 			applyScale();
 			mainBeforeUnloadBound = false;
 			bindMainBeforeUnload();
@@ -389,6 +391,7 @@ if ($theme != 'dark' && $theme != 'light') {
 
 		window.applyThemeToFrames();
 		window.addNagiosHostCopyButtons(document.querySelector('iframe[name="main"]'));
+		if (window.enhanceNagiosStatusSorting) window.enhanceNagiosStatusSorting(document.querySelector('iframe[name="main"]'));
 		bindMainBeforeUnload();
 
 		if (window.innerWidth > 768) {
