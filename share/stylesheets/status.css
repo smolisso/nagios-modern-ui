@@ -1881,6 +1881,15 @@ html:root body.status > table.status > tbody > tr > th .status-sort-link:focus-v
 body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.status > tbody > tr > th:nth-child(5)) table.status > tbody > tr > td img {
     max-width: 17px; max-height: 17px; object-fit: contain; vertical-align: middle;
 }
+/* Host type/OS logos stand out from the adjacent action and state icons. */
+html:root body.status table.status > tbody > tr > td:first-child img[src*="/logos/"] {
+    width: 22px;
+    height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    object-fit: contain;
+    vertical-align: middle;
+}
 body.status:has(> table.status > tbody > tr > th:nth-child(7), > div > table.status > tbody > tr > th:nth-child(5)) .itemTotalsTitle {
     margin: 13px 0 0; padding: 0; font-size: 14px; font-style: normal; font-weight: 400; color: var(--detail-muted);
 }

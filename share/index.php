@@ -50,7 +50,7 @@ if ($theme != 'dark' && $theme != 'light') {
 	<script src="nagiosgraph_modern/popup.js"></script>
 	<script src="stylesheets/theme.js"></script>
 	<script src="stylesheets/host-copy.js?v=0.7.6"></script>
-	<script src="stylesheets/status-sort.js?v=0.8.1"></script>
+	<script src="stylesheets/status-sort.js?v=0.8.2"></script>
 
 	<style>
 		:root {

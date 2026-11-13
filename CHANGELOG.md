@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.8.2] - 2026-11-13
+
+### Changed
+- Enlarged host type and operating system logos from 17px to 22px in status tables, preserving their proportions and keeping adjacent action and state icons unchanged
+- Bumped the Modern UI version and README badge to `0.8.2` and rebuilt `share.zip`
+
+---
+
 ## [0.8.1] - 2026-11-12
 
 ### Added
