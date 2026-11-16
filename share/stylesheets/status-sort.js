@@ -2,6 +2,52 @@
   'use strict';
 
   var dividerTables = new WeakSet();
+  var refreshCountdowns = new WeakMap();
+
+  function addRefreshCountdown(doc, title, seconds) {
+    var previous = refreshCountdowns.get(doc);
+    if (previous && previous.seconds === seconds) return;
+    if (previous) {
+      doc.defaultView.clearInterval(previous.timer);
+      previous.node.remove();
+      refreshCountdowns.delete(doc);
+    }
+    if (!(seconds > 0)) return;
+    var countdown = doc.createElement('div');
+    countdown.className = 'status-refresh-countdown';
+    countdown.title = 'Auto refresh every ' + seconds + ' seconds';
+    var caption = doc.createElement('div');
+    caption.className = 'status-refresh-caption';
+    var label = doc.createElement('span');
+    label.textContent = 'Next refresh';
+    var remaining = doc.createElement('span');
+    remaining.className = 'status-refresh-remaining';
+    caption.appendChild(label);
+    caption.appendChild(remaining);
+    var track = doc.createElement('div');
+    track.className = 'status-refresh-track';
+    track.setAttribute('aria-hidden', 'true');
+    var fill = doc.createElement('div');
+    fill.className = 'status-refresh-fill';
+    track.appendChild(fill);
+    countdown.appendChild(caption);
+    countdown.appendChild(track);
+    title.appendChild(countdown);
+    var view = doc.defaultView;
+    var started = view.performance.timeOrigin || Date.now();
+    var deadline = started + seconds * 1000;
+    function updateCountdown() {
+      var milliseconds = Math.max(0, deadline - Date.now());
+      var value = Math.ceil(milliseconds / 1000);
+      remaining.textContent = value > 0
+        ? String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0')
+        : 'Refreshing soon';
+      fill.style.transform = 'scaleX(' + Math.min(1, milliseconds / (seconds * 1000)) + ')';
+    }
+    updateCountdown();
+    var timer = view.setInterval(updateCountdown, 1000);
+    refreshCountdowns.set(doc, { node: countdown, seconds: seconds, timer: timer });
+  }
 
   function addLiveIndicator(doc) {
     var title = Array.from(doc.querySelectorAll('.pageTitle .statusTitle')).find(function (node) {
@@ -26,6 +72,7 @@
     var badge = title.querySelector('.status-live-badge');
     if (!(seconds > 0)) {
       if (badge) badge.remove();
+      addRefreshCountdown(doc, title, 0);
       return;
     }
     if (!badge) {
@@ -42,6 +89,7 @@
     var description = 'Auto refresh every ' + seconds + ' seconds';
     badge.title = description;
     badge.setAttribute('aria-label', 'Live status. ' + description);
+    addRefreshCountdown(doc, title, seconds);
   }
 
   function addStatusDashboard(doc) {
@@ -105,13 +153,66 @@
     var clock = element('section', 'status-dashboard-card status-dashboard-clock');
     clock.setAttribute('aria-label', 'Local time on this device');
     var clockDetails = element('div', 'status-dashboard-clock-details');
-    clockDetails.appendChild(element('div', 'status-dashboard-label', 'LOCAL TIME'));
+    var clockToolbar = element('div', 'status-dashboard-clock-toolbar');
+    var clockHeading = element('div', 'status-dashboard-clock-heading');
+    clockHeading.appendChild(element('div', 'status-dashboard-label', 'LOCAL TIME'));
+    clockToolbar.appendChild(clockHeading);
+    var clockToggle = element('button', 'status-dashboard-clock-toggle');
+    clockToggle.type = 'button';
+    clockToolbar.appendChild(clockToggle);
+    clockDetails.appendChild(clockToolbar);
     var time = element('time', 'status-dashboard-time');
     var date = element('div', 'status-dashboard-date');
     var zone = element('div', 'status-dashboard-zone', Intl.DateTimeFormat().resolvedOptions().timeZone);
-    clockDetails.appendChild(time);
+    var svgNamespace = 'http://www.w3.org/2000/svg';
+    function clockShape(tag, attributes) {
+      var node = doc.createElementNS(svgNamespace, tag);
+      Object.keys(attributes).forEach(function (key) { node.setAttribute(key, attributes[key]); });
+      return node;
+    }
+    var toggleIcon = clockShape('svg', { viewBox: '0 0 24 24', width: 18, height: 18,
+      fill: 'none', stroke: 'currentColor', 'stroke-width': 1.8,
+      'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' });
+    toggleIcon.appendChild(clockShape('path', { d: 'M20 7v5h-5M4 17v-5h5M6 8a7 7 0 0 1 12-2l2 2M18 16a7 7 0 0 1-12 2l-2-2' }));
+    clockToggle.appendChild(toggleIcon);
+    var analog = clockShape('svg', { viewBox: '0 0 100 100',
+      'class': 'status-dashboard-analog', role: 'img' });
+    analog.appendChild(clockShape('circle', { cx: 50, cy: 50, r: 46, 'class': 'clock-face' }));
+    for (var tick = 0; tick < 12; tick++) {
+      analog.appendChild(clockShape('line', { x1: 50, y1: 7, x2: 50, y2: tick % 3 ? 11 : 14,
+        transform: 'rotate(' + tick * 30 + ' 50 50)', 'class': 'clock-tick' }));
+    }
+    var hourHand = clockShape('line', { x1: 50, y1: 50, x2: 50, y2: 29, 'class': 'clock-hour' });
+    var minuteHand = clockShape('line', { x1: 50, y1: 50, x2: 50, y2: 18, 'class': 'clock-minute' });
+    var secondHand = clockShape('line', { x1: 50, y1: 57, x2: 50, y2: 12, 'class': 'clock-second' });
+    analog.appendChild(hourHand);
+    analog.appendChild(minuteHand);
+    analog.appendChild(secondHand);
+    analog.appendChild(clockShape('circle', { cx: 50, cy: 50, r: 2.5, 'class': 'clock-pin' }));
+    var clockMode = 'digital';
+    try { clockMode = view.localStorage.getItem('nagios.status.clockMode') === 'analog' ? 'analog' : 'digital'; } catch (error) {}
+    function applyClockMode() {
+      var isAnalog = clockMode === 'analog';
+      time.hidden = isAnalog;
+      analog.hidden = !isAnalog;
+      // SVG hidden is not supported uniformly; keep the attribute explicit.
+      if (isAnalog) analog.removeAttribute('hidden'); else analog.setAttribute('hidden', '');
+      clockToggle.title = isAnalog ? 'Mostra orologio digitale' : 'Mostra orologio analogico';
+      clockToggle.setAttribute('aria-label', 'Passa all’orologio ' + (isAnalog ? 'digitale' : 'analogico'));
+      clockToggle.setAttribute('aria-pressed', String(isAnalog));
+    }
+    clockToggle.addEventListener('click', function () {
+      clockMode = clockMode === 'digital' ? 'analog' : 'digital';
+      try { view.localStorage.setItem('nagios.status.clockMode', clockMode); } catch (error) {}
+      applyClockMode();
+    });
+    applyClockMode();
+    var clockDisplay = element('div', 'status-dashboard-clock-display');
+    clockDisplay.appendChild(time);
+    clockDisplay.appendChild(analog);
+    clockDetails.appendChild(clockDisplay);
     clockDetails.appendChild(date);
-    clockDetails.appendChild(zone);
+    clockHeading.appendChild(zone);
     var trend = element('div', 'status-dashboard-mini-trend');
     trend.appendChild(element('div', 'status-dashboard-label', 'AVAILABILITY'));
     var history = [];
@@ -214,6 +315,10 @@
       var now = new Date();
       time.dateTime = now.toISOString();
       time.textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+      analog.setAttribute('aria-label', 'Ora locale: ' + time.textContent);
+      hourHand.setAttribute('transform', 'rotate(' + ((now.getHours() % 12) * 30 + now.getMinutes() / 2 + now.getSeconds() / 120) + ' 50 50)');
+      minuteHand.setAttribute('transform', 'rotate(' + (now.getMinutes() * 6 + now.getSeconds() / 10) + ' 50 50)');
+      secondHand.setAttribute('transform', 'rotate(' + now.getSeconds() * 6 + ' 50 50)');
       var dateParts = {};
       dateFormatter.formatToParts(now).forEach(function (part) {
         dateParts[part.type] = part.value;
@@ -252,7 +357,8 @@
         var above = headerCells[index + 1];
         // On desktop, tuck each panel under its own totals card rather than
         // leaving a gap determined by the taller network information card.
-        var lift = above && view.matchMedia('(min-width: 1051px)').matches
+        var lift = above && (doc.documentElement.getAttribute('data-shell-layout') === 'desktop' ||
+          view.matchMedia('(min-width: 1051px)').matches)
           ? Math.max(0, header.offsetHeight - above.offsetHeight) : 0;
         cell.style.marginTop = -lift + 'px';
       });

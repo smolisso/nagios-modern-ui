@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.2] - 2026-11-16
+
+### Added
+- Icon-only digital/analog clock toggle with a saved preference, fixed button position and theme-aware hour, minute and second hands
+- Native-refresh countdown and progress bar below LIVE, with English labels and automatic hiding when refresh is disabled
+
+### Changed
+- Enlarged clock typography and refined the compact clock layout, placing the time zone beneath LOCAL TIME
+- Made the LIVE halo more visible and unified dark-theme OK/UP colors across totals, donut charts, legends and status badges
+- Optimized mobile dashboards with side-by-side state charts and clocks, larger charts with legends on the right, and hidden availability history
+- Updated version metadata and the status script cache version; rebuilt `share.zip` for `0.9.2`
+
+### Fixed
+- The main shell now selects mobile or desktop dashboard layout before the sidebar width is subtracted from the iframe viewport
+- Desktop layouts retain all three totals cards without overlaps on narrow embedded pages
+- Added distinct dark-theme outlines to host-detail timing and output cells
+
+---
+
 ## [0.9.1] - 2026-11-16
 
 ### Added

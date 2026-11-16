@@ -714,7 +714,7 @@ table.serviceTotals td {
 /* colori più sobri */
 .hostTotalsUP,
 .serviceTotalsOK {
-    background-color: #7fbf7f !important;
+    background-color: #6bc497 !important;
     color: #102010;
 }
 
@@ -2702,10 +2702,10 @@ body.status .status-live-dot {
 body.status .status-live-dot::after {
     content: "";
     position: absolute;
-    inset: -3px;
-    border: 1px solid currentColor;
+    inset: -4px;
+    border: 2px solid currentColor;
     border-radius: inherit;
-    animation: status-live-pulse 2.8s ease-out infinite;
+    animation: status-live-pulse 1.8s ease-out infinite;
     pointer-events: none;
 }
 html:is(.light, [data-theme="light"]) body.status .statusTitle .status-live-badge {
@@ -2721,8 +2721,9 @@ body.status .status-live-badge:focus-visible {
     outline-offset: 3px;
 }
 @keyframes status-live-pulse {
-    0% { transform: scale(.55); opacity: .7; }
-    75%, 100% { transform: scale(1.5); opacity: 0; }
+    0% { transform: scale(.5); opacity: 1; }
+    35% { opacity: .8; }
+    85%, 100% { transform: scale(1.6); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
     body.status .status-live-dot::after { animation: none; opacity: 0; }
@@ -2829,17 +2830,19 @@ html:root body.status section.status-dashboard-clock {
     align-items: center;
 }
 html:root body.status section.status-dashboard-clock > .status-dashboard-clock-details {
-    align-self: center; min-width: 0; text-align: right;
+    align-self: center; min-width: 0; text-align: right; container-type: inline-size;
 }
 html:root body.status section.status-dashboard-clock > .status-dashboard-mini-trend {
     align-self: center; min-width: 0; text-align: left;
     padding-right: 12px; border-right: 1px solid var(--detail-border);
 }
 body.status .status-dashboard-clock-details .status-dashboard-time {
-    font-size: clamp(24px, 2.7vw, 40px);
+    font-size: clamp(32px, 23cqw, 60px);
     font-weight: 750;
 }
-body.status .status-dashboard-clock-details .status-dashboard-date { font-size: 11px; }
+body.status .status-dashboard-clock-details .status-dashboard-date { font-size: 13px; }
+body.status .status-dashboard-clock-details .status-dashboard-zone { font-size: 9px; line-height: 1.2; margin-top: 2px; }
+body.status .status-dashboard-clock-details .status-dashboard-label { font-size: 11px; }
 body.status .status-dashboard-mini-trend .status-dashboard-label { font-size: 9px; letter-spacing: .7px; }
 body.status .status-dashboard-trend-value { display: block; margin: 8px 0; font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
 body.status .status-dashboard-trend-bars { display: flex; align-items: flex-end; gap: 2px; height: 56px; }
@@ -2864,3 +2867,99 @@ html:root body.status .status-dashboard-trend-ranges button[aria-pressed="true"]
 html:root body.status .status-dashboard-trend-ranges button:hover { color: var(--detail-text); }
 html:root body.status .status-dashboard-trend-ranges button:focus-visible { outline: 2px solid var(--detail-link); outline-offset: 2px; }
 html:root body.status .status-dashboard-trend-ranges button:disabled { opacity: .5; cursor: default; }
+
+body.status .status-dashboard-clock-toolbar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: nowrap; gap: 8px; height: 30px; }
+html:root body.status .status-dashboard-clock-toggle {
+    appearance: none; display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; flex: 0 0 30px; padding: 0; border-radius: 6px; border: 1px solid var(--detail-border);
+    background: var(--detail-neutral); color: var(--detail-text); cursor: pointer; font: 600 11px/1.3 system-ui, sans-serif;
+}
+html:root body.status .status-dashboard-clock-toggle:hover { border-color: var(--detail-link); }
+html:root body.status .status-dashboard-clock-toggle:focus-visible { outline: 2px solid var(--detail-link); outline-offset: 2px; }
+body.status .status-dashboard-analog { display: block; width: 104px; height: 104px; max-width: 100%; margin: 0; overflow: visible; }
+body.status .status-dashboard-clock-details [hidden] { display: none !important; }
+body.status .status-dashboard-analog .clock-face { fill: var(--detail-bg); stroke: var(--detail-border); stroke-width: 2; }
+body.status .status-dashboard-analog .clock-tick { stroke: var(--detail-muted); stroke-width: 1.5; }
+body.status .status-dashboard-analog :is(.clock-hour, .clock-minute) { stroke: var(--detail-text); stroke-linecap: round; }
+body.status .status-dashboard-analog .clock-hour { stroke-width: 4; }
+body.status .status-dashboard-analog .clock-minute { stroke-width: 2.5; }
+body.status .status-dashboard-analog .clock-second { stroke: var(--detail-link); stroke-width: 1.2; stroke-linecap: round; }
+body.status .status-dashboard-analog .clock-pin { fill: var(--detail-link); }
+
+body.status .status-dashboard-clock-display {
+    height: 108px; display: flex; align-items: center; justify-content: flex-end;
+}
+body.status .status-dashboard-clock-display .status-dashboard-time { margin: 0; }
+
+/* Mobile dashboard: state chart and clock share one row; omit the trend. */
+@media (max-width: 768px) {
+    html:root:not([data-shell-layout="desktop"]) body.status.status-dashboard > table.pageTitle > tbody > tr {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-title-cell { grid-column: 1 / -1; grid-row: 1; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-chart-cell { grid-column: 1; grid-row: 2; min-width: 0; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-cell { grid-column: 2; grid-row: 2; min-width: 0; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-card { padding: 12px; container-type: inline-size; }
+    html:root:not([data-shell-layout="desktop"]) body.status section.status-dashboard-clock { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    html:root:not([data-shell-layout="desktop"]) body.status section.status-dashboard-clock > .status-dashboard-mini-trend { display: none; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-chart-body { display: grid; grid-template-columns: minmax(0, .44fr) minmax(0, .56fr); align-items: center; gap: 10px; margin-top: 10px; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut { width: 100%; max-width: 160px; height: auto; aspect-ratio: 1; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut-center { inset: 13%; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut-center strong { font-size: clamp(17px, 7cqw, 32px); }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut-center span { font-size: clamp(9px, 2.5cqw, 12px); }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-legend { width: 100%; gap: 5px; }
+    html:root:not([data-shell-layout="desktop"]) body.status .status-dashboard-legend-item { font-size: clamp(10px, 3cqw, 14px); gap: 5px; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-details .status-dashboard-time { font-size: clamp(25px, 21cqw, 68px); letter-spacing: -1px; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-details .status-dashboard-date { font-size: 11px; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-details .status-dashboard-label { font-size: 9px; letter-spacing: .7px; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-toolbar { gap: 5px; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-analog { width: clamp(90px, 30cqw, 144px); height: auto; aspect-ratio: 1; }
+    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-display { height: clamp(108px, 34cqw, 154px); }
+}
+
+/* Desktop shell may leave a narrow iframe after the sidebar is subtracted. */
+html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr {
+    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.15fr);
+}
+html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.pageTitle > tbody > tr {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.15fr) !important;
+}
+html[data-shell-layout="desktop"] body.status .status-dashboard-title-cell { grid-column: 1; grid-row: 1; }
+html[data-shell-layout="desktop"] body.status .status-dashboard-chart-cell { grid-column: 2; grid-row: 1; }
+html[data-shell-layout="desktop"] body.status .status-dashboard-clock-cell { grid-column: 3; grid-row: 1; }
+html:root[data-shell-layout="desktop"] body.status section.status-dashboard-clock { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+html:root[data-shell-layout="desktop"] body.status section.status-dashboard-clock > .status-dashboard-mini-trend {
+    display: block; padding: 0 12px 0 0; border-bottom: 0; border-right: 1px solid var(--detail-border);
+}
+
+/* Reset legacy narrow-iframe header placement when the shell is desktop.
+   Otherwise the info card spans a whole row and lifted panels cover totals. */
+html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:nth-child(-n+3) {
+    display: block !important; width: auto !important; min-width: 0;
+    grid-row: 1; margin-bottom: 0;
+}
+html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:first-child { grid-column: 1 !important; }
+html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:nth-child(2) { grid-column: 2; }
+html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:nth-child(3) { grid-column: 3; }
+
+/* Keep timing/output cells distinct in the dark host-detail table. */
+html:root:not(.light):not([data-theme="light"]) body.status > div > table.status:has(> tbody > tr > th:nth-child(5)):not(:has(> tbody > tr > th:nth-child(6))) > tbody > tr > td:nth-child(n+3):not([colspan]) {
+    box-shadow: inset 0 0 0 1px #39475b !important;
+}
+
+/* Native CGI refresh countdown beneath LIVE; no additional reload timer. */
+body.status .statusTitle .status-refresh-countdown {
+    width: 230px; max-width: 100%; margin-top: 30px;
+    color: var(--detail-muted, var(--cgi-muted));
+    font: 500 11px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: normal;
+}
+body.status .status-refresh-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+body.status .status-refresh-remaining { color: var(--detail-text, var(--cgi-text)); font-weight: 650; font-variant-numeric: tabular-nums; }
+body.status .status-refresh-track { height: 4px; border-radius: 999px; background: var(--detail-border, var(--cgi-border)); overflow: hidden; }
+body.status .status-refresh-fill { height: 100%; border-radius: inherit; background: #34d399; transform-origin: left; transition: transform 1s linear; }
+html:is(.light, [data-theme="light"]) body.status .status-refresh-fill { background: #0c8b52; }
+@media (prefers-reduced-motion: reduce) {
+    body.status .status-refresh-fill { transition: none; }
+}

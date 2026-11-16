@@ -50,7 +50,7 @@ if ($theme != 'dark' && $theme != 'light') {
 	<script src="nagiosgraph_modern/popup.js"></script>
 	<script src="stylesheets/theme.js"></script>
 	<script src="stylesheets/host-copy.js?v=0.7.6"></script>
-	<script src="stylesheets/status-sort.js?v=0.9.1"></script>
+	<script src="stylesheets/status-sort.js?v=0.9.2"></script>
 
 	<style>
 		:root {
@@ -237,6 +237,10 @@ if ($theme != 'dark' && $theme != 'light') {
 			var main = document.querySelector('iframe[name="main"]');
 			try {
 				var doc = main.contentDocument || main.contentWindow.document;
+				// Choose the dashboard layout from the shell, before subtracting
+				// the sidebar width from the embedded page's viewport.
+				var layout = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
+				doc.documentElement.setAttribute('data-shell-layout', layout);
 				var w = main.offsetWidth;
 				var old = doc.getElementById('__rscale');
 				if (old) old.remove();
