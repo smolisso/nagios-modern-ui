@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.1] - 2026-11-16
+
+### Added
+- Compact global availability history beside the status-page clock, sourced from the same snapshot as Live Overview
+- Accessible 24h, 7gg and 30gg range selectors with session persistence, sample tooltips, adaptive scale and explicit unavailable-data handling
+
+### Changed
+- Aligned dashboard columns with the upper totals cards and moved each panel directly below its corresponding summary on desktop
+- Right-aligned the clock, emphasized time digits and displayed full Italian day and month names
+- Expanded the compact trend area while retaining responsive stacking on smaller screens
+- Updated version metadata and status script cache version; rebuilt `share.zip` for `0.9.1`
+
+### Fixed
+- Centered host state labels inside the Host Information badges without changing their dimensions or colors
+
+---
+
 ## [0.9.0] - 2026-11-16
 
 ### Added

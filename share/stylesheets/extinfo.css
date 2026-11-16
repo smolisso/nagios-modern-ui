@@ -1217,6 +1217,9 @@ html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel .dataVal > div[class
     font-size: 12px;
     line-height: 1.4;
 }
+html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel .dataVal > div:is(.hostUP, .hostDOWN, .hostUNREACHABLE, .hostPENDING) {
+    justify-content: center;
+}
 html:root body.extinfo:has(.stateInfoPanel) .stateInfoPanel :is(.checksENABLED, .notificationsENABLED, .eventhandlersENABLED, .flapdetectionENABLED, .notflapping, .downtimeINACTIVE) {
     background: var(--cgi-ok);
     color: var(--cgi-ok-text);

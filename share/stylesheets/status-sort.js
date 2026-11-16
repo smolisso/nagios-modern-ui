@@ -104,21 +104,123 @@
     var clockCell = element('td', 'status-dashboard-clock-cell');
     var clock = element('section', 'status-dashboard-card status-dashboard-clock');
     clock.setAttribute('aria-label', 'Local time on this device');
-    clock.appendChild(element('div', 'status-dashboard-label', 'LOCAL TIME'));
+    var clockDetails = element('div', 'status-dashboard-clock-details');
+    clockDetails.appendChild(element('div', 'status-dashboard-label', 'LOCAL TIME'));
     var time = element('time', 'status-dashboard-time');
     var date = element('div', 'status-dashboard-date');
     var zone = element('div', 'status-dashboard-zone', Intl.DateTimeFormat().resolvedOptions().timeZone);
-    clock.appendChild(time);
-    clock.appendChild(date);
-    clock.appendChild(zone);
+    clockDetails.appendChild(time);
+    clockDetails.appendChild(date);
+    clockDetails.appendChild(zone);
+    var trend = element('div', 'status-dashboard-mini-trend');
+    trend.appendChild(element('div', 'status-dashboard-label', 'AVAILABILITY'));
+    var history = [];
+    var selectedRange = '24h';
+    var ranges = { '24h': 86400, '7gg': 604800, '30gg': 2592000 };
+    try { selectedRange = view.sessionStorage.getItem('nagios.status.trendRange') || '24h'; } catch (error) {}
+    if (!ranges[selectedRange]) selectedRange = '24h';
+    var rangeControls = element('div', 'status-dashboard-trend-ranges');
+    rangeControls.setAttribute('role', 'group');
+    rangeControls.setAttribute('aria-label', 'Periodo disponibilità complessiva');
+    Object.keys(ranges).forEach(function (range) {
+      var button = element('button', '', range);
+      button.type = 'button';
+      button.disabled = true;
+      button.setAttribute('aria-pressed', String(range === selectedRange));
+      button.addEventListener('click', function () {
+        selectedRange = range;
+        try { view.sessionStorage.setItem('nagios.status.trendRange', range); } catch (error) {}
+        renderTrend();
+      });
+      rangeControls.appendChild(button);
+    });
+    var trendValue = element('strong', 'status-dashboard-trend-value', '—');
+    var trendBars = element('div', 'status-dashboard-trend-bars');
+    trendBars.setAttribute('aria-label', 'Disponibilità complessiva');
+    var trendNote = element('div', 'status-dashboard-trend-note', 'Caricamento…');
+    trend.appendChild(trendValue);
+    trend.appendChild(rangeControls);
+    trend.appendChild(trendBars);
+    trend.appendChild(trendNote);
+    clock.appendChild(trend);
+    clock.appendChild(clockDetails);
+    function renderTrend() {
+      rangeControls.querySelectorAll('button').forEach(function (button) {
+        button.setAttribute('aria-pressed', String(button.textContent === selectedRange));
+      });
+      trendBars.replaceChildren();
+      trendValue.textContent = '—';
+      trendValue.removeAttribute('title');
+      var now = Date.now() / 1000;
+      var samples = history.filter(function (sample) { return sample.timestamp >= now - ranges[selectedRange]; });
+      trendBars.hidden = !samples.length;
+      if (!samples.length) {
+        trendNote.textContent = 'Dati non disponibili nel periodo';
+        return;
+      }
+      trendBars.title = 'Storico disponibile: ' + new Date(samples[0].timestamp * 1000).toLocaleString('it-IT') +
+        ' – ' + new Date(samples[samples.length - 1].timestamp * 1000).toLocaleString('it-IT');
+      var latest = samples[samples.length - 1];
+      trendValue.textContent = latest.availability_pct.toFixed(1) + '%';
+      trendValue.title = 'Ultimo campione: ' + new Date(latest.timestamp * 1000).toLocaleString('it-IT');
+      var buckets = [];
+      var size = Math.ceil(samples.length / 32);
+      for (var i = 0; i < samples.length; i += size) {
+        var chunk = samples.slice(i, i + size);
+        buckets.push({ timestamp: chunk[chunk.length - 1].timestamp,
+          value: chunk.reduce(function (sum, sample) { return sum + sample.availability_pct; }, 0) / chunk.length });
+      }
+      var values = buckets.map(function (sample) { return sample.value; });
+      var min = Math.min.apply(null, values), max = Math.max.apply(null, values);
+      var padding = max - min < .001 ? .5 : Math.max(.2, (max - min) * .15);
+      var lower = Math.max(0, min - padding), upper = Math.min(100, max + padding);
+      if (upper - lower < 1) {
+        var middle = (upper + lower) / 2;
+        lower = Math.max(0, middle - .5); upper = Math.min(100, middle + .5);
+      }
+      buckets.forEach(function (sample) {
+        var bar = element('span', 'status-dashboard-trend-bar');
+        bar.style.height = Math.max(2, (sample.value - lower) / Math.max(.1, upper - lower) * 100) + '%';
+        bar.title = new Date(sample.timestamp * 1000).toLocaleString('it-IT') + ' · ' + sample.value.toFixed(1) + '%';
+        trendBars.appendChild(bar);
+      });
+      trendNote.textContent = 'Complessiva · ' + lower.toFixed(1) + '–' + upper.toFixed(1) + '%';
+    }
+    // Read the same snapshot used by live.php, once per page load.
+    view.fetch(new URL('../live_trend_snapshot.json', doc.location.href).href, {
+      cache: 'no-store', credentials: 'same-origin'
+    }).then(function (response) {
+      if (!response.ok) throw new Error('Snapshot unavailable');
+      return response.json();
+    }).then(function (snapshot) {
+      var now = Date.now() / 1000;
+      history = Array.isArray(snapshot.samples) ? snapshot.samples.filter(function (sample) {
+        return Number.isFinite(sample.timestamp) && sample.timestamp >= now - ranges['30gg'] &&
+          sample.timestamp <= now && Number.isFinite(sample.availability_pct) &&
+          sample.availability_pct >= 0 && sample.availability_pct <= 100;
+      }) : [];
+      history.sort(function (a, b) { return a.timestamp - b.timestamp; });
+      rangeControls.querySelectorAll('button').forEach(function (button) { button.disabled = false; });
+      renderTrend();
+    }).catch(function () {
+      trendNote.textContent = 'Dati non disponibili';
+      trendBars.hidden = true;
+    });
     clockCell.appendChild(clock);
+    var dateFormatter = new Intl.DateTimeFormat('it-IT', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
     function updateClock() {
       var now = new Date();
       time.dateTime = now.toISOString();
       time.textContent = now.toLocaleTimeString('en-GB', { hour12: false });
-      date.textContent = now.toLocaleDateString('en-GB', {
-        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric'
+      var dateParts = {};
+      dateFormatter.formatToParts(now).forEach(function (part) {
+        dateParts[part.type] = part.value;
       });
+      function capitalize(value) { return value.charAt(0).toUpperCase() + value.slice(1); }
+      date.textContent = capitalize(dateParts.weekday) + ', ' + dateParts.day + ' ' +
+        capitalize(dateParts.month) + ' ' + dateParts.year;
     }
     function updateColors() {
       var position = 0;
@@ -142,6 +244,31 @@
     row.appendChild(chartCell);
     row.appendChild(clockCell);
     doc.body.classList.add('status-dashboard');
+    function alignDashboardPanels() {
+      var header = doc.querySelector('body > table.headertable');
+      if (!header) return;
+      var headerCells = header.querySelectorAll(':scope > tbody > tr > td');
+      [chartCell, clockCell].forEach(function (cell, index) {
+        var above = headerCells[index + 1];
+        // On desktop, tuck each panel under its own totals card rather than
+        // leaving a gap determined by the taller network information card.
+        var lift = above && view.matchMedia('(min-width: 1051px)').matches
+          ? Math.max(0, header.offsetHeight - above.offsetHeight) : 0;
+        cell.style.marginTop = -lift + 'px';
+      });
+    }
+    alignDashboardPanels();
+    view.addEventListener('resize', alignDashboardPanels);
+    if (view.ResizeObserver) {
+      var layoutObserver = new view.ResizeObserver(alignDashboardPanels);
+      var header = doc.querySelector('body > table.headertable');
+      if (header) {
+        layoutObserver.observe(header);
+        header.querySelectorAll(':scope > tbody > tr > td').forEach(function (cell) {
+          layoutObserver.observe(cell);
+        });
+      }
+    }
     updateColors();
     updateClock();
     // The timer belongs to the CGI window and ends when that page reloads.
