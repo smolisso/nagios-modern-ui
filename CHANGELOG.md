@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.0] - 2026-11-16
+
+### Added
+- Host and service status dashboards with donut charts sourced from the native totals, linked state legends and a local clock showing seconds, date and time zone
+- Refresh-aware LIVE badges with a slow green halo and reduced-motion support
+- Theme-specific SVG and GIF interface icons, with opposing animated flapping arrows generated from the same SVG animation samples
+
+### Changed
+- Moved status titles and LIVE badges to the upper left, replaced the visible Display Filters summary with dashboard panels and preserved active filters and native links
+- Made interface icon backgrounds transparent, retaining the graph icon background only in the dark theme
+- Improved the information icon with a clearer symbol and identical dark strokes in both themes
+- Used the stronger light-theme CRITICAL and WARNING badge colors in service totals, charts and legends
+- Updated installation documentation, icon rendering tools and the status script cache version; rebuilt `share.zip` for `0.9.0`
+
+### Fixed
+- Single-host status layouts no longer reserve empty CGI columns or push the clock below the dashboard on desktop
+- Transparent status icons retain dark strokes on yellow WARNING cells in the dark theme
+
+---
+
 ## [0.8.2] - 2026-11-13
 
 ### Changed

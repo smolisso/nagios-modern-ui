@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.8.2-blue)
+![Version](https://img.shields.io/badge/version-0.9.0-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -12,6 +12,8 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - Compact classic CGI layout with consistent typography, panels, tables and spacing across all 14 stylesheets
 - Dark blue UI refresh across the standard Nagios Core pages
 - Global dark/light theme switch with persisted preference
+- Host and service status dashboards with linked donut charts, a local clock and a refresh-aware LIVE indicator
+- Theme-aware transparent interface icons and animated flapping arrows in SVG and legacy GIF formats
 - Responsive `index.php` shell and a modernized `side.php`
 - Compact/expanded sidebar navigation with active page highlighting
 - `live.php` modern live overview sourced directly from `status.dat`
@@ -129,15 +131,24 @@ Icons and logos:
 [nagios_root_path]/share/images/downtime.svg
 [nagios_root_path]/share/images/status2.svg
 [nagios_root_path]/share/images/flapping.svg
+[nagios_root_path]/share/images/*-dark.svg
 [nagios_root_path]/share/images/*.gif
 [nagios_root_path]/share/images/logos/*
 ```
 
-The five interface icons share a neutral background and uniform strokes. Modern
+The five interface icons use uniform strokes. Comment, downtime, flapping and
+information icons have transparent backgrounds. The graph action icon is also
+transparent in the light theme and keeps its background in the dark theme. Modern
 PHP pages use SVG; matching GIF exports retain the original filenames and pixel
-dimensions for classic Nagios CGI pages. Install both formats. To regenerate the
-GIF exports from their SVG sources, run `bash scripts/render-icons.sh` with
-`rsvg-convert` (librsvg) and `magick` (ImageMagick) installed.
+dimensions for classic Nagios CGI pages. Install both formats, including the
+`*-dark` variants. The shared stylesheet selects dark icons automatically with
+the dark theme and keeps the original icons for the light theme. Information icons
+use the same dark, reinforced symbol in both themes; transparent status icons also
+use dark strokes on yellow WARNING cells. To regenerate the
+GIF exports (light and `*-dark` variants) from their SVG sources, run `bash scripts/render-icons.sh` with
+`rsvg-convert` (librsvg), `magick` (ImageMagick) and Python 3 installed.
+The flapping arrows move in opposite directions in both SVG and GIF variants;
+the GIF frames are generated from the SVG animation samples (1.2-second loop).
 
 ## Live Overview Historical Trend
 

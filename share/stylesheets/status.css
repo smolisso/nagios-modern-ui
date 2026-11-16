@@ -2673,3 +2673,144 @@ html:root body.status:has(div.status > a[href*="hostgroup="][href*="style=detail
 }
 
 }
+
+/* Live status: a steady dot with a slow halo, below the native title. */
+body.status .statusTitle .status-live-badge {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 9px;
+    margin: 9px 0 0;
+    padding: 6px 12px;
+    vertical-align: middle;
+    border: 1px solid rgba(52, 211, 153, .25);
+    border-radius: 999px;
+    background: rgba(16, 185, 129, .1);
+    color: #6ee7b7;
+    font: 700 12px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: .9px;
+    white-space: nowrap;
+}
+body.status .status-live-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    flex: 0 0 8px;
+    border-radius: 50%;
+    background: #34d399;
+}
+body.status .status-live-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border: 1px solid currentColor;
+    border-radius: inherit;
+    animation: status-live-pulse 2.8s ease-out infinite;
+    pointer-events: none;
+}
+html:is(.light, [data-theme="light"]) body.status .statusTitle .status-live-badge {
+    color: #087443;
+    background: rgba(16, 185, 129, .08);
+    border-color: rgba(8, 116, 67, .2);
+}
+html:is(.light, [data-theme="light"]) body.status .status-live-dot {
+    background: #0c8b52;
+}
+body.status .status-live-badge:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+@keyframes status-live-pulse {
+    0% { transform: scale(.55); opacity: .7; }
+    75%, 100% { transform: scale(1.5); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    body.status .status-live-dot::after { animation: none; opacity: 0; }
+}
+
+/* Service detail dashboard: retain native totals, links and filter state. */
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr {
+    display: grid !important;
+    grid-template-columns: minmax(220px, 1fr) minmax(340px, 1.2fr) minmax(200px, .8fr) !important;
+    gap: 16px;
+    align-items: stretch !important;
+}
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td { display: block; }
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td:empty,
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td.status-dashboard-filter-cell { display: none; }
+body.status .status-dashboard-title-cell { order: 0; align-self: start; grid-column: 1; grid-row: 1; }
+body.status .status-dashboard-chart-cell { order: 1; grid-column: 2; grid-row: 1; }
+body.status .status-dashboard-clock-cell { order: 2; grid-column: 3; grid-row: 1; }
+html:root body.status.status-dashboard .status-dashboard-title-cell .statusTitle {
+    text-align: left; max-width: 100%; overflow-wrap: anywhere;
+}
+body.status .status-dashboard-card {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 16px 20px;
+    border: 1px solid var(--detail-border);
+    border-radius: 12px;
+    background: var(--detail-panel);
+    color: var(--detail-text);
+}
+body.status .status-dashboard-label {
+    color: var(--detail-muted); font-size: 10px; font-weight: 650;
+    letter-spacing: 1.5px; line-height: 1.4;
+}
+body.status .status-dashboard-chart-body { display: flex; align-items: center; gap: 24px; margin-top: 12px; }
+body.status .status-dashboard-donut {
+    position: relative; width: 116px; height: 116px; flex: 0 0 116px; border-radius: 50%;
+}
+body.status .status-dashboard-donut-center {
+    position: absolute; inset: 14px; border-radius: 50%; background: var(--detail-panel);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+body.status .status-dashboard-donut-center strong { font-size: 23px; line-height: 1.2; font-weight: 650; font-variant-numeric: tabular-nums; }
+body.status .status-dashboard-donut-center span { font-size: 10px; color: var(--detail-muted); margin-top: 3px; }
+body.status .status-dashboard-legend { flex: 1; min-width: 0; display: grid; gap: 6px; }
+html:root body.status .status-dashboard-legend-item {
+    display: flex; align-items: center; gap: 8px; color: var(--detail-muted);
+    font-size: 12px; line-height: 1.3; text-decoration: none;
+}
+html:root body.status a.status-dashboard-legend-item:hover { color: var(--detail-text); text-decoration: underline; }
+body.status .status-dashboard-swatch { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 2px; }
+body.status .status-dashboard-legend-item strong { margin-left: auto; color: var(--detail-text); font-weight: 650; font-variant-numeric: tabular-nums; }
+body.status .status-dashboard-clock { display: flex; flex-direction: column; justify-content: center; }
+body.status .status-dashboard-time { display: block; margin: 14px 0 6px; font-size: clamp(28px, 3.2vw, 48px); font-weight: 550; letter-spacing: -1.5px; line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.status .status-dashboard-date { color: var(--detail-text); font-size: 13px; }
+body.status .status-dashboard-zone { color: var(--detail-muted); font-size: 11px; margin-top: 6px; }
+@media (max-width: 1050px) {
+    html:root body.status.status-dashboard > table.pageTitle > tbody > tr { grid-template-columns: minmax(320px, 1.2fr) minmax(200px, .8fr) !important; }
+    body.status .status-dashboard-title-cell { grid-column: 1 / -1; grid-row: 1; }
+    body.status .status-dashboard-chart-cell { grid-column: 1; grid-row: 2; }
+    body.status .status-dashboard-clock-cell { grid-column: 2; grid-row: 2; }
+    html:root body.status.status-dashboard .status-dashboard-title-cell .statusTitle { max-width: none; }
+}
+@media (max-width: 600px) {
+    html:root body.status.status-dashboard > table.pageTitle > tbody > tr { grid-template-columns: minmax(0, 1fr) !important; }
+    body.status .status-dashboard-chart-cell { grid-column: 1; grid-row: 2; }
+    body.status .status-dashboard-clock-cell { grid-column: 1; grid-row: 3; }
+    body.status .status-dashboard-chart-body { gap: 18px; }
+    body.status .status-dashboard-time { font-size: 38px; }
+}
+
+/* Override the legacy last-column rule for the new clock cell. */
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td.status-dashboard-clock-cell { display: block !important; }
+
+/* Empty CGI cells must not reserve columns in single-host or headerless views. */
+html:root body.status.status-dashboard > table.pageTitle { width: 100%; margin: 0 0 12px; border-spacing: 0; }
+html:root body.status.status-dashboard > table.pageTitle > tbody { display: block; }
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td.status-dashboard-unused-cell { display: none !important; }
+
+/* Match light-theme service totals to the stronger status badges.
+   The dashboard reads these same cell colors for its ring and legend. */
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsCRITICAL,
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsCRITICAL :is(a, a *) {
+    background-color: var(--state-critical-badge-bg) !important;
+    color: #fff !important;
+}
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsWARNING,
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsWARNING :is(a, a *) {
+    background-color: var(--state-warning-badge-bg) !important;
+    color: var(--state-warning-fg) !important;
+}

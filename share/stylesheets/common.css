@@ -1729,3 +1729,56 @@ html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifi
   html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) { padding: 12px 14px; }
   html:root body:is(.avail, .cmd, .config, .extinfo, .histogram, .history, .notifications, .outages, .showlog, .summary, .tac, .trends, .status:where(:not(:has(> table.status > tbody > tr > th:nth-child(7))))) table.infoBox { max-width: 100%; }
 }
+
+/* Match action/status icons to the selected theme, including legacy CGI GIFs.
+   Original assets remain the light variant; root defaults to dark. */
+:root:not(.light):not([data-theme="light"]) img[src$="images/action.svg"] {
+  content: url("../images/action-dark.svg");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/action.gif"] {
+  content: url("../images/action-dark.gif");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/comment.svg"] {
+  content: url("../images/comment-dark.svg");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/comment.gif"] {
+  content: url("../images/comment-dark.gif");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/downtime.svg"] {
+  content: url("../images/downtime-dark.svg");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/downtime.gif"] {
+  content: url("../images/downtime-dark.gif");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/flapping.svg"] {
+  content: url("../images/flapping-dark.svg");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/flapping.gif"] {
+  content: url("../images/flapping-dark.gif");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/status2.svg"] {
+  content: url("../images/status2-dark.svg");
+}
+
+:root:not(.light):not([data-theme="light"]) img[src$="images/status2.gif"] {
+  content: url("../images/status2-dark.gif");
+}
+
+/* Yellow WARNING cells need the original dark strokes in either theme.
+   Reset only transparent status icons; the graph keeps its themed surface. */
+:root:not(.light):not([data-theme="light"]) :is(td.statusWARNING, td.statusBGWARNING, td.statusBGWARNINGACK, td.statusBGWARNINGSCHED, tr.statusWARNING td) img:is(
+  [src$="images/comment.svg"], [src$="images/comment.gif"],
+  [src$="images/downtime.svg"], [src$="images/downtime.gif"],
+  [src$="images/flapping.svg"], [src$="images/flapping.gif"],
+  [src$="images/status2.svg"], [src$="images/status2.gif"]
+) {
+  content: normal;
+}
