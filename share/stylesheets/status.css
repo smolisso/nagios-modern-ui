@@ -54,7 +54,7 @@ th.serviceTotals,a.serviceTotals { font-size: 8pt; }
 td.serviceTotals       { font-size: 8pt; text-align: center; background-color: #e0e0e0; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsOK       { font-size: 8pt; text-align: center; background-color: #6BC497; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsWARNING  { font-size: 8pt; text-align: center; background-color: #e5ca3e; border: 1px solid #777777; padding: 2 4 2 4; }
-.serviceTotalsUNKNOWN  { font-size: 8pt; text-align: center; background-color: #ffbb55; border: 1px solid #777777; padding: 2 4 2 4; }
+.serviceTotalsUNKNOWN  { font-size: 8pt; text-align: center; background-color: #9e82a0; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsCRITICAL { font-size: 8pt; text-align: center; background-color: #f88888; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsPENDING  { font-size: 8pt; text-align: center; background-color: #acacac; border: 1px solid #777777; padding: 2 4 2 4; }
 .serviceTotalsPROBLEMS { font-size: 8pt; text-align: center; background-color: #aaccff; border: 1px solid #777777; padding: 2 4 2 4; }

@@ -14,7 +14,7 @@
             'position:fixed',
             'z-index:99999',
             'width:720px',
-            'height:360px',
+            'height:400px',
             'background:#08111c',
             'border:1px solid rgba(99,126,156,.35)',
             'border-radius:16px',
@@ -52,7 +52,7 @@
     function placePopup(popup, anchor, event) {
         var pos = frameAdjustedPosition(anchor, event);
         var width = 720;
-        var height = 360;
+        var height = 400;
         var x = Math.min(window.innerWidth - width - 20, pos.x + 18);
         var y = Math.min(window.innerHeight - height - 20, pos.y + 18);
 
@@ -61,6 +61,13 @@
     }
 
     window.showModernGraphPopup = function (anchor, event) {
+        // The CGI adds native tooltips that otherwise overlap the graph preview.
+        anchor.removeAttribute('title');
+        var titledElements = anchor.querySelectorAll('[title]');
+        for (var i = 0; i < titledElements.length; i++) {
+            titledElements[i].removeAttribute('title');
+        }
+
         var popup = ensurePopup();
         var iframe = popup.querySelector('iframe');
         var url = anchor.getAttribute('rel') || '';

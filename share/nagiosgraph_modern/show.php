@@ -462,7 +462,8 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
     }
 
     body.embed .chart-wrap {
-        min-height: 250px;
+        min-height: 320px;
+        height: auto;
         border-radius: 16px;
     }
 
@@ -473,7 +474,8 @@ $hostIconUrl = $host !== '' ? host_icon_url($hostIconMap, $hostIconBaseUrl, $hos
     }
 
     body.embed #chart {
-        height: 250px;
+        min-height: 0;
+        height: 320px;
     }
 
     .brush-layer {

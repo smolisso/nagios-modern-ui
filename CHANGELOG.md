@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.3] - 2026-11-17
+
+### Fixed
+- Removed native action-icon tooltips overlapping graph previews
+- Matched Unknown service totals, dashboard charts and legends to the purple status-table color
+- Enlarged graph previews and aligned embedded chart dimensions to keep bottom axis labels visible
+
+### Changed
+- Updated version metadata and the status script cache version; rebuilt `share.zip` for `0.9.3`
+
+---
+
 ## [0.9.2] - 2026-11-16
 
 ### Added
