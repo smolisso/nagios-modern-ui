@@ -2047,6 +2047,26 @@ html:not(.light):not([data-theme="light"]) body.status:has(> table.status > tbod
     box-shadow: none !important;
 }
 
+/* Native CGI name/icon tables must expose the outer cell's surface,
+   including on hover, for every service state and in both themes. */
+html:root body.status:has(> table.status > tbody > tr > th:nth-child(7)) > table.status > tbody > tr > td:nth-child(-n+2):not([colspan]) :is(table, tbody, tr, td) {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Emphasize the entire hovered detail cell while keeping its state color.
+   A darker overlay makes the same feedback visible on light surfaces. */
+html:root body.status > table.status:has(> tbody > tr > th:nth-child(7)) > tbody > tr > td:not([colspan]):hover,
+html:root body.status > div > table.status:has(> tbody > tr > th:nth-child(5)):not(:has(> tbody > tr > th:nth-child(6))) > tbody > tr > td:not([colspan]):hover {
+    --status-cell-hover-overlay: rgba(255, 255, 255, 0.09);
+    background-image: linear-gradient(var(--status-cell-hover-overlay), var(--status-cell-hover-overlay)) !important;
+}
+
+html:root:is(.light, [data-theme="light"]) body.status > table.status:has(> tbody > tr > th:nth-child(7)) > tbody > tr > td:not([colspan]):hover,
+html:root:is(.light, [data-theme="light"]) body.status > div > table.status:has(> tbody > tr > th:nth-child(5)):not(:has(> tbody > tr > th:nth-child(6))) > tbody > tr > td:not([colspan]):hover {
+    --status-cell-hover-overlay: rgba(0, 0, 0, 0.10);
+}
+
 /* =========================================================
    HOSTGROUP SUMMARY / OVERVIEW
    Select the native group layouts by their links and table structure.
