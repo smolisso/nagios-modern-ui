@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.4] - 2026-11-18
+
+### Fixed
+- Removed uneven hover patches around service names and action icons by making nested CGI table surfaces transparent
+
+### Changed
+- Made hover feedback more visible across host and service detail cells in both dark and light themes, with a balanced intensity that preserves status colors
+- Updated version metadata and the status script cache version; rebuilt `share.zip` for `0.9.4`
+
+---
+
 ## [0.9.3] - 2026-11-17
 
 ### Fixed
