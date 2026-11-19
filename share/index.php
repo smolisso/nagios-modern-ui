@@ -50,7 +50,7 @@ if ($theme != 'dark' && $theme != 'light') {
 	<script src="nagiosgraph_modern/popup.js"></script>
 	<script src="stylesheets/theme.js"></script>
 	<script src="stylesheets/host-copy.js?v=0.7.6"></script>
-	<script src="stylesheets/status-sort.js?v=0.9.4"></script>
+	<script src="stylesheets/status-sort.js?v=<?= filemtime(__DIR__ . '/stylesheets/status-sort.js') ?>"></script>
 
 	<style>
 		:root {
@@ -237,6 +237,20 @@ if ($theme != 'dark' && $theme != 'light') {
 			var main = document.querySelector('iframe[name="main"]');
 			try {
 				var doc = main.contentDocument || main.contentWindow.document;
+				// CGI owns the stylesheet URL; refresh its cache key when our CSS changes.
+				doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(function (link) {
+					var href = new URL(link.href);
+					var revisions = {
+						'status.css': '<?= filemtime(__DIR__ . '/stylesheets/status.css') ?>',
+						'common.css': '<?= filemtime(__DIR__ . '/stylesheets/common.css') ?>'
+					};
+					var stylesheet = href.pathname.match(/\/stylesheets\/(status\.css|common\.css)$/);
+					if (!stylesheet) return;
+					var revision = revisions[stylesheet[1]];
+					if (href.searchParams.get('modern-ui') === revision) return;
+					href.searchParams.set('modern-ui', revision);
+					link.href = href.href;
+				});
 				// Choose the dashboard layout from the shell, before subtracting
 				// the sidebar width from the embedded page's viewport.
 				var layout = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';

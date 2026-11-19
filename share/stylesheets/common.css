@@ -208,6 +208,19 @@ not important:  blue             aaccff  777777
   background-color: var(--background);
 }
 
+/* Static corner mesh stays behind content and never intercepts interaction. */
+html:root body:not(.navbar):not(#root) {
+  background-image: url('../images/neural-network.svg?v=4') !important;
+  background-position: right bottom !important;
+  background-size: max(100vw, 120vh) auto !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+@media print {
+  html:root body:not(.navbar):not(#root) { background-image: none !important; }
+}
+
 body {
   margin: 0.8em 0.8em 2em 0.8em;
   font-family: Geist;

@@ -162,6 +162,10 @@
     clockToolbar.appendChild(clockToggle);
     clockDetails.appendChild(clockToolbar);
     var time = element('time', 'status-dashboard-time');
+    var timeHoursMinutes = doc.createTextNode('');
+    var timeSeconds = element('span', 'status-dashboard-seconds');
+    time.appendChild(timeHoursMinutes);
+    time.appendChild(timeSeconds);
     var date = element('div', 'status-dashboard-date');
     var zone = element('div', 'status-dashboard-zone', Intl.DateTimeFormat().resolvedOptions().timeZone);
     var svgNamespace = 'http://www.w3.org/2000/svg';
@@ -314,7 +318,9 @@
     function updateClock() {
       var now = new Date();
       time.dateTime = now.toISOString();
-      time.textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+      var timeText = now.toLocaleTimeString('en-GB', { hour12: false });
+      timeHoursMinutes.nodeValue = timeText.slice(0, -2);
+      timeSeconds.textContent = timeText.slice(-2);
       analog.setAttribute('aria-label', 'Ora locale: ' + time.textContent);
       hourHand.setAttribute('transform', 'rotate(' + ((now.getHours() % 12) * 30 + now.getMinutes() / 2 + now.getSeconds() / 120) + ' 50 50)');
       minuteHand.setAttribute('transform', 'rotate(' + (now.getMinutes() * 6 + now.getSeconds() / 10) + ' 50 50)');

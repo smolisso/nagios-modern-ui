@@ -2804,6 +2804,15 @@ html:root body.status section.status-dashboard-clock > * {
     align-self: flex-end; text-align: right;
 }
 body.status .status-dashboard-time { display: block; margin: 14px 0 6px; font-size: clamp(28px, 3.2vw, 48px); font-weight: 550; letter-spacing: -1.5px; line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.status .status-dashboard-seconds { color: #5284bd; }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+    body.status .status-dashboard-seconds {
+        background: linear-gradient(to top, #5284bd, #62b999);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
 body.status .status-dashboard-date { color: var(--detail-text); font-size: 13px; }
 body.status .status-dashboard-zone { color: var(--detail-muted); font-size: 11px; margin-top: 6px; }
 @media (max-width: 1050px) {

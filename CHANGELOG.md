@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.5] - 2026-11-19
+
+### Added
+- Gradient-colored digital clock seconds matching the availability trend bars
+- Static neural-network SVG background with 187 nodes and 506 connections, fading from the lower-right corner and scaling with the viewport
+
+### Changed
+- Refresh status JavaScript and embedded CGI stylesheet cache keys automatically when the source files change
+- Updated version metadata and rebuilt `share.zip` for `0.9.5`
+
+---
+
 ## [0.9.4] - 2026-11-18
 
 ### Fixed

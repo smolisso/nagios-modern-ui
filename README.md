@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.9.4-blue)
+![Version](https://img.shields.io/badge/version-0.9.5-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -15,6 +15,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - Host and service status dashboards with linked donut charts, a local clock and a refresh-aware LIVE indicator
 - Compact global availability trend with 24-hour, 7-day and 30-day selectors, using the same snapshot as Live Overview
 - Switchable digital/analog clock with a saved preference, plus a native-refresh countdown beneath LIVE
+- Gradient-colored digital seconds matching the availability trend and a static neural-network background fading from the lower-right corner
 - Theme-aware transparent interface icons and animated flapping arrows in SVG and legacy GIF formats
 - Responsive `index.php` shell and a modernized `side.php`
 - Compact/expanded sidebar navigation with active page highlighting
