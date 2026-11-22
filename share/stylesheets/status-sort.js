@@ -167,7 +167,17 @@
     time.appendChild(timeHoursMinutes);
     time.appendChild(timeSeconds);
     var date = element('div', 'status-dashboard-date');
-    var zone = element('div', 'status-dashboard-zone', Intl.DateTimeFormat().resolvedOptions().timeZone);
+    var clockTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    // A timezone does not uniquely identify a language; use explicit defaults.
+    var clockLocales = {
+      'Europe/Rome': 'it-IT',
+      'Europe/Vienna': 'de-AT',
+      'Europe/Berlin': 'de-DE',
+      'Europe/Paris': 'fr-FR',
+      'Europe/Madrid': 'es-ES'
+    };
+    var clockLocale = clockLocales[clockTimezone] || 'en-GB';
+    var zone = element('div', 'status-dashboard-zone', clockTimezone);
     var svgNamespace = 'http://www.w3.org/2000/svg';
     function clockShape(tag, attributes) {
       var node = doc.createElementNS(svgNamespace, tag);
@@ -312,7 +322,7 @@
       trendBars.hidden = true;
     });
     clockCell.appendChild(clock);
-    var dateFormatter = new Intl.DateTimeFormat('it-IT', {
+    var dateFormatter = new Intl.DateTimeFormat(clockLocale, {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
     });
     function updateClock() {

@@ -163,6 +163,15 @@ If you want the historical availability trend in `live.php`, add this cron job:
 
 This populates the JSON snapshot data used by the live availability widget.
 
+## Dashboard Clock Language
+
+The dashboard clock uses the browser's local time and timezone. Its date language
+is selected from that timezone: `Europe/Rome` uses Italian, `Europe/Vienna` and
+`Europe/Berlin` use German, `Europe/Paris` uses French, and `Europe/Madrid` uses
+Spanish. All other timezones (including `UTC`) use English. If the browser does
+not report a timezone, the label falls back to `UTC` and the date uses English.
+The clock keeps its 24-hour format.
+
 ## Live Overview Timezone
 
 `live.php` formats timestamps using a configurable variable at the top of the file:
