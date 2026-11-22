@@ -176,6 +176,8 @@ If the value is invalid, `live.php` automatically falls back to `UTC`.
 
 ## Nagiosgraph Modern Integration
 
+`nagiosgraph_modern` is fully compatible with the standard Nagiosgraph RRD files created and updated by `insert.pl`. See the [upstream Nagiosgraph installation guide](https://github.com/JasonRivers/nagiosgraph/blob/master/INSTALL).
+
 If you want graphed services to use the new graph page and hover preview, update your `graphed-service` template:
 
 ```cfg
