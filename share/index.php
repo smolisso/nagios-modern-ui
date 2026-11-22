@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/config.inc.php');
+$modernUiConfig = require __DIR__ . '/modern-ui-config.php';
 
 // Allow specifying main window URL for permalinks, etc.
 $url = 'main.php';
@@ -49,6 +50,8 @@ if ($theme != 'dark' && $theme != 'light') {
 	</script>
 	<script src="nagiosgraph_modern/popup.js"></script>
 	<script src="stylesheets/theme.js"></script>
+	<script>window.NagiosModernUIConfig = <?= json_encode($modernUiConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
+	<script src="stylesheets/modern-ui-time.js?v=<?= filemtime(__DIR__ . '/stylesheets/modern-ui-time.js') ?>"></script>
 	<script src="stylesheets/host-copy.js?v=0.7.6"></script>
 	<script src="stylesheets/status-sort.js?v=<?= filemtime(__DIR__ . '/stylesheets/status-sort.js') ?>"></script>
 

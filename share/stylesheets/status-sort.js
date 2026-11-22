@@ -151,7 +151,7 @@
 
     var clockCell = element('td', 'status-dashboard-clock-cell');
     var clock = element('section', 'status-dashboard-card status-dashboard-clock');
-    clock.setAttribute('aria-label', 'Local time on this device');
+    clock.setAttribute('aria-label', 'Dashboard clock');
     var clockDetails = element('div', 'status-dashboard-clock-details');
     var clockToolbar = element('div', 'status-dashboard-clock-toolbar');
     var clockHeading = element('div', 'status-dashboard-clock-heading');
@@ -167,16 +167,10 @@
     time.appendChild(timeHoursMinutes);
     time.appendChild(timeSeconds);
     var date = element('div', 'status-dashboard-date');
-    var clockTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
-    // A timezone does not uniquely identify a language; use explicit defaults.
-    var clockLocales = {
-      'Europe/Rome': 'it-IT',
-      'Europe/Vienna': 'de-AT',
-      'Europe/Berlin': 'de-DE',
-      'Europe/Paris': 'fr-FR',
-      'Europe/Madrid': 'es-ES'
-    };
-    var clockLocale = clockLocales[clockTimezone] || 'en-GB';
+    var clockSettings = window.NagiosModernUITime.resolve();
+    var clockTimezone = clockSettings.timeZone;
+    var clockLocale = clockSettings.language;
+    date.lang = clockLocale;
     var zone = element('div', 'status-dashboard-zone', clockTimezone);
     var svgNamespace = 'http://www.w3.org/2000/svg';
     function clockShape(tag, attributes) {
@@ -232,13 +226,16 @@
     var history = [];
     var selectedRange = '24h';
     var ranges = { '24h': 86400, '7gg': 604800, '30gg': 2592000 };
+    var daySuffixes = { it: 'gg', en: 'd', de: 'T', fr: 'j', es: 'd' };
+    var daySuffix = daySuffixes[clockLocale.toLowerCase().split('-')[0]] || 'd';
     try { selectedRange = view.sessionStorage.getItem('nagios.status.trendRange') || '24h'; } catch (error) {}
     if (!ranges[selectedRange]) selectedRange = '24h';
     var rangeControls = element('div', 'status-dashboard-trend-ranges');
     rangeControls.setAttribute('role', 'group');
     rangeControls.setAttribute('aria-label', 'Periodo disponibilità complessiva');
     Object.keys(ranges).forEach(function (range) {
-      var button = element('button', '', range);
+      var button = element('button', '', range.replace('gg', daySuffix));
+      button.setAttribute('data-range', range);
       button.type = 'button';
       button.disabled = true;
       button.setAttribute('aria-pressed', String(range === selectedRange));
@@ -261,7 +258,7 @@
     clock.appendChild(clockDetails);
     function renderTrend() {
       rangeControls.querySelectorAll('button').forEach(function (button) {
-        button.setAttribute('aria-pressed', String(button.textContent === selectedRange));
+        button.setAttribute('aria-pressed', String(button.getAttribute('data-range') === selectedRange));
       });
       trendBars.replaceChildren();
       trendValue.textContent = '—';
@@ -323,18 +320,25 @@
     });
     clockCell.appendChild(clock);
     var dateFormatter = new Intl.DateTimeFormat(clockLocale, {
-      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+      timeZone: clockTimezone, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+    var timeFormatter = new Intl.DateTimeFormat('en-GB', {
+      timeZone: clockTimezone, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
     });
     function updateClock() {
       var now = new Date();
       time.dateTime = now.toISOString();
-      var timeText = now.toLocaleTimeString('en-GB', { hour12: false });
+      var clockParts = {};
+      timeFormatter.formatToParts(now).forEach(function (part) {
+        clockParts[part.type] = part.value;
+      });
+      var timeText = clockParts.hour + ':' + clockParts.minute + ':' + clockParts.second;
       timeHoursMinutes.nodeValue = timeText.slice(0, -2);
       timeSeconds.textContent = timeText.slice(-2);
-      analog.setAttribute('aria-label', 'Ora locale: ' + time.textContent);
-      hourHand.setAttribute('transform', 'rotate(' + ((now.getHours() % 12) * 30 + now.getMinutes() / 2 + now.getSeconds() / 120) + ' 50 50)');
-      minuteHand.setAttribute('transform', 'rotate(' + (now.getMinutes() * 6 + now.getSeconds() / 10) + ' 50 50)');
-      secondHand.setAttribute('transform', 'rotate(' + now.getSeconds() * 6 + ' 50 50)');
+      analog.setAttribute('aria-label', 'Time: ' + time.textContent);
+      hourHand.setAttribute('transform', 'rotate(' + ((Number(clockParts.hour) % 12) * 30 + Number(clockParts.minute) / 2 + Number(clockParts.second) / 120) + ' 50 50)');
+      minuteHand.setAttribute('transform', 'rotate(' + (Number(clockParts.minute) * 6 + Number(clockParts.second) / 10) + ' 50 50)');
+      secondHand.setAttribute('transform', 'rotate(' + Number(clockParts.second) * 6 + ' 50 50)');
       var dateParts = {};
       dateFormatter.formatToParts(now).forEach(function (part) {
         dateParts[part.type] = part.value;

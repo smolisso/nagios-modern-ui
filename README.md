@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.9.5-blue)
+![Version](https://img.shields.io/badge/version-0.9.6-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -163,25 +163,46 @@ If you want the historical availability trend in `live.php`, add this cron job:
 
 This populates the JSON snapshot data used by the live availability widget.
 
-## Dashboard Clock Language
+## Modern UI Configuration
 
-The dashboard clock uses the browser's local time and timezone. Its date language
-is selected from that timezone: `Europe/Rome` uses Italian, `Europe/Vienna` and
-`Europe/Berlin` use German, `Europe/Paris` uses French, and `Europe/Madrid` uses
-Spanish. All other timezones (including `UTC`) use English. If the browser does
-not report a timezone, the label falls back to `UTC` and the date uses English.
-The clock keeps its 24-hour format.
-
-## Live Overview Timezone
-
-`live.php` formats timestamps using a configurable variable at the top of the file:
+Edit `share/modern-ui-config.php` (installed as
+`/usr/local/nagios/share/modern-ui-config.php`) to configure date and time display:
 
 ```php
-$liveTimezone = 'Europe/Rome';
+<?php
+return [
+    'timezone' => '',
+    'language' => '',
+    'live_refresh_seconds' => 30,
+];
 ```
 
-Set it to any valid PHP timezone identifier (for example `UTC`, `Europe/Rome`, `America/New_York`).
-If the value is invalid, `live.php` automatically falls back to `UTC`.
+| Timezone | Language | Result |
+| --- | --- | --- |
+| Empty | Empty | Browser timezone and browser language |
+| Set | Empty | Configured timezone and its associated language |
+| Empty | Set | Browser timezone and configured language |
+| Set | Set | Configured timezone and configured language |
+
+For example, `timezone => 'Europe/Rome'` and `language => 'it'` display Rome time
+and Italian dates even on a US device. Use a valid IANA timezone and a language
+tag such as `it`, `en-GB`, `de`, `fr`, or `es`.
+
+When only a timezone is configured, `Europe/Rome` selects Italian,
+`Europe/Vienna` and `Europe/Berlin` German, `Europe/Paris` French, and
+`Europe/Madrid` Spanish. Other configured timezones use English.
+Invalid timezone overrides fall back to the browser timezone, then UTC.
+Invalid or unsupported language overrides use the automatic language rule;
+English is the final language fallback.
+
+These settings apply to the digital and analog dashboard clock and all dates in
+`live.php` (last file update, state changes, trend axis, range and tooltips).
+Language affects dates only; interface labels are unchanged. Times keep the
+24-hour format. PHP renders UTC/English fallback dates if JavaScript is unavailable.
+
+`live_refresh_seconds` must be a positive integer; invalid values use 30 seconds.
+Keep this configuration when updating the installation. The release version
+remains separately managed in `share/modern_ui_version.txt`.
 
 ## Nagiosgraph Modern Integration
 

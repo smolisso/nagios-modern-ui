@@ -14,8 +14,8 @@ $criticalServicesUrl = '/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=2
 $hostsDownUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=12';
 $hostsUpUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail';
 $servicesOkUrl = '/nagios/cgi-bin/status.cgi?host=all';
-$refreshSeconds = 30;
-$liveTimezone = 'Europe/Rome';
+$modernUiConfig = require __DIR__ . '/modern-ui-config.php';
+$refreshSeconds = filter_var($modernUiConfig['live_refresh_seconds'] ?? 30, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: 30;
 
 function parse_status_dat(string $path): array
 {
@@ -196,9 +196,15 @@ function format_duration(int $seconds): string
     return $days . 'd ' . $hours . 'h';
 }
 
-function format_timestamp(int $timestamp): string
+function timestamp_html(int $timestamp, string $format = 'd M H:i'): string
 {
-    return $timestamp > 0 ? date('d M H:i', $timestamp) : 'n/a';
+    if ($timestamp <= 0) {
+        return 'n/a';
+    }
+
+    return '<time datetime="' . gmdate('Y-m-d\TH:i:s\Z', $timestamp) . '" data-live-timestamp="' . $timestamp
+        . '" data-live-format="' . htmlspecialchars($format, ENT_QUOTES, 'UTF-8') . '">'
+        . htmlspecialchars(gmdate($format, $timestamp), ENT_QUOTES, 'UTF-8') . '</time>';
 }
 
 function incident_age(int $lastStateChange, int $now): int
@@ -316,7 +322,7 @@ function trend_axis_labels(array $samples, string $range): array
             continue;
         }
 
-        $labels[] = date($format, (int) $samples[$index]['timestamp']);
+        $labels[] = timestamp_html((int) $samples[$index]['timestamp'], $format);
     }
 
     return $labels;
@@ -620,8 +626,7 @@ function service_has_graph(string $rrdRoot, string $hostName, string $serviceNam
 }
 
 $now = time();
-$timezone = in_array($liveTimezone, timezone_identifiers_list(), true) ? $liveTimezone : 'UTC';
-date_default_timezone_set($timezone);
+date_default_timezone_set('UTC');
 $status = parse_status_dat($statusFile);
 $services = $status['service'];
 $hosts = $status['host'];
@@ -711,7 +716,7 @@ foreach ($services as $service) {
         'badge_class' => state_badge_class($state, 'service'),
         'age_seconds' => $ageSeconds,
         'age_label' => format_duration($ageSeconds),
-        'changed_at' => format_timestamp($lastStateChange),
+        'changed_at' => timestamp_html($lastStateChange),
         'severity_weight' => severity_weight($state, 'service'),
         'attempt' => value_int($service, 'current_attempt') . '/' . max(1, value_int($service, 'max_attempts')),
         'unhandled' => $unhandled,
@@ -787,7 +792,7 @@ foreach ($hosts as $host) {
         'badge_class' => state_badge_class($state, 'host'),
         'age_seconds' => $ageSeconds,
         'age_label' => format_duration($ageSeconds),
-        'changed_at' => format_timestamp($lastStateChange),
+        'changed_at' => timestamp_html($lastStateChange),
         'severity_weight' => severity_weight($state, 'host'),
         'attempt' => value_int($host, 'current_attempt') . '/' . max(1, value_int($host, 'max_attempts')),
         'unhandled' => $unhandled,
@@ -824,7 +829,7 @@ $noisyHosts = array_slice($noisyHosts, 0, 5);
 $totalProblems = $summary['service_problems'] + $summary['hosts_down'] + $summary['hosts_unreachable'];
 $unhandledTotal = $summary['service_unhandled'] + $summary['host_unhandled'];
 $statusFileMtime = is_readable($statusFile) ? @filemtime($statusFile) : false;
-$lastUpdateLabel = $statusFileMtime ? date('d M Y H:i:s', $statusFileMtime) : 'status.dat not readable';
+$lastUpdateLabel = $statusFileMtime ? timestamp_html((int) $statusFileMtime, 'd M Y H:i:s') : 'status.dat not readable';
 $lastAgeLabel = $statusFileMtime ? format_duration(max(0, $now - (int) $statusFileMtime)) . ' ago' : 'n/a';
 $dataSourceStatus = is_readable($statusFile) ? 'Live feed online' : 'Live feed unavailable';
 $trendRange = requested_trend_range();
@@ -842,14 +847,14 @@ foreach ($trendSamples as $sample) {
     $trendBars[] = [
         'height' => max(6, min(100, (int) round($normalizedHeight))),
         'label' => number_format($availability, 1) . '%',
-        'timestamp' => isset($sample['timestamp']) ? date($trendPointFormat, (int) $sample['timestamp']) : 'n/a',
+        'timestamp' => isset($sample['timestamp']) ? timestamp_html((int) $sample['timestamp'], $trendPointFormat) : 'n/a',
     ];
 }
 
 $trendAxis = trend_axis_labels($trendSamples, $trendRange);
 $trendRangeFormat = trend_time_range_format($trendRange);
 $trendRangeLabel = $trendSamples !== []
-    ? date($trendRangeFormat, (int) $trendSamples[0]['timestamp']) . ' to ' . date($trendRangeFormat, (int) $trendSamples[count($trendSamples) - 1]['timestamp'])
+    ? timestamp_html((int) $trendSamples[0]['timestamp'], $trendRangeFormat) . ' to ' . timestamp_html((int) $trendSamples[count($trendSamples) - 1]['timestamp'], $trendRangeFormat)
     : 'Waiting for samples';
 $trendZoomOutRange = trend_range_step($trendRange, 'out');
 $trendZoomInRange = trend_range_step($trendRange, 'in');
@@ -865,6 +870,8 @@ $trendTicks = trend_scale_ticks($trendScale);
 <meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>">
 <title>Live Overview</title>
 <script src="stylesheets/theme.js"></script>
+<script>window.NagiosModernUIConfig = <?= json_encode($modernUiConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
+<script src="stylesheets/modern-ui-time.js?v=<?= filemtime(__DIR__ . '/stylesheets/modern-ui-time.js') ?>"></script>
 <link href="stylesheets/common.css" rel="stylesheet">
 <style>
     :root {
@@ -1964,7 +1971,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                                     <div class="trend-bar">
                                         <div class="trend-tooltip">
                                             <div><?= htmlspecialchars($bar['label'], ENT_QUOTES, 'UTF-8') ?></div>
-                                            <div><?= htmlspecialchars($bar['timestamp'], ENT_QUOTES, 'UTF-8') ?></div>
+                                            <div><?= $bar['timestamp'] ?></div>
                                         </div>
                                         <span style="height: <?= (int) $bar['height'] ?>%"></span>
                                     </div>
@@ -1973,13 +1980,13 @@ $trendTicks = trend_scale_ticks($trendScale);
                         </div>
                         <div class="trend-axis">
                             <?php foreach ($trendAxis as $axisLabel): ?>
-                                <span><?= htmlspecialchars($axisLabel, ENT_QUOTES, 'UTF-8') ?></span>
+                                <span><?= $axisLabel ?></span>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
                 </div>
                 <div class="footer-note">
-                    <?= htmlspecialchars($trendRangeLabel, ENT_QUOTES, 'UTF-8') ?> | Visible scale: <?= htmlspecialchars($trendScaleLabel, ENT_QUOTES, 'UTF-8') ?>
+                    <?= $trendRangeLabel ?> | Visible scale: <?= htmlspecialchars($trendScaleLabel, ENT_QUOTES, 'UTF-8') ?>
                 </div>
             </section>
             <div class="hero-side">
@@ -1991,7 +1998,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                     </div>
                     <div class="pill pill-update">
                         <span class="pill-label">Last file update</span>
-                        <span class="pill-value"><?= htmlspecialchars($lastUpdateLabel, ENT_QUOTES, 'UTF-8') ?></span>
+                        <span class="pill-value"><?= $lastUpdateLabel ?></span>
                     </div>
                     <div class="pill pill-freshness">
                         <span class="pill-label">Data freshness</span>
@@ -2003,7 +2010,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                     </div>
                     <div class="pill pill-timezone">
                         <span class="pill-label">Timezone</span>
-                        <span class="pill-value"><?= htmlspecialchars($timezone, ENT_QUOTES, 'UTF-8') ?></span>
+                        <span class="pill-value" data-live-timezone>UTC</span>
                     </div>
                 </div>
             </div>
@@ -2158,7 +2165,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                                         <?php endif; ?>
                                         <div class="incident-meta">
                                             Changed <?= htmlspecialchars($incident['age_label'], ENT_QUOTES, 'UTF-8') ?> ago
-                                            • at <?= htmlspecialchars($incident['changed_at'], ENT_QUOTES, 'UTF-8') ?>
+                                            • at <?= $incident['changed_at'] ?>
                                             • attempt <?= htmlspecialchars($incident['attempt'], ENT_QUOTES, 'UTF-8') ?>
                                             • <?= $incident['hard_state'] ? 'hard state' : 'soft state' ?>
                                         </div>
@@ -2267,7 +2274,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                                         </h3>
                                         <div class="list-meta">
                                             Open for <?= htmlspecialchars($problem['age_label'], ENT_QUOTES, 'UTF-8') ?>
-                                            • changed at <?= htmlspecialchars($problem['changed_at'], ENT_QUOTES, 'UTF-8') ?>
+                                            • changed at <?= $problem['changed_at'] ?>
                                         </div>
                                     </div>
                                     <span class="<?= htmlspecialchars($problem['badge_class'], ENT_QUOTES, 'UTF-8') ?>">
@@ -2329,6 +2336,46 @@ $trendTicks = trend_scale_ticks($trendScale);
     </div>
 </div>
 <script>
+(function () {
+    var timezone = 'UTC';
+    var formatter;
+    function dateFormatter(zone, language) {
+        return new Intl.DateTimeFormat(language, {
+            timeZone: zone, day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+        });
+    }
+    try {
+        var settings = window.NagiosModernUITime.resolve();
+        timezone = settings.timeZone;
+        formatter = dateFormatter(timezone, settings.language);
+    } catch (error) {
+        timezone = 'UTC';
+        try { formatter = dateFormatter(timezone, 'en-GB'); } catch (error) { return; }
+    }
+    if (typeof formatter.formatToParts !== 'function') return;
+
+    document.querySelectorAll('[data-live-timestamp]').forEach(function (node) {
+        var timestamp = Number(node.getAttribute('data-live-timestamp'));
+        var date = new Date(timestamp * 1000);
+        if (!(timestamp > 0) || !Number.isFinite(date.getTime())) return;
+        var parts = {};
+        formatter.formatToParts(date).forEach(function (part) {
+            parts[part.type] = part.value;
+        });
+        var tokens = {
+            d: parts.day, M: parts.month, Y: parts.year,
+            H: parts.hour, i: parts.minute, s: parts.second
+        };
+        node.textContent = node.getAttribute('data-live-format').replace(/[dMYHis]/g, function (token) {
+            return tokens[token];
+        });
+    });
+    document.querySelectorAll('[data-live-timezone]').forEach(function (node) {
+        node.textContent = timezone;
+    });
+})();
+
 document.addEventListener('click', function (event) {
     var card = event.target.closest('[data-card-url]');
     if (!card) {

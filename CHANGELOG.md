@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.6] - 2026-11-22
+
+### Added
+- Shared `modern-ui-config.php` configuration for timezone, date language and Live Overview refresh interval
+- Optional timezone and language overrides, with browser settings used by default and timezone-based language selection when only a timezone is configured
+
+### Changed
+- Applied the selected timezone consistently to digital and analog dashboard clocks and all Live Overview timestamps, including state changes and trend labels and tooltips
+- Localized dashboard availability range labels, including `7gg`/`30gg` in Italian and `7d`/`30d` in English
+- Removed the separate `$liveTimezone` setting; Live Overview retains UTC fallback timestamps when JavaScript is unavailable
+- Updated configuration documentation and version metadata; rebuilt `share.zip` for `0.9.6`
+
+---
+
 ## [0.9.5] - 2026-11-19
 
 ### Added
