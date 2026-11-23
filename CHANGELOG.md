@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.7] - 2026-11-23
+
+### Added
+- Optional graph configuration for the backend, RRD directory, rrdtool and Nagios status file
+- Initial PNP4Nagios graph backend for SINGLE and MULTIPLE RRD layouts, using datasource labels from PNP XML files
+
+### Changed
+- Documented graph data sources, configuration, requirements and PNP limitations; tested with synthetic data, with real-installation validation still pending
+- Updated version metadata and rebuilt `share.zip` for `0.9.7`
+
+---
+
 ## [0.9.6] - 2026-11-22
 
 ### Added

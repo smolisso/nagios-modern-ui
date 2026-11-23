@@ -1,0 +1,2 @@
+# Local graph configuration is installed separately from release files.
+/share/nagiosgraph_modern/config.php

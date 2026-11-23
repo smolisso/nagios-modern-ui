@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.9.6-blue)
+![Version](https://img.shields.io/badge/version-0.9.7-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -102,6 +102,7 @@ Core shell and modern pages:
 Nagiosgraph Modern:
 
 ```text
+[nagios_root_path]/share/nagiosgraph_modern/config.example.php
 [nagios_root_path]/share/nagiosgraph_modern/data.php
 [nagios_root_path]/share/nagiosgraph_modern/popup.js
 [nagios_root_path]/share/nagiosgraph_modern/show.php
@@ -206,7 +207,23 @@ remains separately managed in `share/modern_ui_version.txt`.
 
 ## Nagiosgraph Modern Integration
 
-`nagiosgraph_modern` is fully compatible with the standard Nagiosgraph RRD files created and updated by `insert.pl`. See the [upstream Nagiosgraph installation guide](https://github.com/JasonRivers/nagiosgraph/blob/master/INSTALL).
+`nagiosgraph_modern` reads existing performance data. It does not collect performance data or create RRD files. For Nagiosgraph, `insert.pl` creates and updates the files using its map rules; see the [Nagiosgraph installation guide](https://github.com/JasonRivers/nagiosgraph/blob/master/INSTALL).
+
+By default, the graph backend searches the standard Nagiosgraph RRD directories, including `/usr/local/nagiosgraph/var/rrd`. It expects files named `<host>/<service>___<metric>.rrd`. To select a different path or use PNP4Nagios, copy `share/nagiosgraph_modern/config.example.php` to `share/nagiosgraph_modern/config.php` and edit it. For example:
+
+```php
+<?php
+return [
+    'backend' => 'pnp4nagios',
+    'rrd_root' => '/usr/local/pnp4nagios/var/perfdata',
+    'rrdtool' => '',
+    'status_file' => '/usr/local/nagios/var/status.dat',
+];
+```
+
+Select `nagiosgraph` for Nagiosgraph data, or `pnp4nagios` for PNP's `RRDPATH`. A nonempty `rrd_root` must be a readable directory; an invalid configured path does not fall back to another directory. `rrdtool` may be left empty for automatic detection. The web server user needs read and directory traversal permissions for the data. PNP support also requires the PHP SimpleXML extension and the XML files next to the RRDs. It reads PNP's `SINGLE` and `MULTIPLE` storage layouts and uses the XML datasource labels; its custom graph templates and warning/critical ranges are not reproduced. The PNP host list comes from XML metadata and is not filtered by `status.dat`. Only service graphs are integrated here; PNP host performance data is not integrated as a Nagios host graph.
+
+The package includes only `config.example.php`, so the separately created `config.php` is retained when the release files are copied over an installation. Keep a backup of this local configuration. The PNP reader has been tested with synthetic data and still needs validation against real installations.
 
 If you want graphed services to use the new graph page and hover preview, update your `graphed-service` template:
 
