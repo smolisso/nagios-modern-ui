@@ -1,52 +1,128 @@
 <?php
 include_once(dirname(__FILE__).'/includes/utils.inc.php');
+require_once __DIR__ . '/modern_ui_updater.inc.php';
 
 header('Content-Type: application/json; charset=UTF-8');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('X-Content-Type-Options: nosniff');
 
 $action = isset($_GET['action']) ? (string)$_GET['action'] : 'check';
-if ($action !== 'check') {
-	http_response_code(400);
-	echo json_encode(array(
-		'success' => false,
-		'error' => 'Unsupported action'
-	));
-	exit;
+$method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+if (($action !== 'check' && $action !== 'install') ||
+    ($action === 'check' && $method !== 'GET') || ($action === 'install' && $method !== 'POST')) {
+    modernUiRespond(405, array('success' => false, 'error' => 'Unsupported action or request method.'));
 }
 
-$versionFile = dirname(__FILE__) . '/modern_ui_version.txt';
-$currentVersion = '0.0.0';
-if (is_readable($versionFile)) {
-	$localVersion = trim((string)@file_get_contents($versionFile));
-	if ($localVersion !== '') {
-		$currentVersion = $localVersion;
-	}
+$root = __DIR__;
+$user = isset($_SERVER['REMOTE_USER']) ? (string)$_SERVER['REMOTE_USER'] : '';
+$cgiConfig = read_cgi_config_file();
+$isAdmin = modernUiUpdateAdmin($cgiConfig, $user);
+$requirements = modernUiUpdateRequirements($root);
+$token = '';
+if ($isAdmin) {
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_name('nagios_modern_ui');
+        @session_start(array('cookie_httponly' => true, 'cookie_samesite' => 'Strict',
+            'cookie_secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+            'use_strict_mode' => true));
+    }
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        modernUiRespond(500, array('success' => false, 'error' => 'Cannot start the update session.'));
+    }
+    if (!isset($_SESSION['modern_ui_update_token'], $_SESSION['modern_ui_update_user']) || $_SESSION['modern_ui_update_user'] !== $user) {
+        $_SESSION['modern_ui_update_token'] = bin2hex(random_bytes(32));
+        $_SESSION['modern_ui_update_user'] = $user;
+    }
+    $token = $_SESSION['modern_ui_update_token'];
+    session_write_close();
 }
 
+if ($action === 'install') {
+    if (!$isAdmin) {
+        modernUiRespond(403, array('success' => false, 'error' => 'Only users authorized for Nagios system commands can update the interface.'));
+    }
+    $suppliedToken = isset($_SERVER['HTTP_X_MODERN_UI_TOKEN']) ? (string)$_SERVER['HTTP_X_MODERN_UI_TOKEN'] : '';
+    if ($suppliedToken === '' || !hash_equals($token, $suppliedToken)) {
+        modernUiRespond(403, array('success' => false, 'error' => 'Update session expired. Check for updates again.'));
+    }
+    if ($requirements !== '') {
+        modernUiRespond(409, array('success' => false, 'error' => $requirements));
+    }
+}
+
+$currentVersion = is_readable($root . '/modern_ui_version.txt') ? trim(file_get_contents($root . '/modern_ui_version.txt')) : '0.0.0';
 $latest = fetchLatestRelease();
 if ($latest['ok'] !== true) {
-	http_response_code(502);
-	echo json_encode(array(
-		'success' => false,
-		'current_version' => $currentVersion,
-		'error' => $latest['error']
-	));
-	exit;
+    modernUiRespond(502, array('success' => false, 'current_version' => $currentVersion, 'error' => $latest['error']));
+}
+$latestVersion = normalizeVersion($latest['tag_name']);
+$updateAvailable = version_compare($latestVersion, normalizeVersion($currentVersion), '>');
+$asset = null;
+foreach ($latest['assets'] as $candidate) {
+    if (isset($candidate['name']) && $candidate['name'] === 'share.zip') {
+        $asset = $candidate;
+        break;
+    }
+}
+if ($asset === null && $requirements === '') {
+    $requirements = 'The release does not contain share.zip.';
+}
+if ($action === 'check') {
+    modernUiRespond(200, array(
+        'success' => true, 'current_version' => $currentVersion, 'latest_version' => $latestVersion,
+        'update_available' => $updateAvailable, 'release_url' => $latest['html_url'],
+        'repository' => 'smolisso/nagios-modern-ui',
+        'can_update' => $isAdmin && $requirements === '',
+        'update_error' => $isAdmin ? $requirements : 'Only users authorized for Nagios system commands can update the interface.',
+        'csrf_token' => $token
+    ));
 }
 
-$latestVersion = normalizeVersion($latest['tag_name']);
-$currentNormalized = normalizeVersion($currentVersion);
-$updateAvailable = version_compare($latestVersion, $currentNormalized, '>');
+$requestedVersion = isset($_POST['version']) ? (string)$_POST['version'] : '';
+if (!$updateAvailable || $requestedVersion !== $latestVersion || $asset === null) {
+    modernUiRespond(409, array('success' => false, 'error' => 'The available release changed. Check for updates again.'));
+}
 
-echo json_encode(array(
-	'success' => true,
-	'current_version' => $currentVersion,
-	'latest_version' => $latestVersion,
-	'update_available' => $updateAvailable,
-	'release_url' => isset($latest['html_url']) ? $latest['html_url'] : 'https://github.com/smolisso/nagios-modern-ui/releases',
-	'repository' => 'smolisso/nagios-modern-ui'
-));
-exit;
+// One writer per installation. Keep the lock file so concurrent requests share the same inode.
+$lock = @fopen($root . '/.modern-ui-update.lock', 'c');
+if ($lock === false || !flock($lock, LOCK_EX | LOCK_NB)) {
+    if (is_resource($lock)) fclose($lock);
+    modernUiRespond(409, array('success' => false, 'error' => 'Another update is running, or the update lock is not writable.'));
+}
+$work = '';
+try {
+    @set_time_limit(180);
+    // A previous request may have finished while this request checked GitHub.
+    $installedVersion = is_readable($root . '/modern_ui_version.txt') ? trim(file_get_contents($root . '/modern_ui_version.txt')) : '0.0.0';
+    if ($installedVersion !== $currentVersion) {
+        throw new RuntimeException('The installed version changed. Check for updates again.');
+    }
+    $work = sys_get_temp_dir() . '/nagios-modern-ui-' . bin2hex(random_bytes(16));
+    if (!@mkdir($work, 0700)) {
+        throw new RuntimeException('Cannot create a temporary update directory.');
+    }
+    modernUiDownloadRelease($asset, $work . '/share.zip');
+    $files = modernUiExtractRelease($work . '/share.zip', $work . '/share', $latestVersion);
+    $result = modernUiInstallRelease($work . '/share', $root, $files);
+    $result['success'] = true;
+    $result['current_version'] = $latestVersion;
+    $status = 200;
+} catch (Throwable $error) {
+    $result = array('success' => false, 'error' => $error->getMessage());
+    $status = 500;
+} finally {
+    if ($work !== '') modernUiRemoveStaging($work);
+    flock($lock, LOCK_UN);
+    fclose($lock);
+}
+modernUiRespond($status, $result);
+
+function modernUiRespond($status, $payload)
+{
+    http_response_code($status);
+    echo json_encode($payload);
+    exit;
+}
 
 function normalizeVersion($version)
 {
@@ -79,6 +155,7 @@ function fetchLatestRelease()
 		$httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		if ($body === '' || $httpCode < 200 || $httpCode >= 300) {
 			$error = 'GitHub API request failed';
+			$body = '';
 		}
 		curl_close($ch);
 	}
@@ -110,6 +187,7 @@ function fetchLatestRelease()
 	return array(
 		'ok' => true,
 		'tag_name' => (string)$data['tag_name'],
-		'html_url' => isset($data['html_url']) ? (string)$data['html_url'] : ''
+		'html_url' => isset($data['html_url']) ? (string)$data['html_url'] : '',
+		'assets' => isset($data['assets']) && is_array($data['assets']) ? $data['assets'] : array()
 	);
 }

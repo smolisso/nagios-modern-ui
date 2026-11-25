@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.9.8] - 2026-11-25
+
+### Added
+- Browser installation of newer Modern UI releases from the sidebar, using the official `share.zip` package and SHA-256 verification
+- Session-protected administrator update requests, destination checks and a lock against concurrent updates
+
+### Changed
+- Release files are copied over the existing `share` directory, preserving existing `modern-ui-config.php`, files named `config.php`, and files absent from the package
+- Documented browser update requirements, file replacement behavior and recovery after an interrupted copy
+- Updated version metadata and rebuilt `share.zip` for `0.9.8`
+
+---
+
 ## [0.9.7] - 2026-11-23
 
 ### Added

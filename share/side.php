@@ -197,6 +197,10 @@ body.navbar::after {
 	transform: translateY(-1px);
 }
 
+.update-check-btn[hidden] {
+	display: none;
+}
+
 .update-check-btn:disabled {
 	opacity: 0.7;
 	cursor: default;
@@ -214,9 +218,8 @@ body.navbar::after {
 	letter-spacing: 0.01em;
 	line-height: 1.2;
 	color: rgba(187, 202, 222, 0.86);
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	white-space: normal;
+	overflow-wrap: anywhere;
 }
 
 .update-status.is-ok {
@@ -932,6 +935,7 @@ html.light .update-status.is-error,
 	</div>
 	<div class="modern-ui-updates">
 		<button class="update-check-btn" id="check-updates-btn" type="button">Check updates</button>
+		<button class="update-check-btn" id="install-update-btn" type="button" hidden>Update now</button>
 		<div class="update-status" id="update-status" aria-live="polite"></div>
 	</div>
 	<div class="theme-switch-section">
@@ -1163,10 +1167,14 @@ window.setUpdateStatus = function (message, statusType, releaseUrl) {
 		statusNode.classList.add(statusType);
 	}
 
-	if (releaseUrl) {
-		var safeMessage = String(message || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-		var safeUrl = String(releaseUrl || '').replace(/"/g, '&quot;');
-		statusNode.innerHTML = '<a href="' + safeUrl + '" target="_blank" rel="noopener noreferrer">' + safeMessage + '</a>';
+	if (releaseUrl && /^https:\/\/github\.com\/smolisso\/nagios-modern-ui\/releases(?:\/|$)/.test(releaseUrl)) {
+		var link = document.createElement('a');
+		link.href = releaseUrl;
+		link.target = '_blank';
+		link.rel = 'noopener noreferrer';
+		link.textContent = message || '';
+		statusNode.textContent = '';
+		statusNode.appendChild(link);
 		return;
 	}
 
@@ -1353,44 +1361,83 @@ window.addEventListener('load', function () {
 	}
 
 	var checkUpdatesButton = document.getElementById('check-updates-btn');
-	if (checkUpdatesButton) {
+	var installUpdateButton = document.getElementById('install-update-btn');
+	var updateRelease = null;
+
+	function updateResponse(response) {
+		return response.json().then(function (payload) {
+			if (!response.ok || !payload || !payload.success) {
+				throw new Error(payload && payload.error ? payload.error : 'Update request failed (HTTP ' + response.status + ')');
+			}
+			return payload;
+		});
+	}
+
+	if (checkUpdatesButton && installUpdateButton) {
 		checkUpdatesButton.addEventListener('click', function () {
 			checkUpdatesButton.disabled = true;
+			installUpdateButton.hidden = true;
+			updateRelease = null;
 			window.setUpdateStatus('Checking...', null);
 
 			fetch('modern_ui_update.php?action=check', {
-				method: 'GET',
-				credentials: 'same-origin',
-				cache: 'no-store'
+				method: 'GET', credentials: 'same-origin', cache: 'no-store'
 			})
-				.then(function (response) {
-					if (!response.ok) {
-						throw new Error('HTTP ' + response.status);
-					}
-					return response.json();
-				})
+				.then(updateResponse)
 				.then(function (payload) {
-					if (payload && payload.success && payload.update_available) {
-						window.setUpdateStatus(
-							'Update available: ' + payload.latest_version,
-							'is-update',
-							payload.release_url || ''
-						);
+					if (payload.update_available) {
+						window.setUpdateStatus('Update available: ' + payload.latest_version, 'is-update', payload.release_url || '');
+						if (payload.can_update) {
+							updateRelease = payload;
+							installUpdateButton.hidden = false;
+						} else if (payload.update_error) {
+							var detail = document.createElement('div');
+							detail.textContent = payload.update_error;
+							document.getElementById('update-status').appendChild(detail);
+						}
 						return;
 					}
-
-					if (payload && payload.success) {
-						window.setUpdateStatus('Up to date (' + (payload.current_version || 'n/a') + ')', 'is-ok');
-						return;
-					}
-
-					window.setUpdateStatus('Update check failed', 'is-error');
+					window.setUpdateStatus('Up to date (' + (payload.current_version || 'n/a') + ')', 'is-ok');
 				})
-				.catch(function () {
-					window.setUpdateStatus('Update check failed', 'is-error');
+				.catch(function (error) {
+					window.setUpdateStatus(error.message, 'is-error');
 				})
 				.finally(function () {
 					checkUpdatesButton.disabled = false;
+				});
+		});
+
+		installUpdateButton.addEventListener('click', function () {
+			if (!updateRelease || !window.confirm('Update Modern UI from ' + updateRelease.current_version + ' to ' + updateRelease.latest_version + '? Local configuration files will be preserved.')) {
+				return;
+			}
+			checkUpdatesButton.disabled = true;
+			installUpdateButton.disabled = true;
+			window.setUpdateStatus('Downloading and installing... Please wait.', null);
+			fetch('modern_ui_update.php?action=install', {
+				method: 'POST', credentials: 'same-origin', cache: 'no-store',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'X-Modern-UI-Token': updateRelease.csrf_token
+				},
+				body: 'version=' + encodeURIComponent(updateRelease.latest_version)
+			})
+				.then(updateResponse)
+				.then(function (payload) {
+					updateRelease = null;
+					installUpdateButton.hidden = true;
+					var version = document.querySelector('.modern-ui-version');
+					if (version) version.textContent = 'Modern UI v ' + payload.current_version;
+					window.setUpdateStatus('Updated to ' + payload.current_version + '. Reload the page to use the new version.', 'is-ok');
+				})
+				.catch(function (error) {
+					updateRelease = null;
+					installUpdateButton.hidden = true;
+					window.setUpdateStatus(error.message + ' Check for updates before retrying.', 'is-error');
+				})
+				.finally(function () {
+					checkUpdatesButton.disabled = false;
+					installUpdateButton.disabled = false;
 				});
 		});
 	}

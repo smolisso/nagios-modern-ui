@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.9.7-blue)
+![Version](https://img.shields.io/badge/version-0.9.8-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -163,6 +163,35 @@ If you want the historical availability trend in `live.php`, add this cron job:
 ```
 
 This populates the JSON snapshot data used by the live availability widget.
+
+## Browser updates
+
+Click **Check updates** in the sidebar. When a newer release is available, users
+listed directly in `authorized_for_system_commands` in Nagios `cgi.cfg` (or an
+authenticated user when that setting is `*`) can click **Update now** and confirm.
+Users marked as read-only in `authorized_for_read_only` cannot install updates.
+The server downloads the official release's `share.zip`, checks its SHA-256 digest,
+and copies its files into the existing Nagios `share` directory.
+
+Existing `modern-ui-config.php` and files named `config.php` are preserved. Missing
+configuration files are installed from the package. Files absent from the release
+are retained; changes made directly to distributed interface files are overwritten.
+The updater does not rename or replace the entire `share` directory.
+
+Browser installation requires PHP cURL and Zip, working PHP sessions, outbound
+HTTPS access to GitHub, a writable temporary directory, and write access for the
+web server user to `share` and the destination subdirectories. The interface
+reports missing prerequisites or copy errors. It never runs `sudo` or changes
+server permissions. Authorization through contact groups alone is not supported
+by the updater; list the intended administrator usernames directly.
+
+Each file is replaced with a complete copy, and the version file is updated last.
+This is a file overlay, without a whole-installation rollback: if copying is
+interrupted, check for updates and retry, or install `share.zip` manually. Keep a
+backup of local customizations. Reload the page after a successful update.
+
+Install the version introducing this feature manually once; subsequent releases
+can then be installed from the browser.
 
 ## Modern UI Configuration
 
