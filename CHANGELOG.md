@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.10.1] - 2026-11-25
+
+### Fixed
+- Preserved cockpit indicator colors in host detail views, overriding generic CGI button styles
+
+---
+
 ## [0.10.0] - 2026-11-25
 
 ### Added
