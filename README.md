@@ -58,25 +58,21 @@ Desktop and mobile are both supported:
 
 ## Screenshots
 
-| Live Overview | Problems Overview |
+| Live Overview | Classic Service Problems |
 |---|---|
-| ![](screenshots/live.png) | ![](screenshots/problems_modern.png) |
+| ![Live Overview](screenshots/live.png) | ![Classic Service Problems](screenshots/service-problems.png) |
 
-| Host Detail | Nagiosgraph |
+| Classic Host Detail | Nagiosgraph |
 |---|---|
-| ![](screenshots/hostdetail_modern.png) | ![](screenshots/graph.png) |
+| ![Classic Host Detail](screenshots/hostdetail.png) | ![Nagiosgraph](screenshots/graph.png) |
 
-| Light Live Overview | Light Host Detail |
+| Light Live Overview | Light Classic Host Detail |
 |---|---|
-| ![](screenshots/live_light.png) | ![](screenshots/hostdetail_light.png) |
-
-| Light Problems Overview |  |
-|---|---|
-| ![](screenshots/problems_modern_light.png) |  |
+| ![Light Live Overview](screenshots/live_light.png) | ![Light Classic Host Detail](screenshots/hostdetail_light.png) |
 
 | Classic Status Restyle | Classic Service Status Restyle |
 |---|---|
-| ![](screenshots/status-all.png) | ![](screenshots/status-service-all.png) |
+| ![Classic Status Restyle](screenshots/status-all.png) | ![Classic Service Status Restyle](screenshots/status-service-all.png) |
 
 ## Installation
 
