@@ -2749,228 +2749,218 @@ body.status .status-live-badge:focus-visible {
     body.status .status-live-dot::after { animation: none; opacity: 0; }
 }
 
-/* Service detail dashboard: retain native totals, links and filter state. */
-html:root body.status.status-dashboard > table.pageTitle > tbody > tr {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.15fr) !important;
-    gap: 12px !important;
-    align-items: stretch !important;
+/* Cockpit for native service/host details. CGI tables and their links stay intact. */
+body.status.status-dashboard {
+    --cockpit-green: #6bc497;
+    --cockpit-amber: #eac17a;
+    --cockpit-green-surface: rgba(107, 196, 151, .08);
+    --cockpit-amber-surface: rgba(207, 140, 62, .12);
 }
-html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td { display: block; }
-html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td:empty,
-html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td.status-dashboard-filter-cell { display: none; }
-body.status .status-dashboard-title-cell { order: 0; align-self: start; grid-column: 1; grid-row: 1; }
-body.status .status-dashboard-chart-cell { order: 1; grid-column: 2; grid-row: 1; }
-body.status .status-dashboard-clock-cell { order: 2; grid-column: 3; grid-row: 1; }
-html:root body.status.status-dashboard .status-dashboard-title-cell .statusTitle {
-    text-align: left; max-width: 100%; overflow-wrap: anywhere;
+html:is(.light, [data-theme="light"]) body.status.status-dashboard {
+    --cockpit-green: #16794f;
+    --cockpit-amber: #87500d;
+    --cockpit-green-surface: rgba(22, 121, 79, .07);
+    --cockpit-amber-surface: rgba(207, 140, 62, .12);
+}
+body.status .status-cockpit {
+    display: grid; grid-template-columns: minmax(280px, .85fr) minmax(0, 3.2fr);
+    gap: 14px; align-items: start; margin-bottom: 16px;
 }
 body.status .status-dashboard-card {
-    box-sizing: border-box;
-    height: 100%;
-    padding: 16px 20px;
-    border: 1px solid var(--detail-border);
-    border-radius: 12px;
-    background: var(--detail-panel);
-    color: var(--detail-text);
+    box-sizing: border-box; padding: 16px; min-width: 0;
+    border: 1px solid var(--detail-border); border-radius: 13px;
+    background: var(--detail-panel); color: var(--detail-text);
+    box-shadow: inset 0 1px 0 rgba(128, 155, 184, .04);
 }
 body.status .status-dashboard-label {
     color: var(--detail-muted); font-size: 10px; font-weight: 650;
     letter-spacing: 1.5px; line-height: 1.4;
 }
-body.status .status-dashboard-chart-body { display: flex; align-items: center; gap: 24px; margin-top: 12px; }
-body.status .status-dashboard-donut {
-    position: relative; width: 116px; height: 116px; flex: 0 0 116px; border-radius: 50%;
+body.status .status-cockpit-instruments { display: grid; grid-template-rows: auto auto; gap: 14px; min-width: 0; }
+html:root body.status .status-cockpit .headertable { width: 100%; margin: 0; border-spacing: 0; }
+html:root body.status .status-cockpit .headertable > tbody { display: block; }
+html:root body.status .status-cockpit .headertable > tbody > tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+html:root body.status .status-cockpit .headertable > tbody > tr > td {
+    width: auto; min-width: 0; padding: 16px 18px 12px;
+    background: var(--detail-panel); border: 1px solid var(--detail-border); border-radius: 13px;
 }
+html:root body.status .status-cockpit .headertable > tbody > tr > td.status-cockpit-total-cell { display: block !important; margin: 0; }
+html:root body.status .status-cockpit .headertable > tbody > tr > td.status-cockpit-empty-info { display: none !important; }
+body.status .status-cockpit-gauges { display: grid; grid-template-columns: minmax(180px, .9fr) minmax(200px, 1fr) minmax(300px, 1.4fr); gap: 14px; min-width: 0; }
+body.status .status-cockpit-gauges.status-cockpit-single-gauge { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+body.status .status-cockpit-ops { padding: 18px; align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; }
+body.status .status-cockpit-ops-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+body.status .status-cockpit-ops-heading .infoBoxTitle { margin: 0; font-size: 13px; }
+body.status .status-cockpit .status-live-badge {
+    display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    color: var(--cockpit-green); background: var(--cockpit-green-surface);
+    border: 1px solid var(--detail-border); border-radius: 20px;
+    padding: 5px 9px; font: 650 10px/1.2 system-ui, sans-serif; letter-spacing: 1px;
+}
+body.status .status-cockpit .status-live-dot { width: 6px; height: 6px; background: currentColor; box-shadow: 0 0 7px var(--cockpit-green); }
+body.status .status-cockpit .status-live-dot::after { display: none; }
+body.status .status-cockpit-annunciators { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 18px 0; }
+body.status .status-cockpit-lamp {
+    min-height: 58px; box-sizing: border-box; padding: 9px 10px;
+    border: 1px solid var(--detail-border); border-radius: 6px;
+    background: var(--detail-neutral); display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+    color: var(--detail-muted);
+}
+body.status .status-cockpit-lamp > span { font-size: 9px; letter-spacing: .8px; }
+body.status .status-cockpit-lamp > strong { display: flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: 1px; }
+body.status .status-cockpit-lamp > strong::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+body.status .status-cockpit-lamp.is-enabled { color: var(--cockpit-green); background: var(--cockpit-green-surface); }
+body.status .status-cockpit-lamp.is-disabled { color: var(--cockpit-amber); background: var(--cockpit-amber-surface); border-color: var(--cockpit-amber); }
+body.status .status-cockpit-lamp:is(.is-enabled, .is-disabled) > strong::before { box-shadow: 0 0 7px currentColor; }
+body.status .status-cockpit-refresh { border-block: 1px solid var(--detail-border); padding: 14px 0; }
+body.status .status-cockpit-refresh:empty { display: none; }
+body.status .status-cockpit .status-refresh-countdown {
+    width: 100%; margin: 0; color: var(--detail-muted); font: 500 11px/1.4 system-ui, sans-serif;
+}
+body.status .status-cockpit .status-refresh-caption { margin-bottom: 10px; }
+body.status .status-cockpit .status-refresh-caption > span:first-child { text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+body.status .status-cockpit .status-refresh-remaining { color: var(--detail-text); font-size: 26px; font-weight: 500; letter-spacing: 1px; }
+body.status .status-cockpit .status-refresh-fill { background: linear-gradient(90deg, var(--cockpit-green), #5cb9b5); }
+body.status .status-cockpit-native-info { margin-top: 12px; }
+body.status .status-cockpit-native-info table.infoBox { width: 100%; table-layout: fixed; }
+body.status .status-cockpit-native-info td.infoBox { font-size: 11px; line-height: 1.85; overflow-wrap: anywhere; white-space: normal; }
+body.status .status-cockpit-native-info .infoBoxBadProcStatus { max-width: 100%; box-sizing: border-box; white-space: normal; }
+body.status .status-cockpit-native-info td.linkBox { font-size: 11px; gap: 8px 12px; white-space: normal; }
+body.status .status-cockpit-instrument-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+body.status .status-cockpit-chart-flag { color: var(--cockpit-green); font-size: 9px; letter-spacing: 1px; white-space: nowrap; }
+body.status .status-cockpit-chart-flag.is-attention { color: var(--cockpit-amber); }
+body.status .status-cockpit-chart-flag.is-unavailable { color: var(--detail-muted); }
+body.status .status-dashboard-chart-body { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+body.status .status-cockpit-dial {
+    position: relative; width: min(100%, 160px); aspect-ratio: 1; align-self: center; border-radius: 50%;
+    background: repeating-conic-gradient(from -90deg, var(--detail-muted) 0deg .5deg, transparent .5deg 10deg);
+}
+body.status .status-cockpit-dial::before { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: var(--detail-panel); }
+body.status .status-dashboard-donut { position: absolute; inset: 15px; border-radius: 50%; }
 body.status .status-dashboard-donut-center {
-    position: absolute; inset: 14px; border-radius: 50%; background: var(--detail-panel);
+    position: absolute; inset: 10px; border-radius: 50%; background: var(--detail-panel);
+    box-shadow: inset 0 0 0 1px var(--detail-border);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-body.status .status-dashboard-donut-center strong { font-size: 23px; line-height: 1.2; font-weight: 650; font-variant-numeric: tabular-nums; }
-body.status .status-dashboard-donut-center span { font-size: 10px; color: var(--detail-muted); margin-top: 3px; }
-body.status .status-dashboard-legend { flex: 1; min-width: 0; display: grid; gap: 6px; }
-html:root body.status .status-dashboard-legend-item {
-    display: flex; align-items: center; gap: 8px; color: var(--detail-muted);
-    font-size: 12px; line-height: 1.3; text-decoration: none;
-}
+body.status .status-dashboard-donut-center strong { font-size: 28px; font-weight: 650; line-height: 1.1; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+body.status .status-dashboard-donut-center span { color: var(--detail-muted); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; margin-top: 5px; }
+body.status .status-cockpit-ratio { color: var(--cockpit-green); font-size: 10px; margin-top: 7px; font-variant-numeric: tabular-nums; }
+body.status .status-dashboard-legend { display: grid; gap: 5px; width: 100%; }
+html:root body.status .status-dashboard-legend-item { display: flex; align-items: center; gap: 8px; color: var(--detail-muted); font-size: 11px; text-decoration: none; }
 html:root body.status a.status-dashboard-legend-item:hover { color: var(--detail-text); text-decoration: underline; }
-body.status .status-dashboard-swatch { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 2px; }
 body.status .status-dashboard-legend-item strong { margin-left: auto; color: var(--detail-text); font-weight: 650; font-variant-numeric: tabular-nums; }
-html:root body.status section.status-dashboard-clock {
-    display: flex; flex-direction: column; justify-content: center;
-    width: 100%; align-items: flex-end; text-align: right;
-}
-html:root body.status section.status-dashboard-clock > * {
-    align-self: flex-end; text-align: right;
-}
-body.status .status-dashboard-time { display: block; margin: 14px 0 6px; font-size: clamp(28px, 3.2vw, 48px); font-weight: 550; letter-spacing: -1.5px; line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.status .status-dashboard-swatch { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 2px; }
+html:root body.status section.status-dashboard-clock { display: flex; flex-direction: column; gap: 12px; }
+body.status .status-dashboard-clock-details { min-width: 0; width: 100%; container-type: inline-size; text-align: right; }
+body.status .status-dashboard-clock-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+body.status .status-dashboard-clock-heading { min-width: 0; text-align: left; }
+body.status .status-dashboard-clock-heading .status-dashboard-label { font-size: 12px; }
+body.status .status-dashboard-clock-heading .status-dashboard-zone { color: var(--detail-muted); font-size: 12px; margin-top: 4px; overflow-wrap: anywhere; }
+html:root body.status .status-dashboard-trend-ranges button:focus-visible { outline: 2px solid var(--detail-link); outline-offset: 3px; }
+body.status .status-dashboard-clock-display { height: 70px; display: flex; align-items: center; justify-content: flex-end; }
+body.status .status-dashboard-time { margin: 0; font-size: clamp(30px, 16cqw, 48px); font-weight: 650; letter-spacing: -1.5px; font-variant-numeric: tabular-nums; line-height: 1.1; white-space: nowrap; }
 body.status .status-dashboard-seconds { color: #5284bd; }
 @supports (background-clip: text) or (-webkit-background-clip: text) {
-    body.status .status-dashboard-seconds {
-        background: linear-gradient(to top, #5284bd, #62b999);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-    }
+    body.status .status-dashboard-seconds { background: linear-gradient(to top, #5284bd, #62b999); -webkit-background-clip: text; background-clip: text; color: transparent; }
 }
-body.status .status-dashboard-date { color: var(--detail-text); font-size: 13px; }
-body.status .status-dashboard-zone { color: var(--detail-muted); font-size: 11px; margin-top: 6px; }
-@media (max-width: 1050px) {
-    html:root body.status.status-dashboard > table.pageTitle > tbody > tr { grid-template-columns: minmax(320px, 1.2fr) minmax(200px, .8fr) !important; }
-    body.status .status-dashboard-title-cell { grid-column: 1 / -1; grid-row: 1; }
-    body.status .status-dashboard-chart-cell { grid-column: 1; grid-row: 2; }
-    body.status .status-dashboard-clock-cell { grid-column: 2; grid-row: 2; }
-    html:root body.status.status-dashboard .status-dashboard-title-cell .statusTitle { max-width: none; }
-}
-@media (max-width: 600px) {
-    html:root body.status.status-dashboard > table.pageTitle > tbody > tr { grid-template-columns: minmax(0, 1fr) !important; }
-    body.status .status-dashboard-chart-cell { grid-column: 1; grid-row: 2; }
-    body.status .status-dashboard-clock-cell { grid-column: 1; grid-row: 3; }
-    body.status .status-dashboard-chart-body { gap: 18px; }
-    body.status .status-dashboard-time { font-size: 38px; }
-}
-
-/* Override the legacy last-column rule for the new clock cell. */
-html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td.status-dashboard-clock-cell { display: block !important; }
-
-/* Empty CGI cells must not reserve columns in single-host or headerless views. */
-html:root body.status.status-dashboard > table.pageTitle { width: 100%; margin: 0 0 12px; border-spacing: 0; }
-html:root body.status.status-dashboard > table.pageTitle > tbody { display: block; }
-html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td.status-dashboard-unused-cell { display: none !important; }
-
-/* Match light-theme service totals to the stronger status badges.
-   The dashboard reads these same cell colors for its ring and legend. */
-html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsCRITICAL,
-html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsCRITICAL :is(a, a *) {
-    background-color: var(--state-critical-badge-bg) !important;
-    color: #fff !important;
-}
-html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsWARNING,
-html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsWARNING :is(a, a *) {
-    background-color: var(--state-warning-badge-bg) !important;
-    color: var(--state-warning-fg) !important;
-}
-
-/* Compact global availability history beside the right-aligned clock. */
-html:root body.status section.status-dashboard-clock {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    gap: 12px;
-    align-items: center;
-}
-html:root body.status section.status-dashboard-clock > .status-dashboard-clock-details {
-    align-self: center; min-width: 0; text-align: right; container-type: inline-size;
-}
-html:root body.status section.status-dashboard-clock > .status-dashboard-mini-trend {
-    align-self: center; min-width: 0; text-align: left;
-    padding-right: 12px; border-right: 1px solid var(--detail-border);
-}
-body.status .status-dashboard-clock-details .status-dashboard-time {
-    font-size: clamp(32px, 23cqw, 60px);
-    font-weight: 750;
-}
-body.status .status-dashboard-clock-details .status-dashboard-date { font-size: 13px; }
-body.status .status-dashboard-clock-details .status-dashboard-zone { font-size: 9px; line-height: 1.2; margin-top: 2px; }
-body.status .status-dashboard-clock-details .status-dashboard-label { font-size: 11px; }
-body.status .status-dashboard-mini-trend .status-dashboard-label { font-size: 9px; letter-spacing: .7px; }
-body.status .status-dashboard-trend-value { display: block; margin: 8px 0; font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
-body.status .status-dashboard-trend-bars { display: flex; align-items: flex-end; gap: 2px; height: 56px; }
+body.status .status-dashboard-date { color: var(--detail-muted); font-size: 11px; }
+body.status .status-dashboard-clock-details [hidden] { display: none !important; }
+body.status .status-dashboard-mini-trend { box-sizing: border-box; width: 100%; min-width: 0; padding-top: 12px; border-top: 1px solid var(--detail-border); order: 1; }
+body.status .status-dashboard-trend-value { display: block; margin: 6px 0; font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
+body.status .status-dashboard-trend-bars { display: flex; align-items: flex-end; gap: 3px; height: 40px; }
 body.status .status-dashboard-trend-bars[hidden] { display: none; }
 body.status .status-dashboard-trend-bar { flex: 1; min-width: 1px; border-radius: 2px 2px 0 0; background: linear-gradient(to top, #5284bd, #62b999); }
 body.status .status-dashboard-trend-bar:hover { filter: brightness(1.2); }
 body.status .status-dashboard-trend-note { margin-top: 7px; color: var(--detail-muted); font-size: 9px; line-height: 1.4; }
-@media (max-width: 600px) {
-    html:root body.status section.status-dashboard-clock { grid-template-columns: minmax(0, 1fr); }
-    html:root body.status section.status-dashboard-clock > .status-dashboard-mini-trend { border-right: 0; border-bottom: 1px solid var(--detail-border); padding: 0 0 14px; }
-}
-
-body.status .status-dashboard-trend-ranges { display: flex; gap: 4px; margin: 0 0 9px; }
-html:root body.status .status-dashboard-trend-ranges button {
-    appearance: none; padding: 3px 7px; border: 1px solid var(--detail-border);
-    border-radius: 5px; background: transparent; color: var(--detail-muted);
-    font: 600 10px/1.3 system-ui, sans-serif; cursor: pointer;
-}
-html:root body.status .status-dashboard-trend-ranges button[aria-pressed="true"] {
-    color: var(--detail-text); background: var(--detail-neutral); border-color: var(--detail-link);
-}
-html:root body.status .status-dashboard-trend-ranges button:hover { color: var(--detail-text); }
-html:root body.status .status-dashboard-trend-ranges button:focus-visible { outline: 2px solid var(--detail-link); outline-offset: 2px; }
+body.status .status-dashboard-trend-ranges { display: flex; gap: 4px; margin: 0 0 7px; }
+html:root body.status .status-dashboard-trend-ranges button { appearance: none; padding: 3px 7px; border: 1px solid var(--detail-border); border-radius: 5px; background: transparent; color: var(--detail-muted); font: 600 10px/1.3 system-ui, sans-serif; cursor: pointer; }
+html:root body.status .status-dashboard-trend-ranges button[aria-pressed="true"] { color: var(--detail-text); background: var(--detail-neutral); border-color: var(--detail-link); }
 html:root body.status .status-dashboard-trend-ranges button:disabled { opacity: .5; cursor: default; }
-
-body.status .status-dashboard-clock-toolbar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: nowrap; gap: 8px; height: 30px; }
-html:root body.status .status-dashboard-clock-toggle {
-    appearance: none; display: inline-flex; align-items: center; justify-content: center;
-    width: 30px; height: 30px; flex: 0 0 30px; padding: 0; border-radius: 6px; border: 1px solid var(--detail-border);
-    background: var(--detail-neutral); color: var(--detail-text); cursor: pointer; font: 600 11px/1.3 system-ui, sans-serif;
+/* Retain the native title, pagination and sort rows; hide the optional filter editor. */
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr { grid-template-columns: minmax(0, 1fr) !important; gap: 12px; }
+html:root body.status.status-dashboard table.filter,
+html:root body.status.status-dashboard > table.pageTitle > tbody > tr > td:has(table.filter) { display: none !important; }
+/* Keep the light-theme badge colors as the source for both instruments. */
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsCRITICAL,
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsCRITICAL :is(a, a *) { background-color: var(--state-critical-badge-bg) !important; color: #fff !important; }
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsWARNING,
+html:root:is(.light, [data-theme="light"]) body.status table.serviceTotals td.serviceTotalsWARNING :is(a, a *) { background-color: var(--state-warning-badge-bg) !important; color: var(--state-warning-fg) !important; }
+@media (max-width: 1250px) {
+    body.status .status-cockpit { grid-template-columns: minmax(260px, .9fr) minmax(0, 2fr); }
+    body.status .status-cockpit-gauges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    html:root body.status .status-cockpit-gauges > section.status-dashboard-clock { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: center; }
+    body.status .status-dashboard-clock-details { grid-column: 2; grid-row: 1; }
+    body.status .status-dashboard-mini-trend { grid-column: 1; grid-row: 1; border-top: 0; padding: 0 16px 0 0; border-left: 0; border-right: 1px solid var(--detail-border); }
 }
-html:root body.status .status-dashboard-clock-toggle:hover { border-color: var(--detail-link); }
-html:root body.status .status-dashboard-clock-toggle:focus-visible { outline: 2px solid var(--detail-link); outline-offset: 2px; }
-body.status .status-dashboard-analog { display: block; width: 104px; height: 104px; max-width: 100%; margin: 0; overflow: visible; }
-body.status .status-dashboard-clock-details [hidden] { display: none !important; }
-body.status .status-dashboard-analog .clock-face { fill: var(--detail-bg); stroke: var(--detail-border); stroke-width: 2; }
-body.status .status-dashboard-analog .clock-tick { stroke: var(--detail-muted); stroke-width: 1.5; }
-body.status .status-dashboard-analog :is(.clock-hour, .clock-minute) { stroke: var(--detail-text); stroke-linecap: round; }
-body.status .status-dashboard-analog .clock-hour { stroke-width: 4; }
-body.status .status-dashboard-analog .clock-minute { stroke-width: 2.5; }
-body.status .status-dashboard-analog .clock-second { stroke: var(--detail-link); stroke-width: 1.2; stroke-linecap: round; }
-body.status .status-dashboard-analog .clock-pin { fill: var(--detail-link); }
-
-body.status .status-dashboard-clock-display {
-    height: 108px; display: flex; align-items: center; justify-content: flex-end;
+@media (max-width: 850px) {
+    body.status .status-cockpit { grid-template-columns: minmax(0, 1fr); }
+    body.status .status-cockpit-ops { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; }
+    body.status .status-cockpit-ops-heading { grid-column: 1 / -1; }
+    body.status .status-cockpit-annunciators { margin: 0; }
+    body.status .status-cockpit-refresh { padding: 0; border: 0; align-self: center; }
+    body.status .status-cockpit-native-info { grid-column: 1 / -1; margin: 0; padding-top: 14px; border-top: 1px solid var(--detail-border); }
 }
-body.status .status-dashboard-clock-display .status-dashboard-time { margin: 0; }
-
-/* Mobile dashboard: state chart and clock share one row; omit the trend. */
-@media (max-width: 768px) {
-    html:root:not([data-shell-layout="desktop"]) body.status.status-dashboard > table.pageTitle > tbody > tr {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 10px !important;
-    }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-title-cell { grid-column: 1 / -1; grid-row: 1; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-chart-cell { grid-column: 1; grid-row: 2; min-width: 0; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-cell { grid-column: 2; grid-row: 2; min-width: 0; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-card { padding: 12px; container-type: inline-size; }
-    html:root:not([data-shell-layout="desktop"]) body.status section.status-dashboard-clock { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    html:root:not([data-shell-layout="desktop"]) body.status section.status-dashboard-clock > .status-dashboard-mini-trend { display: none; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-chart-body { display: grid; grid-template-columns: minmax(0, .44fr) minmax(0, .56fr); align-items: center; gap: 10px; margin-top: 10px; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut { width: 100%; max-width: 160px; height: auto; aspect-ratio: 1; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut-center { inset: 13%; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut-center strong { font-size: clamp(17px, 7cqw, 32px); }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-donut-center span { font-size: clamp(9px, 2.5cqw, 12px); }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-legend { width: 100%; gap: 5px; }
-    html:root:not([data-shell-layout="desktop"]) body.status .status-dashboard-legend-item { font-size: clamp(10px, 3cqw, 14px); gap: 5px; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-details .status-dashboard-time { font-size: clamp(25px, 21cqw, 68px); letter-spacing: -1px; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-details .status-dashboard-date { font-size: 11px; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-details .status-dashboard-label { font-size: 9px; letter-spacing: .7px; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-toolbar { gap: 5px; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-analog { width: clamp(90px, 30cqw, 144px); height: auto; aspect-ratio: 1; }
-    html:not([data-shell-layout="desktop"]) body.status .status-dashboard-clock-display { height: clamp(108px, 34cqw, 154px); }
+@media (max-width: 560px) {
+    body.status .status-cockpit-ops { display: block; padding: 18px; }
+    body.status .status-cockpit-annunciators { margin: 18px 0; }
+    body.status .status-cockpit-refresh { padding: 16px 0; border-block: 1px solid var(--detail-border); }
+    body.status .status-cockpit-native-info { margin-top: 16px; padding: 0; border: 0; }
+    html:root body.status .status-cockpit .headertable > tbody > tr { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    body.status .status-cockpit-gauges { gap: 10px; }
+    body.status .status-cockpit-gauges > .status-dashboard-card { padding: 14px 12px; }
+    body.status .status-cockpit-instrument-heading { align-items: flex-start; flex-direction: column; gap: 5px; }
+    body.status .status-cockpit-dial { max-width: 145px; }
+    body.status .status-dashboard-donut { inset: 12px; }
+    body.status .status-dashboard-donut-center { inset: 8px; }
+    body.status .status-dashboard-donut-center strong { font-size: clamp(21px, 6vw, 29px); }
+    body.status .status-cockpit-ratio { font-size: 9px; margin-top: 5px; }
+    html:root body.status .status-cockpit-gauges > section.status-dashboard-clock { display: flex; gap: 18px; }
+    body.status .status-dashboard-mini-trend { padding: 12px 0 0; border-inline: 0; border-top: 1px solid var(--detail-border); }
+    body.status .status-dashboard-clock-display { height: 70px; }
+    body.status .status-dashboard-time { font-size: clamp(30px, 16cqw, 48px); }
 }
 
-/* Desktop shell may leave a narrow iframe after the sidebar is subtracted. */
-html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr {
-    display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.15fr);
+/* Lamps open the native command confirmation; unknown states stay unavailable. */
+body.status button.status-cockpit-lamp {
+    appearance: none; width: 100%; font: inherit; text-align: left; cursor: pointer;
+    transition: border-color .15s ease, box-shadow .15s ease;
 }
-html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.pageTitle > tbody > tr {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.15fr) !important;
+body.status button.status-cockpit-lamp:not(:disabled):hover { box-shadow: inset 0 0 0 1px currentColor; }
+body.status button.status-cockpit-lamp:focus-visible { outline: 2px solid var(--detail-link); outline-offset: 3px; }
+body.status button.status-cockpit-lamp:disabled { cursor: default; opacity: 1; }
+body.status .status-cockpit-command-feedback { color: var(--detail-muted); font-size: 11px; line-height: 1.5; margin: 8px 0; overflow-wrap: anywhere; }
+body.status .status-cockpit-command-feedback[hidden] { display: none; }
+body.status .status-cockpit-command-dialog {
+    box-sizing: border-box; width: min(760px, calc(100vw - 32px)); max-width: calc(100% - 24px);
+    max-height: calc(100vh - 32px); overflow: auto; padding: 20px;
+    border: 1px solid var(--detail-border); border-radius: 13px;
+    background: var(--detail-panel); color: var(--detail-text);
+    box-shadow: 0 20px 80px rgba(0, 0, 0, .35);
+    font: 13px/1.5 system-ui, sans-serif;
 }
-html[data-shell-layout="desktop"] body.status .status-dashboard-title-cell { grid-column: 1; grid-row: 1; }
-html[data-shell-layout="desktop"] body.status .status-dashboard-chart-cell { grid-column: 2; grid-row: 1; }
-html[data-shell-layout="desktop"] body.status .status-dashboard-clock-cell { grid-column: 3; grid-row: 1; }
-html:root[data-shell-layout="desktop"] body.status section.status-dashboard-clock { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
-html:root[data-shell-layout="desktop"] body.status section.status-dashboard-clock > .status-dashboard-mini-trend {
-    display: block; padding: 0 12px 0 0; border-bottom: 0; border-right: 1px solid var(--detail-border);
+body.status .status-cockpit-command-dialog::backdrop { background: rgba(6, 12, 20, .68); }
+body.status .status-cockpit-command-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+body.status .status-cockpit-command-heading h2 { margin: 0; font-size: 17px; font-weight: 650; }
+body.status .status-cockpit-command-status { margin: 12px 0 16px; color: var(--detail-muted); font-size: 12px; }
+body.status :is(.status-cockpit-command-close, .status-cockpit-command-choice) {
+    appearance: none; border: 1px solid var(--detail-border); border-radius: 7px;
+    background: var(--detail-neutral); color: var(--detail-text); font: inherit; cursor: pointer;
 }
-
-/* Reset legacy narrow-iframe header placement when the shell is desktop.
-   Otherwise the info card spans a whole row and lifted panels cover totals. */
-html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:nth-child(-n+3) {
-    display: block !important; width: auto !important; min-width: 0;
-    grid-row: 1; margin-bottom: 0;
+body.status .status-cockpit-command-close { flex: 0 0 auto; padding: 6px 12px; }
+body.status .status-cockpit-command-choices { display: grid; gap: 10px; }
+body.status .status-cockpit-command-choices[hidden] { display: none; }
+body.status .status-cockpit-command-choice { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 14px; text-align: left; }
+body.status .status-cockpit-command-choice strong { color: var(--detail-link); font-size: 12px; }
+body.status :is(.status-cockpit-command-close, .status-cockpit-command-choice):hover { border-color: var(--detail-link); }
+body.status :is(.status-cockpit-command-close, .status-cockpit-command-choice):focus-visible { outline: 2px solid var(--detail-link); outline-offset: 3px; }
+body.status .status-cockpit-command-frame { display: block; width: 100%; height: min(440px, 60vh); min-height: 240px; border: 1px solid var(--detail-border); border-radius: 8px; background: var(--detail-bg); }
+@media (max-width: 560px) {
+    body.status .status-cockpit-command-dialog { padding: 14px; }
+    body.status .status-cockpit-command-heading h2 { font-size: 15px; }
 }
-html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:first-child { grid-column: 1 !important; }
-html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:nth-child(2) { grid-column: 2; }
-html:root[data-shell-layout="desktop"] body.status.status-dashboard > table.headertable > tbody > tr > td:nth-child(3) { grid-column: 3; }
+@media (prefers-reduced-motion: reduce) {
+    body.status button.status-cockpit-lamp { transition: none; }
+}
 
 /* Keep timing/output cells distinct in the dark host-detail table. */
 html:root:not(.light):not([data-theme="light"]) body.status > div > table.status:has(> tbody > tr > th:nth-child(5)):not(:has(> tbody > tr > th:nth-child(6))) > tbody > tr > td:nth-child(n+3):not([colspan]) {

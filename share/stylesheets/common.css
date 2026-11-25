@@ -1001,6 +1001,19 @@ body::after {
     backdrop-filter: blur(2px);
 }
 
+/* The shell supplies one footer for both frames. */
+html[data-modern-ui-footer] body::after {
+    display: none;
+}
+
+/* Hide the native Page Tour widget on every page, including the splash. */
+:is(.vidboxContainer, .vidboxTab, #tlyPageGuideToggle, #tlyPageGuideWrapper,
+    .tlyPageGuideToggle, .page-tour, .pageTour, .page-tour-toggle, .pageTourToggle,
+    [id*="pagetour" i], [class*="pagetour" i],
+    [aria-label="Page Tour" i], [title="Page Tour" i]) {
+    display: none !important;
+}
+
 :is(body.status, body.summary, body.avail, body.notifications, body.outages, body.extinfo, body.tac, body.history, body.showlog, body.trends, body.histogram, body.config, body.cmd)
 :is(#tlyPageGuideToggle, #tlyPageGuideWrapper, .tlyPageGuideToggle, .page-tour, .pageTour, .page-tour-toggle, .pageTourToggle, [id*="pagetour" i], [class*="pagetour" i], [aria-label*="page tour" i], [title*="page tour" i], [id*="tour" i][style*="position: fixed"], [class*="tour" i][style*="position: fixed"]) {
     top: auto !important;

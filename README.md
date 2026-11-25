@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.9.8-blue)
+![Version](https://img.shields.io/badge/version-0.10.0-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -14,7 +14,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - Global dark/light theme switch with persisted preference
 - Host and service status dashboards with linked donut charts, a local clock and a refresh-aware LIVE indicator
 - Compact global availability trend with 24-hour, 7-day and 30-day selectors, using the same snapshot as Live Overview
-- Switchable digital/analog clock with a saved preference, plus a native-refresh countdown beneath LIVE
+- Digital clock, plus a native-refresh countdown beneath LIVE
 - Gradient-colored digital seconds matching the availability trend and a static neural-network background fading from the lower-right corner
 - Theme-aware transparent interface icons and animated flapping arrows in SVG and legacy GIF formats
 - Responsive `index.php` shell and a modernized `side.php`
@@ -93,6 +93,7 @@ Core shell and modern pages:
 [nagios_root_path]/share/host_detail.php
 [nagios_root_path]/share/hostgroups.php
 [nagios_root_path]/share/hostgroups_summary.php
+[nagios_root_path]/share/modern_ui_status.php
 [nagios_root_path]/share/nagios.png
 [nagios_root_path]/share/stylesheets/theme.js
 [nagios_root_path]/share/stylesheets/host-copy.js
@@ -164,6 +165,49 @@ If you want the historical availability trend in `live.php`, add this cron job:
 
 This populates the JSON snapshot data used by the live availability widget.
 
+## Status cockpit
+
+Classic host and service detail pages show a cockpit with host/service status
+instruments, the existing availability history and digital clock, and an
+operations panel containing the native LIVE indicator and refresh countdown.
+Instrument totals and state links come from the original CGI tables, retaining
+their filters and user visibility. Native navigation, warnings, sorting and
+pagination remain available. Active CGI filters and their state links are preserved;
+the Display Filters panel is hidden. The native notifications-disabled notice is removed
+from all CGI pages displayed through Modern UI, including pages without a cockpit.
+Other warnings remain visible.
+
+The notifications, active checks, passive checks and event-handler indicators
+read the `programstatus` block through the read-only `modern_ui_status.php`
+endpoint once per page load. It uses `cgi.cfg` and its `main_config_file` to locate
+the configured `status_file`, falling back to `../var/status.dat` when no status
+path is specified. The web server must be able to read these files. The endpoint
+requires an authenticated web user unless CGI authentication is explicitly
+disabled, and returns only the six program switches needed by the panel.
+
+Active/passive checks show **MIXED** when host and service switches differ;
+hover over the indicator for both states. Unavailable or missing states remain
+neutral (`—`) and cannot be clicked. Click an available indicator to open the
+original Nagios command confirmation in a dialog. Active/passive checks first
+let you choose host or service checks. Opening the dialog sends no command;
+**Commit** in the native form submits it through `cmd.cgi`, retaining Nagios
+permissions, CSRF protection and any configured command comment fields. Read-only
+or unauthorized users receive the native Nagios denial.
+
+After Nagios acknowledges submission, the cockpit rereads program status up to
+15 times, waiting one second between responses, and updates the indicators only
+when the new state is observed.
+An acknowledgment means the command was queued, not that the new state is already
+active. If confirmation is delayed, the interface reports that explicitly and
+does not automatically resubmit. The CGI's existing refresh continues to control
+page updates; the cockpit adds no reload timer.
+
+The shell has a full-width footer with the Modern UI signature. Its thin green
+line follows the same refresh countdown as the cockpit, without another timer or
+automatic reload. Pages without that countdown retain the static footer. Both
+frames reserve space above it, so it never covers the last rows or sidebar items.
+The footer follows the selected dark/light theme and reduced-motion preference.
+
 ## Browser updates
 
 Click **Check updates** in the sidebar. When a newer release is available, users
@@ -225,7 +269,7 @@ Invalid timezone overrides fall back to the browser timezone, then UTC.
 Invalid or unsupported language overrides use the automatic language rule;
 English is the final language fallback.
 
-These settings apply to the digital and analog dashboard clock and all dates in
+These settings apply to the digital dashboard clock and all dates in
 `live.php` (last file update, state changes, trend axis, range and tooltips).
 Language affects dates only; interface labels are unchanged. Times keep the
 24-hour format. PHP renders UTC/English fallback dates if JavaScript is unavailable.

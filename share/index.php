@@ -65,6 +65,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			--toggle-color: #c8cdd5;
 			--page-bg: #0f1117;
 			--sidebar-bg: #141b26;
+			--footer-height: 34px;
 		}
 
 		.light,
@@ -94,7 +95,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			position: fixed;
 			top: 0;
 			left: 0;
-			height: 100vh;
+			height: calc(100vh - var(--footer-height));
 			width: var(--sidebar-width-compact);
 			border: none;
 			border-right: 1px solid var(--border);
@@ -107,7 +108,7 @@ if ($theme != 'dark' && $theme != 'light') {
 			position: fixed;
 			top: 0;
 			left: var(--sidebar-width-compact);
-			height: 100vh;
+			height: calc(100vh - var(--footer-height));
 			width: calc(100% - var(--sidebar-width-compact));
 			border: none;
 			opacity: 1;
@@ -116,6 +117,70 @@ if ($theme != 'dark' && $theme != 'light') {
 
 		body.main-loading iframe[name="main"] {
 			opacity: 0;
+		}
+
+		.modern-ui-footer {
+			position: fixed;
+			inset: auto 0 0;
+			height: var(--footer-height);
+			z-index: 101;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+			padding: 0 22px;
+			background: #0d1115;
+			border-top: 1px solid #303a42;
+			box-shadow: 0 -5px 20px #00000014;
+			color: #92a2b0;
+			font: 10px system-ui, sans-serif;
+		}
+		.modern-ui-footer-engine {
+			display: flex;
+			align-items: center;
+			gap: 9px;
+			letter-spacing: 1.7px;
+			font-weight: 600;
+			white-space: nowrap;
+		}
+		.modern-ui-footer-light {
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			background: #6bc497;
+			box-shadow: 0 0 7px #6bc49766;
+		}
+		.modern-ui-footer-signature { display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+		.modern-ui-footer-product { letter-spacing: 2px; font-size: 9px; color: #8c9ba9; }
+		.modern-ui-footer-separator { height: 12px; width: 1px; background: #37424a; }
+		.modern-ui-footer-author { font-size: 12px; font-weight: 600; letter-spacing: .5px; color: #d5e4df; }
+		.modern-ui-footer-author span { color: #72bea0; }
+		#modern-ui-footer-progress {
+			position: absolute;
+			top: -1px;
+			left: 0;
+			right: 0;
+			height: 2px;
+			transform: scaleX(0);
+			transform-origin: left;
+			background: linear-gradient(90deg, #419f7d, #74d8af);
+			box-shadow: 0 0 7px #66c99944;
+			transition: transform 1s linear;
+		}
+		.light .modern-ui-footer { background: #edf2f5; border-top-color: #c8d3dc; color: #4c6579; box-shadow: 0 -5px 20px #243c4e08; }
+		.light .modern-ui-footer-product { color: #557086; }
+		.light .modern-ui-footer-author { color: #294c41; }
+		.light .modern-ui-footer-author span { color: #2d8967; }
+		.light .modern-ui-footer-separator { background: #c0ced7; }
+		@media (max-width: 650px) {
+			.modern-ui-footer { padding: 0 12px; }
+			.modern-ui-footer-engine { font-size: 8px; letter-spacing: 1px; gap: 6px; }
+			.modern-ui-footer-signature { gap: 9px; }
+			.modern-ui-footer-product { font-size: 8px; letter-spacing: 1px; }
+			.modern-ui-footer-author { font-size: 11px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			#modern-ui-footer-progress { transition: none; }
 		}
 
 		body.desktop-sidebar-expanded iframe[name="side"] {
@@ -203,6 +268,11 @@ if ($theme != 'dark' && $theme != 'light') {
 	<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 	<iframe src="side.php" name="side"></iframe>
 	<iframe src="<?php echo $url; ?>" name="main"></iframe>
+	<footer class="modern-ui-footer" aria-label="Nagios Modern UI">
+		<div id="modern-ui-footer-progress" aria-hidden="true" hidden></div>
+		<div class="modern-ui-footer-engine"><span class="modern-ui-footer-light" aria-hidden="true"></span>NAGIOS CORE</div>
+		<div class="modern-ui-footer-signature"><span class="modern-ui-footer-product">NAGIOS MODERN UI</span><span class="modern-ui-footer-separator" aria-hidden="true"></span><span class="modern-ui-footer-author">smo<span>linux</span></span></div>
+	</footer>
 
 	<script>
 		// Larghezza di riferimento delle pagine CGI di Nagios (layout fisso anni 2000)
@@ -211,6 +281,7 @@ if ($theme != 'dark' && $theme != 'light') {
 
 		function setMainLoading(isLoading) {
 			document.body.classList.toggle('main-loading', !!isLoading);
+			if (isLoading) document.getElementById('modern-ui-footer-progress').hidden = true;
 		}
 
 		function bindMainBeforeUnload() {
@@ -287,6 +358,7 @@ if ($theme != 'dark' && $theme != 'light') {
 				if (!root) {
 					return;
 				}
+				root.setAttribute('data-modern-ui-footer', '');
 
 				root.classList.remove('dark', 'light');
 				root.classList.add(theme);

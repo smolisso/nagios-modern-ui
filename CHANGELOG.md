@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.10.0] - 2026-11-25
+
+### Added
+- Cockpit layout for classic host/service details, with coordinated host and service instruments and a compact operations panel
+- Program indicators for notifications, active/passive host and service checks, and event handlers, with explicit mixed and unavailable states
+- Clickable cockpit indicators opening native `cmd.cgi` confirmation, separate host/service actions, and state verification after command submission
+- Full-width, theme-aware footer with the Modern UI signature and a green line synchronized with the existing refresh countdown
+
+### Changed
+- Reused native CGI totals, links, warnings, refresh countdown, filters and sort controls in the cockpit
+- Retained availability ranges, timezone/language settings and the digital clock across responsive dark and light layouts
+- Removed the analog clock and mode toggle; the dashboard now always displays digital time
+- Hid the native Page Tour widget across all pages
+- Compacted cockpit panels and availability bars, aligned the operations panel with the instruments, right-aligned the clock with a larger left-side heading, and hid the Display Filters panel
+- Removed the native notifications-disabled notice across all CGI pages displayed through Modern UI, preserving other process warnings
+
+---
+
 ## [0.9.8] - 2026-11-25
 
 ### Added
