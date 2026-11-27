@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.10.2] - 2026-11-27
+
+### Added
+- Pointer-following metallic light reflections on the Host Status and Service Status rings
+- Slow rotation of the outer dial ticks during mouse hover, pausing in place when the pointer leaves
+
+### Changed
+- Increased status legend labels and values by 20% for better readability
+- Kept hover effects inactive for touch input and disabled tick rotation when reduced motion is preferred
+
+---
+
 ## [0.10.1] - 2026-11-25
 
 ### Fixed

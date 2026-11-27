@@ -147,6 +147,22 @@
       chart.appendChild(heading);
       var chartBody = element('div', 'status-dashboard-chart-body');
       var dial = element('div', 'status-cockpit-dial');
+      var ticks = element('span', 'status-cockpit-dial-ticks');
+      ticks.setAttribute('aria-hidden', 'true');
+      dial.appendChild(ticks);
+      dial.addEventListener('pointermove', function (event) {
+        if (event.pointerType !== 'mouse') return;
+        var box = dial.getBoundingClientRect();
+        var x = (event.clientX - box.left) / box.width;
+        var y = (event.clientY - box.top) / box.height;
+        dial.style.setProperty('--dial-light-angle', (Math.atan2(y - .5, x - .5) * 180 / Math.PI + 30) + 'deg');
+        dial.style.setProperty('--dial-light-x', (x * 100) + '%');
+        dial.style.setProperty('--dial-light-y', (y * 100) + '%');
+        dial.classList.add('is-lit');
+      });
+      function clearDialLight() { dial.classList.remove('is-lit'); }
+      dial.addEventListener('pointerleave', clearDialLight);
+      dial.addEventListener('pointercancel', clearDialLight);
       var donut = element('div', 'status-dashboard-donut');
       donut.setAttribute('role', 'img');
       donut.setAttribute('aria-label', labels.map(function (label, index) {
