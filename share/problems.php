@@ -1,6 +1,7 @@
 <?php
 
 $statusFile = '../var/status.dat';
+$objectCacheFile = __DIR__ . '/../var/objects.cache';
 $hostExtInfoFile = __DIR__ . '/../etc/objects/hostextinfo.cfg';
 $hostIconBaseUrl = '/nagios/images/logos/';
 $hostDetailBaseUrl = '/nagios/cgi-bin/status.cgi?host=';
@@ -8,8 +9,8 @@ $hostServicesDetailBaseUrl = '/nagios/host_detail.php?host=';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
 $graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
 $graphActionIconUrl = '/nagios/images/action.svg';
-$rrdRoot = '/usr/local/nagiosgraph/var/rrd';
 $refreshSeconds = 30;
+require_once __DIR__ . '/modern_ui_graphs.inc.php';
 
 function parse_status_dat(string $path): array
 {
@@ -251,28 +252,6 @@ function graph_show_url(string $baseUrl, string $hostName, string $serviceName, 
     }
 
     return $url;
-}
-
-function service_has_graph(string $rrdRoot, string $hostName, string $serviceName): bool
-{
-    static $cache = [];
-
-    $cacheKey = $hostName . "\0" . $serviceName;
-    if (isset($cache[$cacheKey])) {
-        return $cache[$cacheKey];
-    }
-
-    $hostDir = rtrim($rrdRoot, '/') . '/' . rawurlencode($hostName);
-    if (!is_dir($hostDir)) {
-        $cache[$cacheKey] = false;
-        return false;
-    }
-
-    $prefix = rawurlencode($serviceName) . '___';
-    $matches = glob($hostDir . '/' . $prefix . '*.rrd');
-    $cache[$cacheKey] = is_array($matches) && $matches !== [];
-
-    return $cache[$cacheKey];
 }
 
 function parse_hostextinfo_icons(string $path): array
@@ -1444,7 +1423,7 @@ $pageTitle = 'Problems Overview';
                                                 </a>
                                             <?php endif; ?>
                                         </h3>
-                                        <?php if ($incident['type'] === 'service' && service_has_graph($rrdRoot, $incident['host_name'], $incident['service_description'])): ?>
+                                        <?php if ($incident['type'] === 'service' && modernUiServiceHasGraph($objectCacheFile, $incident['host_name'], $incident['service_description'])): ?>
                                             <a
                                                 class="graph-action"
                                                 href="<?= htmlspecialchars(graph_show_url($graphShowBaseUrl, $incident['host_name'], $incident['service_description']), ENT_QUOTES) ?>"

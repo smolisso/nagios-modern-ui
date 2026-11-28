@@ -7,8 +7,8 @@ $hostIconBaseUrl = '/nagios/images/logos/';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
 $graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
 $graphActionIconUrl = '/nagios/images/action.svg';
-$rrdRoot = '/usr/local/nagiosgraph/var/rrd';
 $refreshSeconds = 30;
+require_once __DIR__ . '/modern_ui_graphs.inc.php';
 
 function parse_status_dat(string $path): array
 {
@@ -323,28 +323,6 @@ function graph_show_url(string $baseUrl, string $hostName, string $serviceName, 
     }
 
     return $url;
-}
-
-function service_has_graph(string $rrdRoot, string $hostName, string $serviceName): bool
-{
-    static $cache = [];
-
-    $cacheKey = $hostName . "\0" . $serviceName;
-    if (isset($cache[$cacheKey])) {
-        return $cache[$cacheKey];
-    }
-
-    $hostDir = rtrim($rrdRoot, '/') . '/' . rawurlencode($hostName);
-    if (!is_dir($hostDir)) {
-        $cache[$cacheKey] = false;
-        return false;
-    }
-
-    $prefix = rawurlencode($serviceName) . '___';
-    $matches = glob($hostDir . '/' . $prefix . '*.rrd');
-    $cache[$cacheKey] = is_array($matches) && $matches !== [];
-
-    return $cache[$cacheKey];
 }
 
 $requestedHost = isset($_GET['host']) ? trim((string) $_GET['host']) : '';
@@ -1123,7 +1101,7 @@ $hostAttempt = $hostRow !== null ? value_int($hostRow, 'current_attempt') . '/' 
                                     <?php endif; ?>
                                 </div>
                                 <div class="service-side">
-                                    <?php if (service_has_graph($rrdRoot, $requestedHost, $serviceName)): ?>
+                                    <?php if (modernUiServiceHasGraph($objectCacheFile, $requestedHost, $serviceName)): ?>
                                         <a
                                             class="graph-action"
                                             href="<?= htmlspecialchars(graph_show_url($graphShowBaseUrl, $requestedHost, $serviceName), ENT_QUOTES) ?>"

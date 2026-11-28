@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.10.3] - 2026-11-28
+
+### Added
+- Customizable Live Overview with 11 widgets, drag/tap/keyboard reordering, visibility controls and browser-local layout persistence
+- Host health map with host inspection, problem ownership indicator and incident age histogram using the complete Nagios snapshot
+
+### Changed
+- Shared the Status cockpit, clock, command controls and ring appearance with Live Overview
+- Paused Live Overview refresh while editing widgets and removed the duplicate availability chart
+
+### Fixed
+- Kept cockpit ring and legend colors reactive to CSS variables, including delayed stylesheet loads and shell cache refreshes
+- Restored ring reflections and rotating ticks for mouse input on devices whose primary pointer is touch
+- Matched Status and Live ring colors in both themes and restored the Live footer refresh progress
+- Restricted modern service graph icons and previews to services with an effective action URL in the object cache
+
+---
+
 ## [0.10.2] - 2026-11-27
 
 ### Added

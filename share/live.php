@@ -1,7 +1,7 @@
 <?php
 
-$statusFile = '../var/status.dat';
-$trendSnapshotFile = __DIR__ . '/live_trend_snapshot.json';
+$statusFile = __DIR__ . '/../var/status.dat';
+$objectCacheFile = __DIR__ . '/../var/objects.cache';
 $hostExtInfoFile = __DIR__ . '/../etc/objects/hostextinfo.cfg';
 $hostIconBaseUrl = '/nagios/images/logos/';
 $hostDetailBaseUrl = '/nagios/cgi-bin/status.cgi?host=';
@@ -9,11 +9,8 @@ $hostServicesDetailBaseUrl = '/nagios/host_detail.php?host=';
 $serviceDetailBaseUrl = '/nagios/cgi-bin/extinfo.cgi?type=2';
 $graphShowBaseUrl = '/nagios/nagiosgraph_modern/show.php';
 $graphActionIconUrl = '/nagios/images/action.svg';
-$rrdRoot = '/usr/local/nagiosgraph/var/rrd';
-$criticalServicesUrl = '/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=28&hostprops=42';
-$hostsDownUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=12';
-$hostsUpUrl = '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail';
-$servicesOkUrl = '/nagios/cgi-bin/status.cgi?host=all';
+require_once __DIR__ . '/modern_ui_graphs.inc.php';
+require_once __DIR__ . '/modern_ui_live_widgets.inc.php';
 $modernUiConfig = require __DIR__ . '/modern-ui-config.php';
 $refreshSeconds = filter_var($modernUiConfig['live_refresh_seconds'] ?? 30, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: 30;
 
@@ -249,261 +246,6 @@ function compare_by_severity_then_recency(array $left, array $right): int
     return strcmp($left['title'], $right['title']);
 }
 
-function read_trend_snapshot(string $path): array
-{
-    if (!is_readable($path)) {
-        return [];
-    }
-
-    $contents = @file_get_contents($path);
-    if ($contents === false || $contents === '') {
-        return [];
-    }
-
-    $decoded = json_decode($contents, true);
-    if (!is_array($decoded) || !isset($decoded['samples']) || !is_array($decoded['samples'])) {
-        return [];
-    }
-
-    return $decoded['samples'];
-}
-
-function trend_time_format(string $range): string
-{
-    switch ($range) {
-        case '7d':
-        case '14d':
-        case '30d':
-            return 'd M';
-        case '1h':
-        case '6h':
-        case '12h':
-        case '24h':
-        default:
-            return 'H:i';
-    }
-}
-
-function trend_time_range_format(string $range): string
-{
-    switch ($range) {
-        case '7d':
-        case '14d':
-        case '30d':
-            return 'd M Y';
-        case '1h':
-        case '6h':
-        case '12h':
-        case '24h':
-        default:
-            return 'd M H:i';
-    }
-}
-
-function trend_axis_labels(array $samples, string $range): array
-{
-    $count = count($samples);
-    if ($count === 0) {
-        return [];
-    }
-
-    $indexes = array_unique([
-        0,
-        (int) floor(($count - 1) * 0.25),
-        (int) floor(($count - 1) * 0.5),
-        (int) floor(($count - 1) * 0.75),
-        $count - 1,
-    ]);
-
-    $labels = [];
-    $format = trend_time_format($range);
-    foreach ($indexes as $index) {
-        if (!isset($samples[$index]['timestamp'])) {
-            continue;
-        }
-
-        $labels[] = timestamp_html((int) $samples[$index]['timestamp'], $format);
-    }
-
-    return $labels;
-}
-
-function requested_trend_range(): string
-{
-    $allowed = ['1h', '6h', '12h', '24h', '7d', '14d', '30d'];
-    $requested = isset($_GET['range']) ? (string) $_GET['range'] : '24h';
-
-    return in_array($requested, $allowed, true) ? $requested : '24h';
-}
-
-function trend_range_seconds(string $range): int
-{
-    switch ($range) {
-        case '1h':
-            return 3600;
-        case '6h':
-            return 6 * 3600;
-        case '12h':
-            return 12 * 3600;
-        case '7d':
-            return 7 * 86400;
-        case '14d':
-            return 14 * 86400;
-        case '30d':
-            return 30 * 86400;
-        case '24h':
-        default:
-            return 86400;
-    }
-}
-
-function trend_range_label(string $range): string
-{
-    switch ($range) {
-        case '1h':
-            return '1 hour';
-        case '6h':
-            return '6 hours';
-        case '12h':
-            return '12 hours';
-        case '7d':
-            return '7 days';
-        case '14d':
-            return '14 days';
-        case '30d':
-            return '30 days';
-        case '24h':
-        default:
-            return '24 hours';
-    }
-}
-
-function trend_range_step(string $range, string $direction): string
-{
-    $order = ['1h', '6h', '12h', '24h', '7d', '14d', '30d'];
-    $index = array_search($range, $order, true);
-    if ($index === false) {
-        return '24h';
-    }
-
-    if ($direction === 'out') {
-        return $order[min(count($order) - 1, $index + 1)];
-    }
-
-    return $order[max(0, $index - 1)];
-}
-
-function filter_trend_samples(array $samples, int $seconds, int $now): array
-{
-    $cutoff = $now - $seconds;
-
-    return array_values(array_filter($samples, static function (array $sample) use ($cutoff): bool {
-        return isset($sample['timestamp']) && (int) $sample['timestamp'] >= $cutoff;
-    }));
-}
-
-function bucket_trend_samples(array $samples, int $bucketCount): array
-{
-    $count = count($samples);
-    if ($count === 0) {
-        return [];
-    }
-
-    if ($count <= $bucketCount) {
-        return array_values(array_map(static function (array $sample): array {
-            $availability = isset($sample['availability_pct']) ? (float) $sample['availability_pct'] : 0.0;
-
-            return [
-                'timestamp' => isset($sample['timestamp']) ? (int) $sample['timestamp'] : 0,
-                'availability_pct' => $availability,
-            ];
-        }, $samples));
-    }
-
-    $bucketSize = (int) ceil($count / $bucketCount);
-    $buckets = [];
-
-    for ($offset = 0; $offset < $count; $offset += $bucketSize) {
-        $chunk = array_slice($samples, $offset, $bucketSize);
-        if ($chunk === []) {
-            continue;
-        }
-
-        $sum = 0.0;
-        $items = 0;
-
-        foreach ($chunk as $sample) {
-            $sum += isset($sample['availability_pct']) ? (float) $sample['availability_pct'] : 0.0;
-            $items++;
-        }
-
-        $last = $chunk[count($chunk) - 1];
-        $buckets[] = [
-            'timestamp' => isset($last['timestamp']) ? (int) $last['timestamp'] : 0,
-            'availability_pct' => $items > 0 ? round($sum / $items, 1) : 0.0,
-        ];
-    }
-
-    return $buckets;
-}
-
-function trend_scale(array $samples): array
-{
-    if ($samples === []) {
-        return [
-            'min' => 0.0,
-            'max' => 100.0,
-            'span' => 100.0,
-        ];
-    }
-
-    $values = array_map(static function (array $sample): float {
-        return isset($sample['availability_pct']) ? (float) $sample['availability_pct'] : 0.0;
-    }, $samples);
-
-    $min = min($values);
-    $max = max($values);
-
-    if (abs($max - $min) < 0.001) {
-        $padding = 0.5;
-    } else {
-        $padding = max(0.2, ($max - $min) * 0.15);
-    }
-
-    $scaledMin = max(0.0, $min - $padding);
-    $scaledMax = min(100.0, $max + $padding);
-
-    if (($scaledMax - $scaledMin) < 1.0) {
-        $mid = ($scaledMin + $scaledMax) / 2;
-        $scaledMin = max(0.0, $mid - 0.5);
-        $scaledMax = min(100.0, $mid + 0.5);
-    }
-
-    return [
-        'min' => $scaledMin,
-        'max' => $scaledMax,
-        'span' => max(0.1, $scaledMax - $scaledMin),
-    ];
-}
-
-function trend_scale_ticks(array $scale): array
-{
-    $ticks = [];
-    $steps = 4;
-
-    for ($index = 0; $index <= $steps; $index++) {
-        $ratio = $steps > 0 ? ($index / $steps) : 0;
-        $value = $scale['max'] - ($scale['span'] * $ratio);
-        $ticks[] = [
-            'value' => $value,
-            'label' => number_format($value, 1) . '%',
-            'position' => $ratio * 100,
-        ];
-    }
-
-    return $ticks;
-}
-
 function host_detail_url(string $baseUrl, string $hostName): string
 {
     return $baseUrl . rawurlencode($hostName);
@@ -603,28 +345,6 @@ function graph_show_url(string $baseUrl, string $hostName, string $serviceName, 
     return $url;
 }
 
-function service_has_graph(string $rrdRoot, string $hostName, string $serviceName): bool
-{
-    static $cache = [];
-
-    $cacheKey = $hostName . "\0" . $serviceName;
-    if (isset($cache[$cacheKey])) {
-        return $cache[$cacheKey];
-    }
-
-    $hostDir = rtrim($rrdRoot, '/') . '/' . rawurlencode($hostName);
-    if (!is_dir($hostDir)) {
-        $cache[$cacheKey] = false;
-        return false;
-    }
-
-    $prefix = rawurlencode($serviceName) . '___';
-    $matches = glob($hostDir . '/' . $prefix . '*.rrd');
-    $cache[$cacheKey] = is_array($matches) && $matches !== [];
-
-    return $cache[$cacheKey];
-}
-
 $now = time();
 date_default_timezone_set('UTC');
 $status = parse_status_dat($statusFile);
@@ -636,6 +356,7 @@ $summary = [
     'services_warning' => 0,
     'services_critical' => 0,
     'services_unknown' => 0,
+    'services_pending' => 0,
     'service_problems' => 0,
     'service_unhandled' => 0,
     'service_acknowledged' => 0,
@@ -656,6 +377,10 @@ $noisyHosts = [];
 
 foreach ($services as $service) {
     $state = value_int($service, 'current_state');
+    if ((isset($service['has_been_checked']) && value_int($service, 'has_been_checked') === 0) || $state < 0 || $state > 3) {
+        $summary['services_pending']++;
+        continue;
+    }
 
     switch ($state) {
         case 0:
@@ -714,6 +439,7 @@ foreach ($services as $service) {
         'state' => $state,
         'state_label' => state_label($state, 'service'),
         'badge_class' => state_badge_class($state, 'service'),
+        'last_state_change' => $lastStateChange,
         'age_seconds' => $ageSeconds,
         'age_label' => format_duration($ageSeconds),
         'changed_at' => timestamp_html($lastStateChange),
@@ -758,6 +484,10 @@ foreach ($services as $service) {
 
 foreach ($hosts as $host) {
     $state = value_int($host, 'current_state');
+    if (isset($host['has_been_checked']) && value_int($host, 'has_been_checked') === 0) {
+        $summary['hosts_pending']++;
+        continue;
+    }
 
     if ($state === 0) {
         $summary['hosts_up']++;
@@ -790,6 +520,7 @@ foreach ($hosts as $host) {
         'state' => $state,
         'state_label' => state_label($state, 'host'),
         'badge_class' => state_badge_class($state, 'host'),
+        'last_state_change' => $lastStateChange,
         'age_seconds' => $ageSeconds,
         'age_label' => format_duration($ageSeconds),
         'changed_at' => timestamp_html($lastStateChange),
@@ -829,37 +560,30 @@ $noisyHosts = array_slice($noisyHosts, 0, 5);
 $totalProblems = $summary['service_problems'] + $summary['hosts_down'] + $summary['hosts_unreachable'];
 $unhandledTotal = $summary['service_unhandled'] + $summary['host_unhandled'];
 $statusFileMtime = is_readable($statusFile) ? @filemtime($statusFile) : false;
-$lastUpdateLabel = $statusFileMtime ? timestamp_html((int) $statusFileMtime, 'd M Y H:i:s') : 'status.dat not readable';
+$lastUpdateLabel = $statusFileMtime ? timestamp_html((int) $statusFileMtime, 'd M Y H:i:s') : 'Unavailable';
 $lastAgeLabel = $statusFileMtime ? format_duration(max(0, $now - (int) $statusFileMtime)) . ' ago' : 'n/a';
 $dataSourceStatus = is_readable($statusFile) ? 'Live feed online' : 'Live feed unavailable';
-$trendRange = requested_trend_range();
-$trendSamples = filter_trend_samples(read_trend_snapshot($trendSnapshotFile), trend_range_seconds($trendRange), $now);
-$trendSamples = bucket_trend_samples($trendSamples, 48);
-$trendScale = trend_scale($trendSamples);
 $hostIconMap = parse_hostextinfo_icons($hostExtInfoFile);
-$trendBars = [];
-$trendPointFormat = trend_time_range_format($trendRange);
-
-foreach ($trendSamples as $sample) {
-    $availability = isset($sample['availability_pct']) ? (float) $sample['availability_pct'] : 0.0;
-    $normalizedHeight = (($availability - $trendScale['min']) / $trendScale['span']) * 100;
-
-    $trendBars[] = [
-        'height' => max(6, min(100, (int) round($normalizedHeight))),
-        'label' => number_format($availability, 1) . '%',
-        'timestamp' => isset($sample['timestamp']) ? timestamp_html((int) $sample['timestamp'], $trendPointFormat) : 'n/a',
-    ];
-}
-
-$trendAxis = trend_axis_labels($trendSamples, $trendRange);
-$trendRangeFormat = trend_time_range_format($trendRange);
-$trendRangeLabel = $trendSamples !== []
-    ? timestamp_html((int) $trendSamples[0]['timestamp'], $trendRangeFormat) . ' to ' . timestamp_html((int) $trendSamples[count($trendSamples) - 1]['timestamp'], $trendRangeFormat)
-    : 'Waiting for samples';
-$trendZoomOutRange = trend_range_step($trendRange, 'out');
-$trendZoomInRange = trend_range_step($trendRange, 'in');
-$trendScaleLabel = number_format($trendScale['min'], 1) . '% to ' . number_format($trendScale['max'], 1) . '%';
-$trendTicks = trend_scale_ticks($trendScale);
+$widgetData = modernUiLiveWidgetData($hosts, $services, $incidents, $now);
+$healthLabels = ['ok' => 'Healthy', 'pending' => 'Pending', 'unknown' => 'Unknown', 'warning' => 'Warning', 'critical' => 'Critical', 'unreachable' => 'Unreachable', 'down' => 'Down'];
+$ownedPercent = $widgetData['total'] ? (int) round($widgetData['handled'] / $widgetData['total'] * 100) : null;
+$ownedAngle = $widgetData['total'] ? $widgetData['handled'] / $widgetData['total'] * 360 : 0;
+$liveDashboard = [
+    'refreshSeconds' => $refreshSeconds,
+    'manageRefresh' => true,
+    'host' => [
+        'counts' => [$summary['hosts_up'], $summary['hosts_down'], $summary['hosts_unreachable'], $summary['hosts_pending']],
+        'links' => array_map(static function (int $state): string {
+            return '/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=' . $state;
+        }, [2, 4, 8, 1]),
+    ],
+    'service' => [
+        'counts' => [$summary['services_ok'], $summary['services_warning'], $summary['services_unknown'], $summary['services_critical'], $summary['services_pending']],
+        'links' => array_map(static function (int $state): string {
+            return '/nagios/cgi-bin/status.cgi?host=all&servicestatustypes=' . $state;
+        }, [2, 4, 8, 16, 1]),
+    ],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
@@ -867,1244 +591,78 @@ $trendTicks = trend_scale_ticks($trendScale);
 <meta charset="utf-8">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>">
+<noscript><meta http-equiv="refresh" content="<?= (int) $refreshSeconds ?>"></noscript>
 <title>Live Overview</title>
 <script src="stylesheets/theme.js"></script>
 <script>window.NagiosModernUIConfig = <?= json_encode($modernUiConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
 <script src="stylesheets/modern-ui-time.js?v=<?= filemtime(__DIR__ . '/stylesheets/modern-ui-time.js') ?>"></script>
 <link href="stylesheets/common.css" rel="stylesheet">
-<style>
-    :root {
-        --bg: #06111d;
-        --bg-accent: #0c1a2c;
-        --panel: rgba(10, 23, 39, 0.92);
-        --panel-strong: rgba(14, 31, 50, 0.98);
-        --panel-soft: rgba(18, 38, 61, 0.85);
-        --border: rgba(78, 104, 132, 0.34);
-        --border-soft: rgba(111, 143, 177, 0.18);
-        --text: #edf3fb;
-        --muted: #9dafc5;
-        --muted-2: #71839c;
-        --critical: #ff8d92;
-        --critical-bg: rgba(191, 67, 74, 0.14);
-        --critical-border: rgba(255, 141, 146, 0.28);
-        --warning: #f1c95a;
-        --warning-bg: rgba(208, 160, 31, 0.15);
-        --warning-border: rgba(241, 201, 90, 0.30);
-        --ok: #46d691;
-        --ok-bg: rgba(70, 214, 145, 0.13);
-        --ok-border: rgba(70, 214, 145, 0.28);
-        --unknown: #c0c9d6;
-        --unknown-bg: rgba(192, 201, 214, 0.12);
-        --unknown-border: rgba(192, 201, 214, 0.22);
-        --shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
-        --radius-xl: 28px;
-        --radius-lg: 22px;
-        --radius-md: 16px;
-    }
-
-    html.light,
-    :root[data-theme="light"] {
-        --bg: #f2f6fc;
-        --bg-accent: #ffffff;
-        --panel: rgba(255, 255, 255, 0.95);
-        --panel-strong: rgba(255, 255, 255, 0.98);
-        --panel-soft: rgba(245, 250, 255, 0.94);
-        --border: rgba(65, 98, 133, 0.24);
-        --border-soft: rgba(65, 98, 133, 0.20);
-        --text: #1b2a3f;
-        --muted: #4f6280;
-        --muted-2: #7385a0;
-        --critical: #b91e2f;
-        --critical-bg: rgba(230, 56, 75, 0.14);
-        --critical-border: rgba(209, 49, 69, 0.32);
-        --warning: #8b6400;
-        --warning-bg: rgba(245, 181, 44, 0.20);
-        --warning-border: rgba(201, 141, 10, 0.30);
-        --ok: #0b7a49;
-        --ok-bg: rgba(31, 164, 99, 0.16);
-        --ok-border: rgba(22, 133, 81, 0.28);
-        --unknown: #4c627f;
-        --unknown-bg: rgba(78, 102, 135, 0.14);
-        --unknown-border: rgba(78, 102, 135, 0.24);
-        --shadow: 0 14px 26px rgba(31, 57, 88, 0.12);
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        min-height: 100vh;
-        color: var(--text);
-        font-family: "Segoe UI", Roboto, Ubuntu, Arial, sans-serif;
-        background:
-            radial-gradient(circle at top left, rgba(53, 92, 137, 0.18), transparent 32%),
-            linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 100%);
-    }
-
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    a.host-link:hover {
-        text-decoration: underline;
-    }
-
-    .host-link-wrap {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        vertical-align: middle;
-    }
-
-    .host-icon {
-        width: 18px;
-        height: 18px;
-        border-radius: 4px;
-        object-fit: contain;
-        flex: 0 0 auto;
-    }
-
-    a.kpi-link:hover {
-        text-decoration: underline;
-    }
-
-    .page {
-        padding: 18px;
-    }
-
-    .wrap {
-        max-width: 1440px;
-        margin: 0 auto;
-    }
-
-    .panel {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-xl);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(8px);
-    }
-
-    .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.9fr) minmax(220px, 0.62fr);
-        gap: 18px;
-        padding: 22px;
-        margin-bottom: 20px;
-        align-items: start;
-    }
-
-    .hero-corner-logo {
-        grid-column: 2;
-        grid-row: 1;
-        justify-self: end;
-        align-self: start;
-        width: 32px;
-        height: 32px;
-        padding: 2px;
-        border-radius: 999px;
-        border: 1px solid rgba(118, 159, 201, 0.34);
-        background: rgba(20, 36, 58, 0.46);
-        box-shadow: 0 6px 14px rgba(5, 12, 23, 0.22);
-    }
-
-    .hero-corner-logo img {
-        width: 100%;
-        height: 100%;
-        border-radius: 999px;
-        display: block;
-        object-fit: cover;
-    }
-
-    .hero-main {
-        grid-column: 1;
-        grid-row: 1;
-        min-width: 0;
-    }
-
-    .eyebrow {
-        margin-bottom: 10px;
-        color: var(--muted-2);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.24em;
-        text-transform: uppercase;
-    }
-
-    .hero h1 {
-        margin: 0;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 32px;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-    }
-
-    @keyframes live-overview-title-icon-blink {
-        0%,
-        45%,
-        100% {
-            opacity: 1;
-        }
-        55%,
-        90% {
-            opacity: 0.24;
-        }
-    }
-
-    .hero-title-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 0.9em;
-        color: #7be2ae;
-        font-size: 0.88em;
-        line-height: 1;
-        animation: live-overview-title-icon-blink 1.2s ease-in-out infinite;
-    }
-
-    .hero p {
-        margin: 12px 0 0 0;
-        max-width: 760px;
-        color: var(--muted);
-        font-size: 13px;
-        font-style: italic;
-        line-height: 1.5;
-    }
-
-    .hero-side {
-        grid-column: 2;
-        grid-row: 2;
-        display: grid;
-        align-content: start;
-        gap: 12px;
-        min-height: 0;
-    }
-
-    .hero-meta {
-        display: grid;
-        gap: 10px;
-        margin: 0;
-    }
-
-    .hero-side-kicker {
-        color: var(--muted-2);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        text-align: right;
-        padding-right: 2px;
-    }
-
-    .hero-trend {
-        grid-column: 1;
-        grid-row: 2;
-        margin-top: 0;
-        padding: 18px;
-        border-radius: 22px;
-        background: var(--panel-soft);
-        border: 1px solid var(--border-soft);
-    }
-
-    .pill {
-        display: flex;
-        justify-content: space-between;
-        gap: 14px;
-        align-items: center;
-        position: relative;
-        padding: 12px 14px 12px 42px;
-        background: linear-gradient(145deg, rgba(22, 38, 60, 0.60), rgba(15, 29, 47, 0.38));
-        border: 1px solid rgba(116, 145, 178, 0.24);
-        border-radius: 14px;
-        min-height: 0;
-        box-shadow:
-            inset 0 1px 0 rgba(184, 206, 232, 0.08),
-            0 0 0 1px rgba(110, 170, 232, 0.12),
-            0 8px 20px rgba(5, 13, 24, 0.18);
-        transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
-    }
-
-    .pill::before {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        width: 20px;
-        height: 20px;
-        margin-top: -10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 999px;
-        border: 1px solid rgba(134, 171, 212, 0.30);
-        background: rgba(57, 94, 136, 0.18);
-        color: #c9dcf4;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1;
-        transition: transform 0.16s ease, background-color 0.16s ease, border-color 0.16s ease;
-    }
-
-    .pill-source::before { content: "◉"; }
-    .pill-update::before { content: "◷"; }
-    .pill-freshness::before { content: "↻"; }
-    .pill-refresh::before { content: "⟳"; }
-    .pill-timezone::before { content: "◔"; }
-
-    .pill:hover {
-        transform: translateY(-1px);
-        border-color: rgba(126, 172, 220, 0.36);
-        box-shadow:
-            inset 0 1px 0 rgba(196, 220, 245, 0.12),
-            0 0 0 1px rgba(124, 188, 255, 0.24),
-            0 11px 24px rgba(6, 15, 27, 0.26);
-    }
-
-    .pill:hover::before {
-        transform: scale(1.06);
-        border-color: rgba(145, 193, 245, 0.48);
-        background: rgba(74, 119, 168, 0.24);
-    }
-
-    .pill-label {
-        color: var(--muted-2);
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-    }
-
-    .pill-value {
-        color: var(--text);
-        font-size: 13px;
-        font-weight: 700;
-        text-align: right;
-    }
-
-    .kpi-grid {
-        display: grid;
-        gap: 12px;
-        margin-bottom: 14px;
-    }
-
-    .kpi-grid.hosts {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        margin-bottom: 12px;
-    }
-
-    .kpi-grid.services {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .kpi-card {
-        padding: 10px 11px 9px;
-        border-radius: var(--radius-lg);
-        background: var(--panel-strong);
-        border: 1px solid var(--border-soft);
-        min-height: 88px;
-    }
-
-    .kpi-card.alert {
-        background: linear-gradient(180deg, rgba(35, 18, 24, 0.92), rgba(16, 26, 42, 0.98));
-    }
-
-    .kpi-title {
-        color: var(--muted);
-        font-size: 10px;
-        margin-bottom: 6px;
-    }
-
-    .kpi-value {
-        margin: 0;
-        font-size: 28px;
-        line-height: 1;
-        letter-spacing: -0.04em;
-    }
-
-    .kpi-value.critical {
-        color: var(--critical);
-    }
-
-    .kpi-value.warning {
-        color: var(--warning);
-    }
-
-    .kpi-value.ok {
-        color: var(--ok);
-    }
-
-    .kpi-foot {
-        margin-top: 6px;
-        color: var(--muted-2);
-        font-size: 8px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-    }
-
-    .layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
-        gap: 20px;
-        align-items: start;
-    }
-
-    .stack {
-        display: grid;
-        gap: 20px;
-    }
-
-    .panel-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        align-items: flex-start;
-        margin-bottom: 18px;
-    }
-
-    .panel-head h2 {
-        margin: 0;
-        font-size: 18px;
-        line-height: 1.2;
-    }
-
-    .panel-head p {
-        margin: 8px 0 0 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.4;
-    }
-
-    .range {
-        color: var(--muted-2);
-        font-size: 12px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        white-space: nowrap;
-        padding-top: 4px;
-    }
-
-    .trend-toolbar {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .zoom-controls {
-        display: inline-flex;
-        gap: 8px;
-    }
-
-    .zoom-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 999px;
-        border: 1px solid var(--border-soft);
-        background: var(--panel-soft);
-        color: var(--text);
-        font-size: 18px;
-        line-height: 1;
-    }
-
-    .zoom-button.is-disabled {
-        opacity: 0.45;
-        pointer-events: none;
-    }
-
-    .trend-panel,
-    .summary-panel,
-    .list-panel,
-    .incidents-panel {
-        padding: 20px;
-    }
-
-    .hero-trend .panel-head {
-        margin-bottom: 14px;
-    }
-
-    .hero-trend .panel-head h2 {
-        font-size: 16px;
-    }
-
-    .hero-trend .panel-head p {
-        font-size: 13px;
-    }
-
-    .hero-trend .trend-box {
-        height: 250px;
-    }
-
-    .hero-trend .footer-note {
-        margin-top: 12px;
-    }
-
-    .trend-box {
-        position: relative;
-        height: 260px;
-        overflow: hidden;
-        border-radius: 24px;
-        border: 1px solid var(--border-soft);
-        background:
-            linear-gradient(180deg, rgba(79, 117, 162, 0.10), rgba(9, 18, 31, 0.95)),
-            #08111c;
-    }
-
-    .trend-grid-line {
-        position: absolute;
-        left: 56px;
-        right: 0;
-        border-top: 1px solid rgba(111, 128, 152, 0.10);
-    }
-
-    .trend-grid-line strong {
-        position: absolute;
-        left: -50px;
-        top: 0;
-        transform: translateY(-50%);
-        width: 42px;
-        color: var(--muted-2);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        text-align: right;
-    }
-
-    .trend-plot {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 24px;
-        bottom: 52px;
-    }
-
-    .trend-bars {
-        position: absolute;
-        left: 56px;
-        right: 18px;
-        top: 0;
-        bottom: 0;
-        display: flex;
-        align-items: flex-end;
-        gap: 8px;
-    }
-
-    .trend-bar {
-        flex: 1;
-        height: 100%;
-        border-radius: 18px 18px 0 0;
-        background: rgba(111, 143, 177, 0.08);
-        overflow: visible;
-        display: flex;
-        align-items: flex-end;
-        position: relative;
-        z-index: 1;
-        transition: transform 120ms ease, background-color 120ms ease;
-    }
-
-    .trend-bar span {
-        display: block;
-        width: 100%;
-        border-radius: 18px 18px 0 0;
-        background: linear-gradient(180deg, rgba(95, 185, 148, 0.95), rgba(63, 120, 188, 0.88));
-        transition: background 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
-    }
-
-    .trend-bar {
-        cursor: default;
-    }
-
-    .trend-bar:hover {
-        transform: translateY(-2px);
-        z-index: 10;
-    }
-
-    .trend-bar:hover span {
-        background: linear-gradient(180deg, rgba(248, 212, 102, 0.98), rgba(88, 194, 149, 0.94));
-        box-shadow: 0 0 0 1px rgba(248, 212, 102, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
-    }
-
-    .trend-tooltip {
-        position: absolute;
-        left: 50%;
-        top: 8px;
-        transform: translateX(-50%) translateY(6px);
-        padding: 8px 10px;
-        border-radius: 10px;
-        border: 1px solid rgba(111, 143, 177, 0.16);
-        background: rgba(6, 17, 29, 0.96);
-        color: var(--text);
-        font-size: 12px;
-        line-height: 1.35;
-        white-space: nowrap;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 120ms ease, transform 120ms ease;
-        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.22);
-        z-index: 20;
-    }
-
-    .trend-bar:hover .trend-tooltip {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-
-    .trend-axis {
-        position: absolute;
-        left: 56px;
-        right: 18px;
-        bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        color: var(--muted-2);
-        font-size: 11px;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-    }
-
-    .trend-empty {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        color: var(--muted);
-        font-size: 14px;
-        text-align: center;
-    }
-
-    .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-    }
-
-    .summary-item {
-        padding: 16px;
-        border-radius: var(--radius-md);
-        background: var(--panel-soft);
-        border: 1px solid var(--border-soft);
-    }
-
-    .summary-item strong {
-        display: block;
-        margin-bottom: 8px;
-        color: var(--text);
-        font-size: 22px;
-        letter-spacing: -0.03em;
-    }
-
-    .summary-item.ok strong {
-        color: #5ee8a5;
-    }
-
-    .summary-item.critical strong {
-        color: #ff7f8e;
-    }
-
-    .summary-item span {
-        color: var(--muted);
-        font-size: 13px;
-    }
-
-    .list {
-        display: grid;
-        gap: 10px;
-    }
-
-    .list-row {
-        padding: 13px 16px;
-        border-radius: var(--radius-md);
-        background: var(--panel-soft);
-        border: 1px solid var(--border-soft);
-    }
-
-    .incident-row {
-        padding: 9px 12px;
-        border-radius: 14px;
-        background: var(--panel-soft);
-        border: 1px solid var(--border-soft);
-    }
-
-    .incident-row.critical {
-        background: linear-gradient(180deg, rgba(88, 28, 40, 0.62), rgba(29, 32, 50, 0.92));
-        border-color: rgba(255, 141, 146, 0.26);
-    }
-
-    .incident-row.warning {
-        background: linear-gradient(180deg, rgba(89, 69, 18, 0.52), rgba(29, 32, 50, 0.92));
-        border-color: rgba(241, 201, 90, 0.24);
-    }
-
-    .incident-row.unknown {
-        background: linear-gradient(180deg, rgba(60, 68, 83, 0.5), rgba(29, 32, 50, 0.92));
-        border-color: rgba(192, 201, 214, 0.20);
-    }
-
-    .list-row {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 12px;
-        align-items: center;
-    }
-
-    .list-title {
-        margin: 0 0 6px 0;
-        color: var(--text);
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .incident-title {
-        margin: 0;
-        color: var(--text);
-        font-size: 14px;
-        line-height: 1.2;
-        font-weight: 600;
-    }
-
-    .incident-title-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 8px;
-    }
-
-    .graph-action {
-        flex: 0 0 auto;
-        width: 24px;
-        height: 24px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        border: 1px solid rgba(111, 143, 177, 0.18);
-        background: rgba(8, 17, 29, 0.46);
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-        transition: opacity 140ms ease, transform 140ms ease, border-color 140ms ease, background 140ms ease;
-    }
-
-    .graph-action img {
-        width: 14px;
-        height: 14px;
-        display: block;
-    }
-
-    .incident-row:hover .graph-action,
-    .incident-row:focus-within .graph-action {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-    }
-
-    .graph-action:hover {
-        background: rgba(22, 42, 68, 0.72);
-        border-color: rgba(111, 143, 177, 0.28);
-        text-decoration: none;
-    }
-
-    .list-meta {
-        color: var(--muted);
-        font-size: 12px;
-        line-height: 1.4;
-    }
-
-    .incident-meta {
-        color: var(--muted);
-        font-size: 11px;
-        line-height: 1.3;
-        margin-top: 4px;
-    }
-
-    .incident-row {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 10px;
-        align-items: start;
-    }
-
-    .incident-row.is-clickable {
-        cursor: pointer;
-        transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
-    }
-
-    .incident-row.is-clickable:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
-        border-color: rgba(111, 143, 177, 0.28);
-    }
-
-    .incident-flags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        margin-top: 6px;
-    }
-
-    .chip,
-    .badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 999px;
-        white-space: nowrap;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-    }
-
-    .badge {
-        min-width: 118px;
-        padding: 8px 11px;
-        font-size: 11px;
-        border: 1px solid transparent;
-    }
-
-    .chip {
-        padding: 6px 9px;
-        font-size: 10px;
-        color: var(--muted);
-        background: rgba(8, 17, 29, 0.55);
-        border: 1px solid rgba(111, 143, 177, 0.12);
-    }
-
-    .incidents-panel .badge {
-        min-width: 94px;
-        padding: 6px 9px;
-        font-size: 10px;
-        letter-spacing: 0.10em;
-    }
-
-    .incidents-panel .chip {
-        padding: 4px 8px;
-        font-size: 9px;
-        letter-spacing: 0.10em;
-    }
-
-    .incident-row .host-link-wrap {
-        gap: 6px;
-    }
-
-    .incident-row .host-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .chip.unhandled {
-        color: var(--critical);
-        border-color: rgba(255, 141, 146, 0.22);
-        background: rgba(191, 67, 74, 0.12);
-    }
-
-    .badge-critical {
-        color: var(--critical);
-        background: var(--critical-bg);
-        border-color: var(--critical-border);
-    }
-
-    .badge-warning {
-        color: var(--warning);
-        background: var(--warning-bg);
-        border-color: var(--warning-border);
-    }
-
-    .badge-ok {
-        color: var(--ok);
-        background: var(--ok-bg);
-        border-color: var(--ok-border);
-    }
-
-    .badge-unknown {
-        color: var(--unknown);
-        background: var(--unknown-bg);
-        border-color: var(--unknown-border);
-    }
-
-    .empty-state {
-        padding: 18px;
-        color: var(--muted);
-        background: var(--panel-soft);
-        border: 1px dashed var(--border-soft);
-        border-radius: var(--radius-md);
-    }
-
-    .footer-note {
-        margin-top: 20px;
-        color: var(--muted-2);
-        font-size: 12px;
-        text-align: right;
-    }
-
-    @media (max-width: 1180px) {
-        .kpi-grid.hosts,
-        .kpi-grid.services {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .layout,
-        .hero {
-            grid-template-columns: 1fr;
-        }
-
-        .hero-main,
-        .hero-trend,
-        .hero-side {
-            grid-column: 1;
-            grid-row: auto;
-        }
-
-        .hero-corner-logo {
-            grid-column: 1;
-            grid-row: 1;
-            margin-top: 2px;
-        }
-    }
-
-    @media (max-width: 720px) {
-        .page {
-            padding: 12px;
-        }
-
-        .kpi-grid.hosts,
-        .kpi-grid.services,
-        .summary-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .incident-row,
-        .list-row {
-            grid-template-columns: 1fr;
-        }
-
-        .hero h1 {
-            font-size: 26px;
-        }
-
-        .badge {
-            min-width: 0;
-        }
-    }
-
-    html.light body,
-    :root[data-theme="light"] body {
-        background:
-            radial-gradient(circle at top left, rgba(127, 175, 230, 0.22), transparent 36%),
-            linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 100%);
-    }
-
-    html.light .kpi-card.alert,
-    :root[data-theme="light"] .kpi-card.alert {
-        background: linear-gradient(180deg, rgba(248, 229, 232, 0.92), rgba(236, 244, 253, 0.98));
-        border-color: rgba(209, 49, 69, 0.18);
-    }
-
-    html.light .trend-box,
-    :root[data-theme="light"] .trend-box {
-        background:
-            linear-gradient(180deg, rgba(125, 165, 208, 0.14), rgba(234, 242, 251, 0.98)),
-            #eaf2fb;
-        border-color: rgba(86, 120, 158, 0.22);
-    }
-
-    html.light .trend-grid-line,
-    :root[data-theme="light"] .trend-grid-line {
-        border-top-color: rgba(88, 118, 154, 0.22);
-    }
-
-    html.light .trend-bar,
-    :root[data-theme="light"] .trend-bar {
-        background: rgba(86, 120, 158, 0.14);
-    }
-
-    html.light .trend-bar:hover span,
-    :root[data-theme="light"] .trend-bar:hover span {
-        box-shadow: 0 0 0 1px rgba(248, 212, 102, 0.25), 0 8px 14px rgba(52, 89, 132, 0.20);
-    }
-
-    html.light .trend-tooltip,
-    :root[data-theme="light"] .trend-tooltip {
-        border-color: rgba(86, 120, 158, 0.24);
-        background: rgba(255, 255, 255, 0.98);
-        box-shadow: 0 8px 16px rgba(52, 89, 132, 0.16);
-    }
-
-    html.light .incident-row.critical,
-    :root[data-theme="light"] .incident-row.critical {
-        background: linear-gradient(180deg, rgba(248, 214, 220, 0.92), rgba(239, 246, 253, 0.98));
-        border-color: rgba(209, 49, 69, 0.22);
-    }
-
-    html.light .incident-row.warning,
-    :root[data-theme="light"] .incident-row.warning {
-        background: linear-gradient(180deg, rgba(252, 239, 204, 0.92), rgba(239, 246, 253, 0.98));
-        border-color: rgba(201, 141, 10, 0.24);
-    }
-
-    html.light .incident-row.unknown,
-    :root[data-theme="light"] .incident-row.unknown {
-        background: linear-gradient(180deg, rgba(230, 237, 247, 0.92), rgba(239, 246, 253, 0.98));
-        border-color: rgba(78, 102, 135, 0.22);
-    }
-
-    html.light .graph-action,
-    :root[data-theme="light"] .graph-action {
-        border-color: rgba(86, 120, 158, 0.24);
-        background: rgba(242, 247, 253, 0.92);
-    }
-
-    html.light .graph-action:hover,
-    :root[data-theme="light"] .graph-action:hover {
-        background: rgba(227, 237, 249, 0.98);
-        border-color: rgba(86, 120, 158, 0.34);
-    }
-
-    html.light .chip,
-    :root[data-theme="light"] .chip {
-        background: rgba(231, 239, 249, 0.85);
-        border-color: rgba(86, 120, 158, 0.20);
-    }
-
-    html.light .chip.unhandled,
-    :root[data-theme="light"] .chip.unhandled {
-        border-color: rgba(209, 49, 69, 0.30);
-        background: rgba(230, 56, 75, 0.12);
-    }
-
-    html.light .pill,
-    :root[data-theme="light"] .pill {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(244, 250, 255, 0.90));
-        border-color: rgba(86, 120, 158, 0.24);
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.78),
-            0 0 0 1px rgba(134, 176, 221, 0.20),
-            0 10px 22px rgba(61, 99, 139, 0.10);
-    }
-
-    html.light .pill::before,
-    :root[data-theme="light"] .pill::before {
-        color: #33597f;
-        border-color: rgba(86, 120, 158, 0.30);
-        background: rgba(126, 169, 214, 0.16);
-    }
-
-    html.light .pill:hover,
-    :root[data-theme="light"] .pill:hover {
-        border-color: rgba(86, 120, 158, 0.36);
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.92),
-            0 0 0 1px rgba(110, 159, 209, 0.26),
-            0 12px 26px rgba(61, 99, 139, 0.15);
-    }
-
-    html.light .pill:hover::before,
-    :root[data-theme="light"] .pill:hover::before {
-        border-color: rgba(86, 120, 158, 0.42);
-        background: rgba(126, 169, 214, 0.26);
-    }
-
-    html.light .hero-side-kicker,
-    :root[data-theme="light"] .hero-side-kicker {
-        color: #6b7f99;
-    }
-
-    html.light .hero-corner-logo,
-    :root[data-theme="light"] .hero-corner-logo {
-        background: rgba(255, 255, 255, 0.94);
-        border-color: rgba(86, 120, 158, 0.34);
-        box-shadow: 0 8px 18px rgba(61, 99, 139, 0.14);
-    }
-
-    html.light .hero-title-icon,
-    :root[data-theme="light"] .hero-title-icon {
-        color: #1e7a56;
-    }
-</style>
+<link href="stylesheets/status.css?v=<?= filemtime(__DIR__ . '/stylesheets/status.css') ?>" rel="stylesheet">
+<link href="stylesheets/live-overview.css?v=<?= filemtime(__DIR__ . '/stylesheets/live-overview.css') ?>" rel="stylesheet">
+<script src="stylesheets/status-sort.js?v=<?= filemtime(__DIR__ . '/stylesheets/status-sort.js') ?>"></script>
 </head>
-<body>
+<body class="status live-overview">
 <div class="page">
     <div class="wrap">
-        <section class="panel hero">
-            <div class="hero-corner-logo" aria-hidden="true">
-                <img src="nagios.png" alt="">
+        <header class="live-page-heading">
+            <div>
+                <div class="live-eyebrow">MONITORING / OVERVIEW</div>
+                <h1 id="live-dashboard-title">Live Overview <span class="status-live-badge <?= $statusFileMtime === false ? 'is-unavailable' : '' ?>"><span class="status-live-dot" aria-hidden="true"></span><?= $statusFileMtime === false ? 'NO DATA' : 'LIVE' ?></span></h1>
             </div>
-            <div class="hero-main">
-                <div class="eyebrow">Live Monitoring</div>
-                <h1>Nagios Live Overview<span class="hero-title-icon" aria-hidden="true">◉</span></h1>
-                <p>Standalone operational dashboard sourced directly from `status.dat`</p>
-            </div>
-            <section class="hero-trend">
-                <div class="panel-head">
-                    <div>
-                        <h2>Availability trend</h2>
-                    </div>
-                    <div class="trend-toolbar">
-                        <div class="range"><?= htmlspecialchars(trend_range_label($trendRange), ENT_QUOTES, 'UTF-8') ?></div>
-                        <div class="zoom-controls">
-                            <a class="zoom-button <?= $trendRange === '1h' ? 'is-disabled' : '' ?>" href="?range=<?= htmlspecialchars($trendZoomInRange, ENT_QUOTES, 'UTF-8') ?>">-</a>
-                            <a class="zoom-button <?= $trendRange === '30d' ? 'is-disabled' : '' ?>" href="?range=<?= htmlspecialchars($trendZoomOutRange, ENT_QUOTES, 'UTF-8') ?>">+</a>
-                        </div>
-                    </div>
-                </div>
+            <nav class="live-view-links" aria-label="Monitoring views">
+                <a href="/nagios/cgi-bin/status.cgi?hostgroup=all&style=hostdetail">Host details ↗</a>
+                <a href="/nagios/cgi-bin/status.cgi?host=all">Service details ↗</a>
+            </nav>
+        </header>
 
-                <div class="trend-box" aria-hidden="true">
-                    <?php if ($trendBars === []): ?>
-                        <div class="trend-empty">
-                            No trend samples available for the selected range. Populate <?= htmlspecialchars(basename($trendSnapshotFile), ENT_QUOTES, 'UTF-8') ?> from cron to render history here.
-                        </div>
-                    <?php else: ?>
-                        <div class="trend-plot">
-                            <?php foreach ($trendTicks as $tick): ?>
-                                <div class="trend-grid-line" style="top: <?= htmlspecialchars((string) $tick['position'], ENT_QUOTES, 'UTF-8') ?>%;">
-                                    <strong><?= htmlspecialchars($tick['label'], ENT_QUOTES, 'UTF-8') ?></strong>
-                                </div>
-                            <?php endforeach; ?>
-                            <div class="trend-bars">
-                                <?php foreach ($trendBars as $bar): ?>
-                                    <div class="trend-bar">
-                                        <div class="trend-tooltip">
-                                            <div><?= htmlspecialchars($bar['label'], ENT_QUOTES, 'UTF-8') ?></div>
-                                            <div><?= $bar['timestamp'] ?></div>
-                                        </div>
-                                        <span style="height: <?= (int) $bar['height'] ?>%"></span>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                        <div class="trend-axis">
-                            <?php foreach ($trendAxis as $axisLabel): ?>
-                                <span><?= $axisLabel ?></span>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-                <div class="footer-note">
-                    <?= $trendRangeLabel ?> | Visible scale: <?= htmlspecialchars($trendScaleLabel, ENT_QUOTES, 'UTF-8') ?>
-                </div>
-            </section>
-            <div class="hero-side">
-                <div class="hero-side-kicker">Live Runtime</div>
-                <div class="hero-meta">
-                    <div class="pill pill-source">
-                        <span class="pill-label">Data source</span>
-                        <span class="pill-value"><?= htmlspecialchars($dataSourceStatus, ENT_QUOTES, 'UTF-8') ?></span>
-                    </div>
-                    <div class="pill pill-update">
-                        <span class="pill-label">Last file update</span>
-                        <span class="pill-value"><?= $lastUpdateLabel ?></span>
-                    </div>
-                    <div class="pill pill-freshness">
-                        <span class="pill-label">Data freshness</span>
-                        <span class="pill-value"><?= htmlspecialchars($lastAgeLabel, ENT_QUOTES, 'UTF-8') ?></span>
-                    </div>
-                    <div class="pill pill-refresh">
-                        <span class="pill-label">Auto refresh</span>
-                        <span class="pill-value">Every <?= (int) $refreshSeconds ?>s</span>
-                    </div>
-                    <div class="pill pill-timezone">
-                        <span class="pill-label">Timezone</span>
-                        <span class="pill-value" data-live-timezone>UTC</span>
-                    </div>
-                </div>
-            </div>
+        <?php if ($statusFileMtime === false): ?>
+            <div class="live-feed-warning" role="status">Live data is unavailable. Host and service counts cannot be determined.</div>
+        <?php endif; ?>
+        <div class="lw-toolbar" hidden>
+            <button type="button" class="lw-choose" aria-expanded="false" aria-controls="live-widget-picker">Widgets</button>
+            <button type="button" class="lw-reset" hidden>Reset layout</button>
+            <button type="button" class="lw-edit" aria-pressed="false">Edit layout</button>
+        </div>
+        <section id="live-widget-picker" class="lw-picker" aria-label="Visible widgets" hidden>
+            <header><h2>Visible widgets</h2><div><button type="button" class="lw-show-all">Show all</button><button type="button" class="lw-picker-close">Close</button></div></header>
+            <div class="lw-options"></div>
         </section>
+        <p class="lw-layout-status" role="status" aria-live="polite"></p>
+        <p class="lw-empty" hidden>No widgets selected. Use Widgets to show them again.</p>
+        <div id="live-widget-grid"></div>
+        <div id="live-cockpit">
+            <noscript><p>Enable JavaScript to display the monitoring cockpit. <?= count($hosts) ?> hosts · <?= count($services) ?> services.</p></noscript>
+        </div>
+        <div id="live-feed-info" class="live-feed-info">
+            <div class="live-feed-state <?= $statusFileMtime === false ? 'is-unavailable' : '' ?>"><?= htmlspecialchars($dataSourceStatus, ENT_QUOTES, 'UTF-8') ?></div>
+            <div><span>Last update</span><strong><?= $lastUpdateLabel ?></strong></div>
+            <div><span>Data age</span><strong><?= htmlspecialchars($lastAgeLabel, ENT_QUOTES, 'UTF-8') ?></strong></div>
+        </div>
 
-        <section class="kpi-grid hosts">
-            <article class="kpi-card alert">
-                <div class="kpi-title">Hosts Down</div>
-                <p class="kpi-value critical">
-                    <a class="kpi-link" href="<?= htmlspecialchars($hostsDownUrl, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= $summary['hosts_down'] + $summary['hosts_unreachable'] ?>
-                    </a>
-                </p>
-                <div class="kpi-foot"><?= $summary['hosts_down'] ?> down, <?= $summary['hosts_unreachable'] ?> unreachable</div>
-            </article>
-
-            <article class="kpi-card">
-                <div class="kpi-title">Hosts UP</div>
-                <p class="kpi-value ok">
-                    <a class="kpi-link" href="<?= htmlspecialchars($hostsUpUrl, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= $summary['hosts_up'] ?>
-                    </a>
-                </p>
-                <div class="kpi-foot">Currently reachable hosts</div>
-            </article>
-
-            <article class="kpi-card">
-                <div class="kpi-title">Hosts Pending</div>
-                <p class="kpi-value"><?= $summary['hosts_pending'] ?></p>
-                <div class="kpi-foot">No definitive host state yet</div>
-            </article>
-        </section>
-
-        <section class="kpi-grid services">
-            <article class="kpi-card alert">
-                <div class="kpi-title">Critical Services</div>
-                <p class="kpi-value critical">
-                    <a class="kpi-link" href="<?= htmlspecialchars($criticalServicesUrl, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= $summary['services_critical'] ?>
-                    </a>
-                </p>
-                <div class="kpi-foot">Highest urgency service impact</div>
-            </article>
-
-            <article class="kpi-card">
-                <div class="kpi-title">Warning Services</div>
-                <p class="kpi-value warning">
-                    <a class="kpi-link" href="<?= htmlspecialchars($criticalServicesUrl, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= $summary['services_warning'] ?>
-                    </a>
-                </p>
-                <div class="kpi-foot">Degraded but not critical</div>
-            </article>
-
-            <article class="kpi-card">
-                <div class="kpi-title">Unknown Services</div>
-                <p class="kpi-value">
-                    <a class="kpi-link" href="<?= htmlspecialchars($criticalServicesUrl, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= $summary['services_unknown'] ?>
-                    </a>
-                </p>
-                <div class="kpi-foot">State needs inspection</div>
-            </article>
-
-            <article class="kpi-card">
-                <div class="kpi-title">Service OK</div>
-                <p class="kpi-value ok">
-                    <a class="kpi-link" href="<?= htmlspecialchars($servicesOkUrl, ENT_QUOTES, 'UTF-8') ?>">
-                        <?= $summary['services_ok'] ?>
-                    </a>
-                </p>
-                <div class="kpi-foot">Healthy service checks</div>
-            </article>
-        </section>
+        <div class="live-section-heading">
+            <h2>Operations</h2>
+            <span><?= $totalProblems ?> active problems · <?= $unhandledTotal ?> unhandled</span>
+        </div>
 
         <div class="layout">
             <div class="stack">
-                <section class="panel incidents-panel">
+                <section class="panel incidents-panel" data-widget="incidents">
                     <div class="panel-head">
                         <div>
                             <h2>Active incidents</h2>
-                            <p>Sorted by severity first, then by most recent state change so fresh breakages stay at the top.</p>
+                            <p>Host and service problems, ordered by severity and latest change.</p>
                         </div>
                         <div class="range">Top <?= count($activeIncidents) ?></div>
                     </div>
 
                     <?php if ($activeIncidents === []): ?>
-                        <div class="empty-state">No active host or service incidents right now.</div>
+                        <div class="empty-state"><?= $statusFileMtime === false ? 'Live data is unavailable.' : 'No active host or service incidents right now.' ?></div>
                     <?php else: ?>
-                        <div class="list">
+                        <div class="list" tabindex="0" role="region" aria-label="Active incidents list">
                             <?php foreach ($activeIncidents as $incident): ?>
                                 <?php
                                 $incidentSeverityClass = '';
-                                if ($incident['state'] === 2) {
+                                if (($incident['type'] === 'host' && in_array($incident['state'], [1, 2], true)) || ($incident['type'] === 'service' && $incident['state'] === 2)) {
                                     $incidentSeverityClass = 'critical';
                                 } elseif ($incident['state'] === 1) {
                                     $incidentSeverityClass = 'warning';
@@ -2134,7 +692,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                                                         <?= htmlspecialchars($incident['service_description'], ENT_QUOTES, 'UTF-8') ?>
                                                     </a>
                                                 </h3>
-                                                <?php if (service_has_graph($rrdRoot, $incident['host_name'], $incident['service_description'])): ?>
+                                                <?php if (modernUiServiceHasGraph($objectCacheFile, $incident['host_name'], $incident['service_description'])): ?>
                                                     <a
                                                         class="graph-action"
                                                         href="<?= htmlspecialchars(graph_show_url($graphShowBaseUrl, $incident['host_name'], $incident['service_description']), ENT_QUOTES, 'UTF-8') ?>"
@@ -2199,50 +757,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                     <?php endif; ?>
                 </section>
 
-            </div>
-
-            <div class="stack">
-                <section class="panel summary-panel">
-                    <div class="panel-head">
-                        <div>
-                            <h2>Operational summary</h2>
-                            <p>Quick counters for hidden work, suppression, and check-state quality.</p>
-                        </div>
-                    </div>
-
-                    <div class="summary-grid">
-                        <div class="summary-item critical">
-                            <strong><?= $totalProblems ?></strong>
-                            <span>Total active problems</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong><?= $summary['service_acknowledged'] ?></strong>
-                            <span>Acknowledged services</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong><?= $summary['service_downtime'] ?></strong>
-                            <span>Services in downtime</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong><?= $summary['service_flapping'] ?></strong>
-                            <span>Flapping services</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong><?= $summary['hard_problems'] ?></strong>
-                            <span>Hard service problems</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong><?= $summary['soft_problems'] ?></strong>
-                            <span>Soft service problems</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong><?= $summary['host_unhandled'] ?></strong>
-                            <span>Unhandled host problems</span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="panel list-panel">
+                <section class="panel list-panel live-oldest-panel" data-widget="oldest">
                     <div class="panel-head">
                         <div>
                             <h2>Oldest service problems</h2>
@@ -2251,7 +766,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                     </div>
 
                     <?php if ($oldestProblems === []): ?>
-                        <div class="empty-state">No active service problems.</div>
+                        <div class="empty-state"><?= $statusFileMtime === false ? 'Live data is unavailable.' : 'No active service problems.' ?></div>
                     <?php else: ?>
                         <div class="list">
                             <?php foreach ($oldestProblems as $problem): ?>
@@ -2285,8 +800,56 @@ $trendTicks = trend_scale_ticks($trendScale);
                         </div>
                     <?php endif; ?>
                 </section>
+            </div>
 
-                <section class="panel list-panel">
+            <div class="stack">
+                <section class="panel summary-panel" data-widget="summary">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Operational summary</h2>
+                            <p>Acknowledgements, suppression and check states.</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-grid">
+                        <div class="summary-item live-unhandled">
+                            <strong><?= $unhandledTotal ?></strong>
+                            <span>Unhandled problems</span>
+                        </div>
+                        <div class="summary-item critical">
+                            <strong><?= $totalProblems ?></strong>
+                            <span>Total active problems</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong><?= $summary['service_acknowledged'] ?></strong>
+                            <span>Acknowledged services</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong><?= $summary['service_downtime'] ?></strong>
+                            <span>Services in downtime</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong><?= $summary['service_flapping'] ?></strong>
+                            <span>Flapping services</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong><?= $summary['hard_problems'] ?></strong>
+                            <span>Hard service problems</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong><?= $summary['soft_problems'] ?></strong>
+                            <span>Soft service problems</span>
+                        </div>
+                        <div class="summary-item">
+                            <strong><?= $summary['host_unhandled'] ?></strong>
+                            <span>Unhandled host problems</span>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <section class="panel list-panel live-impacted-panel" data-widget="impacted">
                     <div class="panel-head">
                         <div>
                             <h2>Most impacted hosts</h2>
@@ -2295,7 +858,7 @@ $trendTicks = trend_scale_ticks($trendScale);
                     </div>
 
                     <?php if ($noisyHosts === []): ?>
-                        <div class="empty-state">No hosts with active service impact.</div>
+                        <div class="empty-state"><?= $statusFileMtime === false ? 'Live data is unavailable.' : 'No hosts with active service impact.' ?></div>
                     <?php else: ?>
                         <div class="list">
                             <?php foreach ($noisyHosts as $host): ?>
@@ -2327,14 +890,74 @@ $trendTicks = trend_scale_ticks($trendScale);
                         </div>
                     <?php endif; ?>
                 </section>
+
             </div>
         </div>
 
-        <div class="footer-note">
-            Source: <?= htmlspecialchars($statusFile, ENT_QUOTES, 'UTF-8') ?> | Trend store: <?= htmlspecialchars($trendSnapshotFile, ENT_QUOTES, 'UTF-8') ?>
+        <div id="live-extra-widgets" class="layout">
+            <section class="panel" data-widget="host-map" aria-label="Host health map">
+                <div class="panel-head"><div><h2>Host health map</h2><p>One tile per host · worst host or service state.</p></div><span class="range"><?= count($widgetData['hosts']) ?> HOSTS</span></div>
+                <?php if ($widgetData['hosts'] === []): ?>
+                    <div class="empty-state"><?= $statusFileMtime === false ? 'Live data is unavailable.' : 'No hosts in this snapshot.' ?></div>
+                <?php else: $mapColumns = 24; $mapRows = (int) ceil(count($widgetData['hosts']) / $mapColumns); ?>
+                    <svg class="lw-host-map" viewBox="0 0 264 <?= $mapRows * 11 ?>" role="img" aria-label="Host health map. Use the host selector below to inspect each tile.">
+                        <?php foreach ($widgetData['hosts'] as $index => $item): ?>
+                            <rect data-host-index="<?= $index ?>" class="lw-state-<?= $item['state'] ?>" x="<?= ($index % $mapColumns) * 11 + 1 ?>" y="<?= intdiv($index, $mapColumns) * 11 + 1 ?>" width="8" height="8" rx="2"><title><?= htmlspecialchars($item['name'] . ' · ' . $healthLabels[$item['state']], ENT_QUOTES, 'UTF-8') ?></title></rect>
+                        <?php endforeach; ?>
+                    </svg>
+                    <div class="lw-map-legend">
+                        <?php foreach ($widgetData['counts'] as $state => $count): if (!$count) continue; ?>
+                            <span><i class="lw-state-<?= $state ?>" aria-hidden="true"></i><?= $healthLabels[$state] ?> <strong><?= $count ?></strong></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <label class="lw-host-label">Inspect host
+                        <select class="lw-host-select">
+                            <?php foreach ($widgetData['hosts'] as $index => $item): ?>
+                                <option value="<?= $index ?>" data-url="<?= htmlspecialchars(host_services_detail_url($hostServicesDetailBaseUrl, $item['name']), ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($item['name'] . ' · ' . $healthLabels[$item['state']] . ' · ' . $item['problems'] . ' service problems', ENT_QUOTES, 'UTF-8') ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </label>
+                    <div class="lw-host-detail" aria-live="polite"><a href="<?= htmlspecialchars(host_services_detail_url($hostServicesDetailBaseUrl, $widgetData['hosts'][0]['name']), ENT_QUOTES, 'UTF-8') ?>">Open host details ↗</a></div>
+                <?php endif; ?>
+            </section>
+            <section class="panel" data-widget="ownership" aria-label="Problem ownership">
+                <div class="panel-head"><div><h2>Problem ownership</h2><p>Acknowledged or in scheduled downtime.</p></div></div>
+                <div class="lw-ownership-ring <?= !$widgetData['total'] ? 'is-empty' : '' ?>" style="--lw-owned-angle:<?= (float) $ownedAngle ?>deg" role="img" aria-label="<?= $ownedPercent === null ? ($statusFileMtime === false ? 'Live data unavailable' : 'No active problems') : $ownedPercent . '% of problems handled' ?>">
+                    <div><strong data-owned-percent><?= $ownedPercent === null ? '—' : $ownedPercent . '%' ?></strong><span>PROBLEMS HANDLED</span><small><?= $statusFileMtime === false ? 'Live data unavailable' : ($widgetData['total'] ? $widgetData['handled'] . ' of ' . $widgetData['total'] . ' problems' : 'No active problems') ?></small></div>
+                </div>
+                <div class="lw-ownership-counts">
+                    <div><i class="lw-state-ok" aria-hidden="true"></i><span>Handled</span><strong data-owned-count><?= $widgetData['handled'] ?></strong></div>
+                    <div><i class="lw-state-critical" aria-hidden="true"></i><span>Unhandled</span><strong data-unhandled-count><?= $widgetData['total'] - $widgetData['handled'] ?></strong></div>
+                </div>
+            </section>
+            <section class="panel" data-widget="incident-age" aria-label="Incident age">
+                <div class="panel-head"><div><h2>Incident age</h2><p>All active host and service problems.</p></div><span class="range"><?= $widgetData['total'] ?> PROBLEMS</span></div>
+                <?php if ($statusFileMtime === false): ?>
+                    <div class="empty-state">Live data is unavailable.</div>
+                <?php else: ?>
+                    <div class="lw-age-bars">
+                        <?php foreach ($widgetData['ages'] as $count): ?>
+                            <div><strong data-age-value><?= $count ?></strong><span data-age-bar style="height:<?= (float) ($count / max(1, max($widgetData['ages'])) * 120) ?>px"></span></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="lw-age-labels"><span>&lt;1h</span><span>1–24h</span><span>1–7d</span><span>≥7d</span></div>
+                    <div class="lw-age-note"><strong><?= $widgetData['ages'][3] ?></strong><span>problems open for at least a week<?= $widgetData['unknownAge'] ? ' · ' . $widgetData['unknownAge'] . ' with unknown age' : '' ?></span></div>
+                <?php endif; ?>
+            </section>
         </div>
+        <div class="live-bottom-note">Live monitoring · Refresh every <?= (int) $refreshSeconds ?> seconds</div>
     </div>
 </div>
+<script>
+(function () {
+    var source = <?= json_encode($liveDashboard, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+    source.title = document.getElementById('live-dashboard-title');
+    source.mount = document.getElementById('live-cockpit');
+    source.info = document.getElementById('live-feed-info');
+    window.mountNagiosStatusDashboard(source);
+})();
+</script>
+<script src="stylesheets/live-widgets.js?v=<?= filemtime(__DIR__ . '/stylesheets/live-widgets.js') ?>"></script>
 <script>
 (function () {
     var timezone = 'UTC';

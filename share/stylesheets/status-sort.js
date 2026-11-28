@@ -5,14 +5,20 @@
   var refreshCountdowns = new WeakMap();
 
   function updateFooterRefresh(doc, progress) {
-    var footer = document.getElementById('modern-ui-footer-progress');
-    var main = document.querySelector('iframe[name="main"]');
+    var shell = document;
+    // Standalone pages run their timer inside main; the footer belongs to the shell.
+    if (!shell.getElementById('modern-ui-footer-progress')) {
+      try { shell = doc.defaultView.parent.document; }
+      catch (error) { return; } // An independently embedded page may have a different origin.
+    }
+    var footer = shell.getElementById('modern-ui-footer-progress');
+    var main = shell.querySelector('iframe[name="main"]');
     if (!footer || !main || main.contentDocument !== doc) return;
-    footer.hidden = progress == null || document.body.classList.contains('main-loading');
+    footer.hidden = progress == null || shell.body.classList.contains('main-loading');
     footer.style.transform = 'scaleX(' + (progress == null ? 0 : progress) + ')';
   }
 
-  function addRefreshCountdown(doc, title, seconds) {
+  function addRefreshCountdown(doc, title, seconds, manageRefresh) {
     var previous = refreshCountdowns.get(doc);
     if (previous && previous.seconds === seconds) return;
     if (previous) {
@@ -47,7 +53,20 @@
     var view = doc.defaultView;
     var started = view.performance.timeOrigin || Date.now();
     var deadline = started + seconds * 1000;
+    var paused = false;
+    if (manageRefresh) doc.addEventListener('nagios:refresh-pause', function (event) {
+      paused = event.detail === true;
+      countdown.classList.toggle('is-paused', paused);
+      if (!paused) deadline = Date.now() + seconds * 1000;
+      updateCountdown();
+    });
     function updateCountdown() {
+      if (paused) {
+        remaining.textContent = 'Paused while editing';
+        fill.style.transform = 'scaleX(0)';
+        updateFooterRefresh(doc, null);
+        return;
+      }
       var milliseconds = Math.max(0, deadline - Date.now());
       var value = Math.ceil(milliseconds / 1000);
       remaining.textContent = value > 0
@@ -56,6 +75,7 @@
       var progress = Math.min(1, milliseconds / (seconds * 1000));
       fill.style.transform = 'scaleX(' + progress + ')';
       updateFooterRefresh(doc, progress);
+      if (manageRefresh && milliseconds === 0) view.location.reload();
     }
     updateCountdown();
     var timer = view.setInterval(updateCountdown, 1000);
@@ -105,14 +125,16 @@
     addRefreshCountdown(doc, title, seconds);
   }
 
-  function addStatusDashboard(doc) {
+  function addStatusDashboard(doc, source) {
     if (doc.body.classList.contains('status-dashboard')) return;
-    var title = doc.querySelector('.pageTitle .statusTitle');
-    if (!title || !/^(?:Service|Host) Status Details For\b/.test(title.textContent.trim())) return;
-    var header = doc.querySelector('body > table.headertable');
+    var title = source ? source.title : doc.querySelector('.pageTitle .statusTitle');
+    if (!title || (!source && !/^(?:Service|Host) Status Details For\b/.test(title.textContent.trim()))) return;
+    var header = source ? null : doc.querySelector('body > table.headertable');
     var infoCell = header && header.querySelector(':scope > tbody > tr > td:first-child');
-    if (!header || !infoCell) return;
+    if (!source && (!header || !infoCell)) return;
     var view = doc.defaultView;
+    var baseURL = source ? new URL('./', doc.location.href) : new URL('../', doc.location.href);
+    if (source) addRefreshCountdown(doc, title, source.refreshSeconds, source.manageRefresh);
     function element(tag, className, text) {
       var node = doc.createElement(tag);
       node.className = className;
@@ -120,19 +142,19 @@
       return node;
     }
     var charts = [];
-    var colorUpdates = [];
     function createChart(isHost) {
-      var totals = header.querySelector('table.' + (isHost ? 'hostTotals' : 'serviceTotals'));
-      if (!totals) return;
-      var cells = Array.from(totals.querySelectorAll(':scope > tbody > tr:nth-child(2) > td'));
-      var headers = totals.querySelectorAll(':scope > tbody > tr:first-child > th');
-      if (cells.length !== (isHost ? 4 : 5)) return;
-      var counts = cells.map(function (cell) {
+      var data = source && (isHost ? source.host : source.service);
+      var totals = !source && header.querySelector('table.' + (isHost ? 'hostTotals' : 'serviceTotals'));
+      if (!data && !totals) return;
+      var cells = totals ? Array.from(totals.querySelectorAll(':scope > tbody > tr:nth-child(2) > td')) : [];
+      var headers = totals ? totals.querySelectorAll(':scope > tbody > tr:first-child > th') : [];
+      var counts = data ? data.counts : cells.map(function (cell) {
         var value = cell.textContent.trim();
         return /^\d+$/.test(value) ? Number(value) : NaN;
       });
-      if (counts.some(function (count) { return !Number.isFinite(count); })) return;
+      if (counts.length !== (isHost ? 4 : 5) || counts.some(function (count) { return !Number.isInteger(count) || count < 0; })) return;
       var labels = isHost ? ['Up', 'Down', 'Unreachable', 'Pending'] : ['OK', 'Warning', 'Unknown', 'Critical', 'Pending'];
+      var colors = isHost ? ['ok', 'down', 'unreachable', 'pending'] : ['ok', 'warning', 'unknown', 'critical', 'pending'];
       var total = counts.reduce(function (sum, count) { return sum + count; }, 0);
       var problems = counts.slice(1, -1).reduce(function (sum, count) { return sum + count; }, 0);
       var chart = element('section', 'status-dashboard-card status-dashboard-chart');
@@ -181,8 +203,9 @@
       var swatches = [];
       labels.forEach(function (label, index) {
         var original = headers[index] && headers[index].querySelector('a');
-        var item = element(original ? 'a' : 'div', 'status-dashboard-legend-item');
-        if (original) item.setAttribute('href', original.getAttribute('href'));
+        var href = data ? data.links[index] : original && original.getAttribute('href');
+        var item = element(href ? 'a' : 'div', 'status-dashboard-legend-item');
+        if (href) item.setAttribute('href', href);
         var swatch = element('span', 'status-dashboard-swatch');
         swatch.setAttribute('aria-hidden', 'true');
         swatches.push(swatch);
@@ -194,19 +217,19 @@
       });
       chartBody.appendChild(legend);
       chart.appendChild(chartBody);
-      colorUpdates.push(function () {
-        var position = 0;
-        var stops = [];
-        cells.forEach(function (cell, index) {
-          var color = view.getComputedStyle(cell).backgroundColor;
-          swatches[index].style.backgroundColor = color;
-          if (!counts[index] || !total) return;
-          var end = position + counts[index] / total * 100;
-          stops.push(color + ' ' + position + '% ' + end + '%');
-          position = end;
-        });
-        donut.style.background = total ? 'conic-gradient(' + stops.join(',') + ')' : 'var(--detail-neutral)';
+      // Keep CSS variable references alive: the shell can reload stylesheets
+      // after mounting the CGI cockpit, and themes can change at any time.
+      var position = 0;
+      var stops = [];
+      counts.forEach(function (count, index) {
+        var color = 'var(--status-chart-' + (count ? colors[index] : 'empty') + ')';
+        swatches[index].style.backgroundColor = color;
+        if (!count || !total) return;
+        var end = position + count / total * 100;
+        stops.push(color + ' ' + position + '% ' + end + '%');
+        position = end;
       });
+      donut.style.background = total ? 'conic-gradient(' + stops.join(',') + ')' : 'var(--detail-neutral)';
       charts.push(chart);
     }
     createChart(true);
@@ -217,7 +240,7 @@
     var operations = element('section', 'status-dashboard-card status-cockpit-ops');
     operations.setAttribute('aria-label', 'Current network status');
     var operationsHeading = element('div', 'status-cockpit-ops-heading');
-    var nativeHeading = infoCell.querySelector('.infoBoxTitle');
+    var nativeHeading = infoCell && infoCell.querySelector('.infoBoxTitle');
     operationsHeading.appendChild(nativeHeading || element('div', 'infoBoxTitle', 'Current Network Status'));
     var liveBadge = title.querySelector('.status-live-badge');
     if (liveBadge) operationsHeading.appendChild(liveBadge);
@@ -263,9 +286,10 @@
     if (countdown) refreshPanel.appendChild(countdown);
     operations.appendChild(refreshPanel);
     var nativeInfo = element('div', 'status-cockpit-native-info');
-    while (infoCell.firstChild) nativeInfo.appendChild(infoCell.firstChild);
+    if (source) nativeInfo.appendChild(source.info);
+    else while (infoCell.firstChild) nativeInfo.appendChild(infoCell.firstChild);
     operations.appendChild(nativeInfo);
-    header.querySelectorAll(':scope > tbody > tr > td').forEach(function (cell) {
+    if (header) header.querySelectorAll(':scope > tbody > tr > td').forEach(function (cell) {
       if (cell.querySelector('table.hostTotals, table.serviceTotals')) {
         cell.classList.add('status-cockpit-total-cell');
       } else {
@@ -282,7 +306,7 @@
     cockpit.appendChild(instruments);
 
     function readProgramStatus() {
-      return view.fetch(new URL('../modern_ui_status.php', doc.location.href).href, {
+      return view.fetch(new URL('modern_ui_status.php', baseURL).href, {
         cache: 'no-store', credentials: 'same-origin'
       }).then(function (response) {
         if (!response.ok) throw new Error('Program status unavailable');
@@ -367,7 +391,7 @@
         if (typeof current !== 'boolean') return;
         var expected = !current;
         var command = expected ? action.enable : action.disable;
-        var url = new URL('cmd.cgi', doc.location.href);
+        var url = new URL('cgi-bin/cmd.cgi', baseURL);
         url.searchParams.set('cmd_typ', command);
         title.textContent = (expected ? 'Enable ' : 'Disable ') + action.label.toLowerCase();
         status.textContent = 'Review the native Nagios command and click Commit to confirm.';
@@ -556,7 +580,7 @@
       trendNote.textContent = 'Complessiva · ' + lower.toFixed(1) + '–' + upper.toFixed(1) + '%';
     }
     // Read the same snapshot used by live.php, once per page load.
-    view.fetch(new URL('../live_trend_snapshot.json', doc.location.href).href, {
+    view.fetch(new URL('live_trend_snapshot.json', baseURL).href, {
       cache: 'no-store', credentials: 'same-origin'
     }).then(function (response) {
       if (!response.ok) throw new Error('Snapshot unavailable');
@@ -599,22 +623,24 @@
       date.textContent = capitalize(dateParts.weekday) + ', ' + dateParts.day + ' ' +
         capitalize(dateParts.month) + ' ' + dateParts.year;
     }
-    function updateColors() {
-      colorUpdates.forEach(function (update) { update(); });
-    }
     // Move native header nodes, preserving their filters and navigation links.
-    header.before(cockpit);
-    instruments.appendChild(header);
+    if (source) source.mount.replaceChildren(cockpit);
+    else {
+      header.before(cockpit);
+      instruments.appendChild(header);
+    }
     instruments.appendChild(gauges);
     gauges.appendChild(clock);
     doc.body.classList.add('status-dashboard');
-    updateColors();
     updateClock();
     // The timer belongs to the CGI window and ends when that page reloads.
     view.setInterval(updateClock, 1000);
-    var observer = new view.MutationObserver(updateColors);
-    observer.observe(doc.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme'] });
   }
+
+  // Live Overview supplies its parsed counts; classic CGI keeps its native tables.
+  window.mountNagiosStatusDashboard = function (source) {
+    addStatusDashboard(document, source);
+  };
 
   function addOutputDivider(doc, table, header) {
     if (!header || dividerTables.has(table)) return;

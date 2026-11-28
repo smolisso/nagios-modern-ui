@@ -2755,12 +2755,27 @@ body.status.status-dashboard {
     --cockpit-amber: #eac17a;
     --cockpit-green-surface: rgba(107, 196, 151, .08);
     --cockpit-amber-surface: rgba(207, 140, 62, .12);
+    --status-chart-ok: var(--cgi-ok);
+    --status-chart-warning: var(--cgi-warning);
+    --status-chart-critical: var(--cgi-critical);
+    --status-chart-down: #f88888;
+    --status-chart-unknown: var(--cgi-unknown);
+    --status-chart-unreachable: #ffbb55;
+    --status-chart-pending: #acacac;
+    --status-chart-empty: var(--detail-neutral);
 }
 html:is(.light, [data-theme="light"]) body.status.status-dashboard {
     --cockpit-green: #16794f;
     --cockpit-amber: #87500d;
     --cockpit-green-surface: rgba(22, 121, 79, .07);
     --cockpit-amber-surface: rgba(207, 140, 62, .12);
+    --status-chart-warning: var(--state-warning-badge-bg);
+    --status-chart-critical: var(--state-critical-badge-bg);
+    --status-chart-down: var(--state-critical-bg);
+    --status-chart-unknown: var(--state-unknown-bg);
+    --status-chart-unreachable: var(--state-unknown-bg);
+    --status-chart-pending: var(--state-pending-bg);
+    --status-chart-empty: #eef3f9;
 }
 body.status .status-cockpit {
     display: grid; grid-template-columns: minmax(280px, .85fr) minmax(0, 3.2fr);
@@ -2858,11 +2873,10 @@ body.status .status-dashboard-donut::after {
     background: radial-gradient(circle at var(--dial-light-x) var(--dial-light-y),
         rgba(248,255,252,.95), rgba(218,255,237,.3) 16%, transparent 39%);
 }
-@media (hover: hover) and (pointer: fine) {
-    body.status .status-cockpit-dial.is-lit .status-dashboard-donut::before,
-    body.status .status-cockpit-dial.is-lit .status-dashboard-donut::after { opacity: .8; }
-    body.status .status-cockpit-dial.is-lit .status-cockpit-dial-ticks { animation-play-state: running; }
-}
+/* Pointer events select mouse input, including on devices whose primary pointer is touch. */
+body.status .status-cockpit-dial.is-lit .status-dashboard-donut::before,
+body.status .status-cockpit-dial.is-lit .status-dashboard-donut::after { opacity: .8; }
+body.status .status-cockpit-dial.is-lit .status-cockpit-dial-ticks { animation-play-state: running; }
 @media (prefers-reduced-motion: reduce) {
     body.status .status-cockpit-dial-ticks { animation: none; }
     body.status .status-dashboard-donut::before,

@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/smolisso/nagios-modern-ui)
 ![License](https://img.shields.io/github/license/smolisso/nagios-modern-ui?v=1)
-![Version](https://img.shields.io/badge/version-0.10.2-blue)
+![Version](https://img.shields.io/badge/version-0.10.3-blue)
 
 # Nagios Core Modern UI
 A modern Nagios Core frontend refresh built with CSS, PHP and light JavaScript.
@@ -19,7 +19,7 @@ This project keeps the original Nagios CGI backend intact while adding standalon
 - Theme-aware transparent interface icons and animated flapping arrows in SVG and legacy GIF formats
 - Responsive `index.php` shell and a modernized `side.php`
 - Compact/expanded sidebar navigation with active page highlighting
-- `live.php` modern live overview sourced directly from `status.dat`
+- `live.php` modern live overview sourced directly from `status.dat`, with 11 movable and individually hideable widgets
 - `problems.php` modern problems view with severity-first triage and host autocomplete in the search filter
 - `host_detail.php` modern host service detail view with partial-name host autocomplete, keyboard navigation and a prominent configured host address below the host name
 - `hostgroups.php` modern host group overview
@@ -90,10 +90,14 @@ Core shell and modern pages:
 [nagios_root_path]/share/hostgroups.php
 [nagios_root_path]/share/hostgroups_summary.php
 [nagios_root_path]/share/modern_ui_status.php
+[nagios_root_path]/share/modern_ui_graphs.inc.php
+[nagios_root_path]/share/modern_ui_live_widgets.inc.php
 [nagios_root_path]/share/nagios.png
 [nagios_root_path]/share/stylesheets/theme.js
 [nagios_root_path]/share/stylesheets/host-copy.js
 [nagios_root_path]/share/stylesheets/status-sort.js
+[nagios_root_path]/share/stylesheets/live-widgets.js
+[nagios_root_path]/share/stylesheets/live-overview.css
 ```
 
 Nagiosgraph Modern:
@@ -159,7 +163,11 @@ If you want the historical availability trend in `live.php`, add this cron job:
 */5 * * * * root /usr/bin/php /usr/local/nagios/share/live_trend_snapshot.php >/dev/null 2>&1
 ```
 
-This populates the JSON snapshot data used by the live availability widget.
+This populates the JSON snapshot data used by the compact availability trend in the clock widget.
+
+Live Overview includes the shared Status cockpit, active and oldest incidents, an operational summary, impacted hosts, a host health map, problem ownership and an incident age histogram. Use **Widgets** to choose visible panels and **Edit layout** to move them by dragging the handles, selecting a source and destination, or using arrow keys and Enter (Escape cancels). **Reset layout** restores the defaults. Layout preferences are stored in this browser for this installation path. Automatic refresh pauses while the layout editor or widget picker is open and resumes when both are closed.
+
+The health map shows the worst host or service state for each host. Handled problems are acknowledged or in scheduled downtime, counted once even when both apply. The age histogram includes all active host and service problems; missing or future state-change timestamps are reported as unknown age.
 
 ## Status cockpit
 
